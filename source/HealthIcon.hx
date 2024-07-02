@@ -1,6 +1,9 @@
 package;
 
 import flixel.FlxSprite;
+import flixel.math.FlxMath;
+
+using StringTools;
 
 class HealthIcon extends FlxSprite
 {
@@ -8,39 +11,68 @@ class HealthIcon extends FlxSprite
 	 * Used for FreeplayState! If you use it elsewhere, prob gonna annoying
 	 */
 	public var sprTracker:FlxSprite;
+	
+	var noAa:Array<String> = ['dave-angey', 'bambi-3d', 'bf-pixel', 'senpai','senpai-angry','spirit'];
+	var isReallyPlayer:Bool = false;
+	
+	public var iconList:String = '';
 
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
 		super();
 		loadGraphic(Paths.image('iconGrid'), true, 150, 150);
+		
+		isReallyPlayer = isPlayer;
 
-		antialiasing = true;
-		animation.add('bf', [0, 1], 0, false, isPlayer);
-		animation.add('bf-car', [0, 1], 0, false, isPlayer);
-		animation.add('bf-christmas', [0, 1], 0, false, isPlayer);
-		animation.add('bf-pixel', [21, 21], 0, false, isPlayer);
-		animation.add('spooky', [2, 3], 0, false, isPlayer);
-		animation.add('pico', [4, 5], 0, false, isPlayer);
-		animation.add('mom', [6, 7], 0, false, isPlayer);
-		animation.add('mom-car', [6, 7], 0, false, isPlayer);
-		animation.add('tankman', [8, 9], 0, false, isPlayer);
-		animation.add('face', [10, 11], 0, false, isPlayer);
-		animation.add('dad', [12, 13], 0, false, isPlayer);
-		animation.add('senpai', [22, 22], 0, false, isPlayer);
-		animation.add('senpai-angry', [22, 22], 0, false, isPlayer);
-		animation.add('spirit', [23, 23], 0, false, isPlayer);
-		animation.add('bf-old', [14, 15], 0, false, isPlayer);
-		animation.add('gf', [16], 0, false, isPlayer);
-		animation.add('parents-christmas', [17], 0, false, isPlayer);
-		animation.add('monster', [19, 20], 0, false, isPlayer);
-		animation.add('monster-christmas', [19, 20], 0, false, isPlayer);
-		animation.play(char);
+		addIcon('bf', [0, 1]);
+		addIcon('bf-car', [0, 1]);
+		addIcon('bf-christmas', [0, 1]);
+		addIcon('bf-pixel', [21, 21]);
+		addIcon('spooky', [2, 3]);
+		addIcon('pico', [4, 5]);
+		addIcon('mom', [6, 7]);
+		addIcon('mom-car', [6, 7]);
+		addIcon('tankman', [8, 9]);
+		addIcon('face', [10, 11]);
+		addIcon('dad', [12, 13]);
+		addIcon('senpai', [22, 22]);
+		addIcon('senpai-angry', [22, 22]);
+		addIcon('spirit', [23, 23]);
+		addIcon('bf-old', [14, 15]);
+		addIcon('gf', [16]);
+		addIcon('parents-christmas', [17]);
+		addIcon('monster', [19, 20]);
+		addIcon('monster-christmas', [19, 20]);
+		
+		playAnimation(char);
 		scrollFactor.set();
+		
+		//trace(iconList);
+	}
+	
+	function addIcon(target:String, phases:Array<Int>)
+	{
+		animation.add(target, phases, 0, false, isReallyPlayer);
+		iconList += target;
+	}
+	
+	public function playAnimation(curChar:String)
+	{
+		if (!iconList.contains(curChar))
+		{
+			animation.play('face');
+		}
+		else
+			animation.play(curChar);
 	}
 
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		antialiasing = !noAa.contains(animation.curAnim.name);
+		
+		offset.set(Std.int(FlxMath.bound(width - 150,0)),Std.int(FlxMath.bound(height - 150,0)));
 
 		if (sprTracker != null)
 			setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y - 30);
