@@ -15,7 +15,7 @@ class HealthIcon extends FlxSprite
 	var noAa:Array<String> = ['dave-angey', 'bambi-3d', 'bf-pixel', 'senpai','senpai-angry','spirit'];
 	var isReallyPlayer:Bool = false;
 	
-	public var iconList:String = '';
+	var iconList:String = '';
 
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
