@@ -142,8 +142,8 @@ class CharacterSelectState extends MusicBeatState
 				var heyAnimation:Bool = boyfriendChar.animation.getByName("hey") != null; 
 				boyfriendChar.playAnim(heyAnimation ? 'hey' : 'singUP', true);
 				
-				var girlfriendChar:Bool = girlfriendChar.animation.getByName("cheer") != null; 
-				boyfriendChar.playAnim(heyAnimation ? 'cheer' : 'danceLeft', true);
+				var cheerAnimation:Bool = girlfriendChar.animation.getByName("cheer") != null; 
+				girlfriendChar.playAnim(cheerAnimation ? 'cheer' : 'danceLeft', true);
 				
 				FlxG.sound.music.stop();
 				FlxG.sound.play(Paths.music('gameOverEnd'));
