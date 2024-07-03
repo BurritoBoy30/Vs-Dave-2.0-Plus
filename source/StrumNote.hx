@@ -15,7 +15,7 @@ class StrumNote extends FlxSprite
 		switch (type)
 		{
 			case 'pixel':
-				loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels'), true, 17, 17);
+				loadGraphic(Paths.image('notes/NOTE_assets_pixel'), true, 17, 17);
 				animation.add('green', [6]);
 				animation.add('red', [7]);
 				animation.add('blue', [5]);
@@ -43,7 +43,7 @@ class StrumNote extends FlxSprite
 				}
 
 			default:
-				frames = Paths.getSparrowAtlas('NOTE_assets');
+				frames = Paths.getSparrowAtlas('notes/NOTE_assets');
 				animation.addByPrefix('green', 'arrowUP');
 				animation.addByPrefix('blue', 'arrowDOWN');
 				animation.addByPrefix('purple', 'arrowLEFT');
@@ -73,7 +73,7 @@ class StrumNote extends FlxSprite
 				}
 		}
 		
-		animation.play('static');
+		animationPlay('static');
 		
 		antialiasing = type != 'pixel';
 		
@@ -82,5 +82,12 @@ class StrumNote extends FlxSprite
 		scrollFactor.set();
 		
 		this.isPlayer = isPlayer;
-	}		
+	}
+	
+	public function animationPlay(sex:String, wierdBool:Bool = false)
+	{
+		animation.play(sex, wierdBool);
+		centerOffsets();
+		centerOrigin();
+	}
 }

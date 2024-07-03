@@ -91,15 +91,20 @@ class CharacterSelectState extends MusicBeatState
 		
 		boyfriendText = new FlxText(0, -20, FlxG.width, boyfriendData[curBF].displayNames[curFormBF], 16);
 		boyfriendText.setFormat(Paths.font("comic.ttf"), 75, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
-		boyfriendText.borderSize = 2;
+		boyfriendText.borderSize = 5;
 		add(boyfriendText);
 		boyfriendText.cameras = [camHUD];
 		
 		girlfriendText = new FlxText(0, boyfriendText.y + boyfriendText.height - 10, FlxG.width, girlfriendData[curGF].displayNames[curFormGF], 16);
 		girlfriendText.setFormat(Paths.font("comic.ttf"), 75, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
-		girlfriendText.borderSize = 2;
+		girlfriendText.borderSize = 5;
 		add(girlfriendText);
 		girlfriendText.cameras = [camHUD];
+		
+		var changeInfoImg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('changeInfo'));
+		changeInfoImg.antialiasing = true;
+		add(changeInfoImg);
+		changeInfoImg.cameras = [camHUD];
 		
 		super.create();
 	}
@@ -199,7 +204,7 @@ class CharacterSelectState extends MusicBeatState
 	{
 		boyfriendText.text = boyfriendData[curBF].displayNames[curFormBF];
 		boyfriendChar.destroy();
-		boyfriendChar = new Boyfriend(570, 350, boyfriendData[curBF].names[curFormBF]);
+		boyfriendChar = new Boyfriend(670, 370, boyfriendData[curBF].names[curFormBF]);
 		add(boyfriendChar);
 	}
 	

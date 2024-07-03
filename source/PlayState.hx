@@ -73,8 +73,9 @@ class PlayState extends MusicBeatState
 
 	private static var prevCamFollow:FlxObject;
 
-	private var strumLineNotes:FlxTypedGroup<StrumNote>;
-	private var playerStrums:FlxTypedGroup<StrumNote>;
+	public var strumLineNotes:FlxTypedGroup<StrumNote>;
+	public var playerStrums:FlxTypedGroup<StrumNote>;
+	public var dadStrums:FlxTypedGroup<StrumNote>;
 
 	private var camZooming:Bool = false;
 	private var curSong:String = "";
@@ -667,7 +668,7 @@ class PlayState extends MusicBeatState
 		add(strumLineNotes);
 
 		playerStrums = new FlxTypedGroup<StrumNote>();
-
+		dadStrums = new FlxTypedGroup<StrumNote>();
 		// startCountdown();
 
 		generateSong(SONG.song);
@@ -1140,6 +1141,11 @@ class PlayState extends MusicBeatState
 			{
 				playerStrums.add(babyArrow);
 			}
+			else
+			{
+				dadStrums.add(babyArrow);
+			}
+
 			
 			babyArrow.x += Note.swagWidth * Math.abs(i);
 			babyArrow.x += 50;
@@ -1215,10 +1221,18 @@ class PlayState extends MusicBeatState
 		if (FlxG.keys.justPressed.NINE)
 		{
 			if (iconP1.animation.curAnim.name == 'bf-old')
-				iconP1.animation.play(SONG.player1);
+				iconP1.playAnimation(SONG.player1);
 			else
-				iconP1.animation.play('bf-old');
+				iconP1.playAnimation('bf-old');
 		}
+		
+		dadStrums.forEach(function(spr:StrumNote)
+		{
+			if (spr.animation.curAnim.curFrame == (spr.animation.curAnim.numFrames - 1))
+			{
+				spr.animationPlay('static');
+			}
+		});
 
 		switch (curStage)
 		{
@@ -1872,21 +1886,12 @@ class PlayState extends MusicBeatState
 		{
 			if (controlArray[spr.ID] && spr.animation.curAnim.name != 'confirm')
 			{
-				spr.animation.play('pressed');
+				spr.animationPlay('pressed');
 			}
 			if (releaseArray[spr.ID])
 			{
-				spr.animation.play('static');
+				spr.animationPlay('static');
 			}
-			
-			if (spr.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
-			{
-				spr.centerOffsets();
-				spr.offset.x -= 13;
-				spr.offset.y -= 13;
-			}
-			else
-				spr.centerOffsets();
 		});
 	}
 
@@ -1967,7 +1972,7 @@ class PlayState extends MusicBeatState
 			{
 				if (Math.abs(note.noteData) == spr.ID)
 				{
-					spr.animation.play('confirm', true);
+					spr.animationPlay('confirm', true);
 				}
 			});
 
@@ -2008,6 +2013,14 @@ class PlayState extends MusicBeatState
 		}
 
 		dad.holdTimer = 0;
+		
+		dadStrums.forEach(function(spr:StrumNote)
+		{
+			if ((Math.abs(daNote.noteData) == spr.ID) && spr.animation.curAnim.name != 'confirm')
+			{
+				spr.animationPlay('confirm');
+			}
+		});
 
 		if (SONG.needsVoices)
 			vocals.volume = 1;

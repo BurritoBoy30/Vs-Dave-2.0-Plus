@@ -595,13 +595,16 @@ class ChartingState extends MusicBeatState
 			FlxG.switchState(new PlayState());
 		}
 
-		if (FlxG.keys.justPressed.E)
+		if(curSelectedNote != null && curSelectedNote[1] > -1)
 		{
-			changeNoteSustain(Conductor.stepCrochet);
-		}
-		if (FlxG.keys.justPressed.Q)
-		{
-			changeNoteSustain(-Conductor.stepCrochet);
+			if (FlxG.keys.justPressed.E)
+			{
+				changeNoteSustain(Conductor.stepCrochet);
+			}
+			if (FlxG.keys.justPressed.Q)
+			{
+				changeNoteSustain(-Conductor.stepCrochet);
+			}
 		}
 
 		if (FlxG.keys.justPressed.TAB)
