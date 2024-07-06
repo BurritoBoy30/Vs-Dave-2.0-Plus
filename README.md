@@ -1,7 +1,6 @@
-**Vs Dave & Bambi 2.0+**
-![placeholder logo](https://github.com/BurritoBoy30/vs-dave-2.0-plus/assets/99360435/8e5bc5e3-e02b-4e85-9d8e-d3e3ab74250e)
-
+![logo](https://github.com/BurritoBoy30/Vs-Dave-2.0-Plus/assets/99360435/b534c7a8-add3-44a1-a86c-9a5d1cb06869)
 An Mod of DnB 2.0 using an custom made engine (Dave Engine+)
+
 Thats about it.
 
 It has:
