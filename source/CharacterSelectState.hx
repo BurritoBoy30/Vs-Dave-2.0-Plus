@@ -39,6 +39,8 @@ class CharacterSelectState extends MusicBeatState
 	
 	override function create()
 	{
+		trace ('i got here');
+		
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
@@ -81,6 +83,8 @@ class CharacterSelectState extends MusicBeatState
 		stageFront.active = false;
 		add(stageFront);
 		
+		trace ('i got here 2');
+		
 		camGame.zoom = 0.75;
 		
 		boyfriendChar = new Boyfriend(670, 370, boyfriendData[curBF].names[curFormBF]);
@@ -88,6 +92,8 @@ class CharacterSelectState extends MusicBeatState
 		
 		girlfriendChar = new Character(boyfriendChar.x - 400, boyfriendChar.y - 320, girlfriendData[curGF].names[curFormGF]);
 		insert(members.indexOf(boyfriendChar), girlfriendChar);
+		
+		trace ('i got here 3');
 		
 		boyfriendText = new FlxText(0, -20, FlxG.width, boyfriendData[curBF].displayNames[curFormBF], 16);
 		boyfriendText.setFormat(Paths.font("comic.ttf"), 75, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
@@ -244,11 +250,12 @@ class CharacterSelectState extends MusicBeatState
 		girlfriendChar = new Character(boyfriendChar.x - 400, boyfriendChar.y - 320, girlfriendData[curGF].names[curFormGF]);
 		insert(members.indexOf(boyfriendChar), girlfriendChar);
 	}
-	
+		
 	public function endIt(e:FlxTimer = null)
 	{
 		trace("ENDING");
 		PlayState.boyfriendOverride = boyfriendData[curBF].names[curFormBF];
+		PlayState.girlfriendOverride = girlfriendData[curGF].names[curFormGF];
 		LoadingState.loadAndSwitchState(new PlayState());
 	}
 }

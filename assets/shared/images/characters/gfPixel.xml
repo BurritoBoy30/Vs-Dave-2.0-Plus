@@ -32,4 +32,20 @@
 	<SubTexture name="GF IDLE0027" x="0" y="232" width="120" height="106"/>
 	<SubTexture name="GF IDLE0028" x="0" y="232" width="120" height="106"/>
 	<SubTexture name="GF IDLE0029" x="0" y="232" width="120" height="106"/>
+	<SubTexture name="GF DOWN0000" x="130" y="232" width="120" height="106"/>
+	<SubTexture name="GF DOWN0001" x="130" y="232" width="120" height="106"/>
+	<SubTexture name="GF DOWN0002" x="260" y="232" width="120" height="106"/>
+	<SubTexture name="GF DOWN0003" x="260" y="232" width="120" height="106"/>
+	<SubTexture name="GF UP0000" x="390" y="232" width="120" height="106"/>
+	<SubTexture name="GF UP0001" x="390" y="232" width="120" height="106"/>
+	<SubTexture name="GF UP0002" x="0" y="348" width="120" height="106"/>
+	<SubTexture name="GF UP0003" x="0" y="348" width="120" height="106"/>
+	<SubTexture name="GF LEFT0000" x="130" y="348" width="120" height="106"/>
+	<SubTexture name="GF LEFT0001" x="130" y="348" width="120" height="106"/>
+	<SubTexture name="GF LEFT0002" x="260" y="348" width="120" height="106"/>
+	<SubTexture name="GF LEFT0003" x="260" y="348" width="120" height="106"/>
+	<SubTexture name="GF RIGHT0000" x="390" y="348" width="120" height="106"/>
+	<SubTexture name="GF RIGHT0001" x="390" y="348" width="120" height="106"/>
+	<SubTexture name="GF RIGHT0002" x="0" y="464" width="120" height="106"/>
+	<SubTexture name="GF RIGHT0003" x="0" y="464" width="120" height="106"/>
 </TextureAtlas>

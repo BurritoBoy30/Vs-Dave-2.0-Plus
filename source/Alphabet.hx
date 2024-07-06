@@ -29,6 +29,8 @@ class Alphabet extends FlxSpriteGroup
 	public var widthOfWords:Float = FlxG.width;
 
 	var yMulti:Float = 1;
+	
+	public var unlockY:Bool = false;
 
 	// custom shit
 	// amp, backslash, question mark, apostrophy, comma, angry faic, period
@@ -220,7 +222,7 @@ class Alphabet extends FlxSpriteGroup
 
 	override function update(elapsed:Float)
 	{
-		if (isMenuItem)
+		if (isMenuItem && !unlockY)
 		{
 			var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
 
