@@ -48,7 +48,7 @@ class Highscore
 		// Reminder that I don't need to format this song, it should come formatted!
 		songScores.set(song, score);
 		songBfChar.set(song,bfChar);
-		songGfChar.set(song,bfChar);
+		songGfChar.set(song,gfChar);
 		FlxG.save.data.songScores = songScores;
 		FlxG.save.data.songBfChar = songBfChar;
 		FlxG.save.data.songGfChar = songGfChar;
@@ -57,17 +57,17 @@ class Highscore
 	
 	static function setBfChar(song:String, char:String):Void
 	{
-		trace("setchar " + song + ":" + char);
+		trace("set bf char " + song + ":" + char);
 		songBfChar.set(song,char);
-		FlxG.save.data.songNames = songBfChar;
+		FlxG.save.data.songBfChar = songBfChar;
 		FlxG.save.flush();
 	}
 	
 	static function setGfChar(song:String, char:String):Void
 	{
-		trace("setchar " + song + ":" + char);
+		trace("set gf char " + song + ":" + char);
 		songGfChar.set(song,char);
-		FlxG.save.data.songNames = songGfChar;
+		FlxG.save.data.songGfChar = songGfChar;
 		FlxG.save.flush();
 	}
 
@@ -100,7 +100,7 @@ class Highscore
 	
 	public static function getGfChar(song:String):String
 	{
-		if (songBfChar == null)
+		if (songGfChar == null)
 			return "ERROR";
 		if (!songGfChar.exists(formatSong(song)))
 		{
@@ -127,7 +127,6 @@ class Highscore
 			songBfChar = FlxG.save.data.songBfChar;
 			
 		if (FlxG.save.data.songGfChar != null)
-			songGfChar = FlxG.save.data.songGfChar;
-			
+			songGfChar = FlxG.save.data.songGfChar;	
 	}
 }

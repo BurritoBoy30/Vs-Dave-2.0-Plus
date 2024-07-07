@@ -30,6 +30,9 @@ class SaveDataHandler
 
 		if (FlxG.save.data.donoteclick == null)
 			FlxG.save.data.donoteclick = false;
+		
+		if (FlxG.save.data.eyesoreson == null)
+			FlxG.save.data.eyesoreson = true;
 			
 		// This is for the options
 		if(FlxG.save.data.upBind == null)

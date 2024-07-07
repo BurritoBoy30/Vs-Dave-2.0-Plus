@@ -41,9 +41,10 @@ class StrumNote extends FlxSprite
 						animation.add('pressed', [7, 11], 12, false);
 						animation.add('confirm', [15, 19], 24, false);
 				}
+				antialiasing = false;
 
 			default:
-				frames = Paths.getSparrowAtlas('notes/NOTE_assets');
+				frames = Paths.getSparrowAtlas('notes/NOTE_assets' + (type == '3d' ? "_3D" : ""));
 				animation.addByPrefix('green', 'arrowUP');
 				animation.addByPrefix('blue', 'arrowDOWN');
 				animation.addByPrefix('purple', 'arrowLEFT');
@@ -71,11 +72,10 @@ class StrumNote extends FlxSprite
 						animation.addByPrefix('pressed', 'right press', 24, false);
 						animation.addByPrefix('confirm', 'right confirm', 24, false);
 				}
+				antialiasing = type != '3d';
 		}
 		
 		animationPlay('static');
-		
-		antialiasing = type != 'pixel';
 		
 		setGraphicSize(Std.int(width * (type == 'pixel' ? PlayState.daPixelZoom : 0.7)));
 		updateHitbox();		

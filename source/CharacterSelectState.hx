@@ -9,13 +9,9 @@ import flixel.util.FlxColor;
 
 class CharacterSelectState extends MusicBeatState
 {
-	var boyfriendData:Array<SelectableChar> = [
-		new SelectableChar(['bf','bf-christmas','bf-pixel'], ["Boyfriend", "Boyfriend (Christmas)", "Boyfriend (Pixel)"])
-	];
+	var boyfriendData:Array<SelectableChar> = [];
 	
-	var girlfriendData:Array<SelectableChar> = [
-		new SelectableChar(['gf','gf-christmas','gf-pixel'], ["Girlfriend", "Girlfriend (Christmas)", "Girlfriend (Pixel)"])
-	];
+	var girlfriendData:Array<SelectableChar> = [];
 	
 	public var curBF:Int = 0;
 	public var curFormBF:Int = 0;
@@ -38,8 +34,14 @@ class CharacterSelectState extends MusicBeatState
 	var selectedCharacter:Bool = false;
 	
 	override function create()
-	{
-		trace ('i got here');
+	{		
+		boyfriendData = [
+			new SelectableChar(['bf','bf-christmas','bf-pixel'], ["Boyfriend", "Boyfriend (Christmas)", "Boyfriend (Pixel)"])
+		];
+		
+		girlfriendData = [
+			new SelectableChar(['gf','gf-christmas','gf-pixel'], ["Girlfriend", "Girlfriend (Christmas)", "Girlfriend (Pixel)"])
+		];
 		
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -82,18 +84,8 @@ class CharacterSelectState extends MusicBeatState
 		stageFront.scrollFactor.set(0.9, 0.9);
 		stageFront.active = false;
 		add(stageFront);
-		
-		trace ('i got here 2');
-		
+				
 		camGame.zoom = 0.75;
-		
-		boyfriendChar = new Boyfriend(670, 370, boyfriendData[curBF].names[curFormBF]);
-		add(boyfriendChar);
-		
-		girlfriendChar = new Character(boyfriendChar.x - 400, boyfriendChar.y - 320, girlfriendData[curGF].names[curFormGF]);
-		insert(members.indexOf(boyfriendChar), girlfriendChar);
-		
-		trace ('i got here 3');
 		
 		boyfriendText = new FlxText(0, -20, FlxG.width, boyfriendData[curBF].displayNames[curFormBF], 16);
 		boyfriendText.setFormat(Paths.font("comic.ttf"), 75, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
@@ -111,7 +103,10 @@ class CharacterSelectState extends MusicBeatState
 		changeInfoImg.antialiasing = true;
 		add(changeInfoImg);
 		changeInfoImg.cameras = [camHUD];
-		
+				
+		UpdateBF();
+		UpdateGF();
+				
 		super.create();
 	}
 	
@@ -166,14 +161,14 @@ class CharacterSelectState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
-		if (boyfriendChar != null && curBeat % 2 == 0)
-		{
-			boyfriendChar.playAnim('idle', true);
-		}
 		
-		if (girlfriendChar != null)
+		if (curBeat % 2 == 0)
 		{
-			girlfriendChar.dance();
+			if (boyfriendChar != null)
+				boyfriendChar.dance();
+			
+			if (girlfriendChar != null)
+				girlfriendChar.dance();
 		}
 	}
 	
@@ -206,14 +201,6 @@ class CharacterSelectState extends MusicBeatState
 		UpdateBF();
 	}
 	
-	public function UpdateBF()
-	{
-		boyfriendText.text = boyfriendData[curBF].displayNames[curFormBF];
-		boyfriendChar.destroy();
-		boyfriendChar = new Boyfriend(670, 370, boyfriendData[curBF].names[curFormBF]);
-		add(boyfriendChar);
-	}
-	
 	function changeGirlfriend(ahmp:Int = 0)
 	{
 		curGF += ahmp;
@@ -243,11 +230,31 @@ class CharacterSelectState extends MusicBeatState
 		UpdateGF();
 	}
 	
+	var shitOffset:Array<Float> = [-130, -60];
+	
+	public function UpdateBF()
+	{
+		boyfriendText.text = boyfriendData[curBF].displayNames[curFormBF];
+		
+		if (boyfriendChar != null)
+			boyfriendChar.destroy();
+		
+		boyfriendChar = new Boyfriend(770 + shitOffset[0], 450 + shitOffset[1], boyfriendData[curBF].names[curFormBF]);
+		boyfriendChar.x += boyfriendChar.charOffset[0];
+		boyfriendChar.y += boyfriendChar.charOffset[1];
+		add(boyfriendChar);
+	}
+	
 	public function UpdateGF()
 	{
 		girlfriendText.text = girlfriendData[curGF].displayNames[curFormGF];
-		girlfriendChar.destroy();
-		girlfriendChar = new Character(boyfriendChar.x - 400, boyfriendChar.y - 320, girlfriendData[curGF].names[curFormGF]);
+		
+		if (girlfriendChar != null)
+			girlfriendChar.destroy();
+			
+		girlfriendChar = new Character(400 + shitOffset[0], 130 + shitOffset[1], girlfriendData[curGF].names[curFormGF]);
+		girlfriendChar.x += girlfriendChar.charOffset[0];
+		girlfriendChar.y += girlfriendChar.charOffset[1];
 		insert(members.indexOf(boyfriendChar), girlfriendChar);
 	}
 		
