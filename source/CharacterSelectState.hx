@@ -6,6 +6,8 @@ import flixel.FlxCamera;
 import flixel.text.FlxText;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 
 class CharacterSelectState extends MusicBeatState
 {
@@ -33,6 +35,11 @@ class CharacterSelectState extends MusicBeatState
 	
 	var selectedCharacter:Bool = false;
 	
+	var saveBox:FlxSprite;
+	var loadBox:FlxSprite;
+	
+	var buttonPressed:Bool = false;
+	
 	override function create()
 	{		
 		boyfriendData = [
@@ -42,6 +49,8 @@ class CharacterSelectState extends MusicBeatState
 		girlfriendData = [
 			new SelectableChar(['gf','gf-christmas','gf-pixel'], ["Girlfriend", "Girlfriend (Christmas)", "Girlfriend (Pixel)"])
 		];
+		
+		FlxG.mouse.visible = true;
 		
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -84,7 +93,7 @@ class CharacterSelectState extends MusicBeatState
 		stageFront.scrollFactor.set(0.9, 0.9);
 		stageFront.active = false;
 		add(stageFront);
-				
+
 		camGame.zoom = 0.75;
 		
 		boyfriendText = new FlxText(0, -20, FlxG.width, boyfriendData[curBF].displayNames[curFormBF], 16);
@@ -99,14 +108,24 @@ class CharacterSelectState extends MusicBeatState
 		add(girlfriendText);
 		girlfriendText.cameras = [camHUD];
 		
-		var changeInfoImg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('changeInfo'));
+		var changeInfoImg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('charselect/changeInfo'));
 		changeInfoImg.antialiasing = true;
 		add(changeInfoImg);
 		changeInfoImg.cameras = [camHUD];
-				
+		
+		saveBox = new FlxSprite(5, FlxG.height - 150).loadGraphic(Paths.image('charselect/savechar_box'));
+		saveBox.antialiasing = true;
+		add(saveBox);
+		saveBox.cameras = [camHUD];
+		
+		loadBox = new FlxSprite(5, saveBox.y + saveBox.height + 5).loadGraphic(Paths.image('charselect/loadchar_box'));
+		loadBox.antialiasing = true;
+		add(loadBox);
+		loadBox.cameras = [camHUD];
+	
 		UpdateBF();
 		UpdateGF();
-				
+	
 		super.create();
 	}
 	
@@ -118,6 +137,25 @@ class CharacterSelectState extends MusicBeatState
 		
 		if (!selectedCharacter)
 		{
+			if (FlxG.mouse.x > -100 && FlxG.mouse.x < (5 + saveBox.width - 100))
+			{
+				saveBox.color = 0xFF878787;
+				
+				if (FlxG.mouse.justPressed && !buttonPressed)
+				{
+					buttonPressed = true;
+					saveBox.scale.set(0.9, 0.9);
+					FlxTween.tween(saveBox, {'scale.x': 1, 'scale.y': 1}, 0.5, {onComplete: function(twn:FlxTween)
+					{
+						buttonPressed = false;
+					}});
+				}
+			}
+			else
+			{
+				saveBox.color = FlxColor.WHITE;
+			}
+			
 			if (FlxG.keys.justPressed.LEFT)
 				changeBoyfriend(-1);
 			if (FlxG.keys.justPressed.RIGHT)
@@ -153,6 +191,7 @@ class CharacterSelectState extends MusicBeatState
 				
 				FlxG.sound.music.stop();
 				FlxG.sound.play(Paths.music('gameOverEnd'));
+				FlxG.mouse.visible = false;
 				new FlxTimer().start(1.9, endIt);
 			}
 		}
@@ -169,6 +208,24 @@ class CharacterSelectState extends MusicBeatState
 			
 			if (girlfriendChar != null)
 				girlfriendChar.dance();
+		}
+	}
+	
+	function updateButton(target:FlxSprite)
+	{
+		if (FlxG.mouse.overlaps(target))
+		{
+			target.color = 0xFF878787;
+			
+			if (FlxG.mouse.justPressed)
+			{
+				target.scale.set(0.9, 0.9);
+				FlxTween.tween(target, {'scale.x': 1, 'scale.y': 1}, 0.5, {ease: FlxEase.quadOut});
+			}
+		}
+		else
+		{
+			target.color = FlxColor.WHITE;
 		}
 	}
 	
