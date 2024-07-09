@@ -1,6 +1,5 @@
 package;
 
-import openfl.Lib;
 import flixel.FlxG;
 import Controls.KeyboardScheme;
 import Controls.Control;

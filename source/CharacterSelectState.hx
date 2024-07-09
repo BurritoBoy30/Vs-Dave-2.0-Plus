@@ -39,9 +39,12 @@ class CharacterSelectState extends MusicBeatState
 	var loadBox:FlxSprite;
 	
 	var buttonPressed:Bool = false;
+	var noTextPop:Bool = false;
 	
 	override function create()
-	{		
+	{
+		CharacterSelectData.initSave();
+		
 		boyfriendData = [
 			new SelectableChar(['bf','bf-christmas','bf-pixel'], ["Boyfriend", "Boyfriend (Christmas)", "Boyfriend (Pixel)"])
 		];
@@ -137,23 +140,52 @@ class CharacterSelectState extends MusicBeatState
 		
 		if (!selectedCharacter)
 		{
-			if (FlxG.mouse.x > -100 && FlxG.mouse.x < (5 + saveBox.width - 100))
+			var offset:Float = 10;
+			
+			if ((FlxG.mouse.x > (saveBox.x - (saveBox.width / 1.5) - (offset / 2)) && FlxG.mouse.x < (saveBox.x + (saveBox.width / 1.5) - (offset / 2)))
+				&& (FlxG.mouse.y > (saveBox.y + (saveBox.height * 1.5) + offset) && FlxG.mouse.y < (FlxG.height - ((saveBox.height * 1.2) - offset))))
 			{
 				saveBox.color = 0xFF878787;
 				
 				if (FlxG.mouse.justPressed && !buttonPressed)
 				{
-					buttonPressed = true;
-					saveBox.scale.set(0.9, 0.9);
-					FlxTween.tween(saveBox, {'scale.x': 1, 'scale.y': 1}, 0.5, {onComplete: function(twn:FlxTween)
-					{
-						buttonPressed = false;
-					}});
+					isPressed(saveBox);
+					if (!noTextPop) {
+						popUpText('Saved!');
+						
+						FlxG.save.data.savedBfData = curBF;	
+						FlxG.save.data.savedBfFormData = curFormBF;
+						FlxG.save.data.savedGfData = curGF;
+						FlxG.save.data.savedGfFormData = curFormGF;
+					}
 				}
-			}
-			else
-			{
+			} else {
 				saveBox.color = FlxColor.WHITE;
+			}
+			
+			if ((FlxG.mouse.x > (loadBox.x - (loadBox.width / 1.5) - (offset / 2)) && FlxG.mouse.x < (loadBox.x + (loadBox.width / 1.5) - (offset / 2)))
+				&& (FlxG.mouse.y > (loadBox.y + (loadBox.height * 1.5) + (offset * 1.5)) && FlxG.mouse.y < (loadBox.height + (loadBox.y + (loadBox.height * 1.5) + (offset * 3)))))
+			{
+				loadBox.color = 0xFF878787;
+				
+				if (FlxG.mouse.justPressed && !buttonPressed)
+				{
+					isPressed(loadBox);
+					if (!noTextPop) {
+						popUpText('Loaded!');
+						
+						curBF = FlxG.save.data.savedBfData;	
+						curFormBF = FlxG.save.data.savedBfFormData;
+						curGF = FlxG.save.data.savedGfData;
+						curFormGF = FlxG.save.data.savedGfFormData;
+						
+						UpdateBF();
+						UpdateGF();
+						trace('fully loaded');
+					}
+				}
+			} else {
+				loadBox.color = FlxColor.WHITE;
 			}
 			
 			if (FlxG.keys.justPressed.LEFT)
@@ -211,22 +243,39 @@ class CharacterSelectState extends MusicBeatState
 		}
 	}
 	
-	function updateButton(target:FlxSprite)
+	function isPressed(target:FlxSprite)
 	{
-		if (FlxG.mouse.overlaps(target))
+		buttonPressed = true;
+		target.scale.set(0.9, 0.9);
+		FlxTween.tween(target, {'scale.x': 1, 'scale.y': 1}, 0.1, {onComplete: function(twn:FlxTween)
 		{
-			target.color = 0xFF878787;
-			
-			if (FlxG.mouse.justPressed)
+			buttonPressed = false;
+		}});
+	}
+	
+	function popUpText(string:String)
+	{
+		noTextPop = true;
+		var popTxt:FlxText = new FlxText(0, (FlxG.height * 1.25), FlxG.width, string, 16);
+		popTxt.setFormat(Paths.font("comic.ttf"), 60, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		popTxt.borderSize = 3;
+		popTxt.antialiasing = true;
+		popTxt.alpha = 0;
+		add(popTxt);
+		popTxt.cameras = [camHUD];
+		
+		FlxTween.tween(popTxt, {y: FlxG.height - 100, alpha: 1}, 0.5, {onComplete: function(twn:FlxTween)
+		{
+			new FlxTimer().start(1.5, function(tmr:FlxTimer)
 			{
-				target.scale.set(0.9, 0.9);
-				FlxTween.tween(target, {'scale.x': 1, 'scale.y': 1}, 0.5, {ease: FlxEase.quadOut});
-			}
-		}
-		else
-		{
-			target.color = FlxColor.WHITE;
-		}
+				FlxTween.tween(popTxt, {y: (FlxG.height * 1.25), alpha: 0}, 0.5, {onComplete: function(twn:FlxTween)
+				{
+					popTxt.destroy();
+					noTextPop = false;
+				}});
+			});
+		}});
+		
 	}
 	
 	function changeBoyfriend(beep:Int = 0)

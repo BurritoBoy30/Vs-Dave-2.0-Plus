@@ -1,0 +1,21 @@
+package;
+
+import flixel.FlxG;
+
+class CharacterSelectData
+{
+	public static function initSave()
+    {
+        if (FlxG.save.data.savedBfData == null)
+			FlxG.save.data.savedBfData = 0;
+			
+		if (FlxG.save.data.savedBfFormData == null)
+			FlxG.save.data.savedBfFormData = 0;
+			
+		if (FlxG.save.data.savedGfData == null)
+			FlxG.save.data.savedGfData = 0;
+			
+		if (FlxG.save.data.savedGfFormData == null)
+			FlxG.save.data.savedGfFormData = 0;
+	}
+}
