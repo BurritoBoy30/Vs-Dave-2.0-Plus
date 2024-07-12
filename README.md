@@ -1,3 +1,5 @@
+## WARNING: This mod contains content that may get some people unconfortable, play it at your own risk.
+
 ![logo](https://github.com/BurritoBoy30/Vs-Dave-2.0-Plus/assets/99360435/b534c7a8-add3-44a1-a86c-9a5d1cb06869)
 
 ### Info
@@ -19,4 +21,4 @@ It has:
 - "Playable GF" by [RedstyPhoenix](https://www.youtube.com/@RedstyPhoenix) and [VoidEyedPanda](https://www.youtube.com/@VoidEyedPanda)
 - "Rapper GF" by [ZinoMan](https://gamebanana.com/members/2131991)
 - "Massive GF" by [MikuLazo](https://gamebanana.com/members/2650082)
-- Freeplay Girl OC (Zoey) made and owned by [BurgerKurger](https://x.com/BurgerKurger)(+18)
+- Freeplay Girl OC (Zoey) made and owned by [BurgerKurger](https://x.com/BurgerKurger) (+18)
