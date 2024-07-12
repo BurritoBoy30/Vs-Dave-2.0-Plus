@@ -13,9 +13,10 @@ It has:
 ### Credits
 - Vs Dave and Bambi by [MoldyGH](https://www.youtube.com/@MoldyGangstaHero) and his team
 - Straberry Engine by [MissingTextureMan101](https://github.com/benjaminpants/Funkin-Strawberry)
-- D&B Golden Apple by [Sky!](https://www.youtube.com/@SkyFactorial), [Lancey](https://www.youtube.com/@Lancey170). and the Gapple team
+- D&B Golden Apple by [Sky!](https://www.youtube.com/@SkyFactorial), [Lancey](https://www.youtube.com/@Lancey170) and the Gapple team
 - "Cyan over GF" by [MsCyan/TheHoraco](https://gamebanana.com/members/1730677)
 - "Psyka over GF" by [DeliriousPersona](https://gamebanana.com/members/1779588)
 - "Playable GF" by [RedstyPhoenix](https://www.youtube.com/@RedstyPhoenix) and [VoidEyedPanda](https://www.youtube.com/@VoidEyedPanda)
-- "Rapper GF" bf [ZinoMan](https://gamebanana.com/members/2131991)
-- "Massive GF" bf [MikuLazo](https://gamebanana.com/members/2650082)
+- "Rapper GF" by [ZinoMan](https://gamebanana.com/members/2131991)
+- "Massive GF" by [MikuLazo](https://gamebanana.com/members/2650082)
+- Freeplay Girl OC (Zoey) made and owned by [BurgerKurger](https://x.com/BurgerKurger)(+18)
