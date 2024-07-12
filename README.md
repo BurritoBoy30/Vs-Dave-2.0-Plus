@@ -3,7 +3,7 @@
 ![logo](https://github.com/BurritoBoy30/Vs-Dave-2.0-Plus/assets/99360435/b534c7a8-add3-44a1-a86c-9a5d1cb06869)
 
 ### Info
-An Mod of DnB 2.0 using an custom made engine (Dave Engine+)
+An Mod of DnB 2.0 - 3.0 using an custom engine (Dave Engine+), Oh and it also contains random stuff that I like, its a mess lol.
 
 Thats about it.
 
