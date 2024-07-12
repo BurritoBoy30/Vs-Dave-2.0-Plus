@@ -246,7 +246,7 @@ class PlayState extends MusicBeatState
 				}
 				
 			case 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'mealie':
-				defaultCamZoom = 0.9;
+				defaultCamZoom = 0.8;
 				
 				var isNight:Bool;
 				isNight = SONG.song.toLowerCase() == 'splitathon' || SONG.song.toLowerCase() == 'mealie';
@@ -314,8 +314,8 @@ class PlayState extends MusicBeatState
 				add(fence);
 				add(sign);
 				
-			case 'furiosity' | 'cheating':
-				defaultCamZoom = 0.9;
+			case 'polygonized' | 'cheating':
+				defaultCamZoom = 0.8;
 				
 				curStage = SONG.song.toLowerCase() == 'cheating' ? 'greenVoid' : 'redVoid';
 				var bg:FlxSprite = new FlxSprite(-600, -200);
@@ -937,9 +937,9 @@ class PlayState extends MusicBeatState
 			}
 		}
 		
-		if (SONG.song.toLowerCase() == 'furiosity' || SONG.song.toLowerCase() == 'cheating')
+		if (dad.curCharacter == 'dave-angey' || dad.curCharacter == 'bambi-3d')
 		{
-			dad.y += (Math.sin(elapsedtime) * 0.2);
+			dad.y += (Math.sin(elapsedtime) * 0.4);
 		}
 
 		if (SONG.song.toLowerCase() == 'cheating') // fuck you
@@ -1144,7 +1144,7 @@ class PlayState extends MusicBeatState
 			vocals.stop();
 			FlxG.sound.music.stop();
 			
-			if (curSong.toLowerCase() == 'furiosity')
+			if (curSong.toLowerCase() == 'polygonized' || curSong.toLowerCase() == 'cheating')
 			{
 				screenshader.shader.uampmul.value[0] = 0;
 				screenshader.Enabled = false;

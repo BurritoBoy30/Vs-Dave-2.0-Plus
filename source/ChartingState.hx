@@ -522,7 +522,6 @@ class ChartingState extends MusicBeatState
 						}
 						else
 						{
-							trace('tryin to delete note...');
 							deleteNote(note);
 						}
 					}
@@ -677,7 +676,7 @@ class ChartingState extends MusicBeatState
 		{
 			if (curSelectedNote[2] != null)
 			{
-				curSelectedNote[2] += value;
+				curSelectedNote[2] += Std.int(value);
 				curSelectedNote[2] = Math.max(curSelectedNote[2], 0);
 			}
 		}
@@ -917,7 +916,6 @@ class ChartingState extends MusicBeatState
 		{
 			if (i[0] == note.strumTime && i[1] % 4 == note.noteData)
 			{
-				FlxG.log.add('FOUND EVIL NUMBER');
 				_song.notes[curSection].sectionNotes.remove(i);
 			}
 		}
@@ -950,20 +948,14 @@ class ChartingState extends MusicBeatState
 
 		_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus]);
 
-		curSelectedNote = _song.notes[curSection].sectionNotes[_song.notes[curSection].sectionNotes.length - 1];
+		var thingy = _song.notes[curSection].sectionNotes[_song.notes[curSection].sectionNotes.length - 1];
 
-		if (FlxG.keys.pressed.CONTROL)
-		{
-			_song.notes[curSection].sectionNotes.push([noteStrum, (noteData + 4) % 8, noteSus]);
-		}
-
-		trace(noteStrum);
-		trace(curSection);
+		curSelectedNote = thingy;
 
 		updateGrid();
 		updateNoteUI();
 
-		autosaveSong();
+		autosaveSong();	
 	}
 
 	function getStrumTime(yPos:Float):Float

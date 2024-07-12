@@ -41,16 +41,19 @@ class CharacterSelectState extends MusicBeatState
 	var buttonPressed:Bool = false;
 	var noTextPop:Bool = false;
 	
+	var overlay:FlxSprite;	
 	override function create()
 	{
 		CharacterSelectData.initSave();
 		
 		boyfriendData = [
-			new SelectableChar(['bf','bf-christmas','bf-pixel'], ["Boyfriend", "Boyfriend (Christmas)", "Boyfriend (Pixel)"])
+			new SelectableChar(['bf', 'bf-christmas', 'bf-pixel'], ["Boyfriend", "Boyfriend (Christmas)", "Boyfriend (Pixel)"])
 		];
 		
 		girlfriendData = [
-			new SelectableChar(['gf','gf-christmas','gf-pixel'], ["Girlfriend", "Girlfriend (Christmas)", "Girlfriend (Pixel)"])
+			new SelectableChar(['gf', 'gf-christmas', 'gf-standing', 'gf-pixel'], ["Girlfriend", "Girlfriend (Christmas)", "Girlfriend (Standing)", "Girlfriend (Pixel)"]),
+			new SelectableChar(['cyan', 'cyan-christmas'], ["Cyan", "Cyan (Christmas)"]),
+			new SelectableChar(['psyka', 'psyka-christmas', 'psyka-standing'], ["Psyka", "Psyka (Christmas)", "Psyka (Standing)"])
 		];
 		
 		FlxG.mouse.visible = true;
@@ -99,15 +102,17 @@ class CharacterSelectState extends MusicBeatState
 
 		camGame.zoom = 0.75;
 		
-		boyfriendText = new FlxText(0, -20, FlxG.width, boyfriendData[curBF].displayNames[curFormBF], 16);
+		boyfriendText = new FlxText(0, 0, FlxG.width, boyfriendData[curBF].displayNames[curFormBF], 16);
 		boyfriendText.setFormat(Paths.font("comic.ttf"), 75, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
-		boyfriendText.borderSize = 5;
+		boyfriendText.borderSize = 3;
+		boyfriendText.antialiasing = true;
 		add(boyfriendText);
 		boyfriendText.cameras = [camHUD];
 		
-		girlfriendText = new FlxText(0, boyfriendText.y + boyfriendText.height - 10, FlxG.width, girlfriendData[curGF].displayNames[curFormGF], 16);
+		girlfriendText = new FlxText(0, boyfriendText.y + boyfriendText.height, FlxG.width, girlfriendData[curGF].displayNames[curFormGF], 16);
 		girlfriendText.setFormat(Paths.font("comic.ttf"), 75, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
-		girlfriendText.borderSize = 5;
+		girlfriendText.borderSize = 3;
+		girlfriendText.antialiasing = true;
 		add(girlfriendText);
 		girlfriendText.cameras = [camHUD];
 		
@@ -125,7 +130,23 @@ class CharacterSelectState extends MusicBeatState
 		loadBox.antialiasing = true;
 		add(loadBox);
 		loadBox.cameras = [camHUD];
-	
+		
+		iconBF = new HealthIcon(boyfriendData[curBF].names[curFormBF], false);
+		iconBF.y = boyfriendText.y - 10;
+		iconBF.screenCenter(X);
+		add(iconBF);
+		iconBF.cameras = [camHUD];
+
+		iconGF = new HealthIcon(girlfriendData[curGF].names[curFormGF], false);
+		iconGF.y = girlfriendText.y - 10;
+		iconGF.screenCenter(X);
+		add(iconGF);
+		iconGF.cameras = [camHUD];
+		
+		overlay = new FlxSprite(0, 0).makeGraphic(1, 1);
+		overlay.scrollFactor.set();
+		add(overlay);	
+			
 		UpdateBF();
 		UpdateGF();
 	
@@ -232,15 +253,17 @@ class CharacterSelectState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
-		
+
 		if (curBeat % 2 == 0)
 		{
 			if (boyfriendChar != null)
 				boyfriendChar.dance();
-			
-			if (girlfriendChar != null)
-				girlfriendChar.dance();
 		}
+		
+		var singleBop:Array<String> = ['skyblue'];
+		
+		if (girlfriendChar != null && curBeat % (singleBop.contains(girlfriendChar.curCharacter) ? 2 : 1) == 0)
+			girlfriendChar.dance();
 	}
 	
 	function isPressed(target:FlxSprite)
@@ -264,7 +287,7 @@ class CharacterSelectState extends MusicBeatState
 		add(popTxt);
 		popTxt.cameras = [camHUD];
 		
-		FlxTween.tween(popTxt, {y: FlxG.height - 100, alpha: 1}, 0.5, {onComplete: function(twn:FlxTween)
+		FlxTween.tween(popTxt, {y: FlxG.height - 100, alpha: 1}, 0.2, {onComplete: function(twn:FlxTween)
 		{
 			new FlxTimer().start(1.5, function(tmr:FlxTimer)
 			{
@@ -340,28 +363,41 @@ class CharacterSelectState extends MusicBeatState
 	
 	public function UpdateBF()
 	{
-		boyfriendText.text = boyfriendData[curBF].displayNames[curFormBF];
+		var iconOffseet:Float = 85;
 		
-		if (boyfriendChar != null)
-			boyfriendChar.destroy();
+		if (boyfriendChar != null) {
+			remove(boyfriendChar);
+			iconBF.x -= (boyfriendText.textField.textWidth / 2) + iconOffseet;
+		
+		}
+		boyfriendText.text = boyfriendData[curBF].displayNames[curFormBF];
+		iconBF.x += (boyfriendText.textField.textWidth / 2) + iconOffseet;
 		
 		boyfriendChar = new Boyfriend(770 + shitOffset[0], 450 + shitOffset[1], boyfriendData[curBF].names[curFormBF]);
 		boyfriendChar.x += boyfriendChar.charOffset[0];
 		boyfriendChar.y += boyfriendChar.charOffset[1];
-		add(boyfriendChar);
+		insert(members.indexOf(overlay), boyfriendChar);
+		iconBF.playAnimation(boyfriendData[curBF].names[curFormBF]);
 	}
 	
 	public function UpdateGF()
 	{
-		girlfriendText.text = girlfriendData[curGF].displayNames[curFormGF];
+		var iconOffseet:Float = 85;
 		
-		if (girlfriendChar != null)
-			girlfriendChar.destroy();
-			
+		if (girlfriendChar != null) {
+			remove(girlfriendChar);
+			iconGF.x -= (girlfriendText.textField.textWidth / 2) + iconOffseet;
+		}
+		
+		girlfriendText.text = girlfriendData[curGF].displayNames[curFormGF];
+		iconGF.x += (girlfriendText.textField.textWidth / 2) + iconOffseet;
+		
 		girlfriendChar = new Character(400 + shitOffset[0], 130 + shitOffset[1], girlfriendData[curGF].names[curFormGF]);
 		girlfriendChar.x += girlfriendChar.charOffset[0];
 		girlfriendChar.y += girlfriendChar.charOffset[1];
 		insert(members.indexOf(boyfriendChar), girlfriendChar);
+		iconGF.playAnimation(girlfriendData[curGF].names[curFormGF]);
+		
 	}
 		
 	public function endIt(e:FlxTimer = null)

@@ -47,9 +47,11 @@ class FreeplayState extends MusicBeatState
 	private var NameAlpha:Alphabet;
 
 	var loadingPack:Bool = false;
+	
+	var zoeyBop:FlxSprite;
 
 	override function create()
-	{
+	{		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
 		add(bg);
 		
@@ -76,7 +78,7 @@ class FreeplayState extends MusicBeatState
 		{
 			case 'dave':
 				addWeek(['Tutorial'], 0, ['gf'], ['Easy']);
-				addWeek(['House', 'Insanity', 'Furiosity'], 1, ['dave', 'dave', 'dave-angey'], ['Hard', 'Normal', 'Hard']);
+				addWeek(['House', 'Insanity', 'Polygonized'], 1, ['dave', 'dave', 'dave-angey'], ['Hard', 'Normal', 'Hard']);
 				addWeek(['Blocked','Corn-Theft','Maze',], 2, ['bambi'], ['Hard', 'Normal', 'Normal']);
 				addWeek(['Splitathon'],3,['the-duo'], ['Hard']);
 				
@@ -90,6 +92,14 @@ class FreeplayState extends MusicBeatState
 	
 	function GoToActualFreeplay()
 	{
+		zoeyBop = new FlxSprite(700, 95);
+		zoeyBop.frames = Paths.getSparrowAtlas('zoey', 'preload');
+		zoeyBop.animation.addByPrefix('jiggle', 'jiggle', 10, true);
+		zoeyBop.animation.play('jiggle');
+		zoeyBop.setGraphicSize(Std.int(zoeyBop.width * 1.5));
+		zoeyBop.alpha = 0;
+		add(zoeyBop);
+		
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
 
@@ -130,8 +140,14 @@ class FreeplayState extends MusicBeatState
 		FlxTween.tween(scoreBG,{alpha: 0.6},0.2,{ease: FlxEase.expoInOut});
 		FlxTween.tween(scoreText,{alpha: 1},0.2,{ease: FlxEase.expoInOut});
 		FlxTween.tween(diffText,{alpha: 1},0.2,{ease: FlxEase.expoInOut});
+		FlxTween.tween(zoeyBop,{alpha: 1},0.2,{ease: FlxEase.expoInOut});
 
 		changeSelection();
+	}
+		
+	override function beatHit()
+	{
+		super.beatHit();
 	}
 
 	public function addSong(songName:String, weekNum:Int, songCharacter:String, diffculty:String)
@@ -178,6 +194,8 @@ class FreeplayState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		Conductor.songPosition = FlxG.sound.music.time;
+
 		super.update(elapsed);
 		
 		if (!InMainFreeplayState) 
@@ -185,6 +203,7 @@ class FreeplayState extends MusicBeatState
 			scoreBG = null;
 			scoreText = null;
 			diffText = null;
+			zoeyBop = null;
 			
 			if (controls.LEFT_P && canInteract)
 			{
@@ -243,8 +262,12 @@ class FreeplayState extends MusicBeatState
 			
 			if (scoreBG != null)
 			{
-				scoreBG.scale.x = scoreText.textField.textWidth + 12;
-				scoreBG.x = FlxG.width - (scoreBG.scale.x / 2);
+				if (scoreText.textField.textWidth < diffText.textField.textWidth)
+					scoreBG.scale.x = diffText.textField.textWidth + 12;
+				else
+					scoreBG.scale.x = scoreText.textField.textWidth + 12;
+					
+					scoreBG.x = FlxG.width - (scoreBG.scale.x / 2);
 			}
 			
 			if (controls.BACK && canInteract)
@@ -291,6 +314,14 @@ class FreeplayState extends MusicBeatState
 							FlxTween.tween(diffText,{alpha: 0},0.2, {onComplete: function(twn:FlxTween)
 							{
 								diffText = null;
+							}});
+						}
+						
+						if (zoeyBop != null)
+						{
+							FlxTween.tween(zoeyBop,{alpha: 0},0.2, {onComplete: function(twn:FlxTween)
+							{
+								zoeyBop = null;
 							}});
 						}
 						

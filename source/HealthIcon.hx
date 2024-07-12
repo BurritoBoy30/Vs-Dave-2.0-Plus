@@ -12,7 +12,7 @@ class HealthIcon extends FlxSprite
 	 */
 	public var sprTracker:FlxSprite;
 	
-	var noAa:Array<String> = ['dave-angey', 'bambi-3d', 'bf-pixel', 'gf-pixel', 'senpai','senpai-angry','spirit'];
+	var noAa:Array<String> = ['dave-angey', 'bambi-3d', 'bf-pixel', 'gf-pixel'];
 	var isReallyPlayer:Bool = false;
 	
 	var iconList:String = '';
@@ -52,7 +52,7 @@ class HealthIcon extends FlxSprite
 		addRepeatingIcon(repeatingIcons[2], [16, 17]);
 		
 		// cyan
-		addIcon(repeatingIcons[3], [18, 19]);
+		addRepeatingIcon(repeatingIcons[3], [18, 19]);
 		
 		addIcon('gf-massive', [20, 21]);
 		addIcon('skyblue', [22, 23]);
@@ -75,6 +75,7 @@ class HealthIcon extends FlxSprite
 		addIcon('tristan-golden', [38, 39]);
 		addIcon('bambi-angey', [40, 41]);
 		addIcon('dave-alpha', [42, 43]);
+		addIcon('bf-with-cyan', [44, 45]);
 		
 		playAnimation(char);
 		scrollFactor.set();
