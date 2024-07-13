@@ -357,6 +357,25 @@ class Character extends FlxSprite
 				
 				charOffset[0] = 175;
 				charOffset[1] = 450;
+			
+			case 'bambi-angey':
+				frames = Paths.getSparrowAtlas('characters/bambimaddddd');
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+
+				addOffset('idle');
+				addOffset('singLEFT');
+				addOffset('singDOWN');
+				addOffset('singUP', 0, 20);
+				addOffset('singRIGHT');
+
+				playAnim('idle');
+				
+				charOffset[1] = 450;
+				charOffset[0] = 200;
 
 			case 'bambi-3d':
 				// BAMBI SHITE ANIMATION LOADING CODE
@@ -734,7 +753,8 @@ class Character extends FlxSprite
 		{
 			switch (curCharacter)
 			{
-				case 'gf' | 'gf-christmas' | 'gf-standing' | 'gf-pixel' | 'cyan' | 'cyan-christmas' | 'psyka' | 'psyka-christmas' | 'gf-massive':
+				case 'gf' | 'gf-christmas' | 'gf-standing' | 'gf-pixel' | 'psyka' | 'psyka-christmas' | 'psyka-standing'  | 'cyan' |
+					'cyan-christmas' | 'gf-massive':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;

@@ -9,9 +9,9 @@ import Controls.Control;
 */
 class SaveDataHandler
 {
-    public static function initSave()
-    {
-        if (FlxG.save.data.newInput == null)
+	public static function initSave()
+	{
+		if (FlxG.save.data.newInput == null)
 			FlxG.save.data.newInput = true;
 
 		if (FlxG.save.data.downscroll == null)
@@ -34,7 +34,7 @@ class SaveDataHandler
 			
 		// This is for the options
 		if(FlxG.save.data.upBind == null)
-            FlxG.save.data.upBind = "W";
+			FlxG.save.data.upBind = "W";
 			
         if(FlxG.save.data.downBind == null)
             FlxG.save.data.downBind = "S";

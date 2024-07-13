@@ -77,22 +77,31 @@ class FreeplayState extends MusicBeatState
 		switch (AllPossibleSongs[CurrentPack].toLowerCase())
 		{
 			case 'dave':
-				addWeek(['Tutorial'], 0, ['gf'], ['Easy']);
-				addWeek(['House', 'Insanity', 'Polygonized'], 1, ['dave', 'dave', 'dave-angey'], ['Hard', 'Normal', 'Hard']);
-				addWeek(['Blocked','Corn-Theft','Maze',], 2, ['bambi'], ['Hard', 'Normal', 'Normal']);
-				addWeek(['Splitathon'],3,['the-duo'], ['Hard']);
+				addWeek(['Tutorial'], 0, ['gf'], ['Easy'], [100]);
+				addWeek(['House', 'Insanity', 'Polygonized'], 1,
+					['dave', 'dave', 'dave-angey'],
+					['Hard', 'Normal', 'Hard'],
+					[230, 160, 180]
+				);
+				addWeek(['Blocked','Corn-Theft','Maze',], 2,
+					['bambi'],
+					['Hard', 'Normal', 'Normal'],
+					[188, 105, 113]
+				);
+				addWeek(['Splitathon'],3,['the-duo'], ['Hard'], [230]);
 				
 			case 'joke':
-				addWeek(['Cheating'], 2, ['bambi-3d'], ['Stupid']);
+				addWeek(['Cheating'], 2, ['bambi-3d'], ['Stupid'], [125]);
 			
 			case 'extra':
-				addWeek(['Bonus-Song'], 1 ,['dave'], ['Hard']);
+				addWeek(['Bonus-Song'], 1 ,['dave'], ['Hard'], [140]);
+				addWeek(['Mealie'], 2 ,['bambi'], ['Hard'], [167]);
 		}
 	}
 	
 	function GoToActualFreeplay()
 	{
-		zoeyBop = new FlxSprite(700, 95);
+		zoeyBop = new FlxSprite(700, 100);
 		zoeyBop.frames = Paths.getSparrowAtlas('zoey', 'preload');
 		zoeyBop.animation.addByPrefix('jiggle', 'jiggle', 10, true);
 		zoeyBop.animation.play('jiggle');
@@ -149,10 +158,29 @@ class FreeplayState extends MusicBeatState
 	{
 		super.beatHit();
 	}
-
-	public function addSong(songName:String, weekNum:Int, songCharacter:String, diffculty:String)
+	
+	public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>, diffculty:Array<String>, bpm:Array<Int>)
 	{
-		songs.push(new SongMetadata(songName, weekNum, songCharacter, diffculty));
+		if (songCharacters == null)
+			songCharacters = ['bf'];
+
+		var num:Int = 0;
+		var anotherNum:Int = 0;
+		for (song in songs)
+		{
+			addSong(song, weekNum, songCharacters[num], diffculty[anotherNum], bpm[anotherNum]);
+
+			if (songCharacters.length != 1)
+				num++;
+			
+			if (diffculty.length != 1)
+				anotherNum++;
+		}
+	}
+	
+	public function addSong(songName:String, weekNum:Int, songCharacter:String, diffculty:String, bpm:Int)
+	{
+		songs.push(new SongMetadata(songName, weekNum, songCharacter, diffculty, bpm));
 	}
 	
 	public function UpdatePackSelection(change:Int)
@@ -171,25 +199,6 @@ class FreeplayState extends MusicBeatState
 		NameAlpha.x = (FlxG.width / 2) - 164;
 		add(NameAlpha);
 		CurrentSongIcon.loadGraphic(Paths.image('week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
-	}
-
-	public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>, diffculty:Array<String>)
-	{
-		if (songCharacters == null)
-			songCharacters = ['bf'];
-
-		var num:Int = 0;
-		var anotherNum:Int = 0;
-		for (song in songs)
-		{
-			addSong(song, weekNum, songCharacters[num], diffculty[anotherNum]);
-
-			if (songCharacters.length != 1)
-				num++;
-			
-			if (diffculty.length != 1)
-				anotherNum++;
-		}
 	}
 
 	override function update(elapsed:Float)
@@ -267,7 +276,7 @@ class FreeplayState extends MusicBeatState
 				else
 					scoreBG.scale.x = scoreText.textField.textWidth + 12;
 					
-					scoreBG.x = FlxG.width - (scoreBG.scale.x / 2);
+				scoreBG.x = FlxG.width - (scoreBG.scale.x / 2);
 			}
 			
 			if (controls.BACK && canInteract)
@@ -389,7 +398,8 @@ class FreeplayState extends MusicBeatState
 		curBfChar = Highscore.getBfChar(songs[curSelected].songName);
 		curGfChar = Highscore.getGfChar(songs[curSelected].songName);
 		updateScore();
-		
+		Conductor.changeBPM(songs[curSelected].bpm);
+				
 		#if PRELOAD_ALL
 		FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
 		#end
@@ -414,7 +424,6 @@ class FreeplayState extends MusicBeatState
 			if (item.targetY == 0)
 			{
 				item.alpha = 1;
-				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
 	}
@@ -431,12 +440,14 @@ class SongMetadata
 	public var week:Int = 0;
 	public var songCharacter:String = "";
 	public var diffculty:String = "";
+	public var bpm:Int = 0;
 
-	public function new(song:String, week:Int, songCharacter:String, diffculty:String)
+	public function new(song:String, week:Int, songCharacter:String, diffculty:String, bpm:Int)
 	{
 		this.songName = song;
 		this.week = week;
 		this.songCharacter = songCharacter;
 		this.diffculty = diffculty;
+		this.bpm = bpm;
 	}
 }

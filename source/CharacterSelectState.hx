@@ -52,8 +52,8 @@ class CharacterSelectState extends MusicBeatState
 		
 		girlfriendData = [
 			new SelectableChar(['gf', 'gf-christmas', 'gf-standing', 'gf-pixel'], ["Girlfriend", "Girlfriend (Christmas)", "Girlfriend (Standing)", "Girlfriend (Pixel)"]),
-			new SelectableChar(['cyan', 'cyan-christmas'], ["Cyan", "Cyan (Christmas)"]),
-			new SelectableChar(['psyka', 'psyka-christmas', 'psyka-standing'], ["Psyka", "Psyka (Christmas)", "Psyka (Standing)"])
+			new SelectableChar(['psyka', 'psyka-christmas', 'psyka-standing'], ["Psyka", "Psyka (Christmas)", "Psyka (Standing)"]),
+			new SelectableChar(['cyan', 'cyan-christmas'], ["Cyan", "Cyan (Christmas)"])
 		];
 		
 		FlxG.mouse.visible = true;
@@ -163,8 +163,8 @@ class CharacterSelectState extends MusicBeatState
 		{
 			var offset:Float = 10;
 			
-			if ((FlxG.mouse.x > (saveBox.x - (saveBox.width / 1.5) - (offset / 2)) && FlxG.mouse.x < (saveBox.x + (saveBox.width / 1.5) - (offset / 2)))
-				&& (FlxG.mouse.y > (saveBox.y + (saveBox.height * 1.5) + offset) && FlxG.mouse.y < (FlxG.height - ((saveBox.height * 1.2) - offset))))
+			if ((FlxG.mouse.x > (saveBox.x - (offset * 21)) && FlxG.mouse.x < saveBox.x + saveBox.width + (offset * -11.5))
+				&& (FlxG.mouse.y > (saveBox.y + (offset * 7)) && FlxG.mouse.y < (saveBox.y + saveBox.height + (offset * 8))))
 			{
 				saveBox.color = 0xFF878787;
 				
@@ -184,8 +184,8 @@ class CharacterSelectState extends MusicBeatState
 				saveBox.color = FlxColor.WHITE;
 			}
 			
-			if ((FlxG.mouse.x > (loadBox.x - (loadBox.width / 1.5) - (offset / 2)) && FlxG.mouse.x < (loadBox.x + (loadBox.width / 1.5) - (offset / 2)))
-				&& (FlxG.mouse.y > (loadBox.y + (loadBox.height * 1.5) + (offset * 1.5)) && FlxG.mouse.y < (loadBox.height + (loadBox.y + (loadBox.height * 1.5) + (offset * 3)))))
+			if ((FlxG.mouse.x > (loadBox.x - (offset * 21)) && FlxG.mouse.x < loadBox.x + loadBox.width + (offset * -11.5))
+				&& (FlxG.mouse.y > (loadBox.y + (offset * 8)) && FlxG.mouse.y < (loadBox.y + loadBox.height + (offset * 9.5))))
 			{
 				loadBox.color = 0xFF878787;
 				

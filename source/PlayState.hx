@@ -101,10 +101,13 @@ class PlayState extends MusicBeatState
 
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
+	var timeTxt:FlxText;
+	var songPercent:Float = 0;
 
 	private var generatedMusic:Bool = false;
 	private var startingSong:Bool = false;
 	private var shakeCam:Bool = false;
+	private var updateTime:Bool = false;
 
 	private var iconP1:HealthIcon;
 	private var iconP2:HealthIcon;
@@ -125,6 +128,8 @@ class PlayState extends MusicBeatState
 	var defaultCamZoom:Float = 1.05;
 
 	public static var daPixelZoom:Float = 6;
+	
+	var songLength:Float = 0;
 
 	public static var theFunne:Bool = true;
 	var funneEffect:FlxSprite;
@@ -139,7 +144,6 @@ class PlayState extends MusicBeatState
 
 	override public function create()
 	{
-
 		theFunne = FlxG.save.data.newInput;
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
@@ -445,12 +449,20 @@ class PlayState extends MusicBeatState
 
 		Conductor.songPosition = -5000;
 
-
 		strumLine = new FlxSprite(0, 50).makeGraphic(FlxG.width, 10);
 		strumLine.scrollFactor.set();
 
 		if (FlxG.save.data.downscroll)
 			strumLine.y = FlxG.height - 165;
+		
+		timeTxt = new FlxText((FlxG.width / 2.28), 70, FlxG.width, "", 32);
+		timeTxt.setFormat(Paths.font("comic.ttf"), 40, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt.scrollFactor.set();
+		timeTxt.antialiasing = true;
+		timeTxt.alpha = 0;
+		timeTxt.borderSize = 2;
+		if(FlxG.save.data.downScroll) timeTxt.y = FlxG.height - 45;
+		add(timeTxt);
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
@@ -527,6 +539,7 @@ class PlayState extends MusicBeatState
 		iconP2.cameras = [camHUD];
 		kadeEngineWatermark.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
+		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
@@ -535,6 +548,7 @@ class PlayState extends MusicBeatState
 
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
+		updateTime = true;
 
 		if (isStoryMode)
 		{
@@ -713,6 +727,10 @@ class PlayState extends MusicBeatState
 			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
+		
+		// Song duration in a float, useful for the time left feature
+		songLength = FlxG.sound.music.length;
+		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 	}
 
 	var debugNum:Int = 0;
@@ -1084,6 +1102,17 @@ class PlayState extends MusicBeatState
 					// Conductor.songPosition += FlxG.elapsed * 1000;
 					// trace('MISSED FRAME');
 				}
+				
+				if(updateTime) {
+					var curTime:Float = Conductor.songPosition;
+					if(curTime < 0) curTime = 0;
+					songPercent = (curTime / songLength);
+
+					var secondsTotal:Int = Math.floor((songLength - curTime) / 1000);
+					if(secondsTotal < 0) secondsTotal = 0;
+
+					timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
+				}
 			}
 
 			// Conductor.lastSongPos = FlxG.sound.music.time;
@@ -1102,36 +1131,6 @@ class PlayState extends MusicBeatState
 
 		FlxG.watch.addQuick("beatShit", curBeat);
 		FlxG.watch.addQuick("stepShit", curStep);
-
-		if (curSong == 'Fresh')
-		{
-			switch (curBeat)
-			{
-				case 16:
-					camZooming = true;
-					gfSpeed = 2;
-				case 48:
-					gfSpeed = 1;
-				case 80:
-					gfSpeed = 2;
-				case 112:
-					gfSpeed = 1;
-				case 163:
-					// FlxG.sound.music.stop();
-					// FlxG.switchState(new TitleState());
-			}
-		}
-
-		if (curSong == 'Bopeebo')
-		{
-			switch (curBeat)
-			{
-				case 128, 129, 130:
-					vocals.volume = 0;
-					// FlxG.sound.music.stop();
-					// FlxG.switchState(new PlayState());
-			}
-		}
 
 		if (health <= 0)
 		{
@@ -1299,7 +1298,10 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
+		timeTxt.visible = false;
 		canPause = false;
+		updateTime = false;
+		
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
 		if (SONG.validScore)
@@ -1863,6 +1865,13 @@ class PlayState extends MusicBeatState
 						splitathonExpression('bambi-corn', -100, 550);
 						changeDad("dave-splitathon");
 				}
+			case 'mealie':
+				switch (curStep)
+				{
+					case 1776:
+						FlxG.camera.flash(FlxColor.WHITE, 0.25);
+						changeDad('bambi-angey');
+				}
 		}
 	}
 
@@ -1885,13 +1894,6 @@ class PlayState extends MusicBeatState
 		}
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 		wiggleShit.update(Conductor.crochet);
-
-		// HARDCODING FOR MILF ZOOMS!
-		if (curSong.toLowerCase() == 'milf' && curBeat >= 168 && curBeat < 200 && camZooming && FlxG.camera.zoom < 1.35)
-		{
-			FlxG.camera.zoom += 0.015;
-			camHUD.zoom += 0.03;
-		}
 
 		if (camZooming && FlxG.camera.zoom < 1.35 && curBeat % 4 == 0)
 		{
