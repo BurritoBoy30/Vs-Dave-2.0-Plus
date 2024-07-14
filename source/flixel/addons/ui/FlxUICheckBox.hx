@@ -35,6 +35,7 @@ class FlxUICheckBox extends FlxUIGroup implements ILabeled implements IFlxUIClic
 	public var box_space:Float = 2;
 
 	public var skipButtonUpdate(default, set):Bool = false;
+	public var boxAntialias:Bool = false;
 
 	public var callback:Void->Void;
 
@@ -90,8 +91,8 @@ class FlxUICheckBox extends FlxUIGroup implements ILabeled implements IFlxUIClic
 		{
 			box = new FlxSprite();
 			box.loadGraphic(Box, true);
+			
 		}
-
 		button = new FlxUIButton(0, 0, Label, _clickCheck);
 
 		// set default checkbox label format
@@ -125,7 +126,7 @@ class FlxUICheckBox extends FlxUIGroup implements ILabeled implements IFlxUIClic
 			mark = new FlxSprite();
 			mark.loadGraphic(Check);
 		}
-
+		
 		add(box);
 		add(mark);
 		add(button);
@@ -269,6 +270,9 @@ class FlxUICheckBox extends FlxUIGroup implements ILabeled implements IFlxUIClic
 				checkbox_dirty = false;
 			}
 		}
+		
+		box.antialiasing = boxAntialias;
+		mark.antialiasing = boxAntialias;
 	}
 
 	/*****GETTER/SETTER***/

@@ -36,17 +36,17 @@ class SaveDataHandler
 		if(FlxG.save.data.upBind == null)
 			FlxG.save.data.upBind = "W";
 			
-        if(FlxG.save.data.downBind == null)
-            FlxG.save.data.downBind = "S";
+		if(FlxG.save.data.downBind == null)
+			FlxG.save.data.downBind = "S";
         
-        if(FlxG.save.data.leftBind == null)
-            FlxG.save.data.leftBind = "A";
+		if(FlxG.save.data.leftBind == null)
+			FlxG.save.data.leftBind = "A";
 
-        if(FlxG.save.data.rightBind == null)
-            FlxG.save.data.rightBind = "D";
+		if(FlxG.save.data.rightBind == null)
+			FlxG.save.data.rightBind = "D";
 
 		if(FlxG.save.data.keyStyleChoice == null)
-            FlxG.save.data.keyStyleChoice = 0;
+			FlxG.save.data.keyStyleChoice = 0;
 			
 		switch (FlxG.save.data.keyStyleChoice)
 		{
@@ -57,5 +57,8 @@ class SaveDataHandler
 			case 2:
 				PlayerSettings.player1.controls.setKeyboardScheme(KeyboardScheme.Custom, true);
 		}
+		
+		if (FlxG.save.data.hornyALL == null)
+			FlxG.save.data.hornyALL = false;
     }
 }

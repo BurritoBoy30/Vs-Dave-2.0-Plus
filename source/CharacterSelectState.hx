@@ -3,11 +3,14 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
+import flixel.FlxState;
+import flixel.FlxSubState;
 import flixel.text.FlxText;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.addons.ui.FlxUICheckBox;
 
 class CharacterSelectState extends MusicBeatState
 {
@@ -35,26 +38,42 @@ class CharacterSelectState extends MusicBeatState
 	
 	var selectedCharacter:Bool = false;
 	
+	var changeInfoImg:FlxSprite;
 	var saveBox:FlxSprite;
 	var loadBox:FlxSprite;
+	var hornyGfBG:FlxSprite;
+	var hornyGfBOX:FlxUICheckBox;
 	
 	var buttonPressed:Bool = false;
 	var noTextPop:Bool = false;
 	
-	var overlay:FlxSprite;	
+	var overlay:FlxSprite;
+	
+	public static var noGfChar:Array<String> = ['bf-with-gf', 'bf-with-cyan'];
+	
 	override function create()
 	{
 		CharacterSelectData.initSave();
 		
 		boyfriendData = [
-			new SelectableChar(['bf', 'bf-christmas', 'bf-pixel'], ["Boyfriend", "Boyfriend (Christmas)", "Boyfriend (Pixel)"])
+			new SelectableChar(['bf', 'bf-christmas', 'bf-pixel'], ["Boyfriend", "Boyfriend (Christmas)", "Boyfriend (Pixel)"]),
+			new SelectableChar(['bf-with-gf', 'bf-with-cyan', 'bf-pixel'], ["Boyfriend w/ Girlfriend", "Boyfriend w/ Cyan"]) 
 		];
 		
-		girlfriendData = [
-			new SelectableChar(['gf', 'gf-christmas', 'gf-standing', 'gf-pixel'], ["Girlfriend", "Girlfriend (Christmas)", "Girlfriend (Standing)", "Girlfriend (Pixel)"]),
-			new SelectableChar(['psyka', 'psyka-christmas', 'psyka-standing'], ["Psyka", "Psyka (Christmas)", "Psyka (Standing)"]),
-			new SelectableChar(['cyan', 'cyan-christmas'], ["Cyan", "Cyan (Christmas)"])
-		];
+		if (FlxG.save.data.hornyGF)
+		{
+			girlfriendData = [
+				new SelectableChar(['gf-massive'], ["Massive Girlfriend"])
+			];
+		}
+		else
+		{
+			girlfriendData = [
+				new SelectableChar(['gf', 'gf-christmas', 'gf-standing', 'gf-pixel'], ["Girlfriend", "Girlfriend (Christmas)", "Girlfriend (Standing)", "Girlfriend (Pixel)"]),
+				new SelectableChar(['psyka', 'psyka-christmas', 'psyka-standing'], ["Psyka", "Psyka (Christmas)", "Psyka (Standing)"]),
+				new SelectableChar(['cyan', 'cyan-christmas'], ["Cyan", "Cyan (Christmas)"])
+			];
+		}
 		
 		FlxG.mouse.visible = true;
 		
@@ -116,20 +135,37 @@ class CharacterSelectState extends MusicBeatState
 		add(girlfriendText);
 		girlfriendText.cameras = [camHUD];
 		
-		var changeInfoImg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('charselect/changeInfo'));
+		changeInfoImg = new FlxSprite(0, 0).loadGraphic(Paths.image('charselect/changeInfo'));
 		changeInfoImg.antialiasing = true;
 		add(changeInfoImg);
 		changeInfoImg.cameras = [camHUD];
 		
-		saveBox = new FlxSprite(5, FlxG.height - 150).loadGraphic(Paths.image('charselect/savechar_box'));
-		saveBox.antialiasing = true;
-		add(saveBox);
-		saveBox.cameras = [camHUD];
+		hornyGfBG = new FlxSprite(FlxG.width - 305, FlxG.height - 105).loadGraphic(Paths.image('charselect/hornygf_bg'));
+		hornyGfBG.antialiasing = true;
+		add(hornyGfBG);
+		hornyGfBG.cameras = [camHUD];
 		
-		loadBox = new FlxSprite(5, saveBox.y + saveBox.height + 5).loadGraphic(Paths.image('charselect/loadchar_box'));
+		hornyGfBOX = new FlxUICheckBox(hornyGfBG.x + (hornyGfBG.width / 1.5), hornyGfBG.y, Paths.image('charselect/hornygf_box'), Paths.image('charselect/hornygf_boxCheck'), "", 100);
+		hornyGfBOX.checked = FlxG.save.data.hornyGF;
+		hornyGfBOX.callback = function()
+		{
+			FlxG.save.data.hornyGF = !FlxG.save.data.hornyGF;
+			updateGfListing();
+			UpdateGF();
+		};
+		hornyGfBOX.boxAntialias = true;
+		add(hornyGfBOX);
+		hornyGfBOX.cameras = [camHUD];
+		
+		loadBox = new FlxSprite(hornyGfBG.x, hornyGfBG.y - 43).loadGraphic(Paths.image('charselect/loadchar_box'));
 		loadBox.antialiasing = true;
 		add(loadBox);
 		loadBox.cameras = [camHUD];
+		
+		saveBox = new FlxSprite(loadBox.x, loadBox.y - loadBox.height - 5).loadGraphic(Paths.image('charselect/savechar_box'));
+		saveBox.antialiasing = true;
+		add(saveBox);
+		saveBox.cameras = [camHUD];
 		
 		iconBF = new HealthIcon(boyfriendData[curBF].names[curFormBF], false);
 		iconBF.y = boyfriendText.y - 10;
@@ -145,10 +181,14 @@ class CharacterSelectState extends MusicBeatState
 		
 		overlay = new FlxSprite(0, 0).makeGraphic(1, 1);
 		overlay.scrollFactor.set();
-		add(overlay);	
+		add(overlay);
+		
+		trace('is not text');
 			
 		UpdateBF();
 		UpdateGF();
+		
+		trace('is not chars');
 	
 		super.create();
 	}
@@ -160,11 +200,8 @@ class CharacterSelectState extends MusicBeatState
 		super.update(elapsed);
 		
 		if (!selectedCharacter)
-		{
-			var offset:Float = 10;
-			
-			if ((FlxG.mouse.x > (saveBox.x - (offset * 21)) && FlxG.mouse.x < saveBox.x + saveBox.width + (offset * -11.5))
-				&& (FlxG.mouse.y > (saveBox.y + (offset * 7)) && FlxG.mouse.y < (saveBox.y + saveBox.height + (offset * 8))))
+		{			
+			if (mouseOverButton(saveBox, 110, 52))
 			{
 				saveBox.color = 0xFF878787;
 				
@@ -184,8 +221,7 @@ class CharacterSelectState extends MusicBeatState
 				saveBox.color = FlxColor.WHITE;
 			}
 			
-			if ((FlxG.mouse.x > (loadBox.x - (offset * 21)) && FlxG.mouse.x < loadBox.x + loadBox.width + (offset * -11.5))
-				&& (FlxG.mouse.y > (loadBox.y + (offset * 8)) && FlxG.mouse.y < (loadBox.y + loadBox.height + (offset * 9.5))))
+			if (mouseOverButton(loadBox, 110, 67))
 			{
 				loadBox.color = 0xFF878787;
 				
@@ -201,7 +237,7 @@ class CharacterSelectState extends MusicBeatState
 						curFormGF = FlxG.save.data.savedGfFormData;
 						
 						UpdateBF();
-						UpdateGF();
+						UpdateGF();	
 						trace('fully loaded');
 					}
 				}
@@ -218,16 +254,19 @@ class CharacterSelectState extends MusicBeatState
 				changeBoyfriendForm(-1);
 			if (FlxG.keys.justPressed.DOWN)
 				changeBoyfriendForm(1);
-				
-			if (FlxG.keys.justPressed.A)
-				changeGirlfriend(-1);
-			if (FlxG.keys.justPressed.D)
-				changeGirlfriend(1);
 			
-			if (FlxG.keys.justPressed.W)
-				changeGirlfriendForm(-1);
-			if (FlxG.keys.justPressed.S)
-				changeGirlfriendForm(1);
+			if (!noGfChar.contains(boyfriendChar.curCharacter))
+			{
+				if (FlxG.keys.justPressed.A)
+					changeGirlfriend(-1);
+				if (FlxG.keys.justPressed.D)
+					changeGirlfriend(1);
+				
+				if (FlxG.keys.justPressed.W)
+					changeGirlfriendForm(-1);
+				if (FlxG.keys.justPressed.S)
+					changeGirlfriendForm(1);
+			}
 			
 			if (controls.BACK)
 				FlxG.switchState(new FreeplayState());
@@ -239,8 +278,11 @@ class CharacterSelectState extends MusicBeatState
 				var heyAnimation:Bool = boyfriendChar.animation.getByName("hey") != null; 
 				boyfriendChar.playAnim(heyAnimation ? 'hey' : 'singUP', true);
 				
-				var cheerAnimation:Bool = girlfriendChar.animation.getByName("cheer") != null; 
-				girlfriendChar.playAnim(cheerAnimation ? 'cheer' : 'danceLeft', true);
+				if (!noGfChar.contains(boyfriendChar.curCharacter))
+				{
+					var cheerAnimation:Bool = girlfriendChar.animation.getByName("cheer") != null; 
+					girlfriendChar.playAnim(cheerAnimation ? 'cheer' : 'danceLeft', true);
+				}
 				
 				FlxG.sound.music.stop();
 				FlxG.sound.play(Paths.music('gameOverEnd'));
@@ -248,6 +290,11 @@ class CharacterSelectState extends MusicBeatState
 				new FlxTimer().start(1.9, endIt);
 			}
 		}
+	}
+	
+	function mouseOverButton(target:FlxSprite, buttonX:Float, buttonY:Float)
+	{
+		return (FlxG.mouse.x > target.x + buttonX && FlxG.mouse.x < target.x + target.width + (buttonX * 1.9))	&& (FlxG.mouse.y > target.y + buttonY && FlxG.mouse.y < target.y + target.height + (buttonY * 1.2) + 3);
 	}
 	
 	override function beatHit()
@@ -264,6 +311,32 @@ class CharacterSelectState extends MusicBeatState
 		
 		if (girlfriendChar != null && curBeat % (singleBop.contains(girlfriendChar.curCharacter) ? 2 : 1) == 0)
 			girlfriendChar.dance();
+	}
+	
+	override function openSubState(SubState:FlxSubState)
+	{
+		super.openSubState(SubState);
+	}
+	
+	function updateGfListing()
+	{
+		curGF = 0;
+		curFormGF = 0;
+		
+		if (FlxG.save.data.hornyGF)
+		{
+			girlfriendData = [
+				new SelectableChar(['gf-massive'], ["Massive Girlfriend"])
+			];
+		}
+		else
+		{
+			girlfriendData = [
+				new SelectableChar(['gf', 'gf-christmas', 'gf-standing', 'gf-pixel'], ["Girlfriend", "Girlfriend (Christmas)", "Girlfriend (Standing)", "Girlfriend (Pixel)"]),
+				new SelectableChar(['psyka', 'psyka-christmas', 'psyka-standing'], ["Psyka", "Psyka (Christmas)", "Psyka (Standing)"]),
+				new SelectableChar(['cyan', 'cyan-christmas'], ["Cyan", "Cyan (Christmas)"])
+			];
+		}
 	}
 	
 	function isPressed(target:FlxSprite)
@@ -298,7 +371,18 @@ class CharacterSelectState extends MusicBeatState
 				}});
 			});
 		}});
+	}
+	
+	function updateGfStuff()
+	{
+		girlfriendChar.visible = !noGfChar.contains(boyfriendChar.curCharacter);
+		girlfriendText.visible = !noGfChar.contains(boyfriendChar.curCharacter);
+		iconGF.visible = !noGfChar.contains(boyfriendChar.curCharacter);
 		
+		if (noGfChar.contains(boyfriendChar.curCharacter))
+			changeInfoImg.loadGraphic(Paths.image('charselect/changeInfoNoGF'));
+		else
+			changeInfoImg.loadGraphic(Paths.image('charselect/changeInfo'));
 	}
 	
 	function changeBoyfriend(beep:Int = 0)
@@ -314,6 +398,7 @@ class CharacterSelectState extends MusicBeatState
 			curBF = 0;
 		
 		UpdateBF();
+		updateGfStuff();
 	}
 	
 	function changeBoyfriendForm(beep:Int = 0)
@@ -328,6 +413,7 @@ class CharacterSelectState extends MusicBeatState
 			curFormBF = 0;
 		
 		UpdateBF();
+		updateGfStuff();
 	}
 	
 	function changeGirlfriend(ahmp:Int = 0)
@@ -360,11 +446,10 @@ class CharacterSelectState extends MusicBeatState
 	}
 	
 	var shitOffset:Array<Float> = [-130, -60];
+	var iconOffseet:Float = 85;
 	
 	public function UpdateBF()
-	{
-		var iconOffseet:Float = 85;
-		
+	{		
 		if (boyfriendChar != null) {
 			remove(boyfriendChar);
 			iconBF.x -= (boyfriendText.textField.textWidth / 2) + iconOffseet;
@@ -373,7 +458,7 @@ class CharacterSelectState extends MusicBeatState
 		boyfriendText.text = boyfriendData[curBF].displayNames[curFormBF];
 		iconBF.x += (boyfriendText.textField.textWidth / 2) + iconOffseet;
 		
-		boyfriendChar = new Boyfriend(770 + shitOffset[0], 450 + shitOffset[1], boyfriendData[curBF].names[curFormBF]);
+		boyfriendChar = new Boyfriend(770 + shitOffset[0] - (noGfChar.contains(boyfriendData[curBF].names[curFormBF]) ? 200 : 0), 450 + shitOffset[1], boyfriendData[curBF].names[curFormBF]);
 		boyfriendChar.x += boyfriendChar.charOffset[0];
 		boyfriendChar.y += boyfriendChar.charOffset[1];
 		insert(members.indexOf(overlay), boyfriendChar);
@@ -381,9 +466,7 @@ class CharacterSelectState extends MusicBeatState
 	}
 	
 	public function UpdateGF()
-	{
-		var iconOffseet:Float = 85;
-		
+	{		
 		if (girlfriendChar != null) {
 			remove(girlfriendChar);
 			iconGF.x -= (girlfriendText.textField.textWidth / 2) + iconOffseet;
@@ -397,7 +480,6 @@ class CharacterSelectState extends MusicBeatState
 		girlfriendChar.y += girlfriendChar.charOffset[1];
 		insert(members.indexOf(boyfriendChar), girlfriendChar);
 		iconGF.playAnimation(girlfriendData[curGF].names[curFormGF]);
-		
 	}
 		
 	public function endIt(e:FlxTimer = null)

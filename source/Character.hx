@@ -22,8 +22,6 @@ class Character extends FlxSprite
 	public var globaloffset:Array<Float> = [0,0];
 	public var charOffset:Array<Float> = [0,0];
 	
-	var isGF:Bool = false;
-
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
 		super(x, y);
@@ -44,8 +42,8 @@ class Character extends FlxSprite
 				
 				addAnimation(-5, 'idle', 'BF idle dance');
 				addAnimation(-29, 27, 'singUP', 'BF NOTE UP0');
-				addAnimation(4, -6, 'singLEFT', 'BF NOTE LEFT0');
-				addAnimation(-49, -6, 'singRIGHT', 'BF NOTE RIGHT0');
+				addAnimation(12, -6, 'singLEFT', 'BF NOTE LEFT0');
+				addAnimation(-38, -7, 'singRIGHT', 'BF NOTE RIGHT0');
 				addAnimation(-10, -50, 'singDOWN', 'BF NOTE DOWN0');
 				addAnimation(-29, 27, 'singUPmiss', 'BF NOTE UP MISS');
 				addAnimation(12, 24, 'singLEFTmiss', 'BF NOTE LEFT MISS');
@@ -69,20 +67,20 @@ class Character extends FlxSprite
 				
 				addAnimation(-5, 'idle', 'BF idle dance');
 				addAnimation(-29, 27, 'singUP', 'BF NOTE UP0');
-				addAnimation(4, -6, 'singLEFT', 'BF NOTE LEFT0');
-				addAnimation(-49, -6, 'singRIGHT', 'BF NOTE RIGHT0');
+				addAnimation(12, -6, 'singLEFT', 'BF NOTE LEFT0');
+				addAnimation(-38, -7, 'singRIGHT', 'BF NOTE RIGHT0');
 				addAnimation(-10, -50, 'singDOWN', 'BF NOTE DOWN0');
 				addAnimation(-29, 27, 'singUPmiss', 'BF NOTE UP MISS');
 				addAnimation(12, 24, 'singLEFTmiss', 'BF NOTE LEFT MISS');
 				addAnimation(-30, 21, 'singRIGHTmiss', 'BF NOTE RIGHT MISS');
-				addAnimation(-11, -19, 'singDOWNmiss', 'BF');
+				addAnimation(-11, -19, 'singDOWNmiss', 'BF NOTE DOWN MISS');
 
-				playAnim('idle');
+				addAnimation(-4, 'scared', 'BF idle shaking', true);
 
 				flipX = true;
 			
 			case 'bf-with-gf':
-				tex = Paths.getSparrowAtlas('characters/BFwithGF');
+				tex = Paths.getSparrowAtlas('characters/BFwithGf');
 				frames = tex;
 				
 				addAnimation(-5, 'idle', 'BF idle dance');
@@ -374,8 +372,8 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 				
-				charOffset[1] = 450;
-				charOffset[0] = 200;
+				charOffset[1] = 430;
+				charOffset[0] = 220;
 
 			case 'bambi-3d':
 				// BAMBI SHITE ANIMATION LOADING CODE
@@ -662,29 +660,30 @@ class Character extends FlxSprite
 				animation.addByPrefix('singUP', 'up', 24, false);
 				animation.addByPrefix('singDOWN', 'down', 24, false);
 				animation.addByIndices('sad', 'sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'idle', [27, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceRight', 'idle', [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], "", 24, false);
+				animation.addByIndices('danceLeft', 'idle', [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], "", 24, false);
+				animation.addByIndices('danceRight', 'idle', [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 0, 1, 2], "", 24, false);
 				animation.addByIndices('hairBlow', "hairblow", [0, 1, 2, 3], "", 24);
 				animation.addByIndices('hairFall', "hairland", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
 				animation.addByPrefix('scared', 'scared', 24);
 				
-				addOffset('cheer');
-				addOffset('sad', -2, -21);
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
+				addOffset('cheer', 118, 251);
+				addOffset('sad', 11, -35);
+				addOffset('danceLeft', 6, 310);
+				addOffset('danceRight', 6, 310);
 
-				addOffset("singUP", 0, 4);
-				addOffset("singRIGHT", 0, -20);
-				addOffset("singLEFT", 0, -19);
+				addOffset("singUP", -19, 18);
+				addOffset("singRIGHT", 8, -49);
+				addOffset("singLEFT", 13, -7);
 				addOffset("singDOWN", 0, -20);
-				addOffset('hairBlow', 45, -8);
+				addOffset('hairBlow', 205, -35);
 				addOffset('hairFall', 0, -9);
 
 				addOffset('scared', -2, -17);
 
 				playAnim('danceRight');
-
-
+				
+				charOffset[0] = 75;
+				charOffset[1] = -350;
 		}
 
 		dance();

@@ -17,5 +17,8 @@ class CharacterSelectData
 			
 		if (FlxG.save.data.savedGfFormData == null)
 			FlxG.save.data.savedGfFormData = 0;
+			
+		if (FlxG.save.data.hornyGF == null)
+			FlxG.save.data.hornyGF = false;
 	}
 }

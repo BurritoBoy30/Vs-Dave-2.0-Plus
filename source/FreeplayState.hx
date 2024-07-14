@@ -80,12 +80,12 @@ class FreeplayState extends MusicBeatState
 				addWeek(['Tutorial'], 0, ['gf'], ['Easy'], [100]);
 				addWeek(['House', 'Insanity', 'Polygonized'], 1,
 					['dave', 'dave', 'dave-angey'],
-					['Hard', 'Normal', 'Hard'],
+					['Normal', 'Normal', 'Hard'],
 					[230, 160, 180]
 				);
 				addWeek(['Blocked','Corn-Theft','Maze',], 2,
 					['bambi'],
-					['Hard', 'Normal', 'Normal'],
+					['Hard', 'Hard', 'Normal'],
 					[188, 105, 113]
 				);
 				addWeek(['Splitathon'],3,['the-duo'], ['Hard'], [230]);
@@ -146,10 +146,10 @@ class FreeplayState extends MusicBeatState
 
 		add(scoreText);
 		
-		FlxTween.tween(scoreBG,{alpha: 0.6},0.2,{ease: FlxEase.expoInOut});
-		FlxTween.tween(scoreText,{alpha: 1},0.2,{ease: FlxEase.expoInOut});
-		FlxTween.tween(diffText,{alpha: 1},0.2,{ease: FlxEase.expoInOut});
-		FlxTween.tween(zoeyBop,{alpha: 1},0.2,{ease: FlxEase.expoInOut});
+		FlxTween.tween(scoreBG, {alpha: 0.6}, 0.2, {ease: FlxEase.expoInOut});
+		FlxTween.tween(scoreText, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
+		FlxTween.tween(diffText, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
+		FlxTween.tween(zoeyBop, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
 
 		changeSelection();
 	}
@@ -227,24 +227,20 @@ class FreeplayState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 				canInteract = false;
+				loadingPack = true;
+				LoadProperPack();
+				
+				FlxTween.tween(CurrentSongIcon, {alpha: 0}, 0.2);
+				FlxTween.tween(NameAlpha, {alpha: 0}, 0.2);
 				
 				new FlxTimer().start(0.2, function(Dumbshit:FlxTimer)
 				{
-					loadingPack = true;
-					LoadProperPack();
-					
-					FlxTween.tween(CurrentSongIcon, {alpha: 0}, 0.2);
-					FlxTween.tween(NameAlpha, {alpha: 0}, 0.2);
-					
-					new FlxTimer().start(0.2, function(Dumbshit:FlxTimer)
-					{
-						CurrentSongIcon.visible = false;
-						NameAlpha.visible = false;
-						GoToActualFreeplay();
-						InMainFreeplayState = true;
-						loadingPack = false;
-						canInteract = true;
-					});
+					CurrentSongIcon.visible = false;
+					NameAlpha.visible = false;
+					GoToActualFreeplay();
+					InMainFreeplayState = true;
+					loadingPack = false;
+					canInteract = true;
 				});
 			}
 			if (controls.BACK && canInteract)
@@ -286,68 +282,68 @@ class FreeplayState extends MusicBeatState
 				
 				for (i in iconArray)
 				{
-					FlxTween.tween(i, {alpha: 0}, 0.3);
+					FlxTween.tween(i, {alpha: 0}, 0.2);
 				}
 				
 				for (i in grpSongs)
 				{
-					//i.unlockY = true;
-
-					FlxTween.tween(i, {alpha: 0}, 0.3, {onComplete: function(twn:FlxTween)
+					FlxTween.tween(i, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
 					{
-						i.unlockY = false;
-						
-						CurrentSongIcon.visible = true;
-						NameAlpha.visible = true;
-						FlxTween.tween(CurrentSongIcon, {alpha: 1}, 0.2);
-						FlxTween.tween(NameAlpha, {alpha: 1}, 0.2);
-						
-						if (scoreBG != null)
-						{
-							FlxTween.tween(scoreBG,{alpha: 0},0.2, {onComplete: function(twn:FlxTween)
-							{
-								scoreBG = null;
-							}});
-						}
-						
-						if (scoreText != null)
-						{
-							FlxTween.tween(scoreText,{alpha: 0},0.2, {onComplete: function(twn:FlxTween)
-							{
-								scoreText = null;
-							}});
-						}
-						
-						if (diffText != null)
-						{
-							FlxTween.tween(diffText,{alpha: 0},0.2, {onComplete: function(twn:FlxTween)
-							{
-								diffText = null;
-							}});
-						}
-						
-						if (zoeyBop != null)
-						{
-							FlxTween.tween(zoeyBop,{alpha: 0},0.2, {onComplete: function(twn:FlxTween)
-							{
-								zoeyBop = null;
-							}});
-						}
-						
-						InMainFreeplayState = false;
-						loadingPack = false;
-
-						for (i in grpSongs) { remove(i); }
-						for (i in iconArray) { remove(i); }
-						
-						// MAKE SURE TO RESET EVERYTHIN!
-						songs = [];
-						grpSongs.members = [];
-						iconArray = [];
-						curSelected = 0;
-						canInteract = true;
+						i.unlockY = false;	
 					}});
 				}
+				
+				if (scoreBG != null)
+				{
+					FlxTween.tween(scoreBG, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
+					{
+						scoreBG = null;
+					}});
+				}
+				
+				if (scoreText != null)
+				{
+					FlxTween.tween(scoreText, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
+					{
+						scoreText = null;
+					}});
+				}
+				
+				if (diffText != null)
+				{
+					FlxTween.tween(diffText, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
+					{
+						diffText = null;
+					}});
+				}
+				
+				if (zoeyBop != null)
+				{
+					FlxTween.tween(zoeyBop, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
+					{
+						zoeyBop = null;
+					}});
+				}
+				
+				new FlxTimer().start(0.2, function(Dumbshit:FlxTimer)
+				{
+					CurrentSongIcon.visible = true;
+					NameAlpha.visible = true;
+					FlxTween.tween(CurrentSongIcon, {alpha: 1}, 0.2);
+					FlxTween.tween(NameAlpha, {alpha: 1}, 0.2);
+					
+					InMainFreeplayState = false;
+					loadingPack = false;
+					for (i in grpSongs) { remove(i); }
+					for (i in iconArray) { remove(i); }
+						
+					// MAKE SURE TO RESET EVERYTHIN!
+					songs = [];
+					grpSongs.members = [];
+					iconArray = [];
+					curSelected = 0;
+					canInteract = true;
+				});
 			}
 
 			if (accepted && canInteract)
@@ -430,7 +426,13 @@ class FreeplayState extends MusicBeatState
 	
 	function updateScore()
 	{
-		diffText.text = songs[curSelected].diffculty + " - (" + curBfChar.toUpperCase() + " - " + curGfChar.toUpperCase() + ")";
+		var theBF:String;
+		theBF = curBfChar.toLowerCase();
+		
+		if (CharacterSelectState.noGfChar.contains(theBF))
+			diffText.text = songs[curSelected].diffculty + " - (" + curBfChar.toUpperCase() + ")";
+		else
+			diffText.text = songs[curSelected].diffculty + " - (" + curBfChar.toUpperCase() + " - " + curGfChar.toUpperCase() + ")";
 	}
 }
 
