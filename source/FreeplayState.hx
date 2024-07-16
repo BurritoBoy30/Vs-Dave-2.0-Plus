@@ -37,7 +37,7 @@ class FreeplayState extends MusicBeatState
 	var canInteract:Bool = true;
 
 	private var iconArray:Array<HealthIcon> = [];
-		
+	
 	private var CurrentSongIcon:FlxSprite;
 
 	private var AllPossibleSongs:Array<String> = ["Dave","Joke","Extra"];
@@ -47,12 +47,14 @@ class FreeplayState extends MusicBeatState
 	private var NameAlpha:Alphabet;
 
 	var loadingPack:Bool = false;
-	
+
 	var zoeyBop:FlxSprite;
 
 	override function create()
 	{		
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(MainMenuState.randomizeBG());
+		bg.antialiasing = true;
+		bg.color = 0xFF9271FD;
 		add(bg);
 		
 		CurrentSongIcon = new FlxSprite(0,0).loadGraphic(Paths.image('week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));

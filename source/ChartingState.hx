@@ -103,7 +103,7 @@ class ChartingState extends MusicBeatState
 			};
 		}
 		
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(MainMenuState.randomizeBG());
 		bg.scrollFactor.set();
 		bg.color = 0xFF222222;
 		add(bg);
@@ -232,6 +232,16 @@ class ChartingState extends MusicBeatState
 			FlxG.sound.music.volume = vol;
 		};
 
+		var isHornyOrNot:String = '';
+		
+		if (FlxG.save.data.hornyALL)
+		{
+			isHornyOrNot = 'characterListHorny';
+		}
+		else
+		{
+			isHornyOrNot = 'characterList';
+		}
 		var characters:Array<String> = CoolUtil.coolTextFile(Paths.txt('characterList'));
 
 		var player1DropDown = new FlxUIDropDownMenu(10, 200, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)

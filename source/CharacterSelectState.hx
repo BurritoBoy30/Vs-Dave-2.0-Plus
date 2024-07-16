@@ -51,18 +51,21 @@ class CharacterSelectState extends MusicBeatState
 	
 	public static var noGfChar:Array<String> = ['bf-with-gf', 'bf-with-cyan'];
 	
+	public var noMorePresses:Bool = false;
+	
 	override function create()
 	{
 		CharacterSelectData.initSave();
 		
 		boyfriendData = [
 			new SelectableChar(['bf', 'bf-christmas', 'bf-pixel'], ["Boyfriend", "Boyfriend (Christmas)", "Boyfriend (Pixel)"]),
-			new SelectableChar(['bf-with-gf', 'bf-with-cyan', 'bf-pixel'], ["Boyfriend w/ Girlfriend", "Boyfriend w/ Cyan"]) 
+			new SelectableChar(['bf-with-gf', 'bf-with-cyan'], ["Boyfriend w/ Girlfriend", "Boyfriend w/ Cyan"]) 
 		];
 		
 		if (FlxG.save.data.hornyGF)
 		{
 			girlfriendData = [
+				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-pixel'], ["Hot Girlfriend", "Hot Girlfriend (Sex Mod)", "Hot Girlfriend (Christmas)", "Hot Girlfriend (Standing)"]),
 				new SelectableChar(['gf-massive'], ["Massive Girlfriend"])
 			];
 		}
@@ -136,6 +139,7 @@ class CharacterSelectState extends MusicBeatState
 		girlfriendText.cameras = [camHUD];
 		
 		changeInfoImg = new FlxSprite(0, 0).loadGraphic(Paths.image('charselect/changeInfo'));
+		changeInfoImg.y = FlxG.height - changeInfoImg.height;
 		changeInfoImg.antialiasing = true;
 		add(changeInfoImg);
 		changeInfoImg.cameras = [camHUD];
@@ -208,7 +212,8 @@ class CharacterSelectState extends MusicBeatState
 				if (FlxG.mouse.justPressed && !buttonPressed)
 				{
 					isPressed(saveBox);
-					if (!noTextPop) {
+					if (!noTextPop)
+					{
 						popUpText('Saved!');
 						
 						FlxG.save.data.savedBfData = curBF;	
@@ -217,9 +222,9 @@ class CharacterSelectState extends MusicBeatState
 						FlxG.save.data.savedGfFormData = curFormGF;
 					}
 				}
-			} else {
+			} 
+			else
 				saveBox.color = FlxColor.WHITE;
-			}
 			
 			if (mouseOverButton(loadBox, 110, 67))
 			{
@@ -228,44 +233,48 @@ class CharacterSelectState extends MusicBeatState
 				if (FlxG.mouse.justPressed && !buttonPressed)
 				{
 					isPressed(loadBox);
-					if (!noTextPop) {
+					if (!noTextPop)
+					{
 						popUpText('Loaded!');
 						
 						curBF = FlxG.save.data.savedBfData;	
 						curFormBF = FlxG.save.data.savedBfFormData;
 						curGF = FlxG.save.data.savedGfData;
 						curFormGF = FlxG.save.data.savedGfFormData;
-						
+										
 						UpdateBF();
 						UpdateGF();	
+						updateGfUI();
 						trace('fully loaded');
 					}
 				}
-			} else {
+			} else
 				loadBox.color = FlxColor.WHITE;
-			}
 			
-			if (FlxG.keys.justPressed.LEFT)
-				changeBoyfriend(-1);
-			if (FlxG.keys.justPressed.RIGHT)
-				changeBoyfriend(1);
-			
-			if (FlxG.keys.justPressed.UP)
-				changeBoyfriendForm(-1);
-			if (FlxG.keys.justPressed.DOWN)
-				changeBoyfriendForm(1);
-			
-			if (!noGfChar.contains(boyfriendChar.curCharacter))
+			if (!noMorePresses)
 			{
-				if (FlxG.keys.justPressed.A)
-					changeGirlfriend(-1);
-				if (FlxG.keys.justPressed.D)
-					changeGirlfriend(1);
+				if (FlxG.keys.justPressed.LEFT)
+					changeBoyfriend(-1);
+				if (FlxG.keys.justPressed.RIGHT)
+					changeBoyfriend(1);
 				
-				if (FlxG.keys.justPressed.W)
-					changeGirlfriendForm(-1);
-				if (FlxG.keys.justPressed.S)
-					changeGirlfriendForm(1);
+				if (FlxG.keys.justPressed.UP)
+					changeBoyfriendForm(-1);
+				if (FlxG.keys.justPressed.DOWN)
+					changeBoyfriendForm(1);
+				
+				if (!noGfChar.contains(boyfriendChar.curCharacter))
+				{
+					if (FlxG.keys.justPressed.A)
+						changeGirlfriend(-1);
+					if (FlxG.keys.justPressed.D)
+						changeGirlfriend(1);
+					
+					if (FlxG.keys.justPressed.W)
+						changeGirlfriendForm(-1);
+					if (FlxG.keys.justPressed.S)
+						changeGirlfriendForm(1);
+				}
 			}
 			
 			if (controls.BACK)
@@ -326,6 +335,7 @@ class CharacterSelectState extends MusicBeatState
 		if (FlxG.save.data.hornyGF)
 		{
 			girlfriendData = [
+				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-pixel'], ["Hot Girlfriend", "Hot Girlfriend (Sex Mod)", "Hot Girlfriend (Christmas)", "Hot Girlfriend (Standing)"]),
 				new SelectableChar(['gf-massive'], ["Massive Girlfriend"])
 			];
 		}
@@ -336,6 +346,21 @@ class CharacterSelectState extends MusicBeatState
 				new SelectableChar(['psyka', 'psyka-christmas', 'psyka-standing'], ["Psyka", "Psyka (Christmas)", "Psyka (Standing)"]),
 				new SelectableChar(['cyan', 'cyan-christmas'], ["Cyan", "Cyan (Christmas)"])
 			];
+		}
+	}
+	
+	function updateGfUI()
+	{
+		girlfriendChar.visible = !noGfChar.contains(boyfriendChar.curCharacter);
+		girlfriendText.visible = !noGfChar.contains(boyfriendChar.curCharacter);
+		iconGF.visible = !noGfChar.contains(boyfriendChar.curCharacter);
+		
+		if (noGfChar.contains(boyfriendChar.curCharacter)) {
+			changeInfoImg.loadGraphic(Paths.image('charselect/changeInfoNoGF'));
+			changeInfoImg.y = FlxG.height - changeInfoImg.height / 2;
+		} else {
+			changeInfoImg.loadGraphic(Paths.image('charselect/changeInfo'));
+			changeInfoImg.y = FlxG.height - changeInfoImg.height;
 		}
 	}
 	
@@ -373,18 +398,6 @@ class CharacterSelectState extends MusicBeatState
 		}});
 	}
 	
-	function updateGfStuff()
-	{
-		girlfriendChar.visible = !noGfChar.contains(boyfriendChar.curCharacter);
-		girlfriendText.visible = !noGfChar.contains(boyfriendChar.curCharacter);
-		iconGF.visible = !noGfChar.contains(boyfriendChar.curCharacter);
-		
-		if (noGfChar.contains(boyfriendChar.curCharacter))
-			changeInfoImg.loadGraphic(Paths.image('charselect/changeInfoNoGF'));
-		else
-			changeInfoImg.loadGraphic(Paths.image('charselect/changeInfo'));
-	}
-	
 	function changeBoyfriend(beep:Int = 0)
 	{
 		curBF += beep;
@@ -398,7 +411,7 @@ class CharacterSelectState extends MusicBeatState
 			curBF = 0;
 		
 		UpdateBF();
-		updateGfStuff();
+		updateGfUI();
 	}
 	
 	function changeBoyfriendForm(beep:Int = 0)
@@ -413,7 +426,7 @@ class CharacterSelectState extends MusicBeatState
 			curFormBF = 0;
 		
 		UpdateBF();
-		updateGfStuff();
+		updateGfUI();
 	}
 	
 	function changeGirlfriend(ahmp:Int = 0)
@@ -449,7 +462,8 @@ class CharacterSelectState extends MusicBeatState
 	var iconOffseet:Float = 85;
 	
 	public function UpdateBF()
-	{		
+	{
+		noMorePresses = true;
 		if (boyfriendChar != null) {
 			remove(boyfriendChar);
 			iconBF.x -= (boyfriendText.textField.textWidth / 2) + iconOffseet;
@@ -463,10 +477,12 @@ class CharacterSelectState extends MusicBeatState
 		boyfriendChar.y += boyfriendChar.charOffset[1];
 		insert(members.indexOf(overlay), boyfriendChar);
 		iconBF.playAnimation(boyfriendData[curBF].names[curFormBF]);
+		noMorePresses = false;
 	}
 	
 	public function UpdateGF()
-	{		
+	{
+		noMorePresses = true;
 		if (girlfriendChar != null) {
 			remove(girlfriendChar);
 			iconGF.x -= (girlfriendText.textField.textWidth / 2) + iconOffseet;
@@ -480,6 +496,7 @@ class CharacterSelectState extends MusicBeatState
 		girlfriendChar.y += girlfriendChar.charOffset[1];
 		insert(members.indexOf(boyfriendChar), girlfriendChar);
 		iconGF.playAnimation(girlfriendData[curGF].names[curFormGF]);
+		noMorePresses = false;
 	}
 		
 	public function endIt(e:FlxTimer = null)
