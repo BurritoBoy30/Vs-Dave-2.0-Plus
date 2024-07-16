@@ -242,7 +242,7 @@ class ChartingState extends MusicBeatState
 		{
 			isHornyOrNot = 'characterList';
 		}
-		var characters:Array<String> = CoolUtil.coolTextFile(Paths.txt('characterList'));
+		var characters:Array<String> = CoolUtil.coolTextFile(Paths.txt(isHornyOrNot));
 
 		var player1DropDown = new FlxUIDropDownMenu(10, 200, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{

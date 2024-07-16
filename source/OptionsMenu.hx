@@ -22,8 +22,9 @@ class OptionsMenu extends MusicBeatState
 	var controlsStrings:Array<String> = [
 		"Ghost Tapping " + (FlxG.save.data.newInput ? "On" : "Off"),
 		(FlxG.save.data.downscroll ? 'Downscroll' : 'Upscroll'),
-		"Accuracy " + (!FlxG.save.data.accuracyDisplay ? "off" : "on"),
-		"Change Keys"
+		"Accuracy " + (!FlxG.save.data.accuracyDisplay ? "Off" : "On"),
+		"Change Keys",
+		"Naughtiness " + (FlxG.save.data.hornyALL ? "On" : "Off"),
 	];
 
 	private var grpControls:FlxTypedGroup<ComicSansText>;
@@ -83,6 +84,9 @@ class OptionsMenu extends MusicBeatState
 					grpControls.members[curSelected].text = "Accuracy " + (!FlxG.save.data.accuracyDisplay ? "off" : "on");
 				case 3:
 					FlxG.switchState(new ChangeKeysState());
+				case 4:
+					FlxG.save.data.hornyALL = !FlxG.save.data.hornyALL;
+					grpControls.members[curSelected].text = "Naughtiness " + (FlxG.save.data.hornyALL ? "On" : "Off");
 			}
 		}
 	}

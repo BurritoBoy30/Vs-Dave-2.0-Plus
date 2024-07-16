@@ -719,6 +719,8 @@ class Character extends FlxSprite
 				addOffset('scared', -2, -17);
 
 				playAnim('danceRight');
+				
+				charOffset[1] = -5;
 			
 			case 'gf-hot-funny':
 				// GIRLFRIEND CODE
@@ -751,6 +753,8 @@ class Character extends FlxSprite
 				addOffset('scared', -2, -17);
 
 				playAnim('danceRight');
+				
+				charOffset[1] = -5;
 
 			case 'gf-hot-christmas':
 				tex = Paths.getSparrowAtlas('characters/girlfriends/GF_Bent_Christmas');
@@ -784,6 +788,7 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 				
 				charOffset[0] = -80;
+				charOffset[1] = -5;
 				
 			case 'gf-hot-standing':
 				tex = Paths.getSparrowAtlas('characters/girlfriends/GF_Funny_Boombox');
@@ -800,6 +805,36 @@ class Character extends FlxSprite
 				
 				charOffset[0] = 90;
 				charOffset[1] = 205;
+				
+			case 'tails-doll':
+				tex = Paths.getSparrowAtlas('characters/girlfriends/tailslol_edit');
+				frames = tex;
+				
+				addAnimation(0, 0, 'idle', 'tailslol idle');
+				addAnimation(0, 0, 'singUP', 'tailslol up');
+				addAnimation(0, 0, 'singLEFT', 'tailslol left');
+				addAnimation(0, 0, 'singRIGHT', 'tailslol right');
+				addAnimation(0, 0, 'singDOWN', 'tailslol down');
+				
+				playAnim('idle');
+				
+				charOffset[0] = -140;
+				charOffset[1] = -170;
+				
+			case 'skyblue':
+				tex = Paths.getSparrowAtlas('characters/girlfriends/SKYBLUE');
+				frames = tex;
+				
+				addAnimation(0, 0, 'idle', 'SKYBLUE IDLE');
+				addAnimation(0, 0, 'singUP', 'SKYBLUE UP');
+				addAnimation(0, 0, 'singLEFT', 'SKYBLUE LEFT');
+				addAnimation(0, 0, 'singRIGHT', 'SKYBLUE RIGHT');
+				addAnimation(0, 0, 'singDOWN', 'SKYBLUE DOWN');
+				
+				playAnim('idle');
+				
+				charOffset[0] = 20;
+				charOffset[1] = -70;
 		}
 
 		dance();
@@ -869,7 +904,7 @@ class Character extends FlxSprite
 			switch (curCharacter)
 			{
 				case 'gf' | 'gf-christmas' | 'gf-standing' | 'gf-pixel' | 'psyka' | 'psyka-christmas' | 'psyka-standing'  | 'cyan' |
-					'cyan-christmas' | 'gf-massive':
+					'cyan-christmas' | 'gf-massive' | 'gf-hot' | 'gf-hot-christmas' | 'gf-hot-funny' | 'gf-hot-standing':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;

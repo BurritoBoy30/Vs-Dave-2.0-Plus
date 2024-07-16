@@ -19,7 +19,7 @@ class HealthIcon extends FlxSprite
 	
 	var repeatingIcons:Array<Dynamic> = [
 		['bf', 'bf-christmas'],
-		['gf', 'gf-christmas', 'gf-standing', 'gf-player'],
+		['gf', 'gf-christmas', 'gf-standing', 'gf-player' , 'gf-hot', 'gf-hot-christmas', 'gf-hot-funny', 'gf-hot-standing'],
 		['psyka', 'psyka-christmas', 'psyka-standing'],
 		['cyan', 'cyan-christmas'],
 		['dave', 'dave-annoyed', 'dave-splitathon'],
@@ -76,6 +76,7 @@ class HealthIcon extends FlxSprite
 		addIcon('bambi-angey', [40, 41]);
 		addIcon('dave-alpha', [42, 43]);
 		addIcon('bf-with-cyan', [44, 45]);
+		addIcon('tails-doll', [46, 47]);
 		
 		playAnimation(char);
 		scrollFactor.set();

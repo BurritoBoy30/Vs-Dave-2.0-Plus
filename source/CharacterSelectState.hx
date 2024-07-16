@@ -41,6 +41,7 @@ class CharacterSelectState extends MusicBeatState
 	var changeInfoImg:FlxSprite;
 	var saveBox:FlxSprite;
 	var loadBox:FlxSprite;
+	var tailsBox:FlxSprite;
 	var hornyGfBG:FlxSprite;
 	var hornyGfBOX:FlxUICheckBox;
 	
@@ -52,6 +53,8 @@ class CharacterSelectState extends MusicBeatState
 	public static var noGfChar:Array<String> = ['bf-with-gf', 'bf-with-cyan'];
 	
 	public var noMorePresses:Bool = false;
+	
+	var isTails:Bool = false;
 	
 	override function create()
 	{
@@ -65,8 +68,9 @@ class CharacterSelectState extends MusicBeatState
 		if (FlxG.save.data.hornyGF)
 		{
 			girlfriendData = [
-				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-pixel'], ["Hot Girlfriend", "Hot Girlfriend (Sex Mod)", "Hot Girlfriend (Christmas)", "Hot Girlfriend (Standing)"]),
-				new SelectableChar(['gf-massive'], ["Massive Girlfriend"])
+				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing'], ["Hot Girlfriend", "Hot Girlfriend (Sex Mod)", "Hot Girlfriend (Christmas)", "Hot Girlfriend (Standing)"]),
+				new SelectableChar(['gf-massive'], ["Massive Girlfriend"]),
+				new SelectableChar(['skyblue'], ["Skyblue"])
 			];
 		}
 		else
@@ -151,12 +155,6 @@ class CharacterSelectState extends MusicBeatState
 		
 		hornyGfBOX = new FlxUICheckBox(hornyGfBG.x + (hornyGfBG.width / 1.5), hornyGfBG.y, Paths.image('charselect/hornygf_box'), Paths.image('charselect/hornygf_boxCheck'), "", 100);
 		hornyGfBOX.checked = FlxG.save.data.hornyGF;
-		hornyGfBOX.callback = function()
-		{
-			FlxG.save.data.hornyGF = !FlxG.save.data.hornyGF;
-			updateGfListing();
-			UpdateGF();
-		};
 		hornyGfBOX.boxAntialias = true;
 		add(hornyGfBOX);
 		hornyGfBOX.cameras = [camHUD];
@@ -170,6 +168,11 @@ class CharacterSelectState extends MusicBeatState
 		saveBox.antialiasing = true;
 		add(saveBox);
 		saveBox.cameras = [camHUD];
+		
+		tailsBox = new FlxSprite(saveBox.x, saveBox.y - saveBox.height - 5).loadGraphic(Paths.image('charselect/tailsdoll_box'));
+		tailsBox.antialiasing = true;
+		add(tailsBox);
+		tailsBox.cameras = [camHUD];
 		
 		iconBF = new HealthIcon(boyfriendData[curBF].names[curFormBF], false);
 		iconBF.y = boyfriendText.y - 10;
@@ -203,6 +206,8 @@ class CharacterSelectState extends MusicBeatState
 		
 		super.update(elapsed);
 		
+		tailsBox.visible = FlxG.save.data.hornyGF;
+		
 		if (!selectedCharacter)
 		{			
 			if (mouseOverButton(saveBox, 110, 52))
@@ -214,12 +219,19 @@ class CharacterSelectState extends MusicBeatState
 					isPressed(saveBox);
 					if (!noTextPop)
 					{
-						popUpText('Saved!');
-						
-						FlxG.save.data.savedBfData = curBF;	
-						FlxG.save.data.savedBfFormData = curFormBF;
-						FlxG.save.data.savedGfData = curGF;
-						FlxG.save.data.savedGfFormData = curFormGF;
+						if (!isTails)
+						{
+							popUpText('Tails Doll is On!');
+						}
+						else if (!isTails)
+						{
+							popUpText('Saved!');
+							
+							FlxG.save.data.savedBfData = curBF;	
+							FlxG.save.data.savedBfFormData = curFormBF;
+							FlxG.save.data.savedGfData = curGF;
+							FlxG.save.data.savedGfFormData = curFormGF;
+						}
 					}
 				}
 			} 
@@ -235,21 +247,62 @@ class CharacterSelectState extends MusicBeatState
 					isPressed(loadBox);
 					if (!noTextPop)
 					{
-						popUpText('Loaded!');
-						
-						curBF = FlxG.save.data.savedBfData;	
-						curFormBF = FlxG.save.data.savedBfFormData;
-						curGF = FlxG.save.data.savedGfData;
-						curFormGF = FlxG.save.data.savedGfFormData;
-										
-						UpdateBF();
-						UpdateGF();	
-						updateGfUI();
-						trace('fully loaded');
+						if (!isTails)
+						{
+							popUpText('Tails Doll is On!');
+						}
+						else if (!isTails)
+						{
+							popUpText('Loaded!');
+							curBF = FlxG.save.data.savedBfData;	
+							curFormBF = FlxG.save.data.savedBfFormData;
+							curGF = FlxG.save.data.savedGfData;
+							curFormGF = FlxG.save.data.savedGfFormData;
+											
+							UpdateBF();
+							UpdateGF();	
+							updateGfUI();
+							trace('fully loaded');
+						}
 					}
 				}
 			} else
 				loadBox.color = FlxColor.WHITE;
+				
+			if (mouseOverButton(tailsBox, 110, 41) && tailsBox.visible)
+			{
+				tailsBox.color = 0xFF878787;
+				
+				if (FlxG.mouse.justPressed && !buttonPressed)
+				{
+					isPressed(tailsBox);
+					isTails = !isTails;
+					
+					if(isTails)
+						throwTailsDoll();
+					else if (!isTails)
+						UpdateGF();
+						
+					updateGfUI();
+				}
+			} 
+			else
+				tailsBox.color = FlxColor.WHITE;
+				
+			hornyGfBOX.callback = function()
+			{
+				if (!isTails)
+				{
+					FlxG.save.data.hornyGF = !FlxG.save.data.hornyGF;
+					updateGfListing();
+					UpdateGF();
+				}
+				else
+				{
+					popUpText('Tails Doll is On!');
+					hornyGfBOX.checked = true;
+				}
+			};
 			
 			if (!noMorePresses)
 			{
@@ -263,7 +316,7 @@ class CharacterSelectState extends MusicBeatState
 				if (FlxG.keys.justPressed.DOWN)
 					changeBoyfriendForm(1);
 				
-				if (!noGfChar.contains(boyfriendChar.curCharacter))
+				if (!noGfChar.contains(boyfriendChar.curCharacter) || !isTails)
 				{
 					if (FlxG.keys.justPressed.A)
 						changeGirlfriend(-1);
@@ -289,8 +342,10 @@ class CharacterSelectState extends MusicBeatState
 				
 				if (!noGfChar.contains(boyfriendChar.curCharacter))
 				{
+					var singleBop:Array<String> = ['skyblue', 'tails-doll'];
+					
 					var cheerAnimation:Bool = girlfriendChar.animation.getByName("cheer") != null; 
-					girlfriendChar.playAnim(cheerAnimation ? 'cheer' : 'danceLeft', true);
+					girlfriendChar.playAnim(singleBop.contains(girlfriendChar.curCharacter) ? 'singUP' : cheerAnimation ? 'cheer' : 'danceLeft', true);
 				}
 				
 				FlxG.sound.music.stop();
@@ -316,7 +371,7 @@ class CharacterSelectState extends MusicBeatState
 				boyfriendChar.dance();
 		}
 		
-		var singleBop:Array<String> = ['skyblue'];
+		var singleBop:Array<String> = ['skyblue', 'tails-doll'];
 		
 		if (girlfriendChar != null && curBeat % (singleBop.contains(girlfriendChar.curCharacter) ? 2 : 1) == 0)
 			girlfriendChar.dance();
@@ -335,8 +390,9 @@ class CharacterSelectState extends MusicBeatState
 		if (FlxG.save.data.hornyGF)
 		{
 			girlfriendData = [
-				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-pixel'], ["Hot Girlfriend", "Hot Girlfriend (Sex Mod)", "Hot Girlfriend (Christmas)", "Hot Girlfriend (Standing)"]),
-				new SelectableChar(['gf-massive'], ["Massive Girlfriend"])
+				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing'], ["Hot Girlfriend", "Hot Girlfriend (Sex Mod)", "Hot Girlfriend (Christmas)", "Hot Girlfriend (Standing)"]),
+				new SelectableChar(['gf-massive'], ["Massive Girlfriend"]),
+				new SelectableChar(['skyblue'], ["Skyblue"])
 			];
 		}
 		else
@@ -355,7 +411,7 @@ class CharacterSelectState extends MusicBeatState
 		girlfriendText.visible = !noGfChar.contains(boyfriendChar.curCharacter);
 		iconGF.visible = !noGfChar.contains(boyfriendChar.curCharacter);
 		
-		if (noGfChar.contains(boyfriendChar.curCharacter)) {
+		if (noGfChar.contains(boyfriendChar.curCharacter) || isTails) {
 			changeInfoImg.loadGraphic(Paths.image('charselect/changeInfoNoGF'));
 			changeInfoImg.y = FlxG.height - changeInfoImg.height / 2;
 		} else {
@@ -498,12 +554,27 @@ class CharacterSelectState extends MusicBeatState
 		iconGF.playAnimation(girlfriendData[curGF].names[curFormGF]);
 		noMorePresses = false;
 	}
+	
+	public function throwTailsDoll()
+	{
+		remove(girlfriendChar);
+		iconGF.x -= (girlfriendText.textField.textWidth / 2) + iconOffseet;
+		
+		girlfriendText.text = 'Busty Tails Doll';
+		iconGF.x += (girlfriendText.textField.textWidth / 2) + iconOffseet;
+		
+		girlfriendChar = new Character(400 + shitOffset[0], 130 + shitOffset[1], 'tails-doll');
+		girlfriendChar.x += girlfriendChar.charOffset[0];
+		girlfriendChar.y += girlfriendChar.charOffset[1];
+		insert(members.indexOf(boyfriendChar), girlfriendChar);
+		iconGF.playAnimation('tails-doll');
+	}
 		
 	public function endIt(e:FlxTimer = null)
 	{
 		trace("ENDING");
 		PlayState.boyfriendOverride = boyfriendData[curBF].names[curFormBF];
-		PlayState.girlfriendOverride = girlfriendData[curGF].names[curFormGF];
+		PlayState.girlfriendOverride = isTails ? 'tails-doll' : girlfriendData[curGF].names[curFormGF];
 		LoadingState.loadAndSwitchState(new PlayState());
 	}
 }
