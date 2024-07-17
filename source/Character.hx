@@ -826,10 +826,10 @@ class Character extends FlxSprite
 				frames = tex;
 				
 				addAnimation(0, 0, 'idle', 'SKYBLUE IDLE');
-				addAnimation(0, 0, 'singUP', 'SKYBLUE UP');
-				addAnimation(0, 0, 'singLEFT', 'SKYBLUE LEFT');
-				addAnimation(0, 0, 'singRIGHT', 'SKYBLUE RIGHT');
-				addAnimation(0, 0, 'singDOWN', 'SKYBLUE DOWN');
+				addAnimation(-55, 92, 'singUP', 'SKYBLUE UP');
+				addAnimation(271, -140, 'singLEFT', 'SKYBLUE LEFT');
+				addAnimation(-191, 28, 'singRIGHT', 'SKYBLUE RIGHT');
+				addAnimation(-29, -181, 'singDOWN', 'SKYBLUE DOWN');
 				
 				playAnim('idle');
 				

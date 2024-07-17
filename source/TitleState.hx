@@ -41,11 +41,7 @@ class TitleState extends MusicBeatState
 	var wackyImage:FlxSprite;
 
 	override public function create():Void
-	{
-		#if polymod
-		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
-		#end
-		
+	{		
 		PlayerSettings.init();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
@@ -55,7 +51,6 @@ class TitleState extends MusicBeatState
 		super.create();
 			
 		FlxG.save.bind('funkin', 'ninjamuffin99');
-		
 		SaveDataHandler.initSave();
 			
 		Highscore.load();
@@ -115,9 +110,11 @@ class TitleState extends MusicBeatState
 			// music.loadStream(Paths.music('freakyMenu'));
 			// FlxG.sound.list.add(music);
 			// music.play();
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+			if(FlxG.sound.music == null) {
+				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 
-			FlxG.sound.music.fadeIn(4, 0, 0.7);
+				FlxG.sound.music.fadeIn(4, 0, 0.7);
+			}
 		}
 
 		Conductor.changeBPM(150);
@@ -171,7 +168,7 @@ class TitleState extends MusicBeatState
 		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		credGroup.add(blackScreen);
 
-		credTextShit = new Alphabet(0, 0, "ninjamuffin99\nPhantomArcade\nkawaisprite\nevilsk8er", true);
+		credTextShit = new Alphabet(0, 0, "", true);
 		credTextShit.screenCenter();
 
 		// credTextShit.alignment = CENTER;
@@ -228,43 +225,24 @@ class TitleState extends MusicBeatState
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
 
-		#if mobile
-		for (touch in FlxG.touches.list)
+		if (!transitioning && skippedIntro)
 		{
-			if (touch.justPressed)
+			if (pressedEnter)
 			{
-				pressedEnter = true;
+				if(titleText != null) titleText.animation.play('press');
+
+				FlxG.camera.flash(FlxColor.WHITE, 1);
+				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+
+				transitioning = true;
+				// FlxG.sound.music.stop();
+
+				new FlxTimer().start(2, function(tmr:FlxTimer)
+				{
+					FlxG.switchState(new MainMenuState()); // fail but we go anyway
+					closedState = true;
+				});
 			}
-		}
-		#end
-
-		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
-
-		if (gamepad != null)
-		{
-			if (gamepad.justPressed.START)
-				pressedEnter = true;
-
-			#if switch
-			if (gamepad.justPressed.B)
-				pressedEnter = true;
-			#end
-		}
-
-		if (pressedEnter && !transitioning && skippedIntro)
-		{
-			titleText.animation.play('press');
-
-			FlxG.camera.flash(FlxColor.WHITE, 1);
-			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
-
-			transitioning = true;
-			// FlxG.sound.music.stop();
-
-			new FlxTimer().start(2, function(tmr:FlxTimer)
-			{
-				FlxG.switchState(new MainMenuState()); // fail but we go anyway
-			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
 
@@ -305,69 +283,77 @@ class TitleState extends MusicBeatState
 			textGroup.remove(textGroup.members[0], true);
 		}
 	}
+	
+	private var sickBeats:Int = 0; //Basically curBeat but won't be skipped if you hold the tab or resize the screen
+	private static var closedState:Bool = false;
 
 	override function beatHit()
 	{
 		super.beatHit();
 
-		logoBl.animation.play('bump', true);
-		danceLeft = !danceLeft;
+		if(logoBl != null) 
+			logoBl.animation.play('bump');
 
-		if (danceLeft)
-			gfDance.animation.play('danceRight');
-		else
-			gfDance.animation.play('danceLeft');
+		if(gfDance != null) {
+			danceLeft = !danceLeft;
 
-		FlxG.log.add(curBeat);
+			if (danceLeft)
+				gfDance.animation.play('danceRight');
+			else
+				gfDance.animation.play('danceLeft');
+		}
 
-		switch (curBeat)
-		{
-			case 1:
-				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
-			// credTextShit.visible = true;
-			case 3:
-				addMoreText('present');
-			// credTextShit.text += '\npresent...';
-			// credTextShit.addText();
-			case 4:
-				deleteCoolText();
-			// credTextShit.visible = false;
-			// credTextShit.text = 'In association \nwith';
-			// credTextShit.screenCenter();
-			case 5:
-				createCoolText(['Dave Engine Plus', 'by']);
-			case 7:
-				addMoreText('BurritoBoy30');
-			// credTextShit.text += '\nNewgrounds';
-			case 8:
-				deleteCoolText();
-				ngSpr.visible = false;
-			// credTextShit.visible = false;
+		if(!closedState) {
+			sickBeats++;
+			switch (sickBeats)
+			{
+				case 1:
+					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
+				// credTextShit.visible = true;
+				case 3:
+					addMoreText('present');
+				// credTextShit.text += '\npresent...';
+				// credTextShit.addText();
+				case 4:
+					deleteCoolText();
+				// credTextShit.visible = false;
+				// credTextShit.text = 'In association \nwith';
+				// credTextShit.screenCenter();
+				case 5:
+					createCoolText(['Dave Engine Plus', 'by']);
+				case 7:
+					addMoreText('BurritoBoy30');
+				// credTextShit.text += '\nNewgrounds';
+				case 8:
+					deleteCoolText();
+					ngSpr.visible = false;
+				// credTextShit.visible = false;
 
-			// credTextShit.text = 'Shoutouts Tom Fulp';
-			// credTextShit.screenCenter();
-			case 9:
-				createCoolText([curWacky[0]]);
-			// credTextShit.visible = true;
-			case 11:
-				addMoreText(curWacky[1]);
-			// credTextShit.text += '\nlmao';
-			case 12:
-				deleteCoolText();
-			// credTextShit.visible = false;
-			// credTextShit.text = "Friday";
-			// credTextShit.screenCenter();
-			case 13:
-				addMoreText('Friday');
-			// credTextShit.visible = true;
-			case 14:
-				addMoreText('Night');
-			// credTextShit.text += '\nNight';
-			case 15:
-				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+				// credTextShit.text = 'Shoutouts Tom Fulp';
+				// credTextShit.screenCenter();
+				case 9:
+					createCoolText([curWacky[0]]);
+				// credTextShit.visible = true;
+				case 11:
+					addMoreText(curWacky[1]);
+				// credTextShit.text += '\nlmao';
+				case 12:
+					deleteCoolText();
+				// credTextShit.visible = false;
+				// credTextShit.text = "Friday";
+				// credTextShit.screenCenter();
+				case 13:
+					addMoreText('Friday');
+				// credTextShit.visible = true;
+				case 14:
+					addMoreText('Night');
+				// credTextShit.text += '\nNight';
+				case 15:
+					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
 
-			case 16:
-				skipIntro();
+				case 16:
+					skipIntro();
+			}
 		}
 	}
 

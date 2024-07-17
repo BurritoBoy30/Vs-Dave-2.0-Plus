@@ -102,6 +102,7 @@ class PlayState extends MusicBeatState
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
 	var timeTxt:FlxText;
+	var timeLabelTxt:FlxText;
 	var songPercent:Float = 0;
 
 	private var generatedMusic:Bool = false;
@@ -122,6 +123,7 @@ class PlayState extends MusicBeatState
 	var talking:Bool = true;
 	var songScore:Int = 0;
 	var scoreTxt:FlxText;
+	var kadeEngineWatermark:FlxText;
 	
 	public static var campaignScore:Int = 0;
 
@@ -428,7 +430,7 @@ class PlayState extends MusicBeatState
 		if (FlxG.save.data.downscroll)
 			strumLine.y = FlxG.height - 165;
 		
-		timeTxt = new FlxText((FlxG.width / 2.28), 65, FlxG.width, "", 32);
+		timeTxt = new FlxText(FlxG.width / 2.28, 65, FlxG.width, "", 32);
 		timeTxt.setFormat(Paths.font("comic.ttf"), 45, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.antialiasing = true;
@@ -436,6 +438,14 @@ class PlayState extends MusicBeatState
 		timeTxt.borderSize = 2;
 		if(FlxG.save.data.downScroll) timeTxt.y = FlxG.height - 45;
 		add(timeTxt);
+		
+		timeLabelTxt = new FlxText(timeTxt.x, timeTxt.y - 20, FlxG.width, "Time", 32);
+		timeLabelTxt.setFormat(Paths.font("comic.ttf"), 25, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeLabelTxt.scrollFactor.set();
+		timeLabelTxt.antialiasing = true;
+		timeLabelTxt.alpha = 0;
+		timeLabelTxt.borderSize = 2;
+		add(timeLabelTxt);
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
@@ -492,16 +502,20 @@ class PlayState extends MusicBeatState
 		add(iconP2);
 
 		// Add Kade Engine watermark
-		var kadeEngineWatermark = new FlxText(4, healthBarBG.y + 50 ,0,SONG.song + " - Dave Engine+ (KE " + MainMenuState.kadeEngineVer + ")", 16);
-		kadeEngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		kadeEngineWatermark = new FlxText(4, healthBarBG.y + 43 ,0,SONG.song + " - Dave Engine+ (KE " + MainMenuState.kadeEngineVer + ")", 16);
+		kadeEngineWatermark.setFormat(Paths.font("comic.ttf"), 18, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
+		kadeEngineWatermark.borderSize = 1.5;
+		kadeEngineWatermark.antialiasing = true;
 		add(kadeEngineWatermark);
 
-		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 150, healthBarBG.y + 50, 0, "", 20);
+		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 150, healthBarBG.y + 43, 0, "", 20);
 		if (!FlxG.save.data.accuracyDisplay)
 			scoreTxt.x = healthBarBG.x + healthBarBG.width / 2;
-		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		scoreTxt.setFormat(Paths.font("comic.ttf"), 18, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
+		scoreTxt.borderSize = 1.5;
+		scoreTxt.antialiasing = true;
 		add(scoreTxt);
 
 		strumLineNotes.cameras = [camHUD];
@@ -513,6 +527,7 @@ class PlayState extends MusicBeatState
 		kadeEngineWatermark.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
+		timeLabelTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
@@ -704,6 +719,7 @@ class PlayState extends MusicBeatState
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(timeLabelTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 	}
 
 	var debugNum:Int = 0;
@@ -1275,6 +1291,7 @@ class PlayState extends MusicBeatState
 	function endSong():Void
 	{
 		timeTxt.visible = false;
+		timeLabelTxt.visible = false;
 		canPause = false;
 		updateTime = false;
 		
@@ -1878,13 +1895,13 @@ class PlayState extends MusicBeatState
 		var funny:Float = (healthBar.percent * 0.01) + 0.01;
 
 		//health icon bounce but epic
-		iconP1.setGraphicSize(Std.int(iconP1.width + (50 * funny)),Std.int(iconP2.height - (25 * funny)));
-		iconP2.setGraphicSize(Std.int(iconP2.width + (50 * (2 - funny))),Std.int(iconP2.height - (25 * (2 - funny))));
+		iconP1.setGraphicSize(Std.int(iconP1.width + (50 * funny)), Std.int(iconP2.height - (25 * funny)));
+		iconP2.setGraphicSize(Std.int(iconP2.width + (50 * (2 - funny))), Std.int(iconP2.height - (25 * (2 - funny))));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
 
-		if (curBeat % gfSpeed == 0)
+		if (curBeat % (gfSpeed + (CharacterSelectState.singleBop.contains(gf.curCharacter) ? 1 : 0)) == 0)
 		{
 			gf.dance();
 		}

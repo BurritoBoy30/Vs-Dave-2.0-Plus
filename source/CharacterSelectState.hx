@@ -45,12 +45,16 @@ class CharacterSelectState extends MusicBeatState
 	var hornyGfBG:FlxSprite;
 	var hornyGfBOX:FlxUICheckBox;
 	
+	var saveOffset:Array<Float>;
+	var loadOffset:Array<Float>;
+	
 	var buttonPressed:Bool = false;
 	var noTextPop:Bool = false;
 	
 	var overlay:FlxSprite;
 	
 	public static var noGfChar:Array<String> = ['bf-with-gf', 'bf-with-cyan'];
+	public static var singleBop:Array<String> = ['skyblue', 'tails-doll'];
 	
 	public var noMorePresses:Bool = false;
 	
@@ -65,7 +69,7 @@ class CharacterSelectState extends MusicBeatState
 			new SelectableChar(['bf-with-gf', 'bf-with-cyan'], ["Boyfriend w/ Girlfriend", "Boyfriend w/ Cyan"]) 
 		];
 		
-		if (FlxG.save.data.hornyGF)
+		if (FlxG.save.data.hornyGF && FlxG.save.data.hornyALL)
 		{
 			girlfriendData = [
 				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing'], ["Hot Girlfriend", "Hot Girlfriend (Sex Mod)", "Hot Girlfriend (Christmas)", "Hot Girlfriend (Standing)"]),
@@ -159,15 +163,33 @@ class CharacterSelectState extends MusicBeatState
 		add(hornyGfBOX);
 		hornyGfBOX.cameras = [camHUD];
 		
-		loadBox = new FlxSprite(hornyGfBG.x, hornyGfBG.y - 43).loadGraphic(Paths.image('charselect/loadchar_box'));
+		hornyGfBG.visible = FlxG.save.data.hornyALL;
+		hornyGfBOX.visible = FlxG.save.data.hornyALL;
+		
+		loadBox = new FlxSprite(hornyGfBG.x, 0).loadGraphic(Paths.image('charselect/loadchar_box'));
 		loadBox.antialiasing = true;
 		add(loadBox);
 		loadBox.cameras = [camHUD];
 		
-		saveBox = new FlxSprite(loadBox.x, loadBox.y - loadBox.height - 5).loadGraphic(Paths.image('charselect/savechar_box'));
+		saveBox = new FlxSprite(loadBox.x, 0).loadGraphic(Paths.image('charselect/savechar_box'));
 		saveBox.antialiasing = true;
 		add(saveBox);
 		saveBox.cameras = [camHUD];
+		
+		if (!FlxG.save.data.hornyALL)
+		{
+			loadBox.y = FlxG.height - loadBox.height - 5;
+			saveOffset = [110, 82];
+			loadOffset = [110, 100];
+		}
+		else
+		{
+			loadBox.y = hornyGfBG.y - 43;
+			saveOffset = [110, 52];
+			loadOffset = [110, 67];
+		}
+		
+		saveBox.y = loadBox.y - loadBox.height - 5;
 		
 		tailsBox = new FlxSprite(saveBox.x, saveBox.y - saveBox.height - 5).loadGraphic(Paths.image('charselect/tailsdoll_box'));
 		tailsBox.antialiasing = true;
@@ -206,11 +228,11 @@ class CharacterSelectState extends MusicBeatState
 		
 		super.update(elapsed);
 		
-		tailsBox.visible = FlxG.save.data.hornyGF;
+		tailsBox.visible = FlxG.save.data.hornyGF && FlxG.save.data.hornyALL;
 		
 		if (!selectedCharacter)
 		{			
-			if (mouseOverButton(saveBox, 110, 52))
+			if (mouseOverButton(saveBox, saveOffset[0], saveOffset[1]))
 			{
 				saveBox.color = 0xFF878787;
 				
@@ -219,7 +241,7 @@ class CharacterSelectState extends MusicBeatState
 					isPressed(saveBox);
 					if (!noTextPop)
 					{
-						if (!isTails)
+						if (isTails)
 						{
 							popUpText('Tails Doll is On!');
 						}
@@ -238,7 +260,7 @@ class CharacterSelectState extends MusicBeatState
 			else
 				saveBox.color = FlxColor.WHITE;
 			
-			if (mouseOverButton(loadBox, 110, 67))
+			if (mouseOverButton(loadBox, loadOffset[0], loadOffset[1]))
 			{
 				loadBox.color = 0xFF878787;
 				
@@ -247,7 +269,7 @@ class CharacterSelectState extends MusicBeatState
 					isPressed(loadBox);
 					if (!noTextPop)
 					{
-						if (!isTails)
+						if (isTails)
 						{
 							popUpText('Tails Doll is On!');
 						}
@@ -289,20 +311,23 @@ class CharacterSelectState extends MusicBeatState
 			else
 				tailsBox.color = FlxColor.WHITE;
 				
-			hornyGfBOX.callback = function()
+			if (FlxG.save.data.hornyALL)
 			{
-				if (!isTails)
+				hornyGfBOX.callback = function()
 				{
-					FlxG.save.data.hornyGF = !FlxG.save.data.hornyGF;
-					updateGfListing();
-					UpdateGF();
-				}
-				else
-				{
-					popUpText('Tails Doll is On!');
-					hornyGfBOX.checked = true;
-				}
-			};
+					if (!isTails)
+					{
+						FlxG.save.data.hornyGF = !FlxG.save.data.hornyGF;
+						updateGfListing();
+						UpdateGF();
+					}
+					else
+					{
+						popUpText('Tails Doll is On!');
+						hornyGfBOX.checked = true;
+					}
+				};
+			}
 			
 			if (!noMorePresses)
 			{
@@ -336,14 +361,14 @@ class CharacterSelectState extends MusicBeatState
 			if (FlxG.keys.justPressed.ENTER)
 			{
 				selectedCharacter = true;
+				boyfriendChar.canDance = false;
+				girlfriendChar.canDance = false;
 				
 				var heyAnimation:Bool = boyfriendChar.animation.getByName("hey") != null; 
 				boyfriendChar.playAnim(heyAnimation ? 'hey' : 'singUP', true);
 				
 				if (!noGfChar.contains(boyfriendChar.curCharacter))
 				{
-					var singleBop:Array<String> = ['skyblue', 'tails-doll'];
-					
 					var cheerAnimation:Bool = girlfriendChar.animation.getByName("cheer") != null; 
 					girlfriendChar.playAnim(singleBop.contains(girlfriendChar.curCharacter) ? 'singUP' : cheerAnimation ? 'cheer' : 'danceLeft', true);
 				}
@@ -356,9 +381,9 @@ class CharacterSelectState extends MusicBeatState
 		}
 	}
 	
-	function mouseOverButton(target:FlxSprite, buttonX:Float, buttonY:Float)
+	function mouseOverButton(target:FlxSprite, buttonX:Float, buttonY:Float, fuckingshit:Float = 3)
 	{
-		return (FlxG.mouse.x > target.x + buttonX && FlxG.mouse.x < target.x + target.width + (buttonX * 1.9))	&& (FlxG.mouse.y > target.y + buttonY && FlxG.mouse.y < target.y + target.height + (buttonY * 1.2) + 3);
+		return (FlxG.mouse.x > target.x + buttonX && FlxG.mouse.x < target.x + target.width + (buttonX * 1.9))	&& (FlxG.mouse.y > target.y + buttonY && FlxG.mouse.y < target.y + target.height + (buttonY * 1.2) + fuckingshit);
 	}
 	
 	override function beatHit()
@@ -370,8 +395,6 @@ class CharacterSelectState extends MusicBeatState
 			if (boyfriendChar != null)
 				boyfriendChar.dance();
 		}
-		
-		var singleBop:Array<String> = ['skyblue', 'tails-doll'];
 		
 		if (girlfriendChar != null && curBeat % (singleBop.contains(girlfriendChar.curCharacter) ? 2 : 1) == 0)
 			girlfriendChar.dance();
