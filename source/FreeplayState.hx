@@ -40,7 +40,7 @@ class FreeplayState extends MusicBeatState
 	
 	private var CurrentSongIcon:FlxSprite;
 
-	private var AllPossibleSongs:Array<String> = ["Dave","Joke","Extra"];
+	private var AllPossibleSongs:Array<String> = ["Dave","Golden","Joke","Extra"];
 
 	private var CurrentPack:Int = 0;
 
@@ -91,7 +91,10 @@ class FreeplayState extends MusicBeatState
 					[188, 105, 113]
 				);
 				addWeek(['Splitathon'],3,['the-duo'], ['Hard'], [230]);
-				
+			
+			case 'golden':
+				addWeek(['Disability'], 4 ,['dave-split-3d'], ['Hard'], [182]);
+				addWeek(['OG'], 4 ,['dave-alpha'], ['Extreme'], [110]);
 			case 'joke':
 				addWeek(['Cheating'], 2, ['bambi-3d'], ['Stupid'], [125]);
 			

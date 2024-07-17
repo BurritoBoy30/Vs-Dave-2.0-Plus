@@ -12,7 +12,7 @@ class HealthIcon extends FlxSprite
 	 */
 	public var sprTracker:FlxSprite;
 	
-	var noAa:Array<String> = ['dave-angey', 'bambi-3d', 'bf-pixel', 'gf-pixel'];
+	var noAa:Array<String> = ['dave-angey', 'bambi-3d', 'bf-pixel', 'gf-pixel', 'dave-split-3d'];
 	var isReallyPlayer:Bool = false;
 	
 	var iconList:String = '';
@@ -77,6 +77,7 @@ class HealthIcon extends FlxSprite
 		addIcon('dave-alpha', [42, 43]);
 		addIcon('bf-with-cyan', [44, 45]);
 		addIcon('tails-doll', [46, 47]);
+		addIcon('dave-split-3d', [48, 49]);
 		
 		playAnimation(char);
 		scrollFactor.set();

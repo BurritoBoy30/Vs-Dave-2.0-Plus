@@ -244,10 +244,12 @@ class CharacterSelectState extends MusicBeatState
 						if (isTails)
 						{
 							popUpText('Tails Doll is On!');
+							FlxG.sound.play(Paths.sound('missnote1'));
 						}
 						else if (!isTails)
 						{
 							popUpText('Saved!');
+							FlxG.sound.play(Paths.sound('confirmMenu'));
 							
 							FlxG.save.data.savedBfData = curBF;	
 							FlxG.save.data.savedBfFormData = curFormBF;
@@ -272,10 +274,13 @@ class CharacterSelectState extends MusicBeatState
 						if (isTails)
 						{
 							popUpText('Tails Doll is On!');
+							FlxG.sound.play(Paths.sound('missnote1'));
 						}
 						else if (!isTails)
 						{
 							popUpText('Loaded!');
+							FlxG.sound.play(Paths.sound('confirmMenu'));
+							
 							curBF = FlxG.save.data.savedBfData;	
 							curFormBF = FlxG.save.data.savedBfFormData;
 							curGF = FlxG.save.data.savedGfData;
@@ -324,6 +329,7 @@ class CharacterSelectState extends MusicBeatState
 					else
 					{
 						popUpText('Tails Doll is On!');
+						FlxG.sound.play(Paths.sound('missnote1'));
 						hornyGfBOX.checked = true;
 					}
 				};
@@ -341,16 +347,16 @@ class CharacterSelectState extends MusicBeatState
 				if (FlxG.keys.justPressed.DOWN)
 					changeBoyfriendForm(1);
 				
-				if (!noGfChar.contains(boyfriendChar.curCharacter) || !isTails)
+				if (!noGfChar.contains(boyfriendChar.curCharacter))
 				{
-					if (FlxG.keys.justPressed.A)
+					if (FlxG.keys.justPressed.A && !isTails)
 						changeGirlfriend(-1);
-					if (FlxG.keys.justPressed.D)
+					if (FlxG.keys.justPressed.D && !isTails)
 						changeGirlfriend(1);
 					
-					if (FlxG.keys.justPressed.W)
+					if (FlxG.keys.justPressed.W && !isTails)
 						changeGirlfriendForm(-1);
-					if (FlxG.keys.justPressed.S)
+					if (FlxG.keys.justPressed.S && !isTails)
 						changeGirlfriendForm(1);
 				}
 			}
@@ -381,9 +387,10 @@ class CharacterSelectState extends MusicBeatState
 		}
 	}
 	
-	function mouseOverButton(target:FlxSprite, buttonX:Float, buttonY:Float, fuckingshit:Float = 3)
+	function mouseOverButton(target:FlxSprite, buttonX:Float, buttonY:Float)
 	{
-		return (FlxG.mouse.x > target.x + buttonX && FlxG.mouse.x < target.x + target.width + (buttonX * 1.9))	&& (FlxG.mouse.y > target.y + buttonY && FlxG.mouse.y < target.y + target.height + (buttonY * 1.2) + fuckingshit);
+		return (FlxG.mouse.x > target.x + buttonX && FlxG.mouse.x < target.x + target.width + (buttonX * 1.9))
+			&& (FlxG.mouse.y > target.y + buttonY && FlxG.mouse.y < target.y + target.height + (buttonY * 1.2) + 3);
 	}
 	
 	override function beatHit()
