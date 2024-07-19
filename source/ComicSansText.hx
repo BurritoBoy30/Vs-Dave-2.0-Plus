@@ -23,7 +23,7 @@ class ComicSansText extends FlxText
 		alignment = theAlingment;
 		borderStyle = FlxTextBorderStyle.OUTLINE;
 		borderColor = FlxColor.BLACK;
-		borderSize = 2;
+		borderSize = 4;
 	}
 	
 	override function update(elapsed:Float)
@@ -35,6 +35,8 @@ class ComicSansText extends FlxText
 			y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.40), 0.16);
 			x = FlxMath.lerp(x, (targetY * 20) + 90, 0.16);
 		}
+		
+		antialiasing = true;
 
 		super.update(elapsed);
 	}

@@ -11,6 +11,9 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class ChangeKeysState extends MusicBeatState
 {
+	var hornyBitchesString:Array<String> = ['jaiden1', 'jaiden2', 'chara', 'jessie', 'katzun', 'rebbeca', 'tabbles'];
+	var hornyBitches:FlxSprite;
+	
 	var curSelected:Int = 0;
 	
 	var keysText:FlxTypedGroup<FlxText>;
@@ -40,6 +43,40 @@ class ChangeKeysState extends MusicBeatState
 		menuBG.antialiasing = true;
 		add(menuBG);
 		
+		var bitchChance:Int = FlxG.random.int(0, hornyBitchesString.length - 1);
+		
+		hornyBitches = new FlxSprite(0, 0);
+		hornyBitches.frames = Paths.getSparrowAtlas('hornyshit/scarecorrode/' + hornyBitchesString[3], 'shared');
+		hornyBitches.animation.addByPrefix('idle', hornyBitchesString[3] + " idle", 15);
+		hornyBitches.animation.play('idle');
+			
+		/*
+		switch (bitchChance)
+		{	
+			case 0:
+				hornyBitches.setGraphicSize(Std.int(hornyBitches.width * 0.62));
+				hornyBitches.x = 310;
+				hornyBitches.y = -250;
+			case 1:
+				hornyBitches.setGraphicSize(Std.int(hornyBitches.width * 0.48));
+				hornyBitches.x = -520;
+				hornyBitches.y = -760;
+			case 2:
+				hornyBitches.setGraphicSize(Std.int(hornyBitches.width * 0.9));
+				hornyBitches.screenCenter(X);
+				hornyBitches.y = -40;
+				hornyBitches.animation.curAnim.frameRate = 10;
+			case 3:
+				hornyBitches.setGraphicSize(Std.int(hornyBitches.width * 0.8));
+				hornyBitches.x = 470;
+				hornyBitches.y = -90;
+		}
+		*/
+		
+		hornyBitches.color = 0xFFea71fd;
+		hornyBitches.antialiasing = true;
+		add(hornyBitches);
+		
 		minorTxtBG = new FlxSprite(30, 20).makeGraphic(FlxG.width - 60, 100, 0xFF000000);
 		minorTxtBG.alpha = 0.6;
 		add(minorTxtBG);
@@ -64,7 +101,7 @@ class ChangeKeysState extends MusicBeatState
 		for (i in 0...arrowKeys.length)
 		{
 			var theNotes:FlxSprite = new FlxSprite(0, (keyBindsTxtBG.y - 8) + (i * 140));
-			theNotes.frames = Paths.getSparrowAtlas('NOTE_assets', 'shared');
+			theNotes.frames = Paths.getSparrowAtlas('notes/NOTE_assets', 'shared');
 			theNotes.animation.addByPrefix('note', arrowKeys[i] + '0', 1);
 			theNotes.animation.play('note');
 			theNotes.screenCenter(X);
@@ -90,7 +127,7 @@ class ChangeKeysState extends MusicBeatState
 		if (state == 'select')
 		{
 			if (controls.BACK)
-				FlxG.switchState(new MainMenuState());
+				FlxG.switchState(new OptionsMenu());
 			
 			if (FlxG.save.data.keyStyleChoice == 2)
 			{

@@ -44,7 +44,7 @@ class FreeplayState extends MusicBeatState
 
 	private var CurrentPack:Int = 0;
 
-	private var NameAlpha:Alphabet;
+	private var NameAlpha:ComicSansText;
 
 	var loadingPack:Bool = false;
 
@@ -64,12 +64,11 @@ class FreeplayState extends MusicBeatState
 		CurrentSongIcon.y = (FlxG.height / 2) - 256;
 		CurrentSongIcon.antialiasing = true;
 
-		NameAlpha = new Alphabet(40,(FlxG.height / 2) - 282,AllPossibleSongs[CurrentPack],true,false);
-		NameAlpha.x = (FlxG.width / 2) - 162;
-		Highscore.load();
-		add(NameAlpha);
-
+		NameAlpha = new ComicSansText(0,(FlxG.height / 2) - 282, AllPossibleSongs[CurrentPack], CENTER);
+		
 		add(CurrentSongIcon);
+		add(NameAlpha);
+		Highscore.load();
 
 		super.create();
 	}
@@ -200,10 +199,7 @@ class FreeplayState extends MusicBeatState
 		{
 			CurrentPack = 0;
 		}
-		NameAlpha.destroy();
-		NameAlpha = new Alphabet(40,(FlxG.height / 2) - 282,AllPossibleSongs[CurrentPack],true,false);
-		NameAlpha.x = (FlxG.width / 2) - 164;
-		add(NameAlpha);
+		NameAlpha.text = AllPossibleSongs[CurrentPack];
 		CurrentSongIcon.loadGraphic(Paths.image('week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
 	}
 
