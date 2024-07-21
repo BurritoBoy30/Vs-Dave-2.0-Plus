@@ -18,29 +18,44 @@ class OptionsMenu extends MusicBeatState
 {
 	var selector:FlxText;
 	var curSelected:Int = 0;
-
+	
 	var controlsStrings:Array<String> = [
-		"Ghost Tapping " + (FlxG.save.data.newInput ? "On" : "Off"),
-		(FlxG.save.data.downscroll ? 'Downscroll' : 'Upscroll'),
-		"Accuracy " + (!FlxG.save.data.accuracyDisplay ? "Off" : "On"),
-		"Change Keys",
-		"Naughtiness " + (FlxG.save.data.hornyALL ? "On" : "Off"),
+		"Ghost Tapping",
+		'Downscroll',
+		"Accuracy Display",
+		"Naughtiness",
+		"Change Keys"
 	];
-
 	private var grpControls:FlxTypedGroup<ComicSansText>;
-	var versionShit:FlxText;
+	
+	var controlsBool:Array<Bool> = [
+		FlxG.save.data.newInput,
+		FlxG.save.data.downscroll,
+		FlxG.save.data.accuracyDisplay,
+		FlxG.save.data.hornyALL,
+		false // its not meant to show up anyway
+	];
+	private var checkArray:Array<CheckBox> = [];
+	
 	override function create()
 	{
-		trace(controlsStrings);
+		//trace(controlsStrings);
 		
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(MainMenuState.randomizeBG());
-		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
 		menuBG.antialiasing = true;
 		add(menuBG);
-
+		
+		var hornyBitches:FlxSprite = new FlxSprite(0, 0);
+		hornyBitches.frames = Paths.getSparrowAtlas('hornyshit/rebecca', 'shared');
+		hornyBitches.animation.addByPrefix('idle', "rebecca idle", 30);
+		hornyBitches.screenCenter(X);
+		hornyBitches.animation.play('idle');
+		hornyBitches.antialiasing = true;
+		if (FlxG.save.data.hornyALL) add(hornyBitches);
+		
 		grpControls = new FlxTypedGroup<ComicSansText>();
 		add(grpControls);
 
@@ -49,10 +64,18 @@ class OptionsMenu extends MusicBeatState
 			var controlLabel:ComicSansText = new ComicSansText(0, (70 * i) + 30, controlsStrings[i]);
 			controlLabel.isMenuItem = true;
 			controlLabel.targetY = i;
+			controlLabel.yAdd = 20;
 			grpControls.add(controlLabel);
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
+			
+			var controlBool:CheckBox = new CheckBox(controlsBool[i]);
+			controlBool.textTracker = controlLabel;
+			checkArray.push(controlBool);
+			add(controlBool);
 		}
-
+		
+		checkArray[4].visible = false;
+		
 		super.create();
 		
 		changeSelection();
@@ -64,6 +87,7 @@ class OptionsMenu extends MusicBeatState
 
 		if (controls.BACK)
 			FlxG.switchState(new MainMenuState());
+			
 		if (controls.UP_P)
 			changeSelection(-1);
 		if (controls.DOWN_P)
@@ -75,18 +99,18 @@ class OptionsMenu extends MusicBeatState
 			{
 				case 0:
 					FlxG.save.data.newInput = !FlxG.save.data.newInput;
-					grpControls.members[curSelected].text = "Ghost Tapping " + (FlxG.save.data.newInput ? "On" : "Off");
+					checkArray[curSelected].switchButton(FlxG.save.data.newInput);
 				case 1:
 					FlxG.save.data.downscroll = !FlxG.save.data.downscroll;
-					grpControls.members[curSelected].text = (FlxG.save.data.downscroll ? 'Downscroll' : 'Upscroll');
+					checkArray[curSelected].switchButton(FlxG.save.data.downscroll);
 				case 2:
 					FlxG.save.data.accuracyDisplay = !FlxG.save.data.accuracyDisplay;
-					grpControls.members[curSelected].text = "Accuracy " + (!FlxG.save.data.accuracyDisplay ? "off" : "on");
+					checkArray[curSelected].switchButton(FlxG.save.data.accuracyDisplay);
 				case 3:
-					FlxG.switchState(new ChangeKeysState());
-				case 4:
 					FlxG.save.data.hornyALL = !FlxG.save.data.hornyALL;
-					grpControls.members[curSelected].text = "Naughtiness " + (FlxG.save.data.hornyALL ? "On" : "Off");
+					checkArray[curSelected].switchButton(FlxG.save.data.hornyALL);
+				case 4:
+					FlxG.switchState(new ChangeKeysState());
 			}
 		}
 	}
@@ -107,18 +131,25 @@ class OptionsMenu extends MusicBeatState
 		// selector.y = (70 * curSelected) + 30;
 
 		var bullShit:Int = 0;
-
-		for (item in grpControls.members)
+		
+		for (i in 0...checkArray.length)
 		{
-			item.targetY = bullShit - curSelected;
+			checkArray[i].alpha = 0.6;
+		}
+
+		checkArray[curSelected].alpha = 1;
+		
+		for (fuckerItem in grpControls.members)
+		{
+			fuckerItem.targetY = bullShit - curSelected;
 			bullShit++;
 
-			item.alpha = 0.6;
+			fuckerItem.alpha = 0.6;
 			// item.setGraphicSize(Std.int(item.width * 0.8));
 
-			if (item.targetY == 0)
+			if (fuckerItem.targetY == 0)
 			{
-				item.alpha = 1;
+				fuckerItem.alpha = 1;
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}

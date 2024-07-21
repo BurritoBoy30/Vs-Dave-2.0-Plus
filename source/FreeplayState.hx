@@ -111,7 +111,7 @@ class FreeplayState extends MusicBeatState
 		zoeyBop.animation.play('jiggle');
 		zoeyBop.setGraphicSize(Std.int(zoeyBop.width * 1.5));
 		zoeyBop.alpha = 0;
-		if (!FlxG.save.data.hornyALL) zoeyBop.visible = false;
+		zoeyBop.visible = FlxG.save.data.hornyALL;
 		add(zoeyBop);
 		
 		grpSongs = new FlxTypedGroup<Alphabet>();
