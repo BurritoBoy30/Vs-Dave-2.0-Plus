@@ -49,6 +49,7 @@ class FreeplayState extends MusicBeatState
 	var loadingPack:Bool = false;
 
 	var zoeyBop:FlxSprite;
+	var iconBoopin:Bool = false;
 
 	override function create()
 	{		
@@ -89,17 +90,17 @@ class FreeplayState extends MusicBeatState
 					['Hard', 'Hard', 'Normal'],
 					[188, 105, 113]
 				);
-				addWeek(['Splitathon'],3,['the-duo'], ['Hard'], [230]);
+				addWeek(['Splitathon'], 3,['the-duo'], ['Hard'], [230]);
 			
 			case 'golden':
-				addWeek(['Disability'], 4 ,['dave-split-3d'], ['Hard'], [182]);
+				addWeek(['Disability'], 4,['dave-split-3d'], ['Hard'], [182]);
 				addWeek(['OG'], 4 ,['dave-alpha'], ['Extreme'], [110]);
 			case 'joke':
 				addWeek(['Cheating'], 2, ['bambi-3d'], ['Stupid'], [125]);
 			
 			case 'extra':
-				addWeek(['Bonus-Song'], 1 ,['dave'], ['Hard'], [140]);
-				addWeek(['Mealie'], 2 ,['bambi'], ['Hard'], [167]);
+				addWeek(['Bonus-Song'], 1, ['dave'], ['Hard'], [140]);
+				addWeek(['Mealie'], 2, ['bambi'], ['Hard'], [167]);
 		}
 	}
 	
@@ -162,6 +163,9 @@ class FreeplayState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
+		
+		if (curBeat % 2 == 0 && iconBoopin)
+			FlxTween.tween(FlxG.camera, {zoom:1.05}, 0.5, {ease: FlxEase.quadOut, type: BACKWARD});
 	}
 	
 	public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>, diffculty:Array<String>, bpm:Array<Int>)
@@ -211,6 +215,7 @@ class FreeplayState extends MusicBeatState
 		
 		if (!InMainFreeplayState) 
 		{
+			iconBoopin = false;
 			scoreBG = null;
 			scoreText = null;
 			diffText = null;
@@ -266,6 +271,8 @@ class FreeplayState extends MusicBeatState
 			{
 				changeSelection(1);
 			}
+			
+			iconBoopin = true;
 			
 			if (scoreBG != null)
 			{

@@ -41,7 +41,8 @@ class TitleState extends MusicBeatState
 	var wackyImage:FlxSprite;
 
 	override public function create():Void
-	{		
+	{
+		trace('huh');
 		PlayerSettings.init();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
@@ -49,12 +50,12 @@ class TitleState extends MusicBeatState
 		// DEBUG BULLSHIT
 
 		super.create();
-			
+	
 		FlxG.save.bind('funkin', 'ninjamuffin99');
 		SaveDataHandler.initSave();
-			
-		Highscore.load();
 
+		Highscore.load();
+		
 		if (FlxG.save.data.weekUnlocked != null)
 		{
 			// FIX LATER!!!
@@ -88,6 +89,8 @@ class TitleState extends MusicBeatState
 
 	function startIntro()
 	{
+		FlxG.fullscreen = FlxG.save.data.fullScreen;
+		
 		if (!initialized)
 		{
 			var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
@@ -217,11 +220,6 @@ class TitleState extends MusicBeatState
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
-
-		if (FlxG.keys.justPressed.F)
-		{
-			FlxG.fullscreen = !FlxG.fullscreen;
-		}
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
 

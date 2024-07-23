@@ -340,14 +340,14 @@ class PlayState extends MusicBeatState
 		add(iconP2);
 
 		// Add Kade Engine watermark
-		kadeEngineWatermark = new FlxText(4, healthBarBG.y + 43 ,0,SONG.song + " - Dave Engine+ (KE " + MainMenuState.kadeEngineVer + ")", 16);
+		kadeEngineWatermark = new FlxText(4, healthBarBG.y + 40 ,0,SONG.song + " - Dave Engine+ (KE " + MainMenuState.kadeEngineVer + ")", 16);
 		kadeEngineWatermark.setFormat(Paths.font("comic.ttf"), 18, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		kadeEngineWatermark.borderSize = 1.5;
 		kadeEngineWatermark.antialiasing = true;
 		add(kadeEngineWatermark);
 
-		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 150, healthBarBG.y + 43, 0, "", 20);
+		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 150, healthBarBG.y + 40, 0, "", 20);
 		if (!FlxG.save.data.accuracyDisplay)
 			scoreTxt.x = healthBarBG.x + healthBarBG.width / 2;
 		scoreTxt.setFormat(Paths.font("comic.ttf"), 18, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
@@ -1867,6 +1867,7 @@ class PlayState extends MusicBeatState
 	override function stepHit()
 	{
 		super.stepHit();
+
 		if (FlxG.sound.music.time > Conductor.songPosition + 20 || FlxG.sound.music.time < Conductor.songPosition - 20)
 		{
 			resyncVocals();
@@ -1993,17 +1994,6 @@ class PlayState extends MusicBeatState
 		
 		var funny:Float = (healthBar.percent * 0.01) + 0.01;
 		
-		switch (SONG.song.toLowerCase())
-		{
-			case 'disability':
-				switch(curBeat)
-				{
-					case 176 | 224 | 364 | 384:
-						gfSpeed = 2;
-					case 208 | 256 | 372 | 392:
-						gfSpeed = 1;
-				}
-		}
 		//health icon bounce but epic
 		iconP1.setGraphicSize(Std.int(iconP1.width + (50 * funny)), Std.int(iconP2.height - (25 * funny)));
 		iconP2.setGraphicSize(Std.int(iconP2.width + (50 * (2 - funny))), Std.int(iconP2.height - (25 * (2 - funny))));

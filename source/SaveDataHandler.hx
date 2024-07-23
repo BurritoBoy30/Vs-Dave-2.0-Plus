@@ -60,5 +60,8 @@ class SaveDataHandler
 		
 		if (FlxG.save.data.hornyALL == null)
 			FlxG.save.data.hornyALL = false;
+		
+		if (FlxG.save.data.fullScreen == null)
+			FlxG.save.data.fullScreen = false;
     }
 }

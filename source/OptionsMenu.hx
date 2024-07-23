@@ -1,8 +1,5 @@
 package;
 
-import Controls.KeyboardScheme;
-import Controls.Control;
-import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
@@ -19,22 +16,15 @@ class OptionsMenu extends MusicBeatState
 	var selector:FlxText;
 	var curSelected:Int = 0;
 	
-	var controlsStrings:Array<String> = [
-		"Ghost Tapping",
-		'Downscroll',
-		"Accuracy Display",
-		"Naughtiness",
-		"Change Keys"
+	var controlsStrings:Array<Dynamic> = [
+		["Ghost Tapping", FlxG.save.data.newInput],
+		['Downscroll', FlxG.save.data.downscroll],
+		["Accuracy Display", FlxG.save.data.accuracyDisplay],
+		["Naughtiness", FlxG.save.data.hornyALL],
+		["Change Keys", false],
+		["Fullscreen", FlxG.save.data.fullScreen]
 	];
 	private var grpControls:FlxTypedGroup<ComicSansText>;
-	
-	var controlsBool:Array<Bool> = [
-		FlxG.save.data.newInput,
-		FlxG.save.data.downscroll,
-		FlxG.save.data.accuracyDisplay,
-		FlxG.save.data.hornyALL,
-		false // its not meant to show up anyway
-	];
 	private var checkArray:Array<CheckBox> = [];
 	
 	override function create()
@@ -45,6 +35,7 @@ class OptionsMenu extends MusicBeatState
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
+		menuBG.color = 0xFFea71fd;
 		menuBG.antialiasing = true;
 		add(menuBG);
 		
@@ -52,6 +43,7 @@ class OptionsMenu extends MusicBeatState
 		hornyBitches.frames = Paths.getSparrowAtlas('hornyshit/rebecca', 'shared');
 		hornyBitches.animation.addByPrefix('idle', "rebecca idle", 30);
 		hornyBitches.screenCenter(X);
+		hornyBitches.color = 0xFFea71fd;
 		hornyBitches.animation.play('idle');
 		hornyBitches.antialiasing = true;
 		if (FlxG.save.data.hornyALL) add(hornyBitches);
@@ -61,17 +53,16 @@ class OptionsMenu extends MusicBeatState
 
 		for (i in 0...controlsStrings.length)
 		{
-			var controlLabel:ComicSansText = new ComicSansText(0, (70 * i) + 30, controlsStrings[i]);
+			var controlLabel:ComicSansText = new ComicSansText(0, (70 * i) + 30, controlsStrings[i][0]);
 			controlLabel.isMenuItem = true;
 			controlLabel.targetY = i;
 			controlLabel.yAdd = 20;
 			grpControls.add(controlLabel);
-			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 			
-			var controlBool:CheckBox = new CheckBox(controlsBool[i]);
-			controlBool.textTracker = controlLabel;
-			checkArray.push(controlBool);
-			add(controlBool);
+			var controlCheckBox:CheckBox = new CheckBox(controlsStrings[i][1]);
+			controlCheckBox.textTracker = controlLabel;
+			checkArray.push(controlCheckBox);
+			add(controlCheckBox);
 		}
 		
 		checkArray[4].visible = false;
@@ -111,6 +102,10 @@ class OptionsMenu extends MusicBeatState
 					checkArray[curSelected].switchButton(FlxG.save.data.hornyALL);
 				case 4:
 					FlxG.switchState(new ChangeKeysState());
+				case 5:
+					FlxG.save.data.fullScreen = !FlxG.save.data.fullScreen;
+					checkArray[curSelected].switchButton(FlxG.save.data.fullScreen);
+					FlxG.fullscreen = FlxG.save.data.fullScreen;
 			}
 		}
 	}
