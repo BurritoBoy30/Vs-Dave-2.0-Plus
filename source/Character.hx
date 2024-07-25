@@ -262,9 +262,7 @@ class Character extends FlxSprite
 				antialiasing = false;
 		
 				playAnim('idle');
-				
-				charOffset[1] = 50;
-			
+							
 			case 'bambi-old':
 				tex = Paths.getSparrowAtlas('characters/bambi-old');
 				frames = tex;
@@ -439,6 +437,8 @@ class Character extends FlxSprite
 				antialiasing = false;
 		
 				playAnim('idle');
+				
+				charOffset[1] = 50;
 			// DAD LIST END
 				
 			case 'gf':

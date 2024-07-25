@@ -545,7 +545,8 @@ class PlayState extends MusicBeatState
 				add(bg);
 				
 				createShader(bg, 0.1, 5, 2);
-			case 'og':				
+			case 'og':
+				defaultCamZoom = 0.8;			
 				curStage = 'alphaHouse';
 				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('dave/daveoldbg'));
 				bg.antialiasing = true;
@@ -1158,6 +1159,44 @@ class PlayState extends MusicBeatState
 		if (generatedMusic && SONG.notes[Std.int(curStep / 16)] != null)
 		{
 			focusCam(!SONG.notes[Std.int(curStep / 16)].mustHitSection);
+			
+			var followAmount:Float = 20;
+			if (!SONG.notes[Std.int(curStep / 16)].mustHitSection)
+			{
+				switch (dad.animation.curAnim.name)
+				{
+					case 'singLEFT':
+						dadCam[0] = -followAmount;
+						dadCam[1] = 0;
+					case 'singDOWN':
+						dadCam[0] = 0;
+						dadCam[1] = followAmount;
+					case 'singUP':
+						dadCam[0] = 0;
+						dadCam[1] = -followAmount;
+					case 'singRIGHT':
+						dadCam[0] = followAmount;
+						dadCam[1] = 0;
+				}
+			}
+			else
+			{
+				switch (boyfriend.animation.curAnim.name)
+				{
+					case 'singLEFT':
+						bfCam[0] = -followAmount;
+						bfCam[1] = 0;
+					case 'singDOWN':
+						bfCam[0] = 0;
+						bfCam[1] = followAmount;
+					case 'singUP':
+						bfCam[0] = 0;
+						bfCam[1] = -followAmount;
+					case 'singRIGHT':
+						bfCam[0] = followAmount;
+						bfCam[1] = 0;
+				}
+			}
 		}
 
 		if (camZooming)
@@ -1308,6 +1347,9 @@ class PlayState extends MusicBeatState
 			{
 				case 'dave-angey':
 					camFollow.y = dad.getMidpoint().y;
+				case 'dave-split-3d':
+					camFollow.y = dad.getMidpoint().y - 50;
+					
 			}
 
 			if (SONG.song.toLowerCase() == 'tutorial')
@@ -1345,6 +1387,69 @@ class PlayState extends MusicBeatState
 			
 			camFollow.x += bfCam[0];
 			camFollow.y += bfCam[1];
+		}
+	}
+	
+	function camMove(isDad:Bool)
+	{
+		var followAmount:Float = 20;
+			
+		if (isDad)
+		{
+			if (dad.animation.curAnim.name != 'idle'
+				|| dad.animation.curAnim.name != 'danceLeft'
+				|| dad.animation.curAnim.name != 'danceRight')
+			{
+				switch (dad.animation.curAnim.name)
+				{
+					case 'singLEFT':
+						dadCam[0] = -followAmount;
+						dadCam[1] = 0;
+					case 'singDOWN':
+						dadCam[0] = 0;
+						dadCam[1] = followAmount;
+					case 'singUP':
+						dadCam[0] = 0;
+						dadCam[1] = -followAmount;
+					case 'singRIGHT':
+						dadCam[0] = followAmount;
+						dadCam[1] = 0;
+				}
+			}
+			else
+			{
+				dadCam[0] = 0;
+				dadCam[1] = 0;
+			}
+		}
+		else
+		{
+			
+			if (boyfriend.animation.curAnim.name != 'idle'
+				|| boyfriend.animation.curAnim.name != 'danceLeft'
+				|| boyfriend.animation.curAnim.name != 'danceRight')
+			{
+				switch (boyfriend.animation.curAnim.name)
+				{
+					case 'singLEFT':
+						bfCam[0] = -followAmount;
+						bfCam[1] = 0;
+					case 'singDOWN':
+						bfCam[0] = 0;
+						bfCam[1] = followAmount;
+					case 'singUP':
+						bfCam[0] = 0;
+						bfCam[1] = -followAmount;
+					case 'singRIGHT':
+						bfCam[0] = followAmount;
+						bfCam[1] = 0;
+				}
+			}
+			else
+			{
+				bfCam[0] = 0;
+				bfCam[1] = 0;
+			}
 		}
 	}
 
@@ -1762,7 +1867,7 @@ class PlayState extends MusicBeatState
 			
 			boyfriend.playAnim(animToPlay, true);
 			
-			cameraMoveOnNote(note.noteData, 'bf');
+			//cameraMoveOnNote(note.noteData, 'bf');
 
 			playerStrums.forEach(function(spr:StrumNote)
 			{
@@ -1812,7 +1917,7 @@ class PlayState extends MusicBeatState
 		dad.playAnim(animToPlay + altAnim, true);
 		dad.holdTimer = 0;
 		
-		cameraMoveOnNote(daNote.noteData, 'dad');
+		//cameraMoveOnNote(daNote.noteData, 'dad');
 		
 		if (SONG.song.toLowerCase() == 'insanity')
 		{
@@ -1834,34 +1939,6 @@ class PlayState extends MusicBeatState
 		daNote.kill();
 		notes.remove(daNote, true);
 		daNote.destroy();
-	}
-	
-	function cameraMoveOnNote(note:Int, character:String)
-	{
-		var amount:Array<Float> = new Array<Float>();
-		var followAmount:Float = 20;
-		switch (note)
-		{
-			case 0:
-				amount[0] = -followAmount;
-				amount[1] = 0;
-			case 1:
-				amount[0] = 0;
-				amount[1] = followAmount;
-			case 2:
-				amount[0] = 0;
-				amount[1] = -followAmount;
-			case 3:
-				amount[0] = followAmount;
-				amount[1] = 0;
-		}
-		switch (character)
-		{
-			case 'dad':
-				dadCam = amount;
-			case 'bf':
-				bfCam = amount;
-		}
 	}
 
 	override function stepHit()
