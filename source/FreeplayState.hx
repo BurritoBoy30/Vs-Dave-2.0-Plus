@@ -165,7 +165,7 @@ class FreeplayState extends MusicBeatState
 		super.beatHit();
 		
 		if (curBeat % 2 == 0 && iconBoopin)
-			FlxTween.tween(FlxG.camera, {zoom:1.05}, 0.5, {ease: FlxEase.quadOut, type: BACKWARD});
+			FlxTween.tween(FlxG.camera, {zoom:1.05}, Conductor.crochet / 1300, {ease: FlxEase.quadOut, type: BACKWARD});
 	}
 	
 	public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>, diffculty:Array<String>, bpm:Array<Int>)

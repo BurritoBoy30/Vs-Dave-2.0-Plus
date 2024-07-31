@@ -125,6 +125,11 @@ class MainMenuState extends MusicBeatState
 			{
 				FlxG.switchState(new TitleState());
 			}
+			
+			if (FlxG.keys.justPressed.SEVEN)
+			{
+				FlxG.switchState(new ConsoleState());
+			}
 
 			if (controls.ACCEPT)
 			{
