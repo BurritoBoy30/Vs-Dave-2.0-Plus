@@ -78,6 +78,7 @@ class HealthIcon extends FlxSprite
 		addIcon('bf-with-cyan', [44, 45]);
 		addIcon('tails-doll', [46, 47]);
 		addIcon('dave-split-3d', [48, 49]);
+		addIcon('oruta', [50, 51]);
 		
 		playAnimation(char);
 		scrollFactor.set();

@@ -172,32 +172,86 @@ class Character extends FlxSprite
 				
 				antialiasing = false;
 				flipX = true;
+				
+			case 'rapper-gf':
+				tex = Paths.getSparrowAtlas('characters/GF_in_Bf_clothesV2');
+				frames = tex;
+				
+				addAnimation(-40, -221, 'idle', 'Idle Dance');
+				addAnimation(-45, -207, 'singUP', 'Up Pose');
+				addAnimation(-35, -226, 'singLEFT', 'Left Pose');
+				addAnimation(-46, -220, 'singRIGHT', 'Right Pose');
+				addAnimation(-41, -277, 'singDOWN', 'Down Pose');
+				addAnimation(83, -194, 'singUPmiss', 'Up Miss pose');
+				addAnimation(89, -207, 'singLEFTmiss', 'Left Miss pose');
+				addAnimation(-44, -206, 'singRIGHTmiss', 'Right Miss pose');
+				addAnimation(102, -257, 'singDOWNmiss', 'Down Miss pose');
+				addAnimation(-63, -216, 'hey', 'Hey Pose');
+
+				addAnimation(-61, -216, 'scared', 'Fear', true);
+
+				playAnim('idle');
+
+				flipX = true;
+				
+				charOffset[1] = -340; 
+			
+			case 'rapper-gf-dead':
+				tex = Paths.getSparrowAtlas('characters/GF_in_Bf_clothes_DEAD');
+				frames = tex;
+				
+				addAnimation(0, -200, 'firstDeath', "GF first Dead");
+				addAnimation(-4, -215, 'deathLoop', "GF dead loop", true);
+				addAnimation(2, -183, 'deathConfirm', "GF Dead confirm");
+				
+				playAnim('firstDeath');
+
+				flipX = true;
 			
 			case 'gf-player':
 				tex = Paths.getSparrowAtlas('characters/Playable_GF_V2');
 				frames = tex;
 				
-				addAnimation(-5, 'idle', 'GF Idle dance');
-				addAnimation(-29, 27, 'singUP', 'GF Up');
-				addAnimation(4, -6, 'singLEFT', 'GF Left');
-				addAnimation(-49, -6, 'singRIGHT', 'GF Right');
-				addAnimation(-10, -50, 'singDOWN', 'GF Down');
-				addAnimation(-29, 27, 'singUPmiss', 'GF Miss Up');
-				addAnimation(12, 24, 'singLEFTmiss', 'GF Miss Left');
-				addAnimation(-30, 21, 'singRIGHTmiss', 'GF Miss Right');
-				addAnimation(-11, -19, 'singDOWNmiss', 'GF Miss Down');
-				addAnimation(-4, 5, 'hey', 'GF Hey');
+				addAnimation(-6, -1, 'idle', 'GF Idle dance');
+				addAnimation(-60, 17, 'singUP', 'GF Up');
+				addAnimation(45, -36, 'singLEFT', 'GF Left');
+				addAnimation(-49, -7, 'singRIGHT', 'GF Right');
+				addAnimation(-6, -75, 'singDOWN', 'GF Down');
+				addAnimation(-60, 55, 'singUPmiss', 'GF Miss Up');
+				addAnimation(35, -18, 'singLEFTmiss', 'GF Miss Left');
+				addAnimation(-80, 22, 'singRIGHTmiss', 'GF Miss Right');
+				addAnimation(-42, -44, 'singDOWNmiss', 'GF Miss Down');
+				addAnimation(-36, 1, 'hey', 'GF Hey');
 
-				addAnimation(24, 8, 'firstDeath', "GF First Death");
-				addAnimation(24, 3, 'deathLoop', "GF Death Loop", true);
-				addAnimation(24, 66, 'deathConfirm', "GF Dead Continue");
+				addAnimation(-27, 11, 'firstDeath', "GF First Death");
+				addAnimation(-39, -3, 'deathLoop', "GF Death Loop", true);
+				addAnimation(-33, -2, 'deathConfirm', "GF Dead Continue");
 
-				addAnimation(-4, 'scared', 'GF Scared', true);
+				addAnimation(-35, -2, 'scared', 'GF Scared', true);
 
 				playAnim('idle');
 
 				flipX = true;
-
+				
+				charOffset[1] = -85;
+				
+			case 'oruta':
+				tex = Paths.getSparrowAtlas('characters/oruta');
+				frames = tex;
+				
+				addAnimation(95, 163, 'idle', 'idle');
+				addAnimation(40, 220, 'singUP', 'up');
+				//addAnimation(-23, 132, 'singLEFT', 'left');
+				//addAnimation(100, 160, 'singRIGHT', 'right');
+				addAnimation(100, 160, 'singLEFT', 'right');
+				addAnimation(-23, 132, 'singRIGHT', 'left');
+				addAnimation(109, 79, 'singDOWN', 'down');
+				
+				playAnim('idle');
+				
+				charOffset[0] = 50;
+				charOffset[1] = -100;
+				
 			// BOYFRIEND LIST END
 			
 			// DAD LIST START
@@ -313,7 +367,7 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 				
-				charOffset[1] = 420;
+				charOffset[1] = 430;
 				charOffset[0] = 200;
 			
 			case 'dave-splitathon':
@@ -743,19 +797,19 @@ class Character extends FlxSprite
 				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
 				animation.addByPrefix('scared', 'GF FEAR', 24);
 
-				addOffset('cheer');
-				addOffset('sad', -2, -21);
+				addOffset('cheer', 0, -3);
+				addOffset('sad', -2, -18);
 				addOffset('danceLeft', 0, -9);
 				addOffset('danceRight', 0, -9);
 
-				addOffset("singUP", 0, 4);
-				addOffset("singRIGHT", 0, -20);
-				addOffset("singLEFT", 0, -19);
-				addOffset("singDOWN", 0, -20);
-				addOffset('hairBlow', 45, -8);
+				addOffset("singUP", 0, -2);
+				addOffset("singRIGHT", 0, -22);
+				addOffset("singLEFT", 0, -20);
+				addOffset("singDOWN", 0, -23);
+				addOffset('hairBlow', 64, -7);
 				addOffset('hairFall', 0, -9);
 
-				addOffset('scared', -2, -17);
+				addOffset('scared', -2, -20);
 
 				playAnim('danceRight');
 				
@@ -777,19 +831,19 @@ class Character extends FlxSprite
 				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
 				animation.addByPrefix('scared', 'GF FEAR', 24);
 
-				addOffset('cheer');
-				addOffset('sad', -2, -21);
+				addOffset('cheer', 0, -3);
+				addOffset('sad', -2, -18);
 				addOffset('danceLeft', 0, -9);
 				addOffset('danceRight', 0, -9);
 
-				addOffset("singUP", 0, 4);
-				addOffset("singRIGHT", 0, -20);
-				addOffset("singLEFT", 0, -19);
-				addOffset("singDOWN", 0, -20);
-				addOffset('hairBlow', 45, -8);
+				addOffset("singUP", 0, -2);
+				addOffset("singRIGHT", 0, -22);
+				addOffset("singLEFT", 0, -20);
+				addOffset("singDOWN", 0, -23);
+				addOffset('hairBlow', 64, -7);
 				addOffset('hairFall', 0, -9);
 
-				addOffset('scared', -2, -17);
+				addOffset('scared', -2, -20);
 
 				playAnim('danceRight');
 				
@@ -810,19 +864,19 @@ class Character extends FlxSprite
 				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
 				animation.addByPrefix('scared', 'GF FEAR', 24);
 
-				addOffset('cheer');
-				addOffset('sad', -2, -2);
+				addOffset('cheer', 0, -3);
+				addOffset('sad', -2, -18);
 				addOffset('danceLeft', 0, -9);
 				addOffset('danceRight', 0, -9);
 
-				addOffset("singUP", 0, 4);
-				addOffset("singRIGHT", 0, -20);
-				addOffset("singLEFT", 0, -19);
-				addOffset("singDOWN", 0, -20);
-				addOffset('hairBlow', 45, -8);
+				addOffset("singUP", 0, -2);
+				addOffset("singRIGHT", 0, -22);
+				addOffset("singLEFT", 0, -20);
+				addOffset("singDOWN", 0, -23);
+				addOffset('hairBlow', 64, -7);
 				addOffset('hairFall', 0, -9);
 
-				addOffset('scared', -2, -17);
+				addOffset('scared', -2, -20);
 
 				playAnim('danceRight');
 				
@@ -883,7 +937,7 @@ class Character extends FlxSprite
 			flipX = !flipX;
 
 			// Doesn't flip for BF, since his are already in the right place???
-			if (!curCharacter.startsWith('bf'))
+			if (!(curCharacter.startsWith('bf') || curCharacter == 'gf-player' || curCharacter.startsWith('rapper-gf') || curCharacter == 'oruta'))
 			{
 				// var animArray
 				var oldRight = animation.getByName('singRIGHT').frames;
@@ -903,24 +957,24 @@ class Character extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
-		if (!curCharacter.startsWith('bf'))
+		if(!debugMode && animation.curAnim != null)
 		{
-			if (animation.curAnim.name.startsWith('sing'))
+			if (!isPlayer)
 			{
-				holdTimer += elapsed;
-			}
+				if (animation.curAnim.name.startsWith('sing'))
+				{
+					holdTimer += elapsed;
+				}
 
-			var dadVar:Float = 4;
+				var dadVar:Float = 4;
 
-			if (curCharacter == 'dad')
-				dadVar = 6.1;
-			if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
-			{
-				dance();
-				holdTimer = 0;
-				
-				PlayState.dadCam[0] = 0;
-				PlayState.dadCam[1] = 0;
+				if (curCharacter == 'dad')
+					dadVar = 6.1;
+				if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
+				{
+					dance();
+					holdTimer = 0;
+				}
 			}
 		}
 

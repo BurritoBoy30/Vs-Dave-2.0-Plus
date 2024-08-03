@@ -11,7 +11,6 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import io.newgrounds.NG;
 import lime.app.Application;
 
 using StringTools;
@@ -28,11 +27,6 @@ class MainMenuState extends MusicBeatState
 	var optionShit:Array<String> = ['story mode', 'freeplay'];
 	#end
 
-	var newGaming:FlxText;
-	var newGaming2:FlxText;
-	var newInput:Bool = true;
-
-	public static var kadeEngineVer:String = "1.2";
 	public static var gameVer:String = "0.2.7.1";
 
 	var magenta:FlxSprite;

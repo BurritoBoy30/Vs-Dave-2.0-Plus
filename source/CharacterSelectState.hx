@@ -53,7 +53,7 @@ class CharacterSelectState extends MusicBeatState
 	
 	var overlay:FlxSprite;
 	
-	public static var noGfChar:Array<String> = ['bf-with-gf', 'bf-with-cyan'];
+	public static var noGfChar:Array<String> = ['bf-with-gf', 'bf-with-cyan', 'gf-player', 'rapper-gf', 'oruta'];
 	public static var singleBop:Array<String> = ['skyblue', 'tails-doll'];
 	
 	public var noMorePresses:Bool = false;
@@ -66,7 +66,10 @@ class CharacterSelectState extends MusicBeatState
 		
 		boyfriendData = [
 			new SelectableChar(['bf', 'bf-christmas', 'bf-pixel'], ["Boyfriend", "Boyfriend (Christmas)", "Boyfriend (Pixel)"]),
-			new SelectableChar(['bf-with-gf', 'bf-with-cyan'], ["Boyfriend w/ Girlfriend", "Boyfriend w/ Cyan"]) 
+			new SelectableChar(['bf-with-gf', 'bf-with-cyan'], ["Boyfriend w/ Girlfriend", "Boyfriend w/ Cyan"]),
+			new SelectableChar(['gf-player'], [" Girlfriend (Playable)"]) ,
+			new SelectableChar(['rapper-gf'], ["Rapper Girlfriend"]),
+			new SelectableChar(['oruta'], ["Oruta"]) 
 		];
 		
 		if (FlxG.save.data.hornyGF && FlxG.save.data.hornyALL)
@@ -305,11 +308,7 @@ class CharacterSelectState extends MusicBeatState
 					isPressed(tailsBox);
 					isTails = !isTails;
 					
-					if(isTails)
-						throwTailsDoll();
-					else if (!isTails)
-						UpdateGF();
-						
+					UpdateGF(isTails);	
 					updateGfUI();
 				}
 			} 
@@ -443,7 +442,7 @@ class CharacterSelectState extends MusicBeatState
 		
 		if (noGfChar.contains(boyfriendChar.curCharacter) || isTails) {
 			changeInfoImg.loadGraphic(Paths.image('charselect/changeInfoNoGF'));
-			changeInfoImg.y = FlxG.height - changeInfoImg.height / 2;
+			changeInfoImg.y = FlxG.height - ((changeInfoImg.height / 2) - 5);
 		} else {
 			changeInfoImg.loadGraphic(Paths.image('charselect/changeInfo'));
 			changeInfoImg.y = FlxG.height - changeInfoImg.height;
@@ -566,38 +565,37 @@ class CharacterSelectState extends MusicBeatState
 		noMorePresses = false;
 	}
 	
-	public function UpdateGF()
+	public function UpdateGF(isTails:Bool = false)
 	{
+		var displayName:String = '';
+		var	name:String = '';
+		
+		if (isTails)
+		{
+			displayName = 'Busty Tails Doll';
+			name = 'tails-doll';
+		}
+		else
+		{
+			displayName = girlfriendData[curGF].displayNames[curFormGF];
+			name = girlfriendData[curGF].names[curFormGF];
+		}
+		
 		noMorePresses = true;
 		if (girlfriendChar != null) {
 			remove(girlfriendChar);
 			iconGF.x -= (girlfriendText.textField.textWidth / 2) + iconOffseet;
 		}
 		
-		girlfriendText.text = girlfriendData[curGF].displayNames[curFormGF];
+		girlfriendText.text = displayName;
 		iconGF.x += (girlfriendText.textField.textWidth / 2) + iconOffseet;
 		
-		girlfriendChar = new Character(400 + shitOffset[0], 130 + shitOffset[1], girlfriendData[curGF].names[curFormGF]);
+		girlfriendChar = new Character(400 + shitOffset[0], 130 + shitOffset[1], name);
 		girlfriendChar.x += girlfriendChar.charOffset[0];
 		girlfriendChar.y += girlfriendChar.charOffset[1];
 		insert(members.indexOf(boyfriendChar), girlfriendChar);
-		iconGF.playAnimation(girlfriendData[curGF].names[curFormGF]);
+		iconGF.playAnimation(name);
 		noMorePresses = false;
-	}
-	
-	public function throwTailsDoll()
-	{
-		remove(girlfriendChar);
-		iconGF.x -= (girlfriendText.textField.textWidth / 2) + iconOffseet;
-		
-		girlfriendText.text = 'Busty Tails Doll';
-		iconGF.x += (girlfriendText.textField.textWidth / 2) + iconOffseet;
-		
-		girlfriendChar = new Character(400 + shitOffset[0], 130 + shitOffset[1], 'tails-doll');
-		girlfriendChar.x += girlfriendChar.charOffset[0];
-		girlfriendChar.y += girlfriendChar.charOffset[1];
-		insert(members.indexOf(boyfriendChar), girlfriendChar);
-		iconGF.playAnimation('tails-doll');
 	}
 		
 	public function endIt(e:FlxTimer = null)

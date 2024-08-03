@@ -63,6 +63,15 @@ class ConsoleState extends MusicBeatState
 				{
 					checkForExe();
 				}
+				else if (inputText == 'exit')
+				{
+					startingUp = true;
+					addNewLine("Shutting down..."); 
+					new FlxTimer().start(1, function(tmr:FlxTimer)
+					{
+						FlxG.switchState(new MainMenuState());
+					});
+				}
 				else
 				{
 					addNewLine("Invalid command."); 
@@ -74,7 +83,8 @@ class ConsoleState extends MusicBeatState
 	
 	function clearTextBox()
 	{
-		Textbox.clear();
+		inputText = '';
+		Textbox.text = inputText;
 	}
 
 	function addNewLine(newTxt:String, stillTyping:Bool = true)

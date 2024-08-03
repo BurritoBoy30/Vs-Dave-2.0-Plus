@@ -28,9 +28,7 @@ class OptionsMenu extends MusicBeatState
 	private var checkArray:Array<CheckBox> = [];
 	
 	override function create()
-	{
-		//trace(controlsStrings);
-		
+	{		
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(MainMenuState.randomizeBG());
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();

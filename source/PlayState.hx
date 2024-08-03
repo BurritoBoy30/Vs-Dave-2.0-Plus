@@ -145,9 +145,6 @@ class PlayState extends MusicBeatState
 	public var splitathonExpressionAdded:Bool = false;
 	var bambiEntered:Bool = false;
 	
-	public static var dadCam:Array<Float> = new Array<Float>();
-	public var bfCam:Array<Float> = new Array<Float>();
-
 	override public function create()
 	{
 		theFunne = FlxG.save.data.newInput;
@@ -341,7 +338,7 @@ class PlayState extends MusicBeatState
 		add(iconP2);
 
 		// Add Kade Engine watermark
-		kadeEngineWatermark = new FlxText(4, healthBarBG.y + 40 ,0,SONG.song + " - Dave Engine+ (KE " + MainMenuState.kadeEngineVer + ")", 16);
+		kadeEngineWatermark = new FlxText(4, healthBarBG.y + 40 ,0,SONG.song + " - Dave Engine+ (KE 1.2)", 16);
 		kadeEngineWatermark.setFormat(Paths.font("comic.ttf"), 18, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		kadeEngineWatermark.borderSize = 1.5;
@@ -1203,8 +1200,6 @@ class PlayState extends MusicBeatState
 		if (generatedMusic && SONG.notes[Std.int(curStep / 16)] != null)
 		{
 			focusCam(!SONG.notes[Std.int(curStep / 16)].mustHitSection);
-			
-			camMove(!SONG.notes[Std.int(curStep / 16)].mustHitSection);
 		}
 
 		/*if (camZooming)
@@ -1373,12 +1368,6 @@ class PlayState extends MusicBeatState
 			{
 				tweenCamIn();
 			}
-			
-			bfCam[0] = 0;
-			bfCam[1] = 0;
-			
-			camFollow.x += dadCam[0];
-			camFollow.y += dadCam[1];
 		}
 		else
 		{
@@ -1389,63 +1378,33 @@ class PlayState extends MusicBeatState
 				case 'bf-pixel':
 					camFollow.x = boyfriend.getMidpoint().x - 270;
 					camFollow.y = boyfriend.getMidpoint().y - 230;
-				
 				case 'bf-with-gf':
 					camFollow.y = boyfriend.getMidpoint().y;
+				case 'rapper-gf':
+					camFollow.x = boyfriend.getMidpoint().x - 150;
+					camFollow.y = boyfriend.getMidpoint().y + 150;
+				case 'oruta':
+					camFollow.x = boyfriend.getMidpoint().x - 170;
+					camFollow.y = boyfriend.getMidpoint().y - 170;
+					
 			}
 
 			if (SONG.song.toLowerCase() == 'tutorial')
 			{
 				FlxTween.tween(FlxG.camera, {zoom: 1}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut});
 			}
-			
-			dadCam[0] = 0;
-			dadCam[1] = 0;
-			
-			camFollow.x += bfCam[0];
-			camFollow.y += bfCam[1];
 		}
 	}
 	
-	function camMove(isDad:Bool)
+	function boyfriendIdleColor()
 	{
-		var followAmount:Float = 10;
-			
-		if (isDad)
+		if (curStage == 'bambiFarmNight' || curStage == 'disabled')
 		{
-			switch (dad.animation.curAnim.name)
-			{
-				case 'singLEFT':
-					dadCam[0] = -followAmount;
-					dadCam[1] = 0;
-				case 'singDOWN':
-					dadCam[0] = 0;
-					dadCam[1] = followAmount;
-				case 'singUP':
-					dadCam[0] = 0;
-					dadCam[1] = -followAmount;
-				case 'singRIGHT':
-					dadCam[0] = followAmount;
-					dadCam[1] = 0;
-			}
+			boyfriend.color = 0xFF878787;
 		}
 		else
 		{
-			switch (boyfriend.animation.curAnim.name)
-			{
-				case 'singLEFT':
-					bfCam[0] = -followAmount;
-					bfCam[1] = 0;
-				case 'singDOWN':
-					bfCam[0] = 0;
-					bfCam[1] = followAmount;
-				case 'singUP':
-					bfCam[0] = 0;
-					bfCam[1] = -followAmount;
-				case 'singRIGHT':
-					bfCam[0] = followAmount;
-					bfCam[1] = 0;
-			}
+			boyfriend.color = FlxColor.WHITE;
 		}
 	}
 
@@ -1769,8 +1728,7 @@ class PlayState extends MusicBeatState
 			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 			{
 				boyfriend.dance();
-				bfCam[0] = 0;
-				bfCam[1] = 0;
+				boyfriendIdleColor();
 			}
 		}
 
@@ -1804,25 +1762,30 @@ class PlayState extends MusicBeatState
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
 			// FlxG.log.add('played imss note');
-
-			var missToPlay:String = 'miss';
 			
-			if (boyfriend.animation.getByName("singLEFTmiss") == null)
-			{
-				missToPlay = '';
-				boyfriend.color = 0xFF000084;
-			}
+			var animToPlay:String = '';
 			switch (direction)
 			{
 				case 0:
-					boyfriend.playAnim('singLEFT' + missToPlay, true);
+					animToPlay = 'singLEFT';
 				case 1:
-					boyfriend.playAnim('singDOWN' + missToPlay, true);
+					animToPlay = 'singDOWN';
 				case 2:
-					boyfriend.playAnim('singUP' + missToPlay, true);
+					animToPlay = 'singUP';
 				case 3:
-					boyfriend.playAnim('singRIGHT' + missToPlay, true);
+					animToPlay = 'singRIGHT';
 			}
+			
+			if (boyfriend.animation.getByName("singLEFTmiss") != null)
+			{
+				animToPlay += 'miss';
+			}
+			else
+			{
+				boyfriend.color = 0xFF000084;
+			}
+			
+			boyfriend.playAnim(animToPlay, true);
 
 			updateAccuracy();
 		}
@@ -1855,22 +1818,10 @@ class PlayState extends MusicBeatState
 			else
 				health += 0.004;
 
-			var animToPlay:String = ''; 
-			switch (note.noteData)
-			{	
-				case 0:
-					animToPlay = 'singLEFT';
-				case 1:
-					animToPlay = 'singDOWN';
-				case 2:
-					animToPlay = 'singUP';
-				case 3:
-					animToPlay = 'singRIGHT';
-			}
+			var animList:Array<String> = ['LEFT', 'DOWN', 'UP', 'RIGHT'];
+			boyfriend.playAnim('sing' + animList[Math.round(Math.abs(note.noteData))], true);
 			
-			boyfriend.playAnim(animToPlay, true);
-			
-			//cameraMoveOnNote(note.noteData, 'bf');
+			boyfriendIdleColor();
 
 			playerStrums.forEach(function(spr:StrumNote)
 			{
@@ -2111,19 +2062,21 @@ class PlayState extends MusicBeatState
 			gf.dance();
 		}
 
-		if (!boyfriend.animation.curAnim.name.startsWith("sing") && curBeat % 2 == 0)
+		if (curBeat % 2 == 0)
 		{
-			boyfriend.dance();
-			bfCam[0] = 0;
-			bfCam[1] = 0;
+			if (!boyfriend.animation.curAnim.name.startsWith("sing") && boyfriend.canDance
+				&& (boyfriend.animation.curAnim.name == "hit" ? boyfriend.animation.curAnim.finished : true)
+				&& (boyfriend.animation.curAnim.name == "dodge" ? boyfriend.animation.curAnim.finished : true))
+			{
+				boyfriend.dance();
+				boyfriendIdleColor();
+			}
 		}
 		
 		if (!dad.animation.curAnim.name.startsWith("sing") && curBeat % 2 == 0)
 		{
 			dad.dance();
 			if (SONG.song.toLowerCase() == 'insanity') dadmirror.dance();
-			dadCam[0] = 0;
-			dadCam[1] = 0;
 		}
 
 		if (curBeat % 8 == 7)
