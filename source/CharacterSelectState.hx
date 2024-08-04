@@ -232,6 +232,7 @@ class CharacterSelectState extends MusicBeatState
 		super.update(elapsed);
 		
 		tailsBox.visible = FlxG.save.data.hornyGF && FlxG.save.data.hornyALL;
+		girlfriendChar.visible = !noGfChar.contains(boyfriendChar.curCharacter);
 		
 		if (!selectedCharacter)
 		{			
@@ -436,7 +437,6 @@ class CharacterSelectState extends MusicBeatState
 	
 	function updateGfUI()
 	{
-		girlfriendChar.visible = !noGfChar.contains(boyfriendChar.curCharacter);
 		girlfriendText.visible = !noGfChar.contains(boyfriendChar.curCharacter);
 		iconGF.visible = !noGfChar.contains(boyfriendChar.curCharacter);
 		

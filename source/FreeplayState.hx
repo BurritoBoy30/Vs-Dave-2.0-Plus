@@ -99,7 +99,7 @@ class FreeplayState extends MusicBeatState
 				addWeek(['Cheating'], 2, ['bambi-3d'], ['Stupid'], [125]);
 			
 			case 'extra':
-				addWeek(['Bonus-Song'], 1, ['dave'], ['Hard'], [140]);
+				addWeek(['Bonus-Song'], 1, ['dave'], ['Normal'], [140]);
 				addWeek(['Mealie'], 2, ['bambi'], ['Hard'], [167]);
 		}
 	}

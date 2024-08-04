@@ -84,21 +84,21 @@ class Character extends FlxSprite
 				frames = tex;
 				
 				addAnimation(-5, 'idle', 'BF idle dance');
-				addAnimation(-29, 27, 'singUP', 'BF NOTE UP0');
+				addAnimation(-29, 33, 'singUP', 'BF NOTE UP0');
 				addAnimation(4, -6, 'singLEFT', 'BF NOTE LEFT0');
-				addAnimation(-49, -6, 'singRIGHT', 'BF NOTE RIGHT0');
+				addAnimation(-49, -7, 'singRIGHT', 'BF NOTE RIGHT0');
 				addAnimation(-10, -50, 'singDOWN', 'BF NOTE DOWN0');
-				addAnimation(-29, 27, 'singUPmiss', 'BF NOTE UP MISS');
+				addAnimation(-39, 30, 'singUPmiss', 'BF NOTE UP MISS');
 				addAnimation(12, 24, 'singLEFTmiss', 'BF NOTE LEFT MISS');
-				addAnimation(-30, 21, 'singRIGHTmiss', 'BF NOTE RIGHT MISS');
-				addAnimation(-11, -19, 'singDOWNmiss', 'BF NOTE DOWN MISS');
-				addAnimation(-4, 5, 'hey', 'BF HEY');
+				addAnimation(-50, 24, 'singRIGHTmiss', 'BF NOTE RIGHT MISS');
+				addAnimation(-1, -27, 'singDOWNmiss', 'BF NOTE DOWN MISS');
+				addAnimation(-4, -1, 'hey', 'BF HEY');
 
 				addAnimation(24, 8, 'firstDeath', "BF dies");
 				addAnimation(24, 3, 'deathLoop', "BF Dead Loop", true);
 				addAnimation(24, 66, 'deathConfirm', "BF Dead confirm");
 
-				addAnimation(-4, 'scared', 'BF idle shaking', true);
+				addAnimation(-4, -2, 'scared', 'BF idle shaking', true);
 
 				playAnim('idle');
 
@@ -457,11 +457,11 @@ class Character extends FlxSprite
 				// DAD ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('characters/alphadave');
 				frames = tex;
-				animation.addByPrefix('idle', 'Dad idle dance', 24);
-				animation.addByPrefix('singUP', 'Dad Sing Note UP', 24);
-				animation.addByPrefix('singRIGHT', 'Dad Sing Note RIGHT', 24);
-				animation.addByPrefix('singDOWN', 'Dad Sing Note DOWN', 24);
-				animation.addByPrefix('singLEFT', 'Dad Sing Note LEFT', 24);
+				animation.addByPrefix('idle', 'Dad idle dance', 24, false);
+				animation.addByPrefix('singUP', 'Dad Sing Note UP', 24, false);
+				animation.addByPrefix('singRIGHT', 'Dad Sing Note RIGHT', 24, false);
+				animation.addByPrefix('singDOWN', 'Dad Sing Note DOWN', 24, false);
+				animation.addByPrefix('singLEFT', 'Dad Sing Note LEFT', 24, false);
 
 				addOffset('idle');
 				addOffset("singUP", -6, 50);
@@ -470,6 +470,8 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 0, -30);
 
 				playAnim('idle');
+				
+				charOffset[1] = -20;
 				
 			case 'dave-split-3d':
 				// DAVE SHITE ANIMATION LOADING CODE

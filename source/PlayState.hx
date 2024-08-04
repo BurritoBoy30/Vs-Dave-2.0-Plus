@@ -1428,6 +1428,8 @@ class PlayState extends MusicBeatState
 					camFollow.y = dad.getMidpoint().y;
 				case 'dave-split-3d':
 					camFollow.y = dad.getMidpoint().y - 50;
+				case 'dave-alpha':
+					camFollow.y = dad.getMidpoint().y - 50;
 					
 			}
 
