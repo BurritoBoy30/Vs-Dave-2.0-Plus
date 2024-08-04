@@ -760,12 +760,79 @@ class PlayState extends MusicBeatState
 						}
 					});
 					FlxG.sound.play(Paths.sound('introGo'), 0.6);
+					creditPopUp();
 				case 4:
 			}
 
 			swagCounter += 1;
 			// generateSong('fresh');
 		}, 5);
+	}
+	
+	var creditGoDown:Bool = false;
+	var creditBG:FlxSprite;
+	var creditText:FlxText;
+	
+	function creditPopUp()
+	{
+		creditBG = new FlxSprite(0, 200).makeGraphic(1, 70, FlxColor.BLACK);
+		creditBG.alpha = 0.6;
+		
+		var creditString:String;
+		switch (SONG.song.toLowerCase())
+		{
+			case 'tutorial':
+				creditString = 'KawaiSprite';
+			case 'house' | 'insanity' | 'polygonized' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'bonus-song' | 'cheating':
+				creditString = 'MoldyGH';
+			case 'mealie':
+				creditString = 'Alexander Copper 19';
+			case 'disability' | 'disruption':
+				creditString = 'Sky!';
+			case 'og':
+				creditString = 'Aadsta';
+			default:
+				creditString = 'Placeholder';
+		}
+		
+		creditText = new FlxText(5, creditBG.y - 5, 0, "Song by " + creditString, 24);
+		creditText.setFormat(Paths.font("comic.ttf"), 45, FlxColor.WHITE, LEFT);
+		creditText.antialiasing = true;
+		
+		creditBG.scale.x = creditText.textField.textWidth + 20;
+		creditBG.x = -((creditBG.scale.x / 2) - 1) - 12;
+		creditText.x = -creditText.textField.textWidth - 15;
+		
+		add(creditBG);
+		
+		add(creditText);
+		creditBG.cameras = [camHUD];
+		creditText.cameras = [camHUD];
+		
+		// the bg only only goes the to right place if i add it to the FlxTween function, fucking why??
+		FlxTween.tween(creditBG, {x: (creditBG.scale.x / 2) - 1}, 1, {ease: FlxEase.elasticInOut});
+		FlxTween.tween(creditText, {x: 5}, 1, {ease: FlxEase.elasticInOut});
+		
+		new FlxTimer().start(5, function(Dumbshit:FlxTimer)
+		{
+			FlxTween.tween(creditBG, {x: -((creditBG.scale.x / 2) - 1) - 12}, 1,
+			{
+				ease: FlxEase.elasticInOut,
+				onComplete: function(twn:FlxTween)
+				{
+					creditBG.destroy();
+				}
+			});
+			
+			FlxTween.tween(creditText, {x: -creditText.textField.textWidth - 15}, 1,
+			{
+				ease: FlxEase.elasticInOut,
+				onComplete: function(twn:FlxTween)
+				{
+					creditText.destroy();
+				}
+			});
+		});
 	}
 
 	var previousFrameTime:Int = 0;
