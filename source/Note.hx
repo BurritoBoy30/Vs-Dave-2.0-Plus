@@ -63,9 +63,9 @@ class Note extends FlxSprite
 
 		this.noteData = noteData;
 
-		if (((CharactersWith3D.contains(PlayState.SONG.player2) && !musthit)
-			|| (CharactersWith3D.contains(PlayState.SONG.player1) && musthit))
-			|| ((CharactersWith3D.contains(PlayState.SONG.player2) || CharactersWith3D.contains(PlayState.SONG.player1))
+		if (((CharactersWith3D.contains(PlayState.dad.curCharacter) && !musthit)
+			|| (CharactersWith3D.contains(PlayState.boyfriend.curCharacter) && musthit))
+			|| ((CharactersWith3D.contains(PlayState.dad.curCharacter) || CharactersWith3D.contains(PlayState.boyfriend.curCharacter))
 			&& ((this.strumTime / 50) % 20 > 10)))
 		{
 			this.noteStyle = '3d';

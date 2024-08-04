@@ -39,6 +39,7 @@ import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
 import Shaders.PulseEffect;
+import Shaders.GlitchEffect;
 
 using StringTools;
 
@@ -61,6 +62,7 @@ class PlayState extends MusicBeatState
 
 	public var curbg:FlxSprite;
 	public var screenshader:Shaders.PulseEffect = new PulseEffect();
+	public static var lazychartshader:Shaders.GlitchEffect = new GlitchEffect();
 
 	public var elapsedtime:Float = 0;
 
@@ -88,7 +90,7 @@ class PlayState extends MusicBeatState
 	public var dadStrums:FlxTypedGroup<StrumNote>;
 
 	private var camZooming:Bool = false;
-	public var resetZoom:Bool = true;
+	public var crazyZooming:Bool = false;
 	private var curSong:String = "";
 
 	private var gfSpeed:Int = 1;
@@ -116,6 +118,8 @@ class PlayState extends MusicBeatState
 	private var BAMBICUTSCENEICONHURHURHUR:HealthIcon;
 	private var camHUD:FlxCamera;
 	private var camGame:FlxCamera;
+	
+	public static var eyesoreson = true;
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 
@@ -150,6 +154,7 @@ class PlayState extends MusicBeatState
 		theFunne = FlxG.save.data.newInput;
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
+		eyesoreson = FlxG.save.data.eyesores;
 
 		sicks = 0;
 		bads = 0;
@@ -365,6 +370,15 @@ class PlayState extends MusicBeatState
 		timeTxt.cameras = [camHUD];
 		timeLabelTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+		
+		if (SONG.song.toLowerCase() == 'kabunga') //i desperately wanted it so if you use downscroll it switches it to upscroll and flips the entire hud upside down but i never got to it
+		{
+			lazychartshader.waveAmplitude = 0.03;
+			lazychartshader.waveFrequency = 5;
+			lazychartshader.waveSpeed = 1;
+
+			camHUD.setFilters([new ShaderFilter(lazychartshader.shader)]);
+		}
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -612,20 +626,23 @@ class PlayState extends MusicBeatState
 	
 	function polygonizedEnd()
 	{
+		FlxG.camera.flash(FlxColor.WHITE, 1);
+		defaultCamZoom = 0.9;
+		
 		dad.x = 100;
 		dad.y = 100;
 		changeDad('dave');
 		
 		gf.canDance = false;
 		boyfriend.canDance = false;
-		gf.playAnim('hey', true);
-		boyfriend.playAnim('cheer', true);
-
+		gf.playAnim('cheer', true);
+		boyfriend.playAnim('hey', true);
+		
 		var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('dave/sky_night'));
 		bg.antialiasing = true;
 		bg.scrollFactor.set(0.9, 0.9);
 		bg.active = false;
-		add(bg);
+		insert(members.indexOf(gf), bg);
 
 		var stageHills:FlxSprite = new FlxSprite(-225, -125).loadGraphic(Paths.image('dave/hills_night'));
 		stageHills.setGraphicSize(Std.int(stageHills.width * 1.25));
@@ -633,7 +650,7 @@ class PlayState extends MusicBeatState
 		stageHills.antialiasing = true;
 		stageHills.scrollFactor.set(1, 1);
 		stageHills.active = false;
-		add(stageHills);
+		insert(members.indexOf(gf), stageHills);
 
 		var gate:FlxSprite = new FlxSprite(-225, -125).loadGraphic(Paths.image('dave/gate_night'));
 		gate.setGraphicSize(Std.int(gate.width * 1.2));
@@ -642,7 +659,7 @@ class PlayState extends MusicBeatState
 		gate.scrollFactor.set(0.925, 0.925);
 		gate.x += 25;
 		gate.active = false;
-		add(gate);
+		insert(members.indexOf(gf), gate);
 
 		var stageFront:FlxSprite = new FlxSprite(-225, -125).loadGraphic(Paths.image('dave/grass_night'));
 		stageFront.setGraphicSize(Std.int(stageFront.width * 1.2));
@@ -650,7 +667,9 @@ class PlayState extends MusicBeatState
 		stageFront.antialiasing = true;
 		stageFront.scrollFactor.set(0.9, 0.9);
 		stageFront.active = false;
-		add(stageFront);
+		insert(members.indexOf(gf), stageFront);
+		
+		regenerateStaticArrows(0);
 	}
 
 	var startTimer:FlxTimer;
@@ -961,15 +980,15 @@ class PlayState extends MusicBeatState
 		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.strumTime, Obj2.strumTime);
 	}
 
-	private function generateStaticArrows(player:Int):Void
+	private function generateStaticArrows(player:Int, regenerate:Bool = false, fadeIn:Bool = true):Void
 	{
 		for (i in 0...4)
 		{
 			// FlxG.log.add(i);
 			var noteSkin:String = '';
 			
-			if ((Note.CharactersWith3D.contains(SONG.player2) && player == 0)
-				|| (Note.CharactersWith3D.contains(SONG.player1) && player == 1))
+			if ((Note.CharactersWith3D.contains(dad.curCharacter) && player == 0)
+				|| (Note.CharactersWith3D.contains(boyfriend.curCharacter) && player == 1))
 			{
 				noteSkin = '3d';
 			}
@@ -980,7 +999,7 @@ class PlayState extends MusicBeatState
 			
 			var babyArrow:StrumNote = new StrumNote(0, strumLine.y, i, noteSkin, player == 1);
 
-			if (!isStoryMode)
+			if (!isStoryMode && fadeIn)
 			{
 				babyArrow.y -= 10;
 				babyArrow.alpha = 0;
@@ -1002,6 +1021,30 @@ class PlayState extends MusicBeatState
 
 			strumLineNotes.add(babyArrow);
 		}
+	}
+	
+	function regenerateStaticArrows(player:Int, fadeIn = true)
+	{
+		switch (player)
+		{
+			case 0:
+				dadStrums.forEach(function(spr:StrumNote)
+				{
+					dadStrums.remove(spr);
+					strumLineNotes.remove(spr);
+					remove(spr);
+					spr.destroy();
+				});
+			case 1:
+				playerStrums.forEach(function(spr:StrumNote)
+				{
+					playerStrums.remove(spr);
+					strumLineNotes.remove(spr);
+					remove(spr);
+					spr.destroy();
+				});
+		}
+		generateStaticArrows(player, false, fadeIn);
 	}
 
 	function tweenCamIn():Void
@@ -1121,13 +1164,14 @@ class PlayState extends MusicBeatState
 		}
 		
 		FlxG.camera.setFilters([new ShaderFilter(screenshader.shader)]); // this is very stupid but doesn't effect memory all that much so
-		if (shakeCam && FlxG.save.data.eyesoreson)
+		if (shakeCam && eyesoreson)
 		{
 			// var shad = cast(FlxG.camera.screen.shader,Shaders.PulseShader);
-			FlxG.camera.shake(0.015, 0.015);
+			FlxG.camera.shake(0.010, 0.010);
 		}
 		screenshader.shader.uTime.value[0] += elapsed;
-		if (shakeCam && FlxG.save.data.eyesoreson)
+		lazychartshader.shader.uTime.value[0] += elapsed;
+		if (shakeCam && eyesoreson)
 		{
 			screenshader.shader.uampmul.value[0] = 1;
 		}
@@ -1135,7 +1179,7 @@ class PlayState extends MusicBeatState
 		{
 			screenshader.shader.uampmul.value[0] -= (elapsed / 2);
 		}
-		screenshader.Enabled = shakeCam && FlxG.save.data.eyesoreson;
+		screenshader.Enabled = shakeCam && eyesoreson;
 		
 		if (FlxG.keys.justPressed.NINE)
 		{
@@ -1277,11 +1321,13 @@ class PlayState extends MusicBeatState
 		
 		if (camZooming)
 		{
-			if (resetZoom)
-			{
-				FlxG.camera.zoom = defaultCamZoom;
-				camHUD.zoom = 1;
-			}
+			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
+			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95);
+		}
+		if (crazyZooming)
+		{
+			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
+			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95);
 		}
 
 		FlxG.watch.addQuick("beatShit", curBeat);
@@ -2017,7 +2063,32 @@ class PlayState extends MusicBeatState
 						dad.canDance = false;
 						iconP2.playAnimation('dave');
 				}
-				
+			case 'polygonized':
+				switch(curStep)
+				{
+					case 128 | 640 | 704 | 1535:
+						defaultCamZoom = 0.9;
+					case 256 | 768 | 1468 | 1596 | 2048 | 2144 | 2428:
+						defaultCamZoom = 0.7;
+					case 688 | 752 | 1279 | 1663 | 2176:
+						defaultCamZoom = 1;
+					case 1019 | 1471 | 1599 | 2064:
+						defaultCamZoom = 0.8;
+					case 1920:
+						defaultCamZoom = 1.1;
+
+					case 1024 | 1312:
+						defaultCamZoom = 1.1;
+						crazyZooming = true;
+						shakeCam = true;
+						
+					case 1152 | 1408:
+						defaultCamZoom = 0.9;
+						shakeCam = false;
+						crazyZooming = false;
+					case 2432:
+						polygonizedEnd();
+				}
 			case 'splitathon':
 				switch (curStep)
 				{
@@ -2092,20 +2163,20 @@ class PlayState extends MusicBeatState
 			camHUD.zoom += 0.03;
 		}*/
 		
-		if (camZooming)
+		if (camZooming && curBeat % 4 == 0)
 		{
-			if (curBeat % 4 == 0)
-			{
-				resetZoom = false;
-				
-				FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom + 0.015}, Conductor.crochet / 750, {ease: FlxEase.quadOut, type: BACKWARD});
-				FlxTween.tween(camHUD, {zoom: 1.03}, Conductor.crochet / 750, {ease: FlxEase.quadOut, type: BACKWARD});
-				
-				new FlxTimer().start(Conductor.crochet / 750, function(Dumbshit:FlxTimer)
-				{
-					resetZoom = true;
-				});
-			}
+			FlxG.camera.zoom += 0.015;
+			camHUD.zoom += 0.03;
+		}
+		if (crazyZooming)
+		{
+			FlxG.camera.zoom += 0.015;
+			camHUD.zoom += 0.03;
+		}
+		
+		if(shakeCam && gf.animation.getByName("scared") != null)
+		{
+			gf.playAnim('scared', true);
 		}
 		
 		var funny:Float = (healthBar.percent * 0.01) + 0.01;
@@ -2128,7 +2199,10 @@ class PlayState extends MusicBeatState
 
 		if (curBeat % gfBeatSnap == 0)
 		{
-			gf.dance();
+			if (!(shakeCam && gf.animation.getByName("scared") != null) && gf.canDance)
+			{
+				gf.dance();
+			}
 		}
 
 		if (curBeat % 2 == 0)

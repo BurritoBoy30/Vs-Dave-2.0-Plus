@@ -22,7 +22,8 @@ class OptionsMenu extends MusicBeatState
 		["Accuracy Display", FlxG.save.data.accuracyDisplay],
 		["Naughtiness", FlxG.save.data.hornyALL],
 		["Change Keys", false],
-		["Fullscreen", FlxG.save.data.fullScreen]
+		["Fullscreen", FlxG.save.data.fullScreen],
+		["Eye Sores",FlxG.save.data.eyesoreson]
 	];
 	private var grpControls:FlxTypedGroup<ComicSansText>;
 	private var checkArray:Array<CheckBox> = [];
@@ -104,6 +105,9 @@ class OptionsMenu extends MusicBeatState
 					FlxG.save.data.fullScreen = !FlxG.save.data.fullScreen;
 					checkArray[curSelected].switchButton(FlxG.save.data.fullScreen);
 					FlxG.fullscreen = FlxG.save.data.fullScreen;
+				case 6:
+					FlxG.save.data.eyesoreson = !FlxG.save.data.eyesoreson;
+					checkArray[curSelected].switchButton(FlxG.save.data.eyesoreson);
 			}
 		}
 	}
