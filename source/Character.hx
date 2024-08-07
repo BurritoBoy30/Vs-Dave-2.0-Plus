@@ -22,6 +22,8 @@ class Character extends FlxSprite
 	public var globaloffset:Array<Float> = [0,0];
 	public var charOffset:Array<Float> = [0,0];
 	
+	public static var tutorialGFs:Array<String> = ['gf', 'gf-christmas', 'cyan', 'cyan-christmas', 'psyka', 'psyka-christmas', 'gf-massive', 'gf-hot', 'gf-hot-christmas', 'gf-hot-funny', 'tails-doll', 'skyblue'];
+
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
 		super(x, y);
@@ -299,109 +301,55 @@ class Character extends FlxSprite
 				// DAVE SHITE ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('characters/Dave_Furiosity');
 				frames = tex;
-				animation.addByPrefix('idle', 'IDLE', 24, false);
-				animation.addByPrefix('singUP', 'UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
-		
-				addOffset('idle', 7, 0);
-				addOffset("singUP", -14, 16);
-				addOffset("singRIGHT", 13, 23);
-				addOffset("singLEFT", 49, -9);
-				addOffset("singDOWN", 0, -10);
+				
+				addAnimation(7, 0, 'idle', 'IDLE');
+				addAnimation(-14, 16, 'singUP', 'UP');
+				addAnimation(13, 23, 'singRIGHT', 'RIGHT');
+				addAnimation(49, -9, 'singDOWN', 'DOWN');
+				addAnimation(0, -10, 'singLEFT', 'LEFT');
 				
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
 		
 				playAnim('idle');
-							
-			case 'bambi-old':
-				tex = Paths.getSparrowAtlas('characters/bambi-old');
-				frames = tex;
-				animation.addByPrefix('idle', 'MARCELLO idle dance', 24, false);
-				animation.addByPrefix('singUP', 'MARCELLO NOTE UP0', 24, false);
-				animation.addByPrefix('singLEFT', 'MARCELLO NOTE LEFT0', 24, false);
-				animation.addByPrefix('singRIGHT', 'MARCELLO NOTE RIGHT0', 24, false);
-				animation.addByPrefix('singDOWN', 'MARCELLO NOTE DOWN0', 24, false);
-				animation.addByPrefix('idle', 'MARCELLO idle dance', 24, false);
-				animation.addByPrefix('singUPmiss', 'MARCELLO MISS UP0', 24, false);
-				animation.addByPrefix('singLEFTmiss', 'MARCELLO MISS LEFT0', 24, false);
-				animation.addByPrefix('singRIGHTmiss', 'MARCELLO MISS RIGHT0', 24, false);
-				animation.addByPrefix('singDOWNmiss', 'MARCELLO MISS DOWN0', 24, false);
-
-				animation.addByPrefix('firstDeath', "MARCELLO dead0", 24, false);
-				animation.addByPrefix('deathLoop', "MARCELLO dead0", 24, true);
-				animation.addByPrefix('deathConfirm', "MARCELLO dead0", 24, false);
-	
-				addOffset('idle');
-				addOffset("singUP", -6, 3);
-				addOffset("singRIGHT", 0, -4);
-				addOffset("singLEFT", -10, -2);
-				addOffset("singDOWN", 0, -17);
-				addOffset("singUPmiss", -6, 4);
-				addOffset("singRIGHTmiss", 0, -4);
-				addOffset("singLEFTmiss", -10, -2);
-				addOffset("singDOWNmiss", -7, -14);
-
-				playAnim('idle');
-	
-				flipX = true;
-				
-				charOffset[1] = 400;
-				
-			case 'bambi-new':
-				frames = Paths.getSparrowAtlas('characters/bambiRemake');
-				animation.addByPrefix('idle', 'Idle', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-
-				addOffset('idle');
-				addOffset("singUP", 44, 0);
-				addOffset("singRIGHT", -16, -3);
-				addOffset("singLEFT", -5, -8);
-				addOffset("singDOWN", -5, -48);
-
-				playAnim('idle');
-				
-				charOffset[1] = 430;
-				charOffset[0] = 200;
 			
 			case 'dave-splitathon':
 				frames = Paths.getSparrowAtlas('characters/Splitathon_Dave');
-				animation.addByPrefix('idle', 'Idle', 24, false);
-				animation.addByPrefix('singDOWN', 'Down', 24, false);
-				animation.addByPrefix('singUP', 'Up', 24, false);
-				animation.addByPrefix('singLEFT', 'Left', 24, false);
-				animation.addByPrefix('singRIGHT', 'Right', 24, false);
-
-				addOffset('idle');
-				addOffset("singUP");
-				addOffset("singRIGHT", -9);
-				addOffset("singLEFT");
-				addOffset("singDOWN", 40);
+				
+				addAnimation('idle', 'Idle');
+				addAnimation('singUP', 'Up');
+				addAnimation(-9, 'singRIGHT', 'Right');
+				addAnimation(40, 'singDOWN', 'Down');
+				addAnimation('singLEFT', 'Left');
 
 				playAnim('idle');
 				
 				charOffset[0] = 100;
 				charOffset[1] = 300;
 				
+			case 'bambi-new':
+				frames = Paths.getSparrowAtlas('characters/bambiRemake');
+				
+				addAnimation('idle', 'Idle');
+				addAnimation(44, 0, 'singUP', 'up');
+				addAnimation(-16, -3, 'singRIGHT', 'right');
+				addAnimation(-5, -8, 'singDOWN', 'down');
+				addAnimation(-5, -48, 'singLEFT', 'left');
+
+				playAnim('idle');
+				
+				charOffset[1] = 430;
+				charOffset[0] = 200;
+				
 			case 'bambi-splitathon':
 				frames = Paths.getSparrowAtlas('characters/Splitathon_Bambi');
-				animation.addByPrefix('idle', 'Idle', 18, false);
-				animation.addByPrefix('singDOWN', 'Down', 27, false);
-				animation.addByPrefix('singUP', 'Up', 27, false);
-				animation.addByPrefix('singLEFT', 'Left', 27, false);
-				animation.addByPrefix('singRIGHT', 'Right', 27, false);
-							
-				addOffset('idle');
-				addOffset("singUP", -24, 15);
-				addOffset("singRIGHT", -34, -6);
-				addOffset("singLEFT", -3, 6);
-				addOffset("singDOWN", -20, -10);
+				
+				addAnimation('idle', 'Idle', 18);
+				addAnimation(-20, -10, 'singDOWN', 'Down', 27);
+				addAnimation(-24, 15, 'singUP', 'Up', 27);
+				addAnimation(-3, 6, 'singLEFT', 'Left', 27);
+				addAnimation(-34, -6, 'singRIGHT', 'Right', 27);
 		
 				playAnim('idle');
 				
@@ -410,17 +358,12 @@ class Character extends FlxSprite
 			
 			case 'bambi-angey':
 				frames = Paths.getSparrowAtlas('characters/bambimaddddd');
-				animation.addByPrefix('idle', 'idle', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-
-				addOffset('idle');
-				addOffset('singLEFT');
-				addOffset('singDOWN');
-				addOffset('singUP', 0, 20);
-				addOffset('singRIGHT');
+				
+				addAnimation('idle', 'idle');
+				addAnimation('singLEFT', 'left');
+				addAnimation('singDOWN', 'down');
+				addAnimation(0, 20, 'singUP', 'up');
+				addAnimation('singRIGHT', 'right');
 
 				playAnim('idle');
 				
@@ -431,18 +374,13 @@ class Character extends FlxSprite
 				// BAMBI SHITE ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('characters/bambi_angryboy');
 				frames = tex;
-				animation.addByPrefix('idle', 'DaveAngry idle dance', 24, false);
-				animation.addByPrefix('singUP', 'DaveAngry Sing Note UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'DaveAngry Sing Note RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'DaveAngry Sing Note DOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'DaveAngry Sing Note LEFT', 24, false);
-		
-				addOffset('idle');
-				addOffset("singUP", 0, 0);
-				addOffset("singRIGHT", 0, 0);
-				addOffset("singLEFT", 0, 0);
-				addOffset("singDOWN", 0, 0);
 				
+				addAnimation('idle', 'DaveAngry idle dance');
+				addAnimation('singUP', 'DaveAngry Sing Note UP');
+				addAnimation('singRIGHT', 'DaveAngry Sing Note RIGHT');
+				addAnimation('singDOWN', 'DaveAngry Sing Note DOWN');
+				addAnimation('singLEFT', 'DaveAngry Sing Note LEFT');
+
 				globaloffset[0] = 150;
 				globaloffset[1] = 450; //this is the y
 				setGraphicSize(Std.int(width / furiosityScale));
@@ -457,17 +395,12 @@ class Character extends FlxSprite
 				// DAD ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('characters/alphadave');
 				frames = tex;
-				animation.addByPrefix('idle', 'Dad idle dance', 24, false);
-				animation.addByPrefix('singUP', 'Dad Sing Note UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'Dad Sing Note RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'Dad Sing Note DOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'Dad Sing Note LEFT', 24, false);
-
-				addOffset('idle');
-				addOffset("singUP", -6, 50);
-				addOffset("singRIGHT", 0, 27);
-				addOffset("singLEFT", -10, 10);
-				addOffset("singDOWN", 0, -30);
+				
+				addAnimation('idle', 'Dad idle dance');
+				addAnimation(-6, 50, 'singUP', 'Dad Sing Note UP');
+				addAnimation(0, 27, 'singRIGHT', 'Dad Sing Note RIGHT');
+				addAnimation(0, -30, 'singDOWN', 'Dad Sing Note DOWN');
+				addAnimation(-10, 10, 'singLEFT', 'Dad Sing Note LEFT');
 
 				playAnim('idle');
 				
@@ -477,17 +410,13 @@ class Character extends FlxSprite
 				// DAVE SHITE ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('characters/split_dave_3d');
 				frames = tex;
-				animation.addByPrefix('idle', 'IDLE', 24, false);
-				animation.addByPrefix('singUP', 'UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
+				
+				addAnimation('idle', 'IDLE');
+				addAnimation('singUP', 'UP');
+				addAnimation('singRIGHT', 'RIGHT');
+				addAnimation('singDOWN', 'DOWN');
+				addAnimation('singLEFT', 'LEFT');
 		
-				addOffset('idle');
-				addOffset("singUP");
-				addOffset("singRIGHT");
-				addOffset("singLEFT");
-				addOffset("singDOWN");
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
@@ -501,62 +430,37 @@ class Character extends FlxSprite
 				// GIRLFRIEND CODE
 				tex = Paths.getSparrowAtlas('characters/girlfriends/GF_assets');
 				frames = tex;
-				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
-				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
-				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
-				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
-				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
-				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
-				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				animation.addByPrefix('scared', 'GF FEAR', 24);
-
-				addOffset('cheer');
-				addOffset('sad', -2, -21);
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
-
-				addOffset("singUP", 0, 4);
-				addOffset("singRIGHT", 0, -20);
-				addOffset("singLEFT", 0, -19);
-				addOffset("singDOWN", 0, -20);
-				addOffset('hairBlow', 45, -8);
-				addOffset('hairFall', 0, -9);
-
-				addOffset('scared', -2, -17);
+				
+				addAnimation('cheer', 'GF Cheer');
+				addAnimation(0, -19,'singLEFT', 'GF left note');
+				addAnimation(0, -20, 'singRIGHT', 'GF Right Note');
+				addAnimation(0, 4, 'singUP', 'GF Up Note');
+				addAnimation(0, -20, 'singDOWN', 'GF Down Note');
+				addAnimationIndices(-2, -21, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat',  [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+				addAnimationIndices(0, -9, 'danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
+				addAnimationIndices(45, -8, 'hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], true);
+				addAnimationIndices(0, -9 ,'hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+				addAnimation(-2, -17, 'scared', 'GF FEAR', true);
 
 				playAnim('danceRight');
 
 			case 'gf-christmas':
 				tex = Paths.getSparrowAtlas('characters/girlfriends/gfChristmas');
 				frames = tex;
-				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
-				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
-				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
-				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
-				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
-				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
-				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				animation.addByPrefix('scared', 'GF FEAR', 24);
-
-				addOffset('cheer');
-				addOffset('sad', -2, -2);
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
-
-				addOffset("singUP", 0, 4);
-				addOffset("singRIGHT", 0, -20);
-				addOffset("singLEFT", 0, -19);
-				addOffset("singDOWN", 0, -20);
-				addOffset('hairBlow', 45, -8);
-				addOffset('hairFall', 0, -9);
-
-				addOffset('scared', -2, -17);
+				
+				addAnimation('cheer', 'GF Cheer');
+				addAnimation(0, -19, 'singLEFT', 'GF left note');
+				addAnimation(0, -20, 'singRIGHT', 'GF Right Note');
+				addAnimation(0, 4, 'singUP', 'GF Up Note');
+				addAnimation(0, -20, 'singDOWN', 'GF Down Note');
+				
+				addAnimationIndices(-2, -2, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+				addAnimationIndices(0, -9, 'danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
+				addAnimationIndices(45, -8, 'hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], true);
+				addAnimationIndices(0, -9, 'hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+				addAnimation(-2, -17, 'scared', 'GF FEAR', true);
 
 				playAnim('danceRight');
 				
@@ -565,13 +469,10 @@ class Character extends FlxSprite
 			case 'gf-standing':
 				tex = Paths.getSparrowAtlas('characters/girlfriends/ovaries');
 				frames = tex;
-				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 				
-				addOffset('sad', -19, -21);
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
+				addAnimationIndices(-19, -21, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+				addAnimationIndices(0, -9, 'danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
 				
 				playAnim('danceRight');
 				
@@ -581,11 +482,9 @@ class Character extends FlxSprite
 			case 'gf-pixel':
 				tex = Paths.getSparrowAtlas('characters/girlfriends/gfPixel');
 				frames = tex;
-				animation.addByIndices('danceLeft', 'GF IDLE', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF IDLE', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-
-				addOffset('danceLeft', 0);
-				addOffset('danceRight', 0);
+				
+				addAnimationIndices('danceLeft', 'GF IDLE', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+				addAnimationIndices('danceRight', 'GF IDLE', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
 
 				playAnim('danceRight');
 
@@ -600,31 +499,19 @@ class Character extends FlxSprite
 				// GIRLFRIEND CODE
 				tex = Paths.getSparrowAtlas('characters/girlfriends/cyan_assets');
 				frames = tex;
-				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
-				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
-				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
-				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
-				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
-				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
-				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				animation.addByPrefix('scared', 'GF FEAR', 24);
-
-				addOffset('cheer', 0, -14);
-				addOffset('sad', -2, -19);
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
-
-				addOffset("singUP", 0, -10);
-				addOffset("singRIGHT", 0, -9);
-				addOffset("singLEFT", 0, -8);
-				addOffset("singDOWN", 0, -31);
-				addOffset('hairBlow', 49, 4);
-				addOffset('hairFall', 0, -10);
-
-				addOffset('scared', -2, -40);
+				
+				addAnimation(0, -14, 'cheer', 'GF Cheer');
+				addAnimation(0, -8, 'singLEFT', 'GF left note');
+				addAnimation(0, -9, 'singRIGHT', 'GF Right Note');
+				addAnimation(0, -10, 'singUP', 'GF Up Note');
+				addAnimation(0, -31, 'singDOWN', 'GF Down Note');
+				
+				addAnimationIndices(-2, -19, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+				addAnimationIndices(0, -9, 'danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
+				addAnimationIndices(49, 4, 'hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], true);
+				addAnimationIndices(0, -10, 'hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+				addAnimation(-2, -40, 'scared', 'GF FEAR', true);
 
 				playAnim('danceRight');
 				
@@ -633,31 +520,18 @@ class Character extends FlxSprite
 			case 'cyan-christmas':
 				tex = Paths.getSparrowAtlas('characters/girlfriends/cyanChristmas');
 				frames = tex;
-				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
-				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
-				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
-				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
-				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
-				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
-				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				animation.addByPrefix('scared', 'GF FEAR', 24);
-
-				addOffset('cheer', 0, -14);
-				addOffset('sad', -2, -19);
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
-
-				addOffset("singUP", 0, -10);
-				addOffset("singRIGHT", 0, -9);
-				addOffset("singLEFT", 0, -8);
-				addOffset("singDOWN", 0, -31);
-				addOffset('hairBlow', 49, 4);
-				addOffset('hairFall', 0, -10);
-
-				addOffset('scared', -2, -40);
+				
+				addAnimation(0, -14, 'cheer', 'GF Cheer');
+				addAnimation(0, -8, 'singLEFT', 'GF left note');
+				addAnimation(0, -9, 'singRIGHT', 'GF Right Note');
+				addAnimation(0, -10, 'singUP', 'GF Up Note');
+				addAnimation(0, -31, 'singDOWN', 'GF Down Note');
+				addAnimationIndices(-2, -19, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+				addAnimationIndices(0, -9, 'danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
+				addAnimationIndices(49, 4, 'hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], true);
+				addAnimationIndices(0, -10, 'hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+				addAnimation(-2, -40, 'scared', 'GF FEAR', true);
 
 				playAnim('danceRight');
 				
@@ -668,31 +542,18 @@ class Character extends FlxSprite
 				// GIRLFRIEND CODE
 				tex = Paths.getSparrowAtlas('characters/girlfriends/Psyka_assets');
 				frames = tex;
-				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
-				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
-				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
-				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
-				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
-				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
-				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				animation.addByPrefix('scared', 'GF FEAR', 24);
-
-				addOffset('cheer');
-				addOffset('sad', -2, -21);
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
-
-				addOffset("singUP", 0, 4);
-				addOffset("singRIGHT", 0, -20);
-				addOffset("singLEFT", 0, -19);
-				addOffset("singDOWN", 0, -20);
-				addOffset('hairBlow', 45, -8);
-				addOffset('hairFall', 0, -9);
-
-				addOffset('scared', -2, -17);
+				
+				addAnimation('cheer', 'GF Cheer');
+				addAnimation(0, -19, 'singLEFT', 'GF left note');
+				addAnimation(0, -20, 'singRIGHT', 'GF Right Note');
+				addAnimation(0, 4, 'singUP', 'GF Up Note');
+				addAnimation(0, -20, 'singDOWN', 'GF Down Note');
+				addAnimationIndices(-2, -21, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+				addAnimationIndices(0, -9, 'danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
+				addAnimationIndices(45, -8, 'hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], true);
+				addAnimationIndices(0, -9, 'hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+				addAnimation(-2, -17, 'scared', 'GF FEAR', true);
 
 				playAnim('danceRight');
 				
@@ -701,31 +562,18 @@ class Character extends FlxSprite
 			case 'psyka-christmas':
 				tex = Paths.getSparrowAtlas('characters/girlfriends/psykaChristmas');
 				frames = tex;
-				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
-				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
-				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
-				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
-				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
-				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
-				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				animation.addByPrefix('scared', 'GF FEAR', 24);
-
-				addOffset('cheer');
-				addOffset('sad', -2, -2);
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
-
-				addOffset("singUP", 0, 4);
-				addOffset("singRIGHT", 0, -20);
-				addOffset("singLEFT", 0, -19);
-				addOffset("singDOWN", 0, -20);
-				addOffset('hairBlow', 45, -8);
-				addOffset('hairFall', 0, -9);
-
-				addOffset('scared', -2, -17);
+				
+				addAnimation('cheer', 'GF Cheer');
+				addAnimation(0, -19, 'singLEFT', 'GF left note');
+				addAnimation(0, -20, 'singRIGHT', 'GF Right Note');
+				addAnimation(0, 4, 'singUP', 'GF Up Note');
+				addAnimation(0, -20, 'singDOWN', 'GF Down Note');
+				addAnimationIndices(-2, -2, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+				addAnimationIndices(0, -9, 'danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
+				addAnimationIndices(45, -8, 'hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], true);
+				addAnimationIndices(0, -9, 'hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+				addAnimation(-2, -17, 'scared', 'GF FEAR', true);
 
 				playAnim('danceRight');
 				
@@ -735,13 +583,10 @@ class Character extends FlxSprite
 			case 'psyka-standing':
 				tex = Paths.getSparrowAtlas('characters/girlfriends/obaries');
 				frames = tex;
-				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 				
-				addOffset('sad', -19, -21);
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
+				addAnimationIndices(-19, -21, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+				addAnimationIndices(0, -9, 'danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
 				
 				playAnim('danceRight');
 				
@@ -752,31 +597,19 @@ class Character extends FlxSprite
 				// GIRLFRIEND CODE
 				tex = Paths.getSparrowAtlas('characters/girlfriends/massivegf');
 				frames = tex;
-				animation.addByPrefix('cheer', 'cheer', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-				animation.addByIndices('sad', 'sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'idle', [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], "", 24, false);
-				animation.addByIndices('danceRight', 'idle', [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 0, 1, 2], "", 24, false);
-				animation.addByIndices('hairBlow', "hairblow", [0, 1, 2, 3], "", 24);
-				animation.addByIndices('hairFall', "hairland", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				animation.addByPrefix('scared', 'scared', 24);
 				
-				addOffset('cheer', 118, 251);
-				addOffset('sad', 11, -35);
-				addOffset('danceLeft', 6, 310);
-				addOffset('danceRight', 6, 310);
-
-				addOffset("singUP", -19, 18);
-				addOffset("singRIGHT", 8, -49);
-				addOffset("singLEFT", 13, -7);
-				addOffset("singDOWN", 0, -20);
-				addOffset('hairBlow', 205, -35);
-				addOffset('hairFall', 0, -9);
-
-				addOffset('scared', -2, -17);
+				addAnimation(118, 251, 'cheer', 'cheer');
+				addAnimation(11, -35, 'singLEFT', 'left');
+				addAnimation(8, -49, 'singRIGHT', 'right');
+				addAnimation(-19, 18, 'singUP', 'up');
+				addAnimation(0, -20, 'singDOWN', 'down');
+				
+				addAnimationIndices(11, -35, 'sad', 'sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimationIndices(6, 310,'danceLeft', 'idle', [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
+				addAnimationIndices(6, 310, 'danceRight', 'idle', [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 0, 1, 2]);
+				addAnimationIndices(205, -35, 'hairBlow', "hairblow", [0, 1, 2, 3], true);
+				addAnimationIndices( 0, -9, 'hairFall', "hairland", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+				addAnimation(-2, -17, 'scared', 'scared', true);
 
 				playAnim('danceRight');
 				
@@ -787,31 +620,18 @@ class Character extends FlxSprite
 				// GIRLFRIEND CODE
 				tex = Paths.getSparrowAtlas('characters/girlfriends/GF_Bent_New');
 				frames = tex;
-				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
-				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
-				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
-				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
-				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
-				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
-				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				animation.addByPrefix('scared', 'GF FEAR', 24);
-
-				addOffset('cheer', 0, -3);
-				addOffset('sad', -2, -18);
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
-
-				addOffset("singUP", 0, -2);
-				addOffset("singRIGHT", 0, -22);
-				addOffset("singLEFT", 0, -20);
-				addOffset("singDOWN", 0, -23);
-				addOffset('hairBlow', 64, -7);
-				addOffset('hairFall', 0, -9);
-
-				addOffset('scared', -2, -20);
+				
+				addAnimation(0, -3, 'cheer', 'GF Cheer');
+				addAnimation(0, -20, 'singLEFT', 'GF left note');
+				addAnimation(0, -22, 'singRIGHT', 'GF Right Note');
+				addAnimation(0, -2, 'singUP', 'GF Up Note');
+				addAnimation(0, -23, 'singDOWN', 'GF Down Note');
+				addAnimationIndices(-2, -18, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+				addAnimationIndices(0, -9, 'danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
+				addAnimationIndices(64, -7, 'hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], true);
+				addAnimationIndices(0, -9, 'hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+				addAnimation(-2, -20, 'scared', 'GF FEAR', true);
 
 				playAnim('danceRight');
 				
@@ -821,31 +641,19 @@ class Character extends FlxSprite
 				// GIRLFRIEND CODE
 				tex = Paths.getSparrowAtlas('characters/girlfriends/GF_Bent_Funny');
 				frames = tex;
-				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
-				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
-				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
-				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
-				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
-				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
-				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				animation.addByPrefix('scared', 'GF FEAR', 24);
-
-				addOffset('cheer', 0, -3);
-				addOffset('sad', -2, -18);
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
-
-				addOffset("singUP", 0, -2);
-				addOffset("singRIGHT", 0, -22);
-				addOffset("singLEFT", 0, -20);
-				addOffset("singDOWN", 0, -23);
-				addOffset('hairBlow', 64, -7);
-				addOffset('hairFall', 0, -9);
-
-				addOffset('scared', -2, -20);
+				
+				addAnimation(0, -3, 'cheer', 'GF Cheer');
+				addAnimation(0, -20, 'singLEFT', 'GF left note');
+				addAnimation(0, -22, 'singRIGHT', 'GF Right Note');
+				addAnimation(0, -2, 'singUP', 'GF Up Note');
+				addAnimation(0, -23, 'singDOWN', 'GF Down Note');
+				
+				addAnimationIndices(-2, -18, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+				addAnimationIndices(0, -9, 'danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
+				addAnimationIndices(64, -7, 'hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], true);
+				addAnimationIndices(0, -9, 'hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+				addAnimation(-2, -20, 'scared', 'GF FEAR', true);
 
 				playAnim('danceRight');
 				
@@ -854,31 +662,19 @@ class Character extends FlxSprite
 			case 'gf-hot-christmas':
 				tex = Paths.getSparrowAtlas('characters/girlfriends/GF_Bent_Christmas');
 				frames = tex;
-				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
-				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
-				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
-				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
-				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
-				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
-				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				animation.addByPrefix('scared', 'GF FEAR', 24);
-
-				addOffset('cheer', 0, -3);
-				addOffset('sad', -2, -18);
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
-
-				addOffset("singUP", 0, -2);
-				addOffset("singRIGHT", 0, -22);
-				addOffset("singLEFT", 0, -20);
-				addOffset("singDOWN", 0, -23);
-				addOffset('hairBlow', 64, -7);
-				addOffset('hairFall', 0, -9);
-
-				addOffset('scared', -2, -20);
+				
+				addAnimation(0, -3, 'cheer', 'GF Cheer');
+				addAnimation(0, -20, 'singLEFT', 'GF left note');
+				addAnimation(0, -22,'singRIGHT', 'GF Right Note');
+				addAnimation(0, -2, 'singUP', 'GF Up Note');
+				addAnimation(0, -23, 'singDOWN', 'GF Down Note');
+				
+				addAnimationIndices(-2, -18, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+				addAnimationIndices(0, -9, 'danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
+				addAnimationIndices(64, -7, 'hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], true);
+				addAnimationIndices(0, -9, 'hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+				addAnimation(-2, -20, 'scared', 'GF FEAR', true);
 
 				playAnim('danceRight');
 				
@@ -888,13 +684,10 @@ class Character extends FlxSprite
 			case 'gf-hot-standing':
 				tex = Paths.getSparrowAtlas('characters/girlfriends/GF_Funny_Boombox');
 				frames = tex;
-				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 				
-				addOffset('sad', -19, -21);
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
+				addAnimationIndices(-19, -21, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+				addAnimationIndices(0, -9, 'danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
 				
 				playAnim('danceRight');
 				
@@ -905,11 +698,11 @@ class Character extends FlxSprite
 				tex = Paths.getSparrowAtlas('characters/girlfriends/tailslol_edit');
 				frames = tex;
 				
-				addAnimation(0, 0, 'idle', 'tailslol idle');
-				addAnimation(0, 0, 'singUP', 'tailslol up');
-				addAnimation(0, 0, 'singLEFT', 'tailslol left');
-				addAnimation(0, 0, 'singRIGHT', 'tailslol right');
-				addAnimation(0, 0, 'singDOWN', 'tailslol down');
+				addAnimation('idle', 'tailslol idle');
+				addAnimation('singUP', 'tailslol up');
+				addAnimation('singLEFT', 'tailslol left');
+				addAnimation('singRIGHT', 'tailslol right');
+				addAnimation('singDOWN', 'tailslol down');
 				
 				playAnim('idle');
 				
@@ -1041,7 +834,7 @@ class Character extends FlxSprite
 		else
 			offset.set(0, 0);
 			
-		if (curCharacter == 'gf')
+		if (tutorialGFs.contains(curCharacter) && (curCharacter != 'tails-doll' || curCharacter != 'skyblue'))
 		{
 			if (AnimName == 'singLEFT')
 			{
@@ -1064,9 +857,15 @@ class Character extends FlxSprite
 		animOffsets[name] = [x, y];
 	}
 	
-	public function addAnimation(xAxis:Float = 0, y:Float = 0, name:String, xmlName:String, looped:Bool = false, fps:Int = 24)
+	public function addAnimation(xAxis:Float = 0, yAxis:Float = 0, name:String, xmlName:String, looped:Bool = false, fps:Int = 24)
 	{
 		animation.addByPrefix(name, xmlName, fps, looped);
-		animOffsets[name] = [xAxis, y];
+		animOffsets[name] = [xAxis, yAxis];
+	}
+	
+	public function addAnimationIndices(xAxis:Float = 0, yAxis:Float = 0, name:String, xmlName:String, indicesArray:Array<Int>, looped:Bool = false, fps:Int = 24)
+	{
+		animation.addByIndices(name, xmlName, indicesArray, "", fps, looped);
+		animOffsets[name] = [xAxis, yAxis];
 	}
 }
