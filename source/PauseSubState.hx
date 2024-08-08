@@ -18,11 +18,12 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Exit to menu'];
+	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Botplay', 'Exit to menu'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
 	var bg:FlxBackdrop;
+	var botplayText:FlxText;
 
 	public function new(x:Float, y:Float)
 	{
@@ -34,7 +35,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		FlxG.sound.list.add(pauseMusic);
 
-		var backBg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width + 1, FlxG.height + 1, FlxColor.BLACK);
+		var backBg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width + 5, FlxG.height + 5, FlxColor.BLACK);
 		backBg.alpha = 0;
 		backBg.scrollFactor.set();
 		add(backBg);
@@ -58,7 +59,16 @@ class PauseSubState extends MusicBeatSubstate
 		levelDifficulty.scrollFactor.set();
 		levelDifficulty.setFormat(Paths.font('comic.ttf'), 34);
 		levelDifficulty.updateHitbox();
+		levelDifficulty.antialiasing = true;
 		add(levelDifficulty);
+		
+		botplayText = new FlxText(20, FlxG.height - 70, 0, "BOTPLAY", 32);
+		botplayText.scrollFactor.set();
+		botplayText.setFormat(Paths.font('comic.ttf'), 32);
+		botplayText.x = FlxG.width - (botplayText.width + 30);
+		botplayText.updateHitbox();
+		botplayText.antialiasing = true;
+		add(botplayText);
 
 		levelDifficulty.alpha = 0;
 		levelInfo.alpha = 0;
@@ -97,6 +107,8 @@ class PauseSubState extends MusicBeatSubstate
 			pauseMusic.volume += 0.01 * elapsed;
 
 		super.update(elapsed);
+		
+		botplayText.visible = PlayState.botPlayOn;
 
 		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;
@@ -121,7 +133,10 @@ class PauseSubState extends MusicBeatSubstate
 					close();
 				case "Restart Song":
 					FlxG.resetState();
+				case 'Botplay':
+					PlayState.botPlayOn = !PlayState.botPlayOn;
 				case "Exit to menu":
+					PlayState.botPlayOn = false;
 					if (PlayState.isStoryMode)
 						FlxG.switchState(new StoryMenuState());
 					else

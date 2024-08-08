@@ -112,6 +112,7 @@ class PlayState extends MusicBeatState
 	private var startingSong:Bool = false;
 	private var shakeCam:Bool = false;
 	private var updateTime:Bool = false;
+	public static var botPlayOn:Bool = false;
 
 	private var iconP1:HealthIcon;
 	private var iconP2:HealthIcon;
@@ -129,6 +130,7 @@ class PlayState extends MusicBeatState
 	var songScore:Int = 0;
 	var scoreTxt:FlxText;
 	var kadeEngineWatermark:FlxText;
+	var botPlayState:FlxText;
 	
 	public static var campaignScore:Int = 0;
 
@@ -358,6 +360,15 @@ class PlayState extends MusicBeatState
 		scoreTxt.borderSize = 1.5;
 		scoreTxt.antialiasing = true;
 		add(scoreTxt);
+		
+		botPlayState = new FlxText(-45, (FlxG.save.data.downscroll ? -65 : 65), FlxG.width, "Botplay", 20);
+		botPlayState.setFormat(Paths.font("comic.ttf"), 40, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botPlayState.scrollFactor.set();
+		botPlayState.borderSize = 2;
+		botPlayState.borderQuality = 2;
+		botPlayState.antialiasing = true;
+		botPlayState.visible = false;
+		add(botPlayState); 
 
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
@@ -367,9 +378,16 @@ class PlayState extends MusicBeatState
 		iconP2.cameras = [camHUD];
 		kadeEngineWatermark.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
+		botPlayState.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		timeLabelTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+		
+		switch (curSong.toLowerCase())
+		{
+			case 'splitathon':
+				preloadChar('bambi-splitathon');
+		}
 		
 		if (SONG.song.toLowerCase() == 'kabunga') //i desperately wanted it so if you use downscroll it switches it to upscroll and flips the entire hud upside down but i never got to it
 		{
@@ -1163,6 +1181,11 @@ class PlayState extends MusicBeatState
 				}
 		}
 		
+		if (botPlayOn && FlxG.keys.justPressed.NINE)
+			camHUD.visible = !camHUD.visible;
+			
+		botPlayState.visible = botPlayOn;
+		
 		FlxG.camera.setFilters([new ShaderFilter(screenshader.shader)]); // this is very stupid but doesn't effect memory all that much so
 		if (shakeCam && eyesoreson)
 		{
@@ -1196,6 +1219,17 @@ class PlayState extends MusicBeatState
 				spr.animationPlay('static');
 			}
 		});
+		
+		if (botPlayOn)
+		{
+			playerStrums.forEach(function(spr:StrumNote)
+			{
+				if (spr.animation.curAnim.curFrame == (spr.animation.curAnim.numFrames - 1))
+				{
+					spr.animationPlay('static');
+				}
+			});
+		}
 
 		super.update(elapsed);
 
@@ -1224,9 +1258,14 @@ class PlayState extends MusicBeatState
 		}
 
 		if (FlxG.keys.justPressed.SEVEN)
-		{
 			FlxG.switchState(new ChartingState());
-		}
+		
+		if (FlxG.keys.justPressed.ONE)
+			FlxG.switchState(new AnimationDebug(dad.curCharacter));
+		if (FlxG.keys.justPressed.TWO)
+			FlxG.switchState(new AnimationDebug(gf.curCharacter));
+		if (FlxG.keys.justPressed.THREE)
+			FlxG.switchState(new AnimationDebug(boyfriend.curCharacter));
 
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
@@ -1254,16 +1293,6 @@ class PlayState extends MusicBeatState
 			iconP2.animation.curAnim.curFrame = 1;
 		else
 			iconP2.animation.curAnim.curFrame = 0;
-
-		/* if (FlxG.keys.justPressed.NINE)
-			FlxG.switchState(new Charting()); */
-
-		if (FlxG.keys.justPressed.ONE)
-			FlxG.switchState(new AnimationDebug(dad.curCharacter));
-		if (FlxG.keys.justPressed.TWO)
-			FlxG.switchState(new AnimationDebug(gf.curCharacter));
-		if (FlxG.keys.justPressed.THREE)
-			FlxG.switchState(new AnimationDebug(boyfriend.curCharacter));
 
 		if (startingSong)
 		{
@@ -1535,7 +1564,8 @@ class PlayState extends MusicBeatState
 		if (SONG.validScore)
 		{
 			#if !switch
-			Highscore.saveScore(SONG.song, songScore, boyfriend.curCharacter, gf.curCharacter);
+			if (!botPlayOn)
+				Highscore.saveScore(SONG.song, songScore, boyfriend.curCharacter, gf.curCharacter);
 			#end
 		}
 
@@ -1576,12 +1606,17 @@ class PlayState extends MusicBeatState
 
 				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase());
 				FlxG.sound.music.stop();
+				
+				if (botPlayOn)
+					botPlayOn = false;
 
 				LoadingState.loadAndSwitchState(new PlayState());
 			}
 		}
 		else
 		{
+			if (botPlayOn)
+				botPlayOn = false;
 			trace('WENT BACK TO FREEPLAY??');
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			FlxG.switchState(new FreeplayState());
@@ -1639,7 +1674,8 @@ class PlayState extends MusicBeatState
 			sicks++;
 		}
 		
-		songScore += score;
+		if (!botPlayOn)
+			songScore += score;
 
 		var pixelShit:String = "";
 
@@ -1771,6 +1807,13 @@ class PlayState extends MusicBeatState
 		
 		// RELEASING
 		var releaseArray:Array<Bool> = [controls.LEFT_R, controls.DOWN_R, controls.UP_R, controls.RIGHT_R];
+		
+		if(botPlayOn)
+		{
+			holdArray = [false, false, false, false];
+			controlArray = [false, false, false, false];
+			releaseArray = [false, false, false, false];
+		}
 
 		// FlxG.watch.addQuick('asdfa', upP);
 		if (controlArray.contains(true) && !boyfriend.stunned && generatedMusic)
@@ -1826,6 +1869,21 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
+		
+		notes.forEachAlive(function(daNote:Note)
+		{
+			if(FlxG.save.data.downscroll && daNote.y > strumLine.y ||
+			!FlxG.save.data.downscroll && daNote.y < strumLine.y)
+			{
+				// Force good note hit regardless if it's too late to hit it or not as a fail safe
+				if(botPlayOn && daNote.canBeHit && daNote.mustPress ||
+				botPlayOn && daNote.tooLate && daNote.mustPress)
+				{
+					goodNoteHit(daNote);
+					boyfriend.holdTimer = 0;
+				}
+			}
+		});
 	
 		if (holdArray.contains(true) && generatedMusic)
 		{
@@ -1838,7 +1896,7 @@ class PlayState extends MusicBeatState
 			});
 		}
 
-		if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && !holdArray.contains(true))
+		if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && (!holdArray.contains(true) || botPlayOn))
 		{
 			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 			{
@@ -1908,12 +1966,15 @@ class PlayState extends MusicBeatState
 
 	function updateAccuracy()
 	{
-		if (misses > 0 || accuracy < 96)
-			fc = false;
-		else
-			fc = true;
-		totalPlayed += 1;
-		accuracy = totalNotesHit / totalPlayed * 100;
+		if (!botPlayOn)
+		{
+			if (misses > 0 || accuracy < 96)
+				fc = false;
+			else
+				fc = true;
+			totalPlayed += 1;
+			accuracy = totalNotesHit / totalPlayed * 100;
+		}
 	}
 
 	function goodNoteHit(note:Note):Void
@@ -1996,7 +2057,7 @@ class PlayState extends MusicBeatState
 		
 		dadStrums.forEach(function(spr:StrumNote)
 		{
-			if ((Math.abs(daNote.noteData) == spr.ID) && spr.animation.curAnim.name != 'confirm')
+			if (Math.abs(daNote.noteData) == spr.ID)
 			{
 				spr.animationPlay('confirm', true);
 			}
@@ -2285,6 +2346,36 @@ class PlayState extends MusicBeatState
 				insert(members.indexOf(dad), thing);
 			}
 			thing.antialiasing = true;
+			boyfriend.stunned = false;
+		}
+	}
+	
+	public function preloadAsset(graphic:String) //preload assets
+	{
+		if (boyfriend != null)
+		{
+			boyfriend.stunned = true;
+		}
+		var newthing:FlxSprite = new FlxSprite(9000,-9000).loadGraphic(Paths.image(graphic));
+		add(newthing);
+		remove(newthing);
+		if (boyfriend != null)
+		{
+			boyfriend.stunned = false;
+		}
+	}
+	
+	public function preloadChar(graphic:String) //preload assets
+	{
+		if (boyfriend != null)
+		{
+			boyfriend.stunned = true;
+		}
+		var newthing:Character = new Character(9000,-9000, graphic);
+		add(newthing);
+		remove(newthing);
+		if (boyfriend != null)
+		{
 			boyfriend.stunned = false;
 		}
 	}
