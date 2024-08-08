@@ -22,7 +22,7 @@ class Character extends FlxSprite
 	public var globaloffset:Array<Float> = [0,0];
 	public var charOffset:Array<Float> = [0,0];
 	
-	public static var tutorialGFs:Array<String> = ['gf', 'gf-christmas', 'cyan', 'cyan-christmas', 'psyka', 'psyka-christmas', 'gf-massive', 'gf-hot', 'gf-hot-christmas', 'gf-hot-funny', 'tails-doll', 'skyblue'];
+	public static var tutorialGFs:Array<String> = ['gf', 'gf-christmas', 'cyan', 'cyan-christmas', 'psyka', 'psyka-christmas', 'gf-massive', 'gf-hot', 'gf-hot-christmas', 'gf-hot-funny', 'tails-doll', 'skyblue', 'three-gfs'];
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
@@ -723,6 +723,37 @@ class Character extends FlxSprite
 				
 				charOffset[0] = 20;
 				charOffset[1] = -70;
+				
+			case 'three-gfs':
+				tex = Paths.getSparrowAtlas('characters/girlfriends/GFGAWDl');
+				frames = tex;
+				
+				addAnimation(2, -32, 'cheer', 'GF Cheer');
+				addAnimation(32, -35, 'singLEFT', 'GF left note');
+				addAnimation(-47, -35, 'singRIGHT', 'GF Right Note');
+				addAnimation(-24, -30, 'singUP', 'GF Up Note');
+				addAnimation(-35, -35, 'singDOWN', 'GF Down Note');
+				addAnimationIndices(-47, -35, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimation(0, -9, 'danceLeft', 'dancingLEFT');
+				addAnimation(0, -9, 'danceRight', 'dancingRIGHT');
+				addAnimation(-46, -34, 'scared', 'GF FEAR', true);
+				
+				playAnim('danceRight');
+				
+				charOffset[0] = -132;
+				charOffset[1] = -70;
+				
+			case 'three-gfs-nude':
+				tex = Paths.getSparrowAtlas('characters/girlfriends/GFWHATT');
+				frames = tex;
+				
+				addAnimation(0, -9, 'danceLeft', 'dancingLEFT');
+				addAnimation(0, -9, 'danceRight', 'dancingRIGHT');
+				
+				playAnim('danceRight');
+				
+				charOffset[0] = -132;
+				charOffset[1] = -70;
 		}
 
 		dance();
@@ -795,7 +826,8 @@ class Character extends FlxSprite
 			switch (curCharacter)
 			{
 				case 'gf' | 'gf-christmas' | 'gf-standing' | 'gf-pixel' | 'psyka' | 'psyka-christmas' | 'psyka-standing'  | 'cyan' |
-					'cyan-christmas' | 'gf-massive' | 'gf-hot' | 'gf-hot-christmas' | 'gf-hot-funny' | 'gf-hot-standing':
+					'cyan-christmas' | 'gf-massive' | 'gf-hot' | 'gf-hot-christmas' | 'gf-hot-funny' | 'gf-hot-standing' | 'three-gfs' |
+					'three-gfs-nude':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;

@@ -91,7 +91,7 @@ class PlayState extends MusicBeatState
 
 	private var camZooming:Bool = false;
 	public var crazyZooming:Bool = false;
-	private var curSong:String = "";
+	public static var curSong:String = "";
 
 	private var gfSpeed:Int = 1;
 	private var health:Float = 1;
@@ -184,7 +184,7 @@ class PlayState extends MusicBeatState
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
 
-		switch (SONG.song.toLowerCase())
+		switch (curSong)
 		{
 			case 'house':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/houseDialogue'));
@@ -255,7 +255,7 @@ class PlayState extends MusicBeatState
 		
 		add(gf);
 		add(dad);
-		if (SONG.song.toLowerCase() == 'insanity') add(dadmirror);
+		if (curSong == 'insanity') add(dadmirror);
 		add(boyfriend);
 		gf.visible = !CharacterSelectState.noGfChar.contains(boyfriend.curCharacter);
 		
@@ -383,13 +383,13 @@ class PlayState extends MusicBeatState
 		timeLabelTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 		
-		switch (curSong.toLowerCase())
+		switch (curSong)
 		{
 			case 'splitathon':
 				preloadChar('bambi-splitathon');
 		}
 		
-		if (SONG.song.toLowerCase() == 'kabunga') //i desperately wanted it so if you use downscroll it switches it to upscroll and flips the entire hud upside down but i never got to it
+		if (curSong == 'kabunga') //i desperately wanted it so if you use downscroll it switches it to upscroll and flips the entire hud upside down but i never got to it
 		{
 			lazychartshader.waveAmplitude = 0.03;
 			lazychartshader.waveFrequency = 5;
@@ -408,7 +408,7 @@ class PlayState extends MusicBeatState
 
 		if (isStoryMode)
 		{
-			switch (curSong.toLowerCase())
+			switch (curSong)
 			{
 				default:
 					startCountdown();
@@ -549,7 +549,7 @@ class PlayState extends MusicBeatState
 			case 'polygonized' | 'cheating':
 				defaultCamZoom = 0.8;
 				
-				curStage = SONG.song.toLowerCase() == 'cheating' ? 'greenVoid' : 'redVoid';
+				curStage = curTrack == 'cheating' ? 'greenVoid' : 'redVoid';
 				var bg:FlxSprite = new FlxSprite(-600, -200);
 				switch (curTrack)
 				{
@@ -709,7 +709,7 @@ class PlayState extends MusicBeatState
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 		{
 			dad.dance();
-			if (SONG.song.toLowerCase() == 'insanity') dadmirror.dance();
+			if (curSong == 'insanity') dadmirror.dance();
 			gf.dance();
 			boyfriend.dance();
 
@@ -816,7 +816,7 @@ class PlayState extends MusicBeatState
 		creditBG.alpha = 0.6;
 		
 		var creditString:String;
-		switch (SONG.song.toLowerCase())
+		switch (curSong)
 		{
 			case 'tutorial':
 				creditString = 'KawaiSprite';
@@ -903,7 +903,7 @@ class PlayState extends MusicBeatState
 		var songData = SONG;
 		Conductor.changeBPM(songData.bpm);
 
-		curSong = songData.song;
+		curSong = songData.song.toLowerCase();
 
 		if (SONG.needsVoices)
 			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
@@ -1143,7 +1143,7 @@ class PlayState extends MusicBeatState
 			dad.y += (Math.sin(elapsedtime) * 0.4);
 		}
 
-		switch (SONG.song.toLowerCase())
+		switch (curSong)
 		{
 			case 'cheating': // fuck you
 				playerStrums.forEach(function(spr:StrumNote)
@@ -1373,7 +1373,7 @@ class PlayState extends MusicBeatState
 			vocals.stop();
 			FlxG.sound.music.stop();
 			
-			if (curSong.toLowerCase() == 'polygonized' || curSong.toLowerCase() == 'cheating')
+			if (curSong == 'polygonized' || curSong == 'cheating')
 			{
 				screenshader.shader.uampmul.value[0] = 0;
 				screenshader.Enabled = false;
@@ -1386,7 +1386,7 @@ class PlayState extends MusicBeatState
 
 		if (unspawnNotes[0] != null)
 		{
-			var thing:Int = (SONG.song.toLowerCase() == 'unfairness' || PlayState.SONG.song.toLowerCase() == 'exploitation' ? 15000 : 1500);
+			var thing:Int = (curSong == 'unfairness' || curSong == 'exploitation' ? 15000 : 1500);
 
 			if (unspawnNotes[0].strumTime - Conductor.songPosition < thing)
 			{
@@ -1508,7 +1508,7 @@ class PlayState extends MusicBeatState
 					
 			}
 
-			if (SONG.song.toLowerCase() == 'tutorial')
+			if (curSong == 'tutorial')
 			{
 				tweenCamIn();
 			}
@@ -1533,7 +1533,7 @@ class PlayState extends MusicBeatState
 					
 			}
 
-			if (SONG.song.toLowerCase() == 'tutorial')
+			if (curSong == 'tutorial')
 			{
 				FlxTween.tween(FlxG.camera, {zoom: 1}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut});
 			}
@@ -2049,7 +2049,7 @@ class PlayState extends MusicBeatState
 		
 		//cameraMoveOnNote(daNote.noteData, 'dad');
 		
-		if (SONG.song.toLowerCase() == 'insanity')
+		if (curSong == 'insanity')
 		{
 			dadmirror.playAnim(animToPlay + altAnim, true);
 			dadmirror.holdTimer = 0;
@@ -2080,7 +2080,7 @@ class PlayState extends MusicBeatState
 			resyncVocals();
 		}
 
-		switch (SONG.song.toLowerCase())
+		switch (curSong)
 		{
 			case 'insanity':
 				switch (curStep)
@@ -2280,12 +2280,12 @@ class PlayState extends MusicBeatState
 		if (!dad.animation.curAnim.name.startsWith("sing") && curBeat % 2 == 0)
 		{
 			dad.dance();
-			if (SONG.song.toLowerCase() == 'insanity') dadmirror.dance();
+			if (curSong == 'insanity') dadmirror.dance();
 		}
 
 		if (curBeat % 8 == 7)
 		{
-			if (SONG.song == 'Tutorial' && dad.curCharacter == 'gf')
+			if (curSong == 'tutorial' && dad.curCharacter == 'gf')
 			{
 				dad.playAnim('cheer', true);
 				boyfriend.playAnim('hey', true);
@@ -2300,17 +2300,17 @@ class PlayState extends MusicBeatState
 		dad = new Character(100, 100, char);
 		dad.x += dad.charOffset[0];
 		dad.y += dad.charOffset[1];
-		if (SONG.song.toLowerCase() == 'splitathon' || SONG.song.toLowerCase() == 'mealie')
+		if (curSong == 'splitathon' || curSong == 'mealie')
 			dad.color = 0xFF878787;
 		add(dad);
-		if (!(SONG.song.toLowerCase() == 'splitathon' && bambiEntered))
+		if (!(curSong == 'splitathon' && bambiEntered))
 			iconP2.playAnimation(char);
 		boyfriend.stunned = false;
 	}
 	
 	public function splitathonExpression(expression:String, x:Float, y:Float):Void
 	{
-		if (SONG.song.toLowerCase() == 'splitathon')
+		if (curSong == 'splitathon')
 		{
 			boyfriend.stunned = true;
 			thing.color = 0xFF878787;

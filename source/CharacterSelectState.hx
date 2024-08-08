@@ -32,6 +32,7 @@ class CharacterSelectState extends MusicBeatState
 	
 	public var iconBF:HealthIcon;
 	public var iconGF:HealthIcon;
+	var iconOffseet:Float;
 	
 	public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
@@ -77,6 +78,7 @@ class CharacterSelectState extends MusicBeatState
 			girlfriendData = [
 				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing'], ["Hot Girlfriend", "Hot Girlfriend (Sex Mod)", "Hot Girlfriend (Christmas)", "Hot Girlfriend (Standing)"]),
 				new SelectableChar(['gf-massive'], ["Massive Girlfriend"]),
+				new SelectableChar(['three-gfs', 'three-gfs-nude'], ["The Three Girlfriends", "The Three Girlfriends (Nude)"]),
 				new SelectableChar(['skyblue'], ["Skyblue"])
 			];
 		}
@@ -135,19 +137,33 @@ class CharacterSelectState extends MusicBeatState
 
 		camGame.zoom = 0.75;
 		
-		boyfriendText = new FlxText(0, 0, FlxG.width, boyfriendData[curBF].displayNames[curFormBF], 16);
+		boyfriendText = new FlxText(-70, 0, FlxG.width, boyfriendData[curBF].displayNames[curFormBF], 16);
 		boyfriendText.setFormat(Paths.font("comic.ttf"), 75, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		boyfriendText.borderSize = 3;
 		boyfriendText.antialiasing = true;
 		add(boyfriendText);
 		boyfriendText.cameras = [camHUD];
 		
-		girlfriendText = new FlxText(0, boyfriendText.y + boyfriendText.height, FlxG.width, girlfriendData[curGF].displayNames[curFormGF], 16);
+		girlfriendText = new FlxText(-70, boyfriendText.y + boyfriendText.height, FlxG.width, girlfriendData[curGF].displayNames[curFormGF], 16);
 		girlfriendText.setFormat(Paths.font("comic.ttf"), 75, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		girlfriendText.borderSize = 3;
 		girlfriendText.antialiasing = true;
 		add(girlfriendText);
 		girlfriendText.cameras = [camHUD];
+		
+		iconOffseet = 15;
+		
+		iconBF = new HealthIcon(boyfriendData[curBF].names[curFormBF], false);
+		iconBF.y = boyfriendText.y - 10;
+		iconBF.screenCenter(X);
+		add(iconBF);
+		iconBF.cameras = [camHUD];
+
+		iconGF = new HealthIcon(girlfriendData[curGF].names[curFormGF], false);
+		iconGF.y = girlfriendText.y - 10;
+		iconGF.screenCenter(X);
+		add(iconGF);
+		iconGF.cameras = [camHUD];
 		
 		changeInfoImg = new FlxSprite(0, 0).loadGraphic(Paths.image('charselect/changeInfo'));
 		changeInfoImg.y = FlxG.height - changeInfoImg.height;
@@ -198,18 +214,6 @@ class CharacterSelectState extends MusicBeatState
 		tailsBox.antialiasing = true;
 		add(tailsBox);
 		tailsBox.cameras = [camHUD];
-		
-		iconBF = new HealthIcon(boyfriendData[curBF].names[curFormBF], false);
-		iconBF.y = boyfriendText.y - 10;
-		iconBF.screenCenter(X);
-		add(iconBF);
-		iconBF.cameras = [camHUD];
-
-		iconGF = new HealthIcon(girlfriendData[curGF].names[curFormGF], false);
-		iconGF.y = girlfriendText.y - 10;
-		iconGF.screenCenter(X);
-		add(iconGF);
-		iconGF.cameras = [camHUD];
 		
 		overlay = new FlxSprite(0, 0).makeGraphic(1, 1);
 		overlay.scrollFactor.set();
@@ -442,7 +446,7 @@ class CharacterSelectState extends MusicBeatState
 		
 		if (noGfChar.contains(boyfriendChar.curCharacter) || isTails) {
 			changeInfoImg.loadGraphic(Paths.image('charselect/changeInfoNoGF'));
-			changeInfoImg.y = FlxG.height - ((changeInfoImg.height / 2) - 5);
+			changeInfoImg.y = FlxG.height - ((changeInfoImg.height / 2) - 2);
 		} else {
 			changeInfoImg.loadGraphic(Paths.image('charselect/changeInfo'));
 			changeInfoImg.y = FlxG.height - changeInfoImg.height;
@@ -544,7 +548,6 @@ class CharacterSelectState extends MusicBeatState
 	}
 	
 	var shitOffset:Array<Float> = [-130, -60];
-	var iconOffseet:Float = 85;
 	
 	public function UpdateBF()
 	{

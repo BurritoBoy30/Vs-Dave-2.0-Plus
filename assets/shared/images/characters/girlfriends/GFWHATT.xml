@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="GFWHATT.png">
+	<!-- Created with Adobe Animate version 23.0.1.70 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="dancingLEFT0000" x="5" y="5" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0001" x="994" y="5" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0002" x="1983" y="5" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0003" x="2972" y="5" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0004" x="3961" y="5" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0005" x="4950" y="5" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0006" x="4950" y="5" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0007" x="5939" y="5" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0008" x="6928" y="5" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0009" x="6928" y="5" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0010" x="5" y="771" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0011" x="994" y="771" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0012" x="1983" y="771" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0013" x="2972" y="771" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0014" x="3961" y="771" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0015" x="4950" y="771" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0016" x="4950" y="771" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0017" x="4950" y="771" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0018" x="4950" y="771" width="979" height="756"/>
+	<SubTexture name="dancingLEFT0019" x="4950" y="771" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0000" x="4950" y="771" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0001" x="5939" y="771" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0002" x="6928" y="771" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0003" x="5" y="1537" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0004" x="994" y="1537" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0005" x="994" y="1537" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0006" x="1983" y="1537" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0007" x="1983" y="1537" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0008" x="2972" y="1537" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0009" x="3961" y="1537" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0010" x="3961" y="1537" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0011" x="4950" y="1537" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0012" x="5939" y="1537" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0013" x="6928" y="1537" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0014" x="5" y="2303" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0015" x="994" y="2303" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0016" x="1983" y="2303" width="979" height="756"/>
+	<SubTexture name="dancingRIGHT0017" x="1983" y="2303" width="979" height="756"/>
+</TextureAtlas>

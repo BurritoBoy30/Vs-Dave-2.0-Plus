@@ -24,7 +24,8 @@ class HealthIcon extends FlxSprite
 		['cyan', 'cyan-christmas'],
 		['dave', 'dave-annoyed', 'dave-splitathon'],
 		['bambi', 'bambi-splitathon', 'bambi-new'],
-		['bambi-stupid', 'bambi-old']
+		['bambi-stupid', 'bambi-old'],
+		['three-gfs', 'three-gfs-nude']
 	];
 
 	public function new(char:String = 'bf', isPlayer:Bool = false)
@@ -79,6 +80,9 @@ class HealthIcon extends FlxSprite
 		addIcon('tails-doll', [46, 47]);
 		addIcon('dave-split-3d', [48, 49]);
 		addIcon('oruta', [50, 51]);
+		
+		// three-gfs
+		addRepeatingIcon(repeatingIcons[7], [52, 53]);
 		
 		playAnimation(char);
 		scrollFactor.set();
