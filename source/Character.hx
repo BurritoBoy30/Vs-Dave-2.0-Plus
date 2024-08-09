@@ -502,14 +502,14 @@ class Character extends FlxSprite
 				
 				addAnimation(0, -14, 'cheer', 'GF Cheer');
 				addAnimation(0, -8, 'singLEFT', 'GF left note');
-				addAnimation(0, -9, 'singRIGHT', 'GF Right Note');
+				addAnimation(0, -32, 'singRIGHT', 'GF Right Note');
 				addAnimation(0, -10, 'singUP', 'GF Up Note');
 				addAnimation(0, -31, 'singDOWN', 'GF Down Note');
 				
 				addAnimationIndices(-2, -19, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
 				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
 				addAnimationIndices(0, -9, 'danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
-				addAnimationIndices(49, 4, 'hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], true);
+				addAnimationIndices(46, 4, 'hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], true);
 				addAnimationIndices(0, -10, 'hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 				addAnimation(-2, -40, 'scared', 'GF FEAR', true);
 

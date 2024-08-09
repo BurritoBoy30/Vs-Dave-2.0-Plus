@@ -137,6 +137,10 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.botPlayOn = !PlayState.botPlayOn;
 				case "Exit to menu":
 					PlayState.botPlayOn = false;
+					
+					PlayState.boyfriendOverride = "none";
+					PlayState.girlfriendOverride = "none";
+					
 					if (PlayState.isStoryMode)
 						FlxG.switchState(new StoryMenuState());
 					else

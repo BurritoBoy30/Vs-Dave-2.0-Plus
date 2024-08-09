@@ -184,13 +184,13 @@ class PlayState extends MusicBeatState
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
 
-		switch (curSong)
+		switch (SONG.song.toLowerCase())
 		{
 			case 'house':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/houseDialogue'));
 			case 'insanity':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/insanityDialogue'));
-			case 'furiosity':
+			case 'polygonized':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/furiosityDialogue'));
 			case 'supernovae':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/supernovaeDialogue'));
@@ -213,15 +213,26 @@ class PlayState extends MusicBeatState
 		screenshader.waveFrequency = 2;
 		screenshader.waveSpeed = 1;
 		screenshader.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000, 100000);
-
-		var gfVersion:String = 'gf';
-		
-		gf = new Character(400, 130, (girlfriendOverride == 'none' || girlfriendOverride == 'gf') ? gfVersion : girlfriendOverride);
+			
+		gf = new Character(400, 130, (girlfriendOverride == 'none' || girlfriendOverride == 'gf') ? 'gf' : girlfriendOverride);
 		gf.x += gf.charOffset[0];
 		gf.y += gf.charOffset[1];
 		//gf.scrollFactor.set(0.95, 0.95);
-
-		dad = new Character(100, 100, SONG.player2);
+		
+		var inCaseTutorial:String = '';
+		if (SONG.song.toLowerCase() == 'tutorial')
+		{
+			if (Character.tutorialGFs.contains(gf.curCharacter))
+			{
+				inCaseTutorial = gf.curCharacter;
+			}
+			else
+			{
+				inCaseTutorial = SONG.player2;
+			}
+		}
+			
+		dad = new Character(100, 100, SONG.song.toLowerCase() == 'tutorial' ? inCaseTutorial : SONG.player2);
 		dad.x += dad.charOffset[0];
 		dad.y += dad.charOffset[1];
 		
@@ -230,16 +241,20 @@ class PlayState extends MusicBeatState
 		
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x + 150, dad.getGraphicMidpoint().y - 150);
 		
-		if (dad.curCharacter == 'gf')
+		if (Character.tutorialGFs.contains(dad.curCharacter))
 		{
 			dad.setPosition(gf.x, gf.y);
-			gf.visible = false;
 			if (isStoryMode)
 			{
 				camPos.x += 600;
 				tweenCamIn();
 			}
 		}
+		
+		if (SONG.song.toLowerCase() == 'tutorial')
+			gf.visible = false;
+		else
+			gf.visible = !CharacterSelectState.noGfChar.contains(boyfriend.curCharacter);
 		
 		boyfriend = new Boyfriend(770, 450, (boyfriendOverride == "none" || boyfriendOverride == "bf") ? SONG.player1 : boyfriendOverride);
 		boyfriend.x += boyfriend.charOffset[0];
@@ -255,9 +270,8 @@ class PlayState extends MusicBeatState
 		
 		add(gf);
 		add(dad);
-		if (curSong == 'insanity') add(dadmirror);
+		if (SONG.song.toLowerCase() == 'insanity') add(dadmirror);
 		add(boyfriend);
-		gf.visible = !CharacterSelectState.noGfChar.contains(boyfriend.curCharacter);
 		
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
 		// doof.x += 70;
@@ -340,7 +354,7 @@ class PlayState extends MusicBeatState
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
 
-		iconP2 = new HealthIcon(SONG.player2, false);
+		iconP2 = new HealthIcon(SONG.song.toLowerCase() == 'tutorial' ? inCaseTutorial : SONG.player2, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
 
@@ -410,6 +424,8 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong)
 			{
+				case 'house' | 'insanity' | 'polygonized' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'supernovae' | 'glitch':
+					schoolIntro(doof);
 				default:
 					startCountdown();
 			}
@@ -861,7 +877,7 @@ class PlayState extends MusicBeatState
 				}
 			});
 			
-			FlxTween.tween(creditText, {x: -creditText.textField.textWidth - 15}, 1,
+			FlxTween.tween(creditText, {x: -creditText.textField.textWidth - 25}, 1,
 			{
 				ease: FlxEase.elasticInOut,
 				onComplete: function(twn:FlxTween)
@@ -1505,6 +1521,17 @@ class PlayState extends MusicBeatState
 					camFollow.y = dad.getMidpoint().y - 50;
 				case 'dave-alpha':
 					camFollow.y = dad.getMidpoint().y - 50;
+				
+				case 'gf-massive':
+					camFollow.y = dad.getMidpoint().y - 300;
+					camFollow.x = dad.getMidpoint().x + 50
+				case 'three-gfs':
+					camFollow.x = dad.getMidpoint().x + 50;
+				case 'skyblue':
+					camFollow.x = dad.getMidpoint().x + 100;
+				case 'tails-doll':
+					camFollow.x = dad.getMidpoint().x + 100;
+					camFollow.y = dad.getMidpoint().y - 150;
 					
 			}
 
@@ -1618,6 +1645,7 @@ class PlayState extends MusicBeatState
 			if (botPlayOn)
 				botPlayOn = false;
 			trace('WENT BACK TO FREEPLAY??');
+			
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			FlxG.switchState(new FreeplayState());
 		}

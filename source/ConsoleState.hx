@@ -52,7 +52,9 @@ class ConsoleState extends MusicBeatState
 		super.update(elapsed);
 		
 		if (!startingUp)
-		{			  
+		{
+			inputText = dummyText.text;
+			
 			if (FlxG.keys.justPressed.ENTER && inputText != "")
 			{
 				if (inputText.startsWith('run') && inputText.endsWith('.exe'))
@@ -81,7 +83,6 @@ class ConsoleState extends MusicBeatState
 				reset();
 			}
 			
-			//below is the fuction to delete and add letters:
 			if (FlxG.keys.justPressed.ANY)
 			{
 				changeText(FlxG.keys.getIsDown()[0].ID.toString().toLowerCase());
@@ -119,27 +120,25 @@ class ConsoleState extends MusicBeatState
 					
 				//misc
 				case 'space':						returnInput(' ');
-				case 'backspace':
-					if (inputText != "")
-						backSpace();
-				default:
-					returnInput(shit);
+				case 'backspace':					backSpace();
+				default:							returnInput(shit);
 			}
-				
-			inputText = dummyText.text;
 		}
 	}
 	
-	function returnInput(FUCKINGHELLTHISAGAIN:String)
+	function returnInput(input:String)
 	{
-		mainText.text += FUCKINGHELLTHISAGAIN;
-		dummyText.text += FUCKINGHELLTHISAGAIN;
+		mainText.text += input;
+		dummyText.text += input;
 	}
 	
 	function backSpace()
 	{
-		mainText.text = mainText.text.substring(0, mainText.text.length - 1);
-		dummyText.text = dummyText.text.substring(0, dummyText.text.length - 1);
+		if (inputText != "")
+		{
+			mainText.text = mainText.text.substring(0, mainText.text.length - 1);
+			dummyText.text = dummyText.text.substring(0, dummyText.text.length - 1);
+		}
 	}
 	
 	function reset()

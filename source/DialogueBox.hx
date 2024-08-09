@@ -1,5 +1,11 @@
+
 package;
 
+import flixel.math.FlxPoint;
+import openfl.display.Shader;
+import flixel.tweens.FlxTween;
+import haxe.Log;
+import flixel.input.gamepad.lists.FlxBaseGamepadList;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.text.FlxTypeText;
@@ -17,6 +23,7 @@ class DialogueBox extends FlxSpriteGroup
 	var box:FlxSprite;
 
 	var curCharacter:String = '';
+	var curMod:String = '';
 
 	var dialogue:Alphabet;
 	var dialogueList:Array<String> = [];
@@ -31,87 +38,137 @@ class DialogueBox extends FlxSpriteGroup
 	var portraitLeft:FlxSprite;
 	var portraitRight:FlxSprite;
 
+	var bfPortraitSizeMultiplier:Float = 1.5;
+	var textBoxSizeFix:Float = 7;
+
 	var handSelect:FlxSprite;
 	var bgFade:FlxSprite;
+
+	var debug:Bool = false;
+
+	var curshader:Dynamic;
+
+	public static var randomNumber:Int;
 
 	public function new(talkingRight:Bool = true, ?dialogueList:Array<String>)
 	{
 		super();
+		
+		trace('opened');
 
 		switch (PlayState.SONG.song.toLowerCase())
 		{
-			case 'senpai':
-				FlxG.sound.playMusic(Paths.music('Lunchbox'), 0);
+			case 'house' | 'insanity' | 'splitathon':
+				FlxG.sound.playMusic(Paths.music('DaveDialogue'), 0);
 				FlxG.sound.music.fadeIn(1, 0, 0.8);
-			case 'thorns':
-				FlxG.sound.playMusic(Paths.music('LunchboxScary'), 0);
+			case 'polygonized':
+				FlxG.sound.playMusic(Paths.music('scaryAmbience'), 0);
 				FlxG.sound.music.fadeIn(1, 0, 0.8);
+			case 'supernovae' | 'glitch':
+				randomNumber = FlxG.random.int(0, 50);
+				if(randomNumber == 50)
+				{
+					FlxG.sound.playMusic(Paths.music('secret'), 0);
+					FlxG.sound.music.fadeIn(1, 0, 0.8);
+				}
+				else
+				{
+					FlxG.sound.playMusic(Paths.music('dooDooFeces'), 0);
+					FlxG.sound.music.fadeIn(1, 0, 0.8);
+				}
+			case 'blocked' | 'corn-theft' | 'maze':
+				randomNumber = FlxG.random.int(0, 50);
+				if(randomNumber == 50)
+				{
+					FlxG.sound.playMusic(Paths.music('secret'), 0);
+					FlxG.sound.music.fadeIn(1, 0, 0.8);
+				}
+				else
+				{
+					FlxG.sound.playMusic(Paths.music('DaveDialogue'), 0);
+					FlxG.sound.music.fadeIn(1, 0, 0.8);
+				}
 		}
+		
+		trace('not song');
 
 		bgFade = new FlxSprite(-200, -200).makeGraphic(Std.int(FlxG.width * 1.3), Std.int(FlxG.height * 1.3), 0xFFB3DFd8);
 		bgFade.scrollFactor.set();
 		bgFade.alpha = 0;
 		add(bgFade);
 
-		new FlxTimer().start(0.83, function(tmr:FlxTimer)
+		FlxTween.tween(bgFade, {alpha: 0.7}, 4.15);
+		
+		switch (PlayState.SONG.song.toLowerCase())
 		{
-			bgFade.alpha += (1 / 5) * 0.7;
-			if (bgFade.alpha > 0.7)
-				bgFade.alpha = 0.7;
-		}, 5);
-
-		box = new FlxSprite(-20, 45);
+			case 'house' | 'insanity' | 'polygonized' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon':
+				box = new FlxSprite(-20, 400);
+			default:
+				box = new FlxSprite(-20, 45);
+		}
 		
 		var hasDialog = false;
 		switch (PlayState.SONG.song.toLowerCase())
 		{
-			case 'senpai':
+			case 'house' | 'insanity' | 'polygonized' | 'supernovae' | 'glitch' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon':
 				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-pixel');
-				box.animation.addByPrefix('normalOpen', 'Text Box Appear', 24, false);
-				box.animation.addByIndices('normal', 'Text Box Appear', [4], "", 24);
-			case 'roses':
-				hasDialog = true;
-				FlxG.sound.play(Paths.sound('ANGRY_TEXT_BOX'));
-
-				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-senpaiMad');
-				box.animation.addByPrefix('normalOpen', 'SENPAI ANGRY IMPACT SPEECH', 24, false);
-				box.animation.addByIndices('normal', 'SENPAI ANGRY IMPACT SPEECH', [4], "", 24);
-
-			case 'thorns':
-				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-evil');
-				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
-				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
-
-				var face:FlxSprite = new FlxSprite(320, 170).loadGraphic(Paths.image('weeb/spiritFaceForward'));
-				face.setGraphicSize(Std.int(face.width * 6));
-				add(face);
+				box.frames = Paths.getSparrowAtlas('speech_bubble_talking');
+				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
+				box.updateHitbox();
+				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
+				box.animation.addByPrefix('normal', 'speech bubble normal', 24, true);
+				box.antialiasing = true;
 		}
 
 		this.dialogueList = dialogueList;
 		
 		if (!hasDialog)
 			return;
-		
-		portraitLeft = new FlxSprite(-20, 40);
-		portraitLeft.frames = Paths.getSparrowAtlas('weeb/senpaiPortrait');
-		portraitLeft.animation.addByPrefix('enter', 'Senpai Portrait Enter', 24, false);
-		portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
-		portraitLeft.updateHitbox();
-		portraitLeft.scrollFactor.set();
-		add(portraitLeft);
-		portraitLeft.visible = false;
+			
+		trace('not box');
+			
+		var portraitLeftCharacter:String = '';
+		var portraitRightCharacter:String = 'bf';
 
-		portraitRight = new FlxSprite(0, 40);
-		portraitRight.frames = Paths.getSparrowAtlas('weeb/bfPortrait');
-		portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
-		portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
+		portraitLeft = new FlxSprite();
+		portraitRight = new FlxSprite();
+
+		switch (PlayState.SONG.song.toLowerCase())
+		{
+			case 'house' | 'insanity' | 'polygonized':
+				portraitLeftCharacter = 'dave';
+				
+			case 'blocked' | 'corn-theft' | 'maze' | 'supernovae' | 'glitch' | 'splitathon':
+				portraitLeftCharacter = 'bambi';
+		}
+
+		var leftPortrait:Portrait = getPortrait(portraitLeftCharacter);
+		portraitLeft.frames = Paths.getSparrowAtlas(leftPortrait.portraitPath, 'shared');
+		portraitLeft.animation.addByPrefix('enter', leftPortrait.portraitPrefix, 24, false);
+		portraitLeft.updateHitbox();
+		portraitLeft.antialiasing = true;
+		portraitLeft.scrollFactor.set();
+
+		var rightPortrait:Portrait = getPortrait(portraitRightCharacter);	
+		portraitRight.frames = Paths.getSparrowAtlas(rightPortrait.portraitPath, 'shared');
+		portraitRight.animation.addByPrefix('enter', rightPortrait.portraitPrefix, 24, false);
 		portraitRight.updateHitbox();
+		portraitRight.antialiasing = true;
 		portraitRight.scrollFactor.set();
-		add(portraitRight);
-		portraitRight.visible = false;
 		
+		portraitRight.visible = false;
+
+		switch (PlayState.SONG.song.toLowerCase())
+		{
+			case 'house' | 'insanity' | 'polygonized' | 'blocked' | 'corn-theft' | 'maze' | 'supernovae' | 'glitch' | 'splitathon':
+				portraitLeft.setPosition(276, 170);
+				portraitLeft.visible = true;
+		}
+		add(portraitLeft);
+		add(portraitRight);
+		
+		trace('not characters');
+
 		box.animation.play('normalOpen');
 		box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 		box.updateHitbox();
@@ -120,29 +177,48 @@ class DialogueBox extends FlxSpriteGroup
 		box.screenCenter(X);
 		portraitLeft.screenCenter(X);
 
-		handSelect = new FlxSprite(FlxG.width * 0.9, FlxG.height * 0.9).loadGraphic(Paths.image('weeb/pixelUI/hand_textbox'));
-		add(handSelect);
-
-
-		if (!talkingRight)
+		switch (PlayState.SONG.song.toLowerCase())
 		{
-			// box.flipX = true;
+			case 'house' | 'insanity' | 'supernovae' | 'glitch' |  'blocked' | 'corn-theft' | 'maze' | 'splitathon':
+				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
+				dropText.font = Paths.font("comic.ttf");
+				dropText.color = 0xFF00137F;
+				add(dropText);
+		
+				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
+				swagDialogue.font = Paths.font("comic.ttf");
+				swagDialogue.color = 0xFF000000;
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText', 'shared'), 0.6)];
+				add(swagDialogue);
+			case 'polygonized':
+				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
+				dropText.font = Paths.font("barcode.ttf");
+				dropText.color = 0xFFFFFFFF;
+				add(dropText);
+				dropText.antialiasing = true;
+			
+				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
+				swagDialogue.font = Paths.font("barcode.ttf");
+				swagDialogue.color = 0xFF000000;
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
+				add(swagDialogue);
+			default:
+				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
+				dropText.font = Paths.font("pixel.otf");
+				dropText.color = 0xFFD89494;
+				add(dropText);
+			
+				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
+				swagDialogue.font = Paths.font("pixel.otf");
+				swagDialogue.color = 0xFF3F2021;
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
+				add(swagDialogue);
 		}
-
-		dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
-		dropText.font = 'Pixel Arial 11 Bold';
-		dropText.color = 0xFFD89494;
-		add(dropText);
-
-		swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
-		swagDialogue.font = 'Pixel Arial 11 Bold';
-		swagDialogue.color = 0xFF3F2021;
-		swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
-		add(swagDialogue);
-
-		dialogue = new Alphabet(0, 80, "", false, true);
-		// dialogue.x = 90;
-		// add(dialogue);
+		
+		trace('not sound');
+		dropText.antialiasing = true;
+		swagDialogue.antialiasing = true;
+		//dialogue = new Alphabet(0, 80, "", false, true);
 	}
 
 	var dialogueOpened:Bool = false;
@@ -150,14 +226,9 @@ class DialogueBox extends FlxSpriteGroup
 
 	override function update(elapsed:Float)
 	{
-		// HARD CODING CUZ IM STUPDI
-		if (PlayState.SONG.song.toLowerCase() == 'roses')
-			portraitLeft.visible = false;
-		if (PlayState.SONG.song.toLowerCase() == 'thorns')
+		if (curshader != null)
 		{
-			portraitLeft.color = FlxColor.BLACK;
-			swagDialogue.color = FlxColor.WHITE;
-			dropText.color = FlxColor.BLACK;
+			curshader.shader.uTime.value[0] += elapsed;
 		}
 
 		dropText.text = swagDialogue.text;
@@ -177,30 +248,34 @@ class DialogueBox extends FlxSpriteGroup
 			dialogueStarted = true;
 		}
 
-		if (FlxG.keys.justPressed.ANY  && dialogueStarted == true)
+		if (FlxG.keys.justPressed.ANY && dialogueStarted == true)
 		{
-			remove(dialogue);
-				
-			FlxG.sound.play(Paths.sound('clickText'), 0.8);
+			//remove(dialogue);
+			
+			FlxG.sound.play(Paths.sound('clickText', 'shared'), 0.8);
+			trace('is this shit??');
 
 			if (dialogueList[1] == null && dialogueList[0] != null)
 			{
 				if (!isEnding)
 				{
-					isEnding = true;
-
-					if (PlayState.SONG.song.toLowerCase() == 'senpai' || PlayState.SONG.song.toLowerCase() == 'thorns')
-						FlxG.sound.music.fadeOut(2.2, 0);
-
-					new FlxTimer().start(0.2, function(tmr:FlxTimer)
+					isEnding = true;						
+					
+					switch (PlayState.SONG.song.toLowerCase())
 					{
-						box.alpha -= 1 / 5;
-						bgFade.alpha -= 1 / 5 * 0.7;
-						portraitLeft.visible = false;
-						portraitRight.visible = false;
-						swagDialogue.alpha -= 1 / 5;
-						dropText.alpha = swagDialogue.alpha;
-					}, 5);
+						case 'house' | 'insanity' | 'polygonized' | 'blocked' | 'corn-theft' | 'maze' | 'supernovae' | 'glitch':
+							FlxG.sound.music.fadeOut(2.2, 0);
+					}
+					switch (PlayState.SONG.song.toLowerCase())
+					{
+						default:
+							FlxTween.tween(box, {alpha: 0}, 1.2);
+							FlxTween.tween(bgFade, {alpha: 0}, 1.2);
+							FlxTween.tween(portraitLeft, {alpha: 0}, 1.2);
+							FlxTween.tween(portraitRight, {alpha: 0}, 1.2);
+							FlxTween.tween(swagDialogue, {alpha: 0}, 1.2);
+							FlxTween.tween(dropText, {alpha: 0}, 1.2);
+					}
 
 					new FlxTimer().start(1.2, function(tmr:FlxTimer)
 					{
@@ -231,30 +306,194 @@ class DialogueBox extends FlxSpriteGroup
 		// swagDialogue.text = ;
 		swagDialogue.resetText(dialogueList[0]);
 		swagDialogue.start(0.04, true);
-
-		switch (curCharacter)
+		curshader = null;
+		if (curCharacter != 'generic')
 		{
-			case 'dad':
+			var portrait:Portrait = getPortrait(curCharacter);
+			if (portrait.left)
+			{
+				portraitLeft.frames = Paths.getSparrowAtlas(portrait.portraitPath, 'shared');
+				portraitLeft.animation.addByPrefix('enter', portrait.portraitPrefix, 24, false);
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
 				portraitRight.visible = false;
 				if (!portraitLeft.visible)
 				{
 					portraitLeft.visible = true;
-					portraitLeft.animation.play('enter');
 				}
-			case 'bf':
+			}
+			else
+			{
+				portraitRight.frames = Paths.getSparrowAtlas(portrait.portraitPath, 'shared');
+				portraitRight.animation.addByPrefix('enter', portrait.portraitPrefix, 24, false);
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
 				portraitLeft.visible = false;
 				if (!portraitRight.visible)
 				{
 					portraitRight.visible = true;
-					portraitRight.animation.play('enter');
 				}
+			}
+			switch (curCharacter)
+			{
+				case 'dave' | 'bambi': //guys its the funny bambi character
+					portraitLeft.setPosition(220, 220);
+				case 'bf' | 'gf': //create boyfriend & genderbent boyfriend
+					portraitRight.setPosition(570, 220);
+			}
+			box.flipX = portraitLeft.visible;
+			portraitLeft.x -= 150;
+			//portraitRight.x += 100;
+			portraitLeft.antialiasing = portrait.portraitPath != "dialogue/dave_furiosity";
+			portraitRight.antialiasing = true;
+			portraitLeft.animation.play('enter',true);
+			portraitRight.animation.play('enter',true);
 		}
+		else
+		{
+			portraitLeft.visible = false;
+			portraitRight.visible = false;
+		}
+		switch (curMod)
+		{
+			case 'distort':
+				var shad:Shaders.PulseEffect = new Shaders.PulseEffect();
+				curshader = shad;
+				shad.waveAmplitude = 1;
+				shad.waveFrequency = 2;
+				shad.waveSpeed = 1;
+				shad.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000,100000);
+				shad.shader.uampmul.value[0] = 1;
+				if (curCharacter != 'generic')
+				{
+					portraitLeft.shader = shad.shader;
+					portraitRight.shader = shad.shader;
+				}
+			case 'distortbg':
+				var shad:Shaders.DistortBGEffect = new Shaders.DistortBGEffect();
+				curshader = shad;
+				shad.waveAmplitude = 0.1;
+				shad.waveFrequency = 5;
+				shad.waveSpeed = 2;
+				if (curCharacter != 'generic')
+				{
+					portraitLeft.shader = shad.shader;
+					portraitRight.shader = shad.shader;
+				}
+			case 'setfont_normal':
+				dropText.font = Paths.font("comic.ttf");
+				swagDialogue.font = Paths.font("comic.ttf");
+
+			case 'setfont_code':
+				dropText.font = Paths.font("barcode.ttf");
+				swagDialogue.font = Paths.font("barcode.ttf");
+		}
+	}
+	function getPortrait(character:String):Portrait
+	{
+		var portrait:Portrait = new Portrait('', '', '', true);
+		switch (character)
+		{
+			case 'dave':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					case 'house':
+						portrait.portraitPath = 'dialogue/dave_house';
+						portrait.portraitPrefix = 'dave house portrait';
+
+					case 'insanity':
+						portrait.portraitPath = 'dialogue/dave_insanity';
+						portrait.portraitPrefix = 'dave insanity portrait';
+
+					case 'polygonized':
+						portrait.portraitPath = 'dialogue/dave_furiosity';
+						portrait.portraitPrefix = 'dave furiosity portrait';
+
+					case 'blocked' | 'corn-theft' | 'maze':
+						portrait.portraitPath = 'dialogue/dave_bambiweek';
+						portrait.portraitPrefix = 'dave bambi week portrait';
+					case 'splitathon':
+						portrait.portraitPath = 'dialogue/dave_splitathon';
+						portrait.portraitPrefix = 'dave splitathon portrait';
+				}
+			case 'bambi':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					case 'blocked':
+						portrait.portraitPath = 'dialogue/bambi_blocked';
+						portrait.portraitPrefix = 'bambi blocked portrait';
+					case 'corn-theft':
+						portrait.portraitPath = 'dialogue/bambi_corntheft';
+						portrait.portraitPrefix = 'bambi corntheft portrait';
+					case 'maze':
+						portrait.portraitPath = 'dialogue/bambi_maze';
+						portrait.portraitPrefix = 'bambi maze portrait';
+					case 'splitathon':
+						portrait.portraitPath = 'dialogue/bambi_splitathon';
+						portrait.portraitPrefix = 'bambi splitathon portrait';
+				}
+			case 'bf':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					case 'blocked' | 'maze':
+						portrait.portraitPath = 'dialogue/bf_blocked_maze';
+						portrait.portraitPrefix = 'bf blocked & maze portrait';
+					case 'polygonized'| 'corn-theft':
+						portrait.portraitPath = 'dialogue/bf_furiosity_corntheft';
+						portrait.portraitPrefix = 'bf furiosity & corntheft portrait';
+					case 'house':
+						portrait.portraitPath = 'dialogue/bf_house';
+						portrait.portraitPrefix = 'bf house portrait';
+					case 'insanity' | 'splitathon':
+						portrait.portraitPath = 'dialogue/bf_insanity_splitathon';
+						portrait.portraitPrefix = 'bf insanity & splitathon portrait';
+				}
+				portrait.left = false;
+			case 'gf':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					case 'blocked':
+						portrait.portraitPath = 'dialogue/gf_blocked';
+						portrait.portraitPrefix = 'gf blocked portrait';
+					case 'corn-theft':
+						portrait.portraitPath = 'dialogue/gf_corntheft';
+						portrait.portraitPrefix = 'gf corntheft portrait';
+					case 'maze':
+						portrait.portraitPath = 'dialogue/gf_maze';
+						portrait.portraitPrefix = 'gf maze portrait';
+					case 'splitathon':
+						portrait.portraitPath = 'dialogue/gf_splitathon';
+						portrait.portraitPrefix = 'gf splitathon portrait';
+				}
+				portrait.left = false;
+			default:
+				portrait.portraitPath = 'dialogue/bf_house';
+				portrait.portraitPrefix = 'bf house portrait';
+				
+		}
+		return portrait;
 	}
 
 	function cleanDialog():Void
 	{
 		var splitName:Array<String> = dialogueList[0].split(":");
 		curCharacter = splitName[1];
-		dialogueList[0] = dialogueList[0].substr(splitName[1].length + 2).trim();
+		curMod = splitName[0];
+		dialogueList[0] = dialogueList[0].substr(splitName[1].length + splitName[0].length + 2).trim();
+	}
+}
+
+class Portrait
+{
+	public var portraitPath:String;
+	public var portraitLibraryPath:String = '';
+	public var portraitPrefix:String;
+	public var left:Bool;
+	public function new (portraitPath:String, portraitLibraryPath:String = '', portraitPrefix:String, left:Bool)
+	{
+		this.portraitPath = portraitPath;
+		this.portraitLibraryPath = portraitLibraryPath;
+		this.portraitPrefix = portraitPrefix;
+		this.left = left;
 	}
 }

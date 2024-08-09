@@ -604,6 +604,8 @@ class CharacterSelectState extends MusicBeatState
 	public function endIt(e:FlxTimer = null)
 	{
 		trace("ENDING");
+		PlayState.boyfriendOverride = "none";
+		PlayState.girlfriendOverride = "none";
 		PlayState.boyfriendOverride = boyfriendData[curBF].names[curFormBF];
 		PlayState.girlfriendOverride = isTails ? 'tails-doll' : girlfriendData[curGF].names[curFormGF];
 		LoadingState.loadAndSwitchState(new PlayState());
