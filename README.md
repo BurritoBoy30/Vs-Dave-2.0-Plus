@@ -21,4 +21,8 @@ It has:
 - "Playable GF" by [RedstyPhoenix](https://www.youtube.com/@RedstyPhoenix) and [VoidEyedPanda](https://www.youtube.com/@VoidEyedPanda)
 - "Rapper GF" by [ZinoMan](https://gamebanana.com/members/2131991)
 - "Massive GF" by [MikuLazo](https://gamebanana.com/members/2650082)
+- "Thicc GF" by [lennyfaic](https://gamebanana.com/members/1752121)
+- "Oruta" by [The Vs. Oruta team](https://gamebanana.com/mods/505754)
+- "Skyblue" by skyblueanon
+- "The Three GFs" by [proteincuMbar](https://gamebanana.com/members/2371882)
 - Freeplay Girl OC (Zoey) made and owned by [BurgerKurger](https://x.com/BurgerKurger) (+18)
