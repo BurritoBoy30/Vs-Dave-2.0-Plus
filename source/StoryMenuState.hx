@@ -275,11 +275,8 @@ class StoryMenuState extends MusicBeatState
 			PlayState.storyWeek = curWeek;
 			PlayState.campaignScore = 0;
 			
-			if (PlayState.boyfriendOverride != "none" || PlayState.boyfriendOverride != "bf")
-				PlayState.boyfriendOverride = "none";
-			
-			if (PlayState.girlfriendOverride != "none" || PlayState.girlfriendOverride != "gf")
-				PlayState.girlfriendOverride = "none";
+			PlayState.boyfriendOverride = "none";
+			PlayState.girlfriendOverride = "none";
 
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{

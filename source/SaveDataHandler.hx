@@ -63,5 +63,8 @@ class SaveDataHandler
 		
 		if (FlxG.save.data.fullScreen == null)
 			FlxG.save.data.fullScreen = false;
+			
+		if (FlxG.save.data.seenWarning == null)
+			FlxG.save.data.seenWarning = false;
     }
 }

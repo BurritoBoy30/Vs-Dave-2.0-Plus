@@ -43,32 +43,10 @@ class TitleState extends MusicBeatState
 	override public function create():Void
 	{
 		trace('huh');
-		PlayerSettings.init();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
-
-		// DEBUG BULLSHIT
-
-		super.create();
-	
-		FlxG.save.bind('funkin', 'ninjamuffin99');
-		SaveDataHandler.initSave();
-
-		Highscore.load();
 		
-		if (FlxG.save.data.weekUnlocked != null)
-		{
-			// FIX LATER!!!
-			// WEEK UNLOCK PROGRESSION!!
-			// StoryMenuState.weekUnlocked = FlxG.save.data.weekUnlocked;
-
-			if (StoryMenuState.weekUnlocked.length < 4)
-				StoryMenuState.weekUnlocked.insert(0, true);
-
-			// QUICK PATCH OOPS!
-			if (!StoryMenuState.weekUnlocked[0])
-				StoryMenuState.weekUnlocked[0] = true;
-		}
+		super.create();
 
 		#if FREEPLAY
 		FlxG.switchState(new FreeplayState());
@@ -88,9 +66,7 @@ class TitleState extends MusicBeatState
 	var titleText:FlxSprite;
 
 	function startIntro()
-	{
-		FlxG.fullscreen = FlxG.save.data.fullScreen;
-		
+	{		
 		if (!initialized)
 		{
 			var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
@@ -256,7 +232,8 @@ class TitleState extends MusicBeatState
 	{
 		for (i in 0...textArray.length)
 		{
-			var money:Alphabet = new Alphabet(0, 0, textArray[i], true, false);
+			var money:FlxText = new FlxText(0, 0, FlxG.width, textArray[i], 48);
+			money.setFormat("Comic Sans MS Bold", 48, FlxColor.WHITE, CENTER);
 			money.screenCenter(X);
 			money.y += (i * 60) + 200;
 			credGroup.add(money);
@@ -266,7 +243,8 @@ class TitleState extends MusicBeatState
 
 	function addMoreText(text:String)
 	{
-		var coolText:Alphabet = new Alphabet(0, 0, text, true, false);
+		var coolText:FlxText = new FlxText(0, 0, FlxG.width, text, 48);
+		coolText.setFormat("Comic Sans MS Bold", 48, FlxColor.WHITE, CENTER);
 		coolText.screenCenter(X);
 		coolText.y += (textGroup.length * 60) + 200;
 		credGroup.add(coolText);
@@ -281,7 +259,7 @@ class TitleState extends MusicBeatState
 			textGroup.remove(textGroup.members[0], true);
 		}
 	}
-	
+
 	private var sickBeats:Int = 0; //Basically curBeat but won't be skipped if you hold the tab or resize the screen
 	private static var closedState:Bool = false;
 
@@ -306,25 +284,30 @@ class TitleState extends MusicBeatState
 			switch (sickBeats)
 			{
 				case 1:
-					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
+					createCoolText(['This is']);
+					//createCoolText(['MoldyGH', 'Rapparep', 'Krisspo', 'TheBuilderXD']);
 				// credTextShit.visible = true;
+				case 2:
+					addMoreText('A result');
 				case 3:
-					addMoreText('present');
+					addMoreText('Of boredom');
+				case 4:
+					addMoreText('Deal with it');
 				// credTextShit.text += '\npresent...';
 				// credTextShit.addText();
-				case 4:
+				case 5:
 					deleteCoolText();
 				// credTextShit.visible = false;
 				// credTextShit.text = 'In association \nwith';
 				// credTextShit.screenCenter();
-				case 5:
-					createCoolText(['Dave Engine Plus', 'by']);
+				case 6:
+					createCoolText(['Dave Engine']);
 				case 7:
-					addMoreText('BurritoBoy30');
+					addMoreText('Now Plus');
 				// credTextShit.text += '\nNewgrounds';
 				case 8:
 					deleteCoolText();
-					ngSpr.visible = false;
+					//ngSpr.visible = false;
 				// credTextShit.visible = false;
 
 				// credTextShit.text = 'Shoutouts Tom Fulp';
@@ -332,22 +315,24 @@ class TitleState extends MusicBeatState
 				case 9:
 					createCoolText([curWacky[0]]);
 				// credTextShit.visible = true;
-				case 11:
+				case 10:
 					addMoreText(curWacky[1]);
 				// credTextShit.text += '\nlmao';
-				case 12:
+				case 11:
 					deleteCoolText();
 				// credTextShit.visible = false;
 				// credTextShit.text = "Friday";
 				// credTextShit.screenCenter();
-				case 13:
-					addMoreText('Friday');
+				case 12:
+					addMoreText('Vs Dave');
 				// credTextShit.visible = true;
-				case 14:
-					addMoreText('Night');
+				case 13:
+					addMoreText('& Bambi');
 				// credTextShit.text += '\nNight';
+				case 14:
+					addMoreText('2.0+'); // credTextShit.text += '\nFunkin';
 				case 15:
-					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+					deleteCoolText();
 
 				case 16:
 					skipIntro();

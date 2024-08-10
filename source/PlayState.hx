@@ -213,11 +213,21 @@ class PlayState extends MusicBeatState
 		screenshader.waveFrequency = 2;
 		screenshader.waveSpeed = 1;
 		screenshader.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000, 100000);
-			
-		gf = new Character(400, 130, (girlfriendOverride == 'none' || girlfriendOverride == 'gf') ? 'gf' : girlfriendOverride);
+		
+		var gfVersion:String = 'gf';
+		if (girlfriendOverride == 'none' || girlfriendOverride == 'gf')
+		{
+			gfVersion = 'gf';
+		}
+		else
+		{
+			gfVersion = girlfriendOverride;
+		}
+		
+		gf = new Character(400, 130, gfVersion);
 		gf.x += gf.charOffset[0];
 		gf.y += gf.charOffset[1];
-		//gf.scrollFactor.set(0.95, 0.95);
+		trace('gf load');
 		
 		var inCaseTutorial:String = '';
 		if (SONG.song.toLowerCase() == 'tutorial')
@@ -231,13 +241,15 @@ class PlayState extends MusicBeatState
 				inCaseTutorial = SONG.player2;
 			}
 		}
+		else
+		{
+			inCaseTutorial = SONG.player2;
+		}
 			
-		dad = new Character(100, 100, SONG.song.toLowerCase() == 'tutorial' ? inCaseTutorial : SONG.player2);
+		dad = new Character(100, 100, inCaseTutorial);
 		dad.x += dad.charOffset[0];
 		dad.y += dad.charOffset[1];
-		
-		dadmirror = new Character(dad.x - 100, dad.y - 200, "dave-angey");
-		dadmirror.visible = false;
+		trace('dad load');
 		
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x + 150, dad.getGraphicMidpoint().y - 150);
 		
@@ -251,14 +263,25 @@ class PlayState extends MusicBeatState
 			}
 		}
 		
+		var boyfriendVersion:String = '';
+		if (boyfriendOverride == 'none' || boyfriendOverride == 'bf')
+		{
+			boyfriendVersion = SONG.player1;
+		}
+		else
+		{
+			boyfriendVersion = boyfriendOverride;
+		}
+		
+		boyfriend = new Boyfriend(770, 450, boyfriendVersion);
+		boyfriend.x += boyfriend.charOffset[0];
+		boyfriend.y += boyfriend.charOffset[1];
+		trace('boyfriend load');
+		
 		if (SONG.song.toLowerCase() == 'tutorial')
 			gf.visible = false;
 		else
-			gf.visible = !CharacterSelectState.noGfChar.contains(boyfriend.curCharacter);
-		
-		boyfriend = new Boyfriend(770, 450, (boyfriendOverride == "none" || boyfriendOverride == "bf") ? SONG.player1 : boyfriendOverride);
-		boyfriend.x += boyfriend.charOffset[0];
-		boyfriend.y += boyfriend.charOffset[1];
+			gf.visible = !(Character.tutorialGFs.contains(dad.curCharacter) && CharacterSelectState.noGfChar.contains(boyfriend.curCharacter));
 		
 		switch (curStage)
 		{
@@ -270,7 +293,12 @@ class PlayState extends MusicBeatState
 		
 		add(gf);
 		add(dad);
-		if (SONG.song.toLowerCase() == 'insanity') add(dadmirror);
+		if (SONG.song.toLowerCase() == 'insanity')
+		{
+			dadmirror = new Character(dad.x - 100, dad.y - 200, "dave-angey");
+			dadmirror.visible = false;
+			add(dadmirror);
+		}
 		add(boyfriend);
 		
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
@@ -397,13 +425,13 @@ class PlayState extends MusicBeatState
 		timeLabelTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 		
-		switch (curSong)
+		switch (SONG.song.toLowerCase())
 		{
 			case 'splitathon':
 				preloadChar('bambi-splitathon');
 		}
 		
-		if (curSong == 'kabunga') //i desperately wanted it so if you use downscroll it switches it to upscroll and flips the entire hud upside down but i never got to it
+		if (SONG.song.toLowerCase() == 'kabunga') //i desperately wanted it so if you use downscroll it switches it to upscroll and flips the entire hud upside down but i never got to it
 		{
 			lazychartshader.waveAmplitude = 0.03;
 			lazychartshader.waveFrequency = 5;
@@ -422,7 +450,7 @@ class PlayState extends MusicBeatState
 
 		if (isStoryMode)
 		{
-			switch (curSong)
+			switch (SONG.song.toLowerCase())
 			{
 				case 'house' | 'insanity' | 'polygonized' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'supernovae' | 'glitch':
 					schoolIntro(doof);
@@ -1251,7 +1279,7 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.save.data.accuracyDisplay)
 		{
-			scoreTxt.text = "Score:" + songScore + " | Misses:" + misses + " | Accuracy:" + truncateFloat(accuracy, 2) + "% ";
+			scoreTxt.text = ReturnLanguage.text('score') + songScore + " | Misses:" + misses + " | Accuracy:" + truncateFloat(accuracy, 2) + "% ";
 		}
 		else
 		{
@@ -1524,7 +1552,7 @@ class PlayState extends MusicBeatState
 				
 				case 'gf-massive':
 					camFollow.y = dad.getMidpoint().y - 300;
-					camFollow.x = dad.getMidpoint().x + 50
+					camFollow.x = dad.getMidpoint().x + 50;
 				case 'three-gfs':
 					camFollow.x = dad.getMidpoint().x + 50;
 				case 'skyblue':
@@ -1604,23 +1632,27 @@ class PlayState extends MusicBeatState
 
 			if (storyPlaylist.length <= 0)
 			{
+				PlayState.boyfriendOverride = "none";
+				PlayState.girlfriendOverride = "none";
+				
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 
 				transIn = FlxTransitionableState.defaultTransIn;
 				transOut = FlxTransitionableState.defaultTransOut;
-
-				FlxG.switchState(new StoryMenuState());
-
+			
 				// if ()
 				StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
 
 				if (SONG.validScore)
 				{
-					Highscore.saveWeekScore(storyWeek, campaignScore);
+					if (!botPlayOn)
+						Highscore.saveWeekScore(storyWeek, campaignScore);
 				}
 
 				FlxG.save.data.weekUnlocked = StoryMenuState.weekUnlocked;
 				FlxG.save.flush();
+				
+				FlxG.switchState(new StoryMenuState());
 			}
 			else
 			{
@@ -1644,8 +1676,15 @@ class PlayState extends MusicBeatState
 		{
 			if (botPlayOn)
 				botPlayOn = false;
+				
 			trace('WENT BACK TO FREEPLAY??');
 			
+			if (PlayState.boyfriendOverride != "none" || PlayState.boyfriendOverride != "bf")
+				PlayState.boyfriendOverride = "none";
+			
+			if (PlayState.girlfriendOverride != "none" || PlayState.girlfriendOverride != "gf")
+				PlayState.girlfriendOverride = "none";
+				
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			FlxG.switchState(new FreeplayState());
 		}

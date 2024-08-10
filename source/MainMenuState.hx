@@ -21,12 +21,7 @@ class MainMenuState extends MusicBeatState
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
-	#if !switch
-	var optionShit:Array<String> = ['story mode', 'freeplay', 'options'];
-	#else
-	var optionShit:Array<String> = ['story mode', 'freeplay'];
-	#end
-
+	var optionShit:Array<String> = ['story mode', 'freeplay', 'options', 'credits'];
 	public static var gameVer:String = "0.2.7.1";
 
 	var magenta:FlxSprite;
@@ -78,7 +73,7 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.1);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 27, 0, "Dave Engine+ (KE 1.2)", 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 30, 0, "Dave Engine+ (KE 1.2)", 12);
 		versionShit.setFormat("Comic Sans MS Bold", 18, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionShit.borderSize = 1.5;
 		versionShit.antialiasing = true;
@@ -161,6 +156,8 @@ class MainMenuState extends MusicBeatState
 
 								case 'options':
 									FlxG.switchState(new OptionsMenu());
+								case 'credits':
+									FlxG.switchState(new CreditsState());
 							}
 						});
 					}
