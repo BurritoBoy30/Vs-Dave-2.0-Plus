@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<TextureAtlas imagePath="jaiden1.png">
-<SubTexture name="jaiden1 idle0000" x="0" y="0" width="1200" height="1200" frameX="0" frameY="0" frameWidth="1200" frameHeight="1200" />
-<SubTexture name="jaiden1 idle0001" x="1200" y="0" width="1200" height="1200" frameX="0" frameY="0" frameWidth="1200" frameHeight="1200" />
-<SubTexture name="jaiden1 idle0002" x="0" y="1200" width="1200" height="1200" frameX="0" frameY="0" frameWidth="1200" frameHeight="1200" />
-<SubTexture name="jaiden1 idle0003" x="1200" y="1200" width="1200" height="1200" frameX="0" frameY="0" frameWidth="1200" frameHeight="1200" />
-<SubTexture name="jaiden1 idle0004" x="2400" y="0" width="1200" height="1200" frameX="0" frameY="0" frameWidth="1200" frameHeight="1200" />
-</TextureAtlas>

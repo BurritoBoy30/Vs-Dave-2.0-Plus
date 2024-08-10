@@ -1,9 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<TextureAtlas imagePath="jessie.png">
-<SubTexture name="jessie idle0000" x="0" y="0" width="900" height="900" frameX="0" frameY="0" frameWidth="900" frameHeight="900" />
-<SubTexture name="jessie idle0001" x="900" y="0" width="900" height="900" frameX="0" frameY="0" frameWidth="900" frameHeight="900" />
-<SubTexture name="jessie idle0002" x="0" y="900" width="900" height="900" frameX="0" frameY="0" frameWidth="900" frameHeight="900" />
-<SubTexture name="jessie idle0003" x="1800" y="900" width="900" height="900" frameX="0" frameY="0" frameWidth="900" frameHeight="900" />
-<SubTexture name="jessie idle0004" x="900" y="900" width="900" height="900" frameX="0" frameY="0" frameWidth="900" frameHeight="900" />
-<SubTexture name="jessie idle0005" x="1800" y="0" width="900" height="900" frameX="0" frameY="0" frameWidth="900" frameHeight="900" />
-</TextureAtlas>

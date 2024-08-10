@@ -2091,11 +2091,19 @@ class PlayState extends MusicBeatState
 			camZooming = true;
 
 		var altAnim:String = "";
+		var healthtolower:Float = 0.02;
 
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
 		{
 			if (SONG.notes[Math.floor(curStep / 16)].altAnim)
-				altAnim = '-alt';
+				if (SONG.song.toLowerCase() != "cheating")
+				{
+					altAnim = '-alt';
+				}
+				else
+				{
+					healthtolower = 0.005;
+				}
 		}
 		
 		var animToPlay:String = ''; 
@@ -2113,6 +2121,11 @@ class PlayState extends MusicBeatState
 		
 		dad.playAnim(animToPlay + altAnim, true);
 		dad.holdTimer = 0;
+		
+		if (SONG.song.toLowerCase() == "cheating")
+		{
+			health -= healthtolower;
+		}
 		
 		//cameraMoveOnNote(daNote.noteData, 'dad');
 		

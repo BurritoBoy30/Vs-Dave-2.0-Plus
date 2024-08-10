@@ -56,6 +56,7 @@ class CharacterSelectState extends MusicBeatState
 	
 	public static var noGfChar:Array<String> = ['bf-with-gf', 'bf-with-cyan', 'gf-player', 'rapper-gf', 'oruta'];
 	public static var singleBop:Array<String> = ['skyblue', 'tails-doll'];
+	public static var hornyGFs:Array<String> = ['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-massive', 'skyblue', 'tails-doll'];
 	
 	public var noMorePresses:Bool = false;
 	
@@ -78,7 +79,7 @@ class CharacterSelectState extends MusicBeatState
 			girlfriendData = [
 				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing'], ["Hot Girlfriend", "Hot Girlfriend (Sex Mod)", "Hot Girlfriend (Christmas)", "Hot Girlfriend (Standing)"]),
 				new SelectableChar(['gf-massive'], ["Massive Girlfriend"]),
-				new SelectableChar(['three-gfs', 'three-gfs-nude'], ["The Three Girlfriends", "The Three Girlfriends (Nude)"]),
+				new SelectableChar(['three-gfs'], ["The Three Girlfriends"]),
 				new SelectableChar(['skyblue'], ["Skyblue"])
 			];
 		}
@@ -346,10 +347,13 @@ class CharacterSelectState extends MusicBeatState
 				if (FlxG.keys.justPressed.RIGHT)
 					changeBoyfriend(1);
 				
-				if (FlxG.keys.justPressed.UP)
-					changeBoyfriendForm(-1);
-				if (FlxG.keys.justPressed.DOWN)
-					changeBoyfriendForm(1);
+				if (boyfriendData[curBF].names.length > 1)
+				{
+					if (FlxG.keys.justPressed.UP)
+						changeBoyfriendForm(-1);
+					if (FlxG.keys.justPressed.DOWN)
+						changeBoyfriendForm(1);
+				}
 				
 				if (!noGfChar.contains(boyfriendChar.curCharacter))
 				{
@@ -358,10 +362,13 @@ class CharacterSelectState extends MusicBeatState
 					if (FlxG.keys.justPressed.D && !isTails)
 						changeGirlfriend(1);
 					
-					if (FlxG.keys.justPressed.W && !isTails)
-						changeGirlfriendForm(-1);
-					if (FlxG.keys.justPressed.S && !isTails)
-						changeGirlfriendForm(1);
+					if (girlfriendData[curGF].names.length > 1)
+					{
+						if (FlxG.keys.justPressed.W && !isTails)
+							changeGirlfriendForm(-1);
+						if (FlxG.keys.justPressed.S && !isTails)
+							changeGirlfriendForm(1);
+					}
 				}
 			}
 			
@@ -426,6 +433,7 @@ class CharacterSelectState extends MusicBeatState
 			girlfriendData = [
 				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing'], ["Hot Girlfriend", "Hot Girlfriend (Sex Mod)", "Hot Girlfriend (Christmas)", "Hot Girlfriend (Standing)"]),
 				new SelectableChar(['gf-massive'], ["Massive Girlfriend"]),
+				new SelectableChar(['three-gfs'], ["The Three Girlfriends"]),
 				new SelectableChar(['skyblue'], ["Skyblue"])
 			];
 		}
@@ -513,7 +521,7 @@ class CharacterSelectState extends MusicBeatState
 			curFormBF = boyfriendData[curBF].names.length - 1;
 		if (curFormBF >= boyfriendData[curBF].names.length)
 			curFormBF = 0;
-		
+					
 		UpdateBF();
 		updateGfUI();
 	}

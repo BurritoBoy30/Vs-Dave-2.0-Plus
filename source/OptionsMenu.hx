@@ -39,8 +39,8 @@ class OptionsMenu extends MusicBeatState
 		add(menuBG);
 		
 		var hornyBitches:FlxSprite = new FlxSprite(0, 0);
-		hornyBitches.frames = Paths.getSparrowAtlas('hornyshit/rebecca', 'shared');
-		hornyBitches.animation.addByPrefix('idle', "rebecca idle", 30);
+		hornyBitches.frames = Paths.getSparrowAtlas('hornyshit/option girl', 'shared');
+		hornyBitches.animation.addByPrefix('idle', "option girl idle", 30);
 		hornyBitches.screenCenter(X);
 		hornyBitches.color = 0xFFea71fd;
 		hornyBitches.animation.play('idle');

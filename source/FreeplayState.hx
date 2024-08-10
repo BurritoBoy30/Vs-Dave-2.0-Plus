@@ -436,12 +436,20 @@ class FreeplayState extends MusicBeatState
 	function updateScore()
 	{
 		var theBF:String;
+		var theGF:String;
 		theBF = curBfChar.toLowerCase();
+		theGF = curGfChar.toLowerCase();
 		
 		if (CharacterSelectState.noGfChar.contains(theBF))
 			diffText.text = songs[curSelected].diffculty + " - (" + curBfChar.toUpperCase() + ")";
 		else
-			diffText.text = songs[curSelected].diffculty + " - (" + curBfChar.toUpperCase() + " - " + curGfChar.toUpperCase() + ")";
+		{
+			if (!FlxG.save.data.hornyALL && CharacterSelectState.hornyGFs.contains(theGF))
+				diffText.text = songs[curSelected].diffculty + " - (" + curBfChar.toUpperCase() + " - " + 'GF' + ")";
+			else
+				diffText.text = songs[curSelected].diffculty + " - (" + curBfChar.toUpperCase() + " - " + curGfChar.toUpperCase() + ")";
+		}
+		
 	}
 }
 

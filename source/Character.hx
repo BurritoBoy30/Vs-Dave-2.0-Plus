@@ -742,18 +742,6 @@ class Character extends FlxSprite
 				
 				charOffset[0] = -132;
 				charOffset[1] = -70;
-				
-			case 'three-gfs-nude':
-				tex = Paths.getSparrowAtlas('characters/girlfriends/GFWHATT');
-				frames = tex;
-				
-				addAnimation(0, -9, 'danceLeft', 'dancingLEFT');
-				addAnimation(0, -9, 'danceRight', 'dancingRIGHT');
-				
-				playAnim('danceRight');
-				
-				charOffset[0] = -132;
-				charOffset[1] = -70;
 		}
 
 		dance();
@@ -826,8 +814,7 @@ class Character extends FlxSprite
 			switch (curCharacter)
 			{
 				case 'gf' | 'gf-christmas' | 'gf-standing' | 'gf-pixel' | 'psyka' | 'psyka-christmas' | 'psyka-standing'  | 'cyan' |
-					'cyan-christmas' | 'gf-massive' | 'gf-hot' | 'gf-hot-christmas' | 'gf-hot-funny' | 'gf-hot-standing' | 'three-gfs' |
-					'three-gfs-nude':
+					'cyan-christmas' | 'gf-massive' | 'gf-hot' | 'gf-hot-christmas' | 'gf-hot-funny' | 'gf-hot-standing' | 'three-gfs':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;
