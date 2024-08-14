@@ -22,7 +22,7 @@ class WarningState extends MusicBeatState
 		, 12);
 		versionShit.setFormat("Comic Sans MS Bold", 45, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionShit.borderSize = 1.5;
-		versionShit.antialiasing = true;
+		versionShit.antialiasing = FlxG.save.data.antiAliasing;
 		versionShit.screenCenter();
 		add(versionShit);
 		

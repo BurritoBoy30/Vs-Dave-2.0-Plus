@@ -18,7 +18,7 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Botplay', 'Exit to menu'];
+	var menuItems:Array<String> = ['resume', 'restart', 'botplay', 'exit'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -42,7 +42,7 @@ class PauseSubState extends MusicBeatSubstate
 		
 		bg = new FlxBackdrop(Paths.image('ui/checkeredBG', 'preload'), 1, 1, true, true, 1, 1);
 		bg.alpha = 0;
-		bg.antialiasing = true;
+		bg.antialiasing = FlxG.save.data.antiAliasing;
 		bg.scrollFactor.set();
 		add(bg);
 
@@ -50,7 +50,7 @@ class PauseSubState extends MusicBeatSubstate
 		levelInfo.text += PlayState.SONG.song;
 		levelInfo.scrollFactor.set();
 		levelInfo.setFormat(Paths.font("comic.ttf"), 34);
-		levelInfo.antialiasing = true;
+		levelInfo.antialiasing = FlxG.save.data.antiAliasing;
 		levelInfo.updateHitbox();
 		add(levelInfo);
 
@@ -59,7 +59,7 @@ class PauseSubState extends MusicBeatSubstate
 		levelDifficulty.scrollFactor.set();
 		levelDifficulty.setFormat(Paths.font('comic.ttf'), 34);
 		levelDifficulty.updateHitbox();
-		levelDifficulty.antialiasing = true;
+		levelDifficulty.antialiasing = FlxG.save.data.antiAliasing;
 		add(levelDifficulty);
 		
 		botplayText = new FlxText(20, FlxG.height - 70, 0, "BOTPLAY", 32);
@@ -67,7 +67,7 @@ class PauseSubState extends MusicBeatSubstate
 		botplayText.setFormat(Paths.font('comic.ttf'), 32);
 		botplayText.x = FlxG.width - (botplayText.width + 30);
 		botplayText.updateHitbox();
-		botplayText.antialiasing = true;
+		botplayText.antialiasing = FlxG.save.data.antiAliasing;
 		add(botplayText);
 
 		levelDifficulty.alpha = 0;
@@ -86,7 +86,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		for (i in 0...menuItems.length)
 		{
-			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
+			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, ReturnLanguage.text(menuItems[i]), true, false);
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			grpMenuShit.add(songText);
@@ -129,13 +129,13 @@ class PauseSubState extends MusicBeatSubstate
 
 			switch (daSelected)
 			{
-				case "Resume":
+				case "resume":
 					close();
-				case "Restart Song":
+				case "restart":
 					FlxG.resetState();
-				case 'Botplay':
+				case 'botplay':
 					PlayState.botPlayOn = !PlayState.botPlayOn;
-				case "Exit to menu":
+				case "exit":
 					PlayState.botPlayOn = false;
 					
 					PlayState.boyfriendOverride = "none";

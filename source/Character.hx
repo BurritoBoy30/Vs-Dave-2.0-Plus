@@ -33,7 +33,7 @@ class Character extends FlxSprite
 		this.isPlayer = isPlayer;
 
 		var tex:FlxAtlasFrames;
-		antialiasing = true;
+		antialiasing = FlxG.save.data.antiAliasing;
 
 		switch (curCharacter)
 		{
@@ -334,8 +334,8 @@ class Character extends FlxSprite
 				addAnimation('idle', 'Idle');
 				addAnimation(44, 0, 'singUP', 'up');
 				addAnimation(-16, -3, 'singRIGHT', 'right');
-				addAnimation(-5, -8, 'singDOWN', 'down');
-				addAnimation(-5, -48, 'singLEFT', 'left');
+				addAnimation(-5, -48, 'singDOWN', 'down');
+				addAnimation(-5, -8, 'singLEFT', 'left');
 
 				playAnim('idle');
 				
@@ -424,6 +424,40 @@ class Character extends FlxSprite
 				playAnim('idle');
 				
 				charOffset[1] = 50;
+				
+			case 'bambi-joke':
+				tex = Paths.getSparrowAtlas('characters/bambi-joke', 'shared');
+				frames = tex;
+				
+				addAnimation('idle', 'idle');
+				addAnimation('singUP', 'up');
+				addAnimation('singLEFT', 'left');
+				addAnimation('singRIGHT', 'right');
+				addAnimation('singDOWN', 'down');
+				addAnimation('hey', 'hey');
+
+				flipX = true;
+				playAnim('idle');
+				
+			case 'bambi-piss-3d':
+				tex = Paths.getSparrowAtlas('characters/bambi_pissyboy');
+				frames = tex;
+				
+				addAnimationIndices('danceLeft', 'idle', [for (i in 0...13) i]);
+				addAnimationIndices('danceRight', 'idle', [for (i in 13...23) i]);
+				addAnimation(30, 'singLEFT', 'left');
+				addAnimation(0, -10, 'singDOWN', 'down');
+				addAnimation(10, 20, 'singUP', 'up');
+				addAnimation(30, 20, 'singRIGHT', 'right');
+		
+				setGraphicSize(Std.int(width / furiosityScale));
+				updateHitbox();
+				antialiasing = false;
+		
+				playAnim('danceRight');
+				
+				charOffset[0] = -200;
+				charOffset[1] = -75;
 			// DAD LIST END
 				
 			case 'gf':
@@ -742,6 +776,25 @@ class Character extends FlxSprite
 				
 				charOffset[0] = -132;
 				charOffset[1] = -70;
+			
+			case 'gf-trepidation':
+				tex = Paths.getSparrowAtlas('characters/girlfriends/tpgf');
+				frames = tex;
+				
+				addAnimationIndices('danceLeft1', 'idle a', [29, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13]);
+				addAnimationIndices('danceRight1', 'idle a',[14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]);
+				addAnimationIndices(-250, 25, 'danceLeft2', 'idle b', [29, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13]);
+				addAnimationIndices(-250, 25, 'danceRight2', 'idle b',[14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]);
+				addAnimation(-203, 8, 'transition', 'transition');
+				
+				scale.set(0.75, 0.75);
+				updateHitbox();
+				
+				playAnim('danceRight1');
+				
+				charOffset[0] = -400;
+				charOffset[1] = -250;
+
 		}
 
 		dance();
@@ -768,6 +821,26 @@ class Character extends FlxSprite
 			}
 		}
 	}
+	
+	var startTransiton:Bool = false;
+	var didItOnce:Bool = false;
+	
+	public function trepTransi(chance:Float)
+	{
+		if (curCharacter == 'gf-trepidation')
+		{
+			if (!didItOnce)
+			{
+				if (FlxG.random.bool(chance * 0.01))
+				{
+					startTransiton = true;
+					canDance = false;
+					playAnim('transition', true);
+					didItOnce = true;
+				}
+			}
+		}
+	}
 
 	override function update(elapsed:Float)
 	{
@@ -788,21 +861,40 @@ class Character extends FlxSprite
 				{
 					dance();
 					holdTimer = 0;
+					
+					PlayState.dadNoteCamOffset[0] = 0;
+					PlayState.dadNoteCamOffset[1] = 0;
 				}
 			}
 		}
 
+		// i would delete this but im lazy
 		switch (curCharacter)
 		{
 			case 'gf':
 				if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
 					playAnim('danceRight');
 		}
+		
+		if (curCharacter == 'gf-trepidation')
+		{
+			if (startTransiton)
+			{
+				if (animation.curAnim.name == 'transition' && animation.curAnim.finished)
+				{
+					trepTransition = true;
+					canDance = true;
+					startTransiton = false;
+					dance();
+				}
+			}
+		}
 
 		super.update(elapsed);
 	}
 
 	private var danced:Bool = false;
+	var trepTransition:Bool = false;
 
 	/**
 	 * FOR GF DANCING SHIT
@@ -824,6 +916,30 @@ class Character extends FlxSprite
 						else
 							playAnim('danceLeft', true);
 					}
+				case 'gf-trepidation':
+					danced = !danced;
+
+					if (danced)
+					{
+						if (!trepTransition)
+							playAnim('danceRight1', true);
+						else
+							playAnim('danceRight2', true);
+					}
+					else
+					{
+						if (!trepTransition)
+							playAnim('danceLeft1', true);
+						else
+							playAnim('danceLeft2', true);
+					}
+				case 'bambi-piss-3d':
+					danced = !danced;
+
+					if (danced)
+						playAnim('danceRight', true);
+					else
+						playAnim('danceLeft', true);
 				default:
 					playAnim('idle', true);
 			}
@@ -869,11 +985,6 @@ class Character extends FlxSprite
 				danced = !danced;
 			}
 		}
-	}
-
-	public function addOffset(name:String, x:Float = 0, y:Float = 0)
-	{
-		animOffsets[name] = [x, y];
 	}
 	
 	public function addAnimation(xAxis:Float = 0, yAxis:Float = 0, name:String, xmlName:String, looped:Bool = false, fps:Int = 24)

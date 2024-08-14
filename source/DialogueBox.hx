@@ -117,7 +117,7 @@ class DialogueBox extends FlxSpriteGroup
 				box.updateHitbox();
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
 				box.animation.addByPrefix('normal', 'speech bubble normal', 24, true);
-				box.antialiasing = true;
+				box.antialiasing = FlxG.save.data.antiAliasing;
 		}
 
 		this.dialogueList = dialogueList;
@@ -146,14 +146,14 @@ class DialogueBox extends FlxSpriteGroup
 		portraitLeft.frames = Paths.getSparrowAtlas(leftPortrait.portraitPath, 'shared');
 		portraitLeft.animation.addByPrefix('enter', leftPortrait.portraitPrefix, 24, false);
 		portraitLeft.updateHitbox();
-		portraitLeft.antialiasing = true;
+		portraitLeft.antialiasing = FlxG.save.data.antiAliasing;
 		portraitLeft.scrollFactor.set();
 
 		var rightPortrait:Portrait = getPortrait(portraitRightCharacter);	
 		portraitRight.frames = Paths.getSparrowAtlas(rightPortrait.portraitPath, 'shared');
 		portraitRight.animation.addByPrefix('enter', rightPortrait.portraitPrefix, 24, false);
 		portraitRight.updateHitbox();
-		portraitRight.antialiasing = true;
+		portraitRight.antialiasing = FlxG.save.data.antiAliasing;
 		portraitRight.scrollFactor.set();
 		
 		portraitRight.visible = false;
@@ -195,7 +195,7 @@ class DialogueBox extends FlxSpriteGroup
 				dropText.font = Paths.font("barcode.ttf");
 				dropText.color = 0xFFFFFFFF;
 				add(dropText);
-				dropText.antialiasing = true;
+				dropText.antialiasing = FlxG.save.data.antiAliasing;
 			
 				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
 				swagDialogue.font = Paths.font("barcode.ttf");
@@ -216,8 +216,8 @@ class DialogueBox extends FlxSpriteGroup
 		}
 		
 		trace('not sound');
-		dropText.antialiasing = true;
-		swagDialogue.antialiasing = true;
+		dropText.antialiasing = FlxG.save.data.antiAliasing;
+		swagDialogue.antialiasing = FlxG.save.data.antiAliasing;
 		//dialogue = new Alphabet(0, 80, "", false, true);
 	}
 
@@ -345,7 +345,7 @@ class DialogueBox extends FlxSpriteGroup
 			portraitLeft.x -= 150;
 			//portraitRight.x += 100;
 			portraitLeft.antialiasing = portrait.portraitPath != "dialogue/dave_furiosity";
-			portraitRight.antialiasing = true;
+			portraitRight.antialiasing = FlxG.save.data.antiAliasing;
 			portraitLeft.animation.play('enter',true);
 			portraitRight.animation.play('enter',true);
 		}

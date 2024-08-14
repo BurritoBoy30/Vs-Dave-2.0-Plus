@@ -66,5 +66,14 @@ class SaveDataHandler
 			
 		if (FlxG.save.data.seenWarning == null)
 			FlxG.save.data.seenWarning = false;
+		
+		if (FlxG.save.data.gameLanguage == null)
+			FlxG.save.data.gameLanguage = 'en-us';
+			
+		if (FlxG.save.data.antiAliasing == null)
+			FlxG.save.data.antialiasing = true;
+			
+		if (FlxG.save.data.noteCamera == null)
+			FlxG.save.data.noteCamera = true;
     }
 }

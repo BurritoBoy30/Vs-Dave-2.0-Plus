@@ -16,13 +16,13 @@ class CreditsState extends MusicBeatState
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
 		menuBG.color = 0xFF00CECE;
-		menuBG.antialiasing = true;
+		menuBG.antialiasing = FlxG.save.data.antiAliasing;
 		add(menuBG);
 		
 		var versionShit:FlxText = new FlxText(0, 0, FlxG.width, "Not done yet :(", 12);
 		versionShit.setFormat("Comic Sans MS Bold", 70, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionShit.borderSize = 1.5;
-		versionShit.antialiasing = true;
+		versionShit.antialiasing = FlxG.save.data.antiAliasing;
 		versionShit.screenCenter();
 		add(versionShit);
 		

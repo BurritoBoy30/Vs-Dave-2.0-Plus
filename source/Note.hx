@@ -4,7 +4,9 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxMath;
+import flixel.math.FlxRandom;
 import flixel.util.FlxColor;
+
 #if polymod
 import polymod.format.ParseRules.TargetSignatureElement;
 #end
@@ -22,6 +24,7 @@ class Note extends FlxSprite
 	public var tooLate:Bool = false;
 	public var wasGoodHit:Bool = false;
 	public var prevNote:Note;
+	public var LocalScrollSpeed:Float = 1;
 
 	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
@@ -38,11 +41,11 @@ class Note extends FlxSprite
 	
 	private var notetolookfor = 0;
 
-	private var MyStrum:FlxSprite;
+	public var MyStrum:StrumNote;
 
 	private var InPlayState:Bool = false;
 
-	public static var CharactersWith3D:Array<String> = ["dave-angey","bambi-3d", 'dave-split-3d'];
+	public static var CharactersWith3D:Array<String> = ["dave-angey","bambi-3d", 'dave-split-3d', 'bambi-piss-3d'];
 
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?musthit:Bool = true, noteStyle:String = "normal")
 	{
@@ -71,7 +74,7 @@ class Note extends FlxSprite
 			this.noteStyle = '3d';
 			frames = Paths.getSparrowAtlas('notes/NOTE_assets_3D');
 			animList();
-			antialiasing = true;
+			antialiasing = FlxG.save.data.antiAliasing;
 		}
 		else if (PlayState.boyfriend.curCharacter == 'bf-pixel' && musthit)
 		{
@@ -107,7 +110,7 @@ class Note extends FlxSprite
 			frames = Paths.getSparrowAtlas('notes/NOTE_assets');
 
 			animList();
-			antialiasing = true;
+			antialiasing = FlxG.save.data.antiAliasing;
 		}
 
 		if (PlayState.SONG.song.toLowerCase() == "cheating")
@@ -157,31 +160,48 @@ class Note extends FlxSprite
 			}
 		}
 		
-		if (Type.getClassName(Type.getClass(FlxG.state)).contains("PlayState") && PlayState.SONG.song.toLowerCase() == 'cheating')
+		switch (PlayState.SONG.song.toLowerCase())
 		{
-			var state:PlayState = cast(FlxG.state,PlayState);
-			InPlayState = true;
-			if (musthit)
-			{
-				state.playerStrums.forEach(function(spr:FlxSprite)
+			case 'cheating' | 'unfairness':
+				if (Type.getClassName(Type.getClass(FlxG.state)).contains("PlayState"))
 				{
-					if (spr.ID == notetolookfor)
+					var state:PlayState = cast(FlxG.state,PlayState);
+					InPlayState = true;
+					if (musthit)
 					{
-						x = spr.x;
-						MyStrum = spr;
+						state.playerStrums.forEach(function(spr:StrumNote)
+						{
+							if (spr.ID == notetolookfor)
+							{
+								x = spr.x;
+								MyStrum = spr;
+							}
+						});
 					}
-				});
+					else
+					{
+						state.dadStrums.forEach(function(spr:StrumNote)
+						{
+							if (spr.ID == notetolookfor)
+							{
+								x = spr.x;
+								MyStrum = spr;
+							}
+						});
+					}
+				}
+		}
+		
+		if (PlayState.SONG.song.toLowerCase() == 'unfairness')
+		{
+			var rng:FlxRandom = new FlxRandom();
+			if (rng.int(0,120) == 1)
+			{
+				LocalScrollSpeed = 0.1;
 			}
 			else
 			{
-				state.dadStrums.forEach(function(spr:FlxSprite)
-					{
-						if (spr.ID == notetolookfor)
-						{
-							x = spr.x;
-							MyStrum = spr;
-						}
-					});
+				LocalScrollSpeed = rng.float(1,3);
 			}
 		}
 
@@ -225,8 +245,8 @@ class Note extends FlxSprite
 					case 3:
 						prevNote.animation.play('redhold');
 				}
-
-				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
+																											// why didnt i do this before
+				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * (PlayState.SONG.song.toLowerCase() == 'algebra' ? PlayState.swagSpeed: PlayState.SONG.speed * LocalScrollSpeed);
 				prevNote.updateHitbox();
 				// prevNote.setGraphicSize();
 			}
@@ -258,7 +278,6 @@ class Note extends FlxSprite
 	{
 		super.update(elapsed);
 		
-		
 		if (MyStrum != null)
 		{
 			x = MyStrum.x + (isSustainNote ? width : 0);
@@ -269,27 +288,27 @@ class Note extends FlxSprite
 			{
 				var state:PlayState = cast(FlxG.state,PlayState);
 				if (mustPress)
+				{
+					state.playerStrums.forEach(function(spr:StrumNote)
 					{
-						state.playerStrums.forEach(function(spr:FlxSprite)
+						if (spr.ID == notetolookfor)
 						{
-							if (spr.ID == notetolookfor)
-							{
-								x = spr.x;
-								MyStrum = spr;
-							}
-						});
-					}
-					else
+							x = spr.x;
+							MyStrum = spr;
+						}
+					});
+				}
+				else
+				{
+					state.dadStrums.forEach(function(spr:StrumNote)
 					{
-						state.dadStrums.forEach(function(spr:FlxSprite)
-							{
-								if (spr.ID == notetolookfor)
-								{
-									x = spr.x;
-									MyStrum = spr;
-								}
-							});
-					}
+						if (spr.ID == notetolookfor)
+						{
+							x = spr.x;
+							MyStrum = spr;
+						}
+					});
+				}
 			}
 		}
 		

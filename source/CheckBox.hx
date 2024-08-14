@@ -8,7 +8,7 @@ import flixel.text.FlxText;
 class CheckBox extends FlxSprite
 {
 	var theSwitch:Bool = false;
-	public var textTracker:FlxText;
+	public var textTracker:FlxSprite;
 	
 	public function new(theSwitchData:Bool)
 	{
@@ -22,7 +22,7 @@ class CheckBox extends FlxSprite
 
 		switchButton(theSwitchData);
 		
-		antialiasing = true;
+		antialiasing = FlxG.save.data.antiAliasing;
 	}
 	
 	public function switchButton(placeboolhere:Bool)
@@ -36,7 +36,7 @@ class CheckBox extends FlxSprite
 	override function update(elapsed:Float)
 	{
 		if (textTracker != null)
-			setPosition(textTracker.x + textTracker.textField.textWidth + 20, textTracker.y);
+			setPosition(textTracker.x + textTracker.width + 15, textTracker.y - 40);
 
 		super.update(elapsed);
 	}

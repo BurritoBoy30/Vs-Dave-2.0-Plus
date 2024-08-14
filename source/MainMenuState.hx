@@ -37,7 +37,7 @@ class MainMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(randomizeBG());
-		bg.antialiasing = true;
+		bg.antialiasing = FlxG.save.data.antiAliasing;
 		bg.color = 0xFFFDE871;
 		bg.scrollFactor.set();
 		add(bg);
@@ -47,7 +47,7 @@ class MainMenuState extends MusicBeatState
 
 		magenta = new FlxSprite().loadGraphic(bg.graphic);
 		magenta.visible = false;
-		magenta.antialiasing = true;
+		magenta.antialiasing = FlxG.save.data.antiAliasing;
 		magenta.color = 0xFFfd719b;
 		magenta.scrollFactor.set();
 		add(magenta);
@@ -68,15 +68,15 @@ class MainMenuState extends MusicBeatState
 			menuItem.ID = i;
 			menuItems.add(menuItem);
 			menuItem.scrollFactor.set(0, 1);
-			menuItem.antialiasing = true;
+			menuItem.antialiasing = FlxG.save.data.antiAliasing;
 		}
 
 		FlxG.camera.follow(camFollow, null, 0.1);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 30, 0, "Dave Engine+ (KE 1.2)", 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 32, 0, "Dave Engine+ (KE 1.2)", 12);
 		versionShit.setFormat("Comic Sans MS Bold", 18, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionShit.borderSize = 1.5;
-		versionShit.antialiasing = true;
+		versionShit.antialiasing = FlxG.save.data.antiAliasing;
 		versionShit.scrollFactor.set();
 		add(versionShit);
 

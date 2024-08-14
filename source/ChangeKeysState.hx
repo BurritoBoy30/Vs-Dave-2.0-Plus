@@ -36,7 +36,7 @@ class ChangeKeysState extends MusicBeatState
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
-		menuBG.antialiasing = true;
+		menuBG.antialiasing = FlxG.save.data.antiAliasing;
 		add(menuBG);
 		
 		minorTxtBG = new FlxSprite(30, 20).makeGraphic(FlxG.width - 60, 100, 0xFF000000);
@@ -69,7 +69,7 @@ class ChangeKeysState extends MusicBeatState
 			theNotes.screenCenter(X);
 			theNotes.x -= 60;
 			theNotes.setGraphicSize(Std.int(theNotes.width * 0.75));
-			theNotes.antialiasing = true;
+			theNotes.antialiasing = FlxG.save.data.antiAliasing;
 			add(theNotes);
 			
 			var theKeys:FlxText = new FlxText(0, (keyBindsTxtBG.y - 8) + (i * 140), FlxG.width, keys[i], 12);

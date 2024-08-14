@@ -12,6 +12,8 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.addons.ui.FlxUICheckBox;
 
+// all code here is all made by me
+// t5mpler pls dont kill me
 class CharacterSelectState extends MusicBeatState
 {
 	var boyfriendData:Array<SelectableChar> = [];
@@ -67,30 +69,14 @@ class CharacterSelectState extends MusicBeatState
 		CharacterSelectData.initSave();
 		
 		boyfriendData = [
-			new SelectableChar(['bf', 'bf-christmas', 'bf-pixel'], ["Boyfriend", "Boyfriend (Christmas)", "Boyfriend (Pixel)"]),
-			new SelectableChar(['bf-with-gf', 'bf-with-cyan'], ["Boyfriend w/ Girlfriend", "Boyfriend w/ Cyan"]),
-			new SelectableChar(['gf-player'], [" Girlfriend (Playable)"]) ,
-			new SelectableChar(['rapper-gf'], ["Rapper Girlfriend"]),
-			new SelectableChar(['oruta'], ["Oruta"]) 
+			new SelectableChar(['bf', 'bf-christmas', 'bf-pixel']),
+			new SelectableChar(['bf-with-gf', 'bf-with-cyan']),
+			new SelectableChar(['gf-player']),
+			new SelectableChar(['rapper-gf']),
+			new SelectableChar(['oruta'])
 		];
 		
-		if (FlxG.save.data.hornyGF && FlxG.save.data.hornyALL)
-		{
-			girlfriendData = [
-				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing'], ["Hot Girlfriend", "Hot Girlfriend (Sex Mod)", "Hot Girlfriend (Christmas)", "Hot Girlfriend (Standing)"]),
-				new SelectableChar(['gf-massive'], ["Massive Girlfriend"]),
-				new SelectableChar(['three-gfs'], ["The Three Girlfriends"]),
-				new SelectableChar(['skyblue'], ["Skyblue"])
-			];
-		}
-		else
-		{
-			girlfriendData = [
-				new SelectableChar(['gf', 'gf-christmas', 'gf-standing', 'gf-pixel'], ["Girlfriend", "Girlfriend (Christmas)", "Girlfriend (Standing)", "Girlfriend (Pixel)"]),
-				new SelectableChar(['psyka', 'psyka-christmas', 'psyka-standing'], ["Psyka", "Psyka (Christmas)", "Psyka (Standing)"]),
-				new SelectableChar(['cyan', 'cyan-christmas'], ["Cyan", "Cyan (Christmas)"])
-			];
-		}
+		loadGirlfriendListing(FlxG.save.data.hornyGF && FlxG.save.data.hornyALL);
 		
 		FlxG.mouse.visible = true;
 		
@@ -107,7 +93,7 @@ class CharacterSelectState extends MusicBeatState
 		Conductor.changeBPM(110);
 		
 		var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('dave/sky_night'));
-		bg.antialiasing = true;
+		bg.antialiasing = FlxG.save.data.antiAliasing;
 		bg.scrollFactor.set(0.9, 0.9);
 		bg.active = false;
 		add(bg);
@@ -115,7 +101,7 @@ class CharacterSelectState extends MusicBeatState
 		var stageHills:FlxSprite = new FlxSprite(-225, -125).loadGraphic(Paths.image('dave/hills_night'));
 		stageHills.setGraphicSize(Std.int(stageHills.width * 1.25));
 		stageHills.updateHitbox();
-		stageHills.antialiasing = true;
+		stageHills.antialiasing = FlxG.save.data.antiAliasing;
 		stageHills.scrollFactor.set(1, 1);
 		stageHills.active = false;
 		add(stageHills);
@@ -123,7 +109,7 @@ class CharacterSelectState extends MusicBeatState
 		var gate:FlxSprite = new FlxSprite(-225, -125).loadGraphic(Paths.image('dave/gate_night'));
 		gate.setGraphicSize(Std.int(gate.width * 1.2));
 		gate.updateHitbox();
-		gate.antialiasing = true;
+		gate.antialiasing = FlxG.save.data.antiAliasing;
 		gate.scrollFactor.set(0.925, 0.925);
 		gate.active = false;
 		add(gate);
@@ -131,7 +117,7 @@ class CharacterSelectState extends MusicBeatState
 		var stageFront:FlxSprite = new FlxSprite(-225, -125).loadGraphic(Paths.image('dave/grass_night'));
 		stageFront.setGraphicSize(Std.int(stageFront.width * 1.2));
 		stageFront.updateHitbox();
-		stageFront.antialiasing = true;
+		stageFront.antialiasing = FlxG.save.data.antiAliasing;
 		stageFront.scrollFactor.set(0.9, 0.9);
 		stageFront.active = false;
 		add(stageFront);
@@ -141,14 +127,14 @@ class CharacterSelectState extends MusicBeatState
 		boyfriendText = new FlxText(-70, 0, FlxG.width, boyfriendData[curBF].displayNames[curFormBF], 16);
 		boyfriendText.setFormat(Paths.font("comic.ttf"), 75, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		boyfriendText.borderSize = 3;
-		boyfriendText.antialiasing = true;
+		boyfriendText.antialiasing = FlxG.save.data.antiAliasing;
 		add(boyfriendText);
 		boyfriendText.cameras = [camHUD];
 		
 		girlfriendText = new FlxText(-70, boyfriendText.y + boyfriendText.height, FlxG.width, girlfriendData[curGF].displayNames[curFormGF], 16);
 		girlfriendText.setFormat(Paths.font("comic.ttf"), 75, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		girlfriendText.borderSize = 3;
-		girlfriendText.antialiasing = true;
+		girlfriendText.antialiasing = FlxG.save.data.antiAliasing;
 		add(girlfriendText);
 		girlfriendText.cameras = [camHUD];
 		
@@ -166,14 +152,14 @@ class CharacterSelectState extends MusicBeatState
 		add(iconGF);
 		iconGF.cameras = [camHUD];
 		
-		changeInfoImg = new FlxSprite(0, 0).loadGraphic(Paths.image('charselect/changeInfo'));
+		changeInfoImg = new FlxSprite(0, 0).loadGraphic(Paths.image('charselect/' + FlxG.save.data.gameLanguage + '/changeInfo'));
 		changeInfoImg.y = FlxG.height - changeInfoImg.height;
-		changeInfoImg.antialiasing = true;
+		changeInfoImg.antialiasing = FlxG.save.data.antiAliasing;
 		add(changeInfoImg);
 		changeInfoImg.cameras = [camHUD];
 		
-		hornyGfBG = new FlxSprite(FlxG.width - 305, FlxG.height - 105).loadGraphic(Paths.image('charselect/hornygf_bg'));
-		hornyGfBG.antialiasing = true;
+		hornyGfBG = new FlxSprite(FlxG.width - 305, FlxG.height - 105).loadGraphic(Paths.image('charselect/' + FlxG.save.data.gameLanguage + '/hornygf_bg'));
+		hornyGfBG.antialiasing = FlxG.save.data.antiAliasing;
 		add(hornyGfBG);
 		hornyGfBG.cameras = [camHUD];
 		
@@ -186,13 +172,13 @@ class CharacterSelectState extends MusicBeatState
 		hornyGfBG.visible = FlxG.save.data.hornyALL;
 		hornyGfBOX.visible = FlxG.save.data.hornyALL;
 		
-		loadBox = new FlxSprite(hornyGfBG.x, 0).loadGraphic(Paths.image('charselect/loadchar_box'));
-		loadBox.antialiasing = true;
+		loadBox = new FlxSprite(hornyGfBG.x, 0).loadGraphic(Paths.image('charselect/' + FlxG.save.data.gameLanguage + '/loadchar_box'));
+		loadBox.antialiasing = FlxG.save.data.antiAliasing;
 		add(loadBox);
 		loadBox.cameras = [camHUD];
 		
-		saveBox = new FlxSprite(loadBox.x, 0).loadGraphic(Paths.image('charselect/savechar_box'));
-		saveBox.antialiasing = true;
+		saveBox = new FlxSprite(loadBox.x, 0).loadGraphic(Paths.image('charselect/' + FlxG.save.data.gameLanguage + '/savechar_box'));
+		saveBox.antialiasing = FlxG.save.data.antiAliasing;
 		add(saveBox);
 		saveBox.cameras = [camHUD];
 		
@@ -212,21 +198,17 @@ class CharacterSelectState extends MusicBeatState
 		saveBox.y = loadBox.y - loadBox.height - 5;
 		
 		tailsBox = new FlxSprite(saveBox.x, saveBox.y - saveBox.height - 5).loadGraphic(Paths.image('charselect/tailsdoll_box'));
-		tailsBox.antialiasing = true;
+		tailsBox.antialiasing = FlxG.save.data.antiAliasing;
 		add(tailsBox);
 		tailsBox.cameras = [camHUD];
 		
 		overlay = new FlxSprite(0, 0).makeGraphic(1, 1);
 		overlay.scrollFactor.set();
 		add(overlay);
-		
-		trace('is not text');
 			
 		UpdateBF();
 		UpdateGF();
-		
-		trace('is not chars');
-	
+			
 		super.create();
 	}
 	
@@ -373,7 +355,10 @@ class CharacterSelectState extends MusicBeatState
 			}
 			
 			if (controls.BACK)
+			{	
+				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				FlxG.switchState(new FreeplayState());
+			}
 			
 			if (FlxG.keys.justPressed.ENTER)
 			{
@@ -387,7 +372,7 @@ class CharacterSelectState extends MusicBeatState
 				if (!noGfChar.contains(boyfriendChar.curCharacter))
 				{
 					var cheerAnimation:Bool = girlfriendChar.animation.getByName("cheer") != null; 
-					girlfriendChar.playAnim(singleBop.contains(girlfriendChar.curCharacter) ? 'singUP' : cheerAnimation ? 'cheer' : 'danceLeft', true);
+					girlfriendChar.playAnim(singleBop.contains(girlfriendChar.curCharacter) ? 'singUP' : cheerAnimation ? 'cheer' : (girlfriendChar.curCharacter == 'gf-trepidation') ? 'danceLeft1' : 'danceLeft', true);
 				}
 				
 				FlxG.sound.music.stop();
@@ -428,21 +413,27 @@ class CharacterSelectState extends MusicBeatState
 		curGF = 0;
 		curFormGF = 0;
 		
-		if (FlxG.save.data.hornyGF)
+		loadGirlfriendListing(FlxG.save.data.hornyGF);
+	}
+	
+	function loadGirlfriendListing(isHorny:Bool = false)
+	{
+		if (isHorny)
 		{
 			girlfriendData = [
-				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing'], ["Hot Girlfriend", "Hot Girlfriend (Sex Mod)", "Hot Girlfriend (Christmas)", "Hot Girlfriend (Standing)"]),
-				new SelectableChar(['gf-massive'], ["Massive Girlfriend"]),
-				new SelectableChar(['three-gfs'], ["The Three Girlfriends"]),
-				new SelectableChar(['skyblue'], ["Skyblue"])
+				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing']),
+				new SelectableChar(['gf-massive']),
+				new SelectableChar(['three-gfs']),
+				new SelectableChar(['gf-trepidation']),
+				new SelectableChar(['skyblue'])
 			];
 		}
 		else
 		{
 			girlfriendData = [
-				new SelectableChar(['gf', 'gf-christmas', 'gf-standing', 'gf-pixel'], ["Girlfriend", "Girlfriend (Christmas)", "Girlfriend (Standing)", "Girlfriend (Pixel)"]),
-				new SelectableChar(['psyka', 'psyka-christmas', 'psyka-standing'], ["Psyka", "Psyka (Christmas)", "Psyka (Standing)"]),
-				new SelectableChar(['cyan', 'cyan-christmas'], ["Cyan", "Cyan (Christmas)"])
+				new SelectableChar(['gf', 'gf-christmas', 'gf-standing', 'gf-pixel']),
+				new SelectableChar(['psyka', 'psyka-christmas', 'psyka-standing']),
+				new SelectableChar(['cyan', 'cyan-christmas'])
 			];
 		}
 	}
@@ -477,7 +468,7 @@ class CharacterSelectState extends MusicBeatState
 		var popTxt:FlxText = new FlxText(0, (FlxG.height * 1.25), FlxG.width, string, 16);
 		popTxt.setFormat(Paths.font("comic.ttf"), 60, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		popTxt.borderSize = 3;
-		popTxt.antialiasing = true;
+		popTxt.antialiasing = FlxG.save.data.antiAliasing;
 		popTxt.alpha = 0;
 		add(popTxt);
 		popTxt.cameras = [camHUD];
@@ -572,7 +563,7 @@ class CharacterSelectState extends MusicBeatState
 		boyfriendChar.x += boyfriendChar.charOffset[0];
 		boyfriendChar.y += boyfriendChar.charOffset[1];
 		insert(members.indexOf(overlay), boyfriendChar);
-		iconBF.playAnimation(boyfriendData[curBF].names[curFormBF]);
+		iconBF.createIcon(boyfriendData[curBF].names[curFormBF]);
 		noMorePresses = false;
 	}
 	
@@ -583,8 +574,8 @@ class CharacterSelectState extends MusicBeatState
 		
 		if (isTails)
 		{
-			displayName = 'Busty Tails Doll';
 			name = 'tails-doll';
+			displayName = ReturnLanguage.char(name);
 		}
 		else
 		{
@@ -605,7 +596,7 @@ class CharacterSelectState extends MusicBeatState
 		girlfriendChar.x += girlfriendChar.charOffset[0];
 		girlfriendChar.y += girlfriendChar.charOffset[1];
 		insert(members.indexOf(boyfriendChar), girlfriendChar);
-		iconGF.playAnimation(name);
+		iconGF.createIcon(name);
 		noMorePresses = false;
 	}
 		
@@ -622,12 +613,15 @@ class CharacterSelectState extends MusicBeatState
 
 class SelectableChar
 {
-	public var names:Array<String>;
-	public var displayNames:Array<String>;
+	public var names:Array<String> = [];
+	public var displayNames:Array<String> = [];
 
-	public function new(namesData:Array<String>, displayNamesData:Array<String>)
+	public function new(namesData:Array<String>)
 	{
 		names = namesData;
-		displayNames = displayNamesData;
+		for (i in 0...namesData.length)
+		{
+			displayNames.push(ReturnLanguage.char(namesData[i]));
+		}
 	}
 }

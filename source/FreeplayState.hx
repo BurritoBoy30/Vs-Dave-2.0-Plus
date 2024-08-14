@@ -44,7 +44,7 @@ class FreeplayState extends MusicBeatState
 
 	private var CurrentPack:Int = 0;
 
-	private var NameAlpha:ComicSansText;
+	private var NameAlpha:FlxText;
 
 	var loadingPack:Bool = false;
 
@@ -54,7 +54,7 @@ class FreeplayState extends MusicBeatState
 	override function create()
 	{		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(MainMenuState.randomizeBG());
-		bg.antialiasing = true;
+		bg.antialiasing = FlxG.save.data.antiAliasing;
 		bg.color = 0xFF9271FD;
 		add(bg);
 		
@@ -63,9 +63,12 @@ class FreeplayState extends MusicBeatState
 		CurrentSongIcon.centerOffsets(false);
 		CurrentSongIcon.x = (FlxG.width / 2) - 256;
 		CurrentSongIcon.y = (FlxG.height / 2) - 256;
-		CurrentSongIcon.antialiasing = true;
+		CurrentSongIcon.antialiasing = FlxG.save.data.antiAliasing;
 
-		NameAlpha = new ComicSansText(0,(FlxG.height / 2) - 282, AllPossibleSongs[CurrentPack], CENTER);
+		NameAlpha = new FlxText(0,(FlxG.height / 2) - 282, FlxG.width, AllPossibleSongs[CurrentPack]);
+		NameAlpha.setFormat(Paths.font("comic.ttf"), 90, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		NameAlpha.borderSize = 3;
+		NameAlpha.antialiasing = FlxG.save.data.antiAliasing;
 		
 		add(CurrentSongIcon);
 		add(NameAlpha);
@@ -93,10 +96,11 @@ class FreeplayState extends MusicBeatState
 				addWeek(['Splitathon'], 3,['the-duo'], ['Hard'], [230]);
 			
 			case 'golden':
-				addWeek(['Disability'], 4,['dave-split-3d'], ['Hard'], [182]);
-				addWeek(['OG'], 4 ,['dave-alpha'], ['Extreme'], [110]);
+				addWeek(['Disruption'], 5,['bambi-piss-3d'], ['Extreme'], [330]);
+				addWeek(['Disability'], 6,['dave-split-3d'], ['Hard'], [182]);
+				addWeek(['OG'], 7,['dave-alpha'], ['Extreme'], [110]);
 			case 'joke':
-				addWeek(['Cheating'], 2, ['bambi-3d'], ['Stupid'], [125]);
+				addWeek(['Cheating'], 4, ['bambi-3d'], ['Stupid'], [125]);
 			
 			case 'extra':
 				addWeek(['Bonus-Song'], 1, ['dave'], ['Normal'], [140]);
@@ -380,7 +384,7 @@ class FreeplayState extends MusicBeatState
 		if (Math.abs(lerpScore - intendedScore) <= 10)
 			lerpScore = intendedScore;
 
-		scoreText.text = "PERSONAL BEST:" + lerpScore;
+		scoreText.text = ReturnLanguage.text('personalbest') + lerpScore;
 	}
 
 	function changeSelection(change:Int = 0)
@@ -441,13 +445,13 @@ class FreeplayState extends MusicBeatState
 		theGF = curGfChar.toLowerCase();
 		
 		if (CharacterSelectState.noGfChar.contains(theBF))
-			diffText.text = songs[curSelected].diffculty + " - (" + curBfChar.toUpperCase() + ")";
+			diffText.text = ReturnLanguage.text(songs[curSelected].diffculty.toLowerCase()) + " - (" + curBfChar.toUpperCase() + ")";
 		else
 		{
 			if (!FlxG.save.data.hornyALL && CharacterSelectState.hornyGFs.contains(theGF))
-				diffText.text = songs[curSelected].diffculty + " - (" + curBfChar.toUpperCase() + " - " + 'GF' + ")";
+				diffText.text = ReturnLanguage.text(songs[curSelected].diffculty.toLowerCase()) + " - (" + curBfChar.toUpperCase() + " - " + 'GF' + ")";
 			else
-				diffText.text = songs[curSelected].diffculty + " - (" + curBfChar.toUpperCase() + " - " + curGfChar.toUpperCase() + ")";
+				diffText.text = ReturnLanguage.text(songs[curSelected].diffculty.toLowerCase()) + " - (" + curBfChar.toUpperCase() + " - " + curGfChar.toUpperCase() + ")";
 		}
 		
 	}

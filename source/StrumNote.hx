@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 
 class StrumNote extends FlxSprite
@@ -41,7 +42,6 @@ class StrumNote extends FlxSprite
 						animation.add('pressed', [7, 11], 12, false);
 						animation.add('confirm', [15, 19], 24, false);
 				}
-				antialiasing = false;
 
 			default:
 				frames = Paths.getSparrowAtlas('notes/NOTE_assets' + (type == '3d' ? "_3D" : ""));
@@ -72,7 +72,14 @@ class StrumNote extends FlxSprite
 						animation.addByPrefix('pressed', 'right press', 24, false);
 						animation.addByPrefix('confirm', 'right confirm', 24, false);
 				}
-				antialiasing = type != '3d';
+		}
+		
+		switch (type)
+		{
+			case 'pixel' | '3d':
+				antialiasing = false;
+			default:
+				antialiasing = FlxG.save.data.antiAliasing;
 		}
 		
 		animationPlay('static');

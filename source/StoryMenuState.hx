@@ -85,7 +85,7 @@ class StoryMenuState extends MusicBeatState
 		yellowBG = new FlxSprite(0, 56).makeGraphic(FlxG.width, 400, 0xFF0094FF);
 
 		imageBG = new FlxSprite(0, 56).loadGraphic(Paths.image("blank", "shared"));
-		imageBG.antialiasing = true;
+		imageBG.antialiasing = FlxG.save.data.antiAliasing;
 		imageBG.active = false;
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
@@ -119,7 +119,7 @@ class StoryMenuState extends MusicBeatState
 				lock.animation.addByPrefix('lock', 'lock');
 				lock.animation.play('lock');
 				lock.ID = i;
-				lock.antialiasing = true;
+				lock.antialiasing = FlxG.save.data.antiAliasing;
 				grpLocks.add(lock);
 			}
 		}
@@ -130,7 +130,7 @@ class StoryMenuState extends MusicBeatState
 		{
 			var weekCharacterThing:MenuCharacter = new MenuCharacter((FlxG.width * 0.25) * (1 + char) - 150, weekCharacters[curWeek][char]);
 			weekCharacterThing.y += 70;
-			weekCharacterThing.antialiasing = true;
+			weekCharacterThing.antialiasing = FlxG.save.data.antiAliasing;
 			switch (weekCharacterThing.character)
 			{
 				case 'dad':

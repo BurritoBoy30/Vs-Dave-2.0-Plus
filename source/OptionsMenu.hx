@@ -9,23 +9,26 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
-import ComicSansText;
 
 class OptionsMenu extends MusicBeatState
 {
 	var selector:FlxText;
 	var curSelected:Int = 0;
 	
-	var controlsStrings:Array<Dynamic> = [
-		["Ghost Tapping", FlxG.save.data.newInput],
-		['Downscroll', FlxG.save.data.downscroll],
-		["Accuracy Display", FlxG.save.data.accuracyDisplay],
-		["Naughtiness", FlxG.save.data.hornyALL],
-		["Change Keys", false],
-		["Fullscreen", FlxG.save.data.fullScreen],
-		["Eye Sores",FlxG.save.data.eyesoreson]
+	var controlsStrings:Array<Option> = [
+		new Option('ghosttapping', FlxG.save.data.newInput),
+		new Option('downscroll', FlxG.save.data.downscroll),
+		new Option('accdisplay', FlxG.save.data.accuracyDisplay),
+		new Option('naughtiness', FlxG.save.data.hornyALL),
+		new Option('changekeys'),
+		new Option('fullscreen', FlxG.save.data.fullScreen),
+		new Option('eyesores', FlxG.save.data.eyesoreson),
+		new Option('changelang'),
+		new Option('antialiasing', FlxG.save.data.antiAliasing),
+		new Option('cammove', FlxG.save.data.noteCamera)
 	];
-	private var grpControls:FlxTypedGroup<ComicSansText>;
+	
+	private var grpControls:FlxTypedGroup<Alphabet>;
 	private var checkArray:Array<CheckBox> = [];
 	
 	override function create()
@@ -35,7 +38,7 @@ class OptionsMenu extends MusicBeatState
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
 		menuBG.color = 0xFFea71fd;
-		menuBG.antialiasing = true;
+		menuBG.antialiasing = FlxG.save.data.antiAliasing;
 		add(menuBG);
 		
 		var hornyBitches:FlxSprite = new FlxSprite(0, 0);
@@ -44,27 +47,28 @@ class OptionsMenu extends MusicBeatState
 		hornyBitches.screenCenter(X);
 		hornyBitches.color = 0xFFea71fd;
 		hornyBitches.animation.play('idle');
-		hornyBitches.antialiasing = true;
+		hornyBitches.antialiasing = FlxG.save.data.antiAliasing;
 		if (FlxG.save.data.hornyALL) add(hornyBitches);
 		
-		grpControls = new FlxTypedGroup<ComicSansText>();
+		grpControls = new FlxTypedGroup<Alphabet>();
 		add(grpControls);
 
 		for (i in 0...controlsStrings.length)
 		{
-			var controlLabel:ComicSansText = new ComicSansText(0, (70 * i) + 30, controlsStrings[i][0]);
+			var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i].names, true, false);
 			controlLabel.isMenuItem = true;
 			controlLabel.targetY = i;
 			controlLabel.yAdd = 20;
 			grpControls.add(controlLabel);
 			
-			var controlCheckBox:CheckBox = new CheckBox(controlsStrings[i][1]);
+			var controlCheckBox:CheckBox = new CheckBox(controlsStrings[i].selectors);
 			controlCheckBox.textTracker = controlLabel;
 			checkArray.push(controlCheckBox);
 			add(controlCheckBox);
 		}
 		
 		checkArray[4].visible = false;
+		checkArray[7].visible = false;
 		
 		super.create();
 		
@@ -108,6 +112,15 @@ class OptionsMenu extends MusicBeatState
 				case 6:
 					FlxG.save.data.eyesoreson = !FlxG.save.data.eyesoreson;
 					checkArray[curSelected].switchButton(FlxG.save.data.eyesoreson);
+				case 7:
+					FlxG.switchState(new ChangeLanguage());
+				case 8:
+					FlxG.save.data.antiAliasing = !FlxG.save.data.antiAliasing;
+					checkArray[curSelected].switchButton(FlxG.save.data.antiAliasing);
+				case 9:
+					FlxG.save.data.noteCamera = !FlxG.save.data.noteCamera;
+					checkArray[curSelected].switchButton(FlxG.save.data.noteCamera);
+					
 			}
 		}
 	}
@@ -150,5 +163,19 @@ class OptionsMenu extends MusicBeatState
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+	}
+}
+
+// i love this
+class Option
+{
+	public var names:String;
+	public var selectors:Bool;
+
+	public function new(namesData:String, ?selectorsData:Bool = false)
+	{
+		names = ReturnLanguage.text(namesData);
+		
+		selectors = selectorsData;
 	}
 }
