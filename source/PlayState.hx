@@ -102,7 +102,6 @@ class PlayState extends MusicBeatState
 	private var accuracy:Float = 0.00;
 	private var totalNotesHit:Float = 0;
 	private var totalPlayed:Int = 0;
-	private var ss:Bool = false;
 
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
@@ -988,7 +987,6 @@ class PlayState extends MusicBeatState
 
 		var playerCounter:Int = 0;
 
-		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
 		for (section in noteData)
 		{
 			var coolSection:Int = Std.int(section.lengthInSteps / 4);
@@ -1044,11 +1042,7 @@ class PlayState extends MusicBeatState
 				{
 					swagNote.x += FlxG.width / 2; // general offset
 				}
-				else
-				{
-				}
 			}
-			daBeats += 1;
 		}
 
 		// trace(unspawnNotes.length);
@@ -1577,7 +1571,7 @@ class PlayState extends MusicBeatState
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
 				
-				if (daNote.wasGoodHit && daNote.isSustainNote && Conductor.songPosition >= (daNote.strumTime + 10))
+				if (daNote.wasGoodHit && daNote.isSustainNote && Conductor.songPosition >= (daNote.strumTime + 10 + (!daNote.mustPress ? 40 : 0)))
 				{
 					destroyNote(daNote);
 				}
@@ -1840,36 +1834,39 @@ class PlayState extends MusicBeatState
 		if (noteDiff < Conductor.safeZoneOffset * -2 || noteDiff > Conductor.safeZoneOffset * 2)
 		{
 			daRating = 'shit';
-			totalNotesHit -= 2;
-			score = 50;
-			ss = false;
-			shits++;
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.45)
 		{
 			daRating = 'bad';
-			score = 100;
-			totalNotesHit += 0.2;
-			ss = false;
-			bads++;
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.25)
 		{
 			daRating = 'good';
-			totalNotesHit += 0.65;
-			score = 200;
-			ss = false;
-			goods++;
 		}
 		
-		if (daRating == 'sick')
+		switch (daRating)
 		{
-			totalNotesHit += 1;
-			sicks++;
+			case 'sick':
+				if (!botPlayOn) totalNotesHit += 1;
+				sicks++;
+			case 'good':
+				if (!botPlayOn)	totalNotesHit += 0.65;
+				score = 200;
+				goods++;
+			case 'bad':
+				if (!botPlayOn) totalNotesHit += 0.2;
+				score = 100;
+				bads++;
+			case 'shit':
+				if (!botPlayOn) totalNotesHit -= 2;
+				score = 50;
+				shits++;
 		}
-		
+	
 		if (!botPlayOn)
+		{
 			songScore += score;
+		}
 
 		var pixelShit:String = "";
 
@@ -2012,7 +2009,7 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('asdfa', upP);
 		if (controlArray.contains(true) && !boyfriend.stunned && generatedMusic)
 		{
-			boyfriend.holdTimer = 0;
+			//boyfriend.holdTimer = 0;
 
 			var possibleNotes:Array<Note> = [];
 
@@ -2071,36 +2068,34 @@ class PlayState extends MusicBeatState
 				if (holdArray.contains(true))
 				{
 					if (daNote.canBeHit && daNote.mustPress && daNote.isSustainNote && holdArray[daNote.noteData] == true)
-					{
 						goodNoteHit(daNote);
-					}
 				}
 				else if (botPlayOn)
 				{
-					if(FlxG.save.data.downscroll && daNote.y > strumLine.y ||
-					!FlxG.save.data.downscroll && daNote.y < strumLine.y)
+					var noteLine:Float;
+					
+					if (daNote.MyStrum != null)
+						noteLine = daNote.MyStrum.y;
+					else
+						noteLine = strumLine.y;
+						
+					if(FlxG.save.data.downscroll && daNote.y > noteLine || !FlxG.save.data.downscroll && daNote.y < noteLine)
 					{
-						// Force good note hit regardless if it's too late to hit it or not as a fail safe
 						if(daNote.canBeHit && daNote.mustPress || daNote.tooLate && daNote.mustPress)
-						{
 							goodNoteHit(daNote);
-							boyfriend.holdTimer = 0;
-						}
 					}
 				}
 			});
 		}
 
-		if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && (!holdArray.contains(true) || botPlayOn))
+		if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && (!holdArray.contains(true) || botPlayOn)
+			&& boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 		{
-			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
-			{
-				boyfriend.dance();
-				boyfriendIdleColor();
+			boyfriend.dance();
+			boyfriendIdleColor();
 				
-				bfNoteCamOffset[0] = 0;
-				bfNoteCamOffset[1] = 0;
-			}
+			bfNoteCamOffset[0] = 0;
+			bfNoteCamOffset[1] = 0;
 		}
 
 		playerStrums.forEach(function(spr:StrumNote)
@@ -2166,21 +2161,19 @@ class PlayState extends MusicBeatState
 	{
 		if (!botPlayOn)
 		{
-			if (accuracy < 100)	
-				accuracy = 100;
-				
-			if (accuracy >= 100)
-			{
-				totalPlayed += 1;
-				accuracy = totalNotesHit / totalPlayed * 100;
-			}
+			totalPlayed += 1;
+			
+			if (accuracy > 100.0)
+				accuracy = 100.0;
+			else
+				accuracy = (totalNotesHit / totalPlayed) * 100;
 		}
 	}
 	
 	function cameraMoveOnNote(note:Int, character:String)
 	{
 		var amount:Array<Float> = new Array<Float>();
-		var followAmount:Float = FlxG.save.data.noteCamera ? 20 : 0;
+		var followAmount:Float = FlxG.save.data.noteCamera ? 10 : 0;
 		switch (note)
 		{
 			case 0:
@@ -2215,7 +2208,9 @@ class PlayState extends MusicBeatState
 				combo += 1;
 			}
 			else
-				totalNotesHit += 1;
+			{
+				if (!botPlayOn) totalNotesHit += 1;
+			}
 
 			if (note.noteData >= 0)
 				health += 0.023;
@@ -2224,6 +2219,7 @@ class PlayState extends MusicBeatState
 
 			var animList:Array<String> = ['LEFT', 'DOWN', 'UP', 'RIGHT'];
 			boyfriend.playAnim('sing' + animList[Math.round(Math.abs(note.noteData))], true);
+			boyfriend.holdTimer = 0;
 			
 			boyfriendIdleColor();
 			

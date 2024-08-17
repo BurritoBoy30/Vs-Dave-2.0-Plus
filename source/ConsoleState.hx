@@ -22,6 +22,8 @@ class ConsoleState extends MusicBeatState
 
 	override function create()
 	{
+		FlxG.sound.music.stop();
+		
 		FlxG.mouse.visible = true;
 
 		mainText = new FlxText(5, 5, "");
@@ -36,7 +38,7 @@ class ConsoleState extends MusicBeatState
 
 		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
-			mainText.text = "\n" + "\n" + "\n" +"          Starting BurritoWorks VSD-SMS...";
+			mainText.text = "\n" + "\n" + "\n" +"          " + ReturnLanguage.console('startup');
 
 			new FlxTimer().start(4, function(tmr:FlxTimer)
 			{
@@ -46,6 +48,8 @@ class ConsoleState extends MusicBeatState
 			});
 		});
 	}
+	
+	public var letterType:Bool = false;
 
 	override function update(elapsed:Float)
 	{
@@ -70,7 +74,7 @@ class ConsoleState extends MusicBeatState
 				else if (inputText == 'exit')
 				{
 					startingUp = true;
-					addNewLine("Shutting down...", false); 
+					addNewLine(ReturnLanguage.console('shutdown'), false); 
 					new FlxTimer().start(1, function(tmr:FlxTimer)
 					{
 						FlxG.switchState(new MainMenuState());
@@ -78,14 +82,23 @@ class ConsoleState extends MusicBeatState
 				}
 				else
 				{
-					addNewLine("Invalid command."); 
+					addNewLine(ReturnLanguage.console('invalid')); 
 				}
 				reset();
 			}
 			
-			if (FlxG.keys.justPressed.ANY)
+			if (FlxG.keys.justPressed.ANY && !letterType)
 			{
 				changeText(FlxG.keys.getIsDown()[0].ID.toString().toLowerCase());
+			}
+			
+			if (FlxG.keys.pressed.ANY)
+			{
+				letterType = true;
+			}
+			else if (FlxG.keys.released.ANY)
+			{
+				letterType = false;
 			}
 		}
 	}
@@ -117,6 +130,7 @@ class ConsoleState extends MusicBeatState
 				case 'lbracket':					returnInput('[');
 				case 'rbracket':					returnInput(']');
 				case 'quote':						returnInput('"');
+				case 'slash':						returnInput('/');
 					
 				//misc
 				case 'space':						returnInput(' ');
@@ -149,11 +163,7 @@ class ConsoleState extends MusicBeatState
 	
 	function startText()
 	{
-		mainText.text = "BurritoWorks(R)  VSD-SMS" + "\n"
-			+ "(C) Copyright BurritoWorks Corp 2008-2024." + "\n" + "\n"
-			+ "Press ENTER to input your text as a command." + "\n"
-			+ 'Type "help" to list all the possible commands.' + "\n" + "\n"
-			+ "/";
+		mainText.text = ReturnLanguage.console('startinfo');
 	}
 
 	function addNewLine(newTxt:String, stillTyping:Bool = true)
@@ -172,14 +182,21 @@ class ConsoleState extends MusicBeatState
 	function checkForExe()
 	{
 		var returnText:String = "";
-		returnText = inputText;
-		returnText = returnText.replace("run" , "");
+		returnText = inputText.toLowerCase();
+		returnText = returnText.replace("run " , "");
 		returnText = returnText.replace(".exe" , "");
 
 		switch (returnText)
 		{
+			case 'dispenser':
+				startingUp = true;
+				addNewLine(ReturnLanguage.console('dispenser'), false);
+				new FlxTimer().start(1, function(tmr:FlxTimer)
+				{
+					FlxG.switchState(new DispenserBurstState());
+				});
 			default:
-				addNewLine("Executable not found");
+				addNewLine(ReturnLanguage.console('exenotfound'));
 		}
 	}
 }

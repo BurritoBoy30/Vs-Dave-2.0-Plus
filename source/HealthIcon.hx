@@ -58,7 +58,9 @@ class HealthIcon extends FlxSprite
 			{
 				realChar = char;
 			}
+			
 			loadGraphic(Paths.image('ui/icons/' + realChar, 'preload'), true, 150, 150);
+			
 			if (noAa.contains(char))
 				antialiasing = false;
 			else

@@ -9,187 +9,133 @@ class ReturnLanguage
 	// im lazy enough to not make a function to read .txt files but im competent enough to hard code it to the game
 	public static function text(curText:String)
 	{
-		switch (FlxG.save.data.gameLanguage)
-		{	
-			case 'pt-br':
-				var returnString:String;
-				
-				switch (curText)
-				{
-					//playstate
-					case 'time':			returnString = 'Tempo';
-					case 'score':			returnString = 'Pontuação: ';
-					case 'misses':			returnString = 'Falhas: ';
-					case 'accuracy':		returnString = 'Precisão: ';
-					case 'songcredit':		returnString = 'Música por ';
-					
-					//freeplay
-					case 'personalbest':	returnString = 'RECORDE PESSOAL: ';
-					case 'easy':			returnString = 'Fácil';
-					case 'normal':			returnString = 'Normal';
-					case 'hard':			returnString = 'Difícil';
-					case 'extreme':			returnString = 'Extremo';
-					case 'stupid':			returnString = 'Estúpido';
-					case 'fucked':			returnString = "Você está fudido";
-					
-					//pause
-					case 'resume':			returnString = 'Resumir';
-					case 'restart':			returnString = 'Reiniciar Música';
-					case 'botplay':			returnString = 'Botplay';
-					case 'exit':			returnString = 'Sair para o Menu';
-					
-					//options
-					case 'ghosttapping':	returnString = "Ghost Tapping";
-					case 'downscroll':		returnString = 'Downscroll';
-					case 'accdisplay':		returnString = 'Display de Precisão';
-					case 'naughtiness':		returnString = 'Safadeza';
-					case 'changekeys':		returnString = 'Trocar Binds';
-					case 'fullscreen':		returnString = 'Fullscreen';
-					case 'eyesores':		returnString = 'Efeitos Vibrantes';
-					case 'changelang':		returnString = 'Mudar Idioma';
-					case 'antialiasing':	returnString = 'Anti Aliasing';
-					case 'cammove':			returnString = 'Movimento da Câmera';
-					
-					//placeholder	
-					default:				returnString = 'placeholder';
-				}
-				
-				return returnString;
-			default:
-				var returnString:String;
-				
-				switch (curText)
-				{
-					//playstate
-					case 'time':			returnString = 'Time';
-					case 'score':			returnString = 'Score: ';
-					case 'misses':			returnString = 'Misses: ';
-					case 'accuracy':		returnString = 'Accuracy: ';
-					case 'songcredit':		returnString = 'Song by ';
-					
-					//freeplay
-					case 'personalbest':	returnString = 'PERSONAL BEST: ';
-					case 'easy':			returnString = 'Easy';
-					case 'normal':			returnString = 'Normal';
-					case 'hard':			returnString = 'Hard';
-					case 'extreme':			returnString = 'Extreme';
-					case 'stupid':			returnString = 'Stupid';
-					case 'fucked':			returnString = "You're fucked";
-					
-					//pause
-					case 'resume':			returnString = 'Resume';
-					case 'restart':			returnString = 'Restart Song';
-					case 'botplay':			returnString = 'Botplay';
-					case 'exit':			returnString = 'Exit to Menu';
-					
-					//options
-					case 'ghosttapping':	returnString = "Ghost Tapping";
-					case 'downscroll':		returnString = 'Downscroll';
-					case 'accdisplay':		returnString = 'Accuracy Display';
-					case 'naughtiness':		returnString = 'Naughtiness';
-					case 'changekeys':		returnString = 'Change Binds';
-					case 'fullscreen':		returnString = 'Fullscreen';
-					case 'eyesores':		returnString = 'Eyesores';
-					case 'changelang':		returnString = 'Change Language';
-					case 'antialiasing':	returnString = 'Anti Aliasing';
-					case 'cammove':			returnString = 'Camera Movement';
-					
-					//placeholder	
-					default:				returnString = 'placeholder';
-				}
-				
-				return returnString;
+		var returnString:String;
+		
+		switch (curText)
+		{
+			//playstate
+			case 'time':			returnString = txtString('ui', 0);
+			case 'score':			returnString = txtString('ui', 1) + " ";
+			case 'misses':			returnString = txtString('ui', 2) + " ";
+			case 'accuracy':		returnString = txtString('ui', 3) + " ";
+			case 'songcredit':		returnString = txtString('ui', 4) + " ";
+			
+			//freeplay
+			case 'personalbest':	returnString = txtString('ui', 5) + " ";
+			case 'easy':			returnString = txtString('ui', 6);
+			case 'normal':			returnString = txtString('ui', 7);
+			case 'hard':			returnString = txtString('ui', 8);
+			case 'extreme':			returnString = txtString('ui', 9);
+			case 'stupid':			returnString = txtString('ui', 10);
+			case 'fucked':			returnString = txtString('ui', 11);
+			
+			//pause
+			case 'resume':			returnString = txtString('ui', 12);
+			case 'restart':			returnString = txtString('ui', 13);
+			case 'botplay':			returnString = txtString('ui', 14);
+			case 'exit':			returnString = txtString('ui', 15);
+			
+			//options
+			case 'ghosttapping':	returnString = txtString('ui', 16);
+			case 'downscroll':		returnString = txtString('ui', 17);
+			case 'accdisplay':		returnString = txtString('ui', 18);
+			case 'naughtiness':		returnString = txtString('ui', 19);
+			case 'changekeys':		returnString = txtString('ui', 20);
+			case 'fullscreen':		returnString = txtString('ui', 21);
+			case 'eyesores':		returnString = txtString('ui', 22);
+			case 'changelang':		returnString = txtString('ui', 23);
+			case 'antialiasing':	returnString = txtString('ui', 24);
+			case 'cammove':			returnString = txtString('ui', 25);
+			
+			//placeholder	
+			default:				returnString = curText;
 		}
+		
+		return returnString;
 	}
 	
 	public static function char(curText:String)
 	{
-		switch (FlxG.save.data.gameLanguage)
+		var returnString:String;
+		
+		switch (curText)
 		{
-			case 'pt-br':
-				var returnString:String;
-				
-				switch (curText)
-				{
-					//bf skins
-					case 'bf': 					returnString = 'Boyfriend';
-					case 'bf-christmas':		returnString = 'Boyfriend (Natal)';
-					case 'bf-pixel':			returnString = 'Boyfriend (Pixel)';
-					case 'bf-with-gf':			returnString = 'Boyfriend com Girlfriend';
-					case 'bf-with-cyan':		returnString = 'Boyfriend com Cyan';
-					case 'gf-player':			returnString = 'Girlfriend (Jogável)';
-					case 'rapper-gf':			returnString = 'Girlfriend Rapper';
-					case 'oruta':				returnString = 'Oruta';
-					
-					//gf skins
-					case 'gf': 					returnString = 'Girlfriend';
-					case 'gf-christmas':		returnString = 'Girlfriend (Natal)';
-					case 'gf-standing':			returnString = 'Girlfriend (Em Pé)';
-					case 'gf-pixel':			returnString = 'Girlfriend (Pixel)';
-					case 'psyka':				returnString = 'Psyka';
-					case 'psyka-christmas':		returnString = 'Psyka (Natal)';
-					case 'psyka-standing':		returnString = 'Psyka (Em Pé)';
-					case 'cyan':				returnString = 'Cyan';
-					case 'cyan-christmas':		returnString = 'Cyan (Natal)';
-					
-					//horny gf skins
-					case 'gf-hot':				returnString = 'Girlfriend Gostosa';
-					case 'gf-hot-funny':		returnString = 'Girlfriend Gostosa (Sex Mod)';
-					case 'gf-hot-christmas':	returnString = 'Girlfriend Gostosa (Natal)';
-					case 'gf-hot-standing':		returnString = 'Girlfriend Gostosa (Em Pé)';
-					case 'gf-massive':			returnString = 'Girlfriend Massiva';
-					case 'three-gfs':			returnString = 'Trio Girlfriend';
-					case 'gf-trepidation':		returnString = 'Girlfriend Trepidation';
-					case 'skyblue':				returnString = 'Skyblue';
-					case 'tails-doll':			returnString = 'Tails Doll Peituda';
-					
-					//placeholder
-					default:					returnString = 'Cara';
-				}
-				
-				return returnString;
-			default:
-				var returnString:String;
-				
-				switch (curText)
-				{
-					//bf skins
-					case 'bf': 					returnString = 'Boyfriend';
-					case 'bf-christmas':		returnString = 'Boyfriend (Christmas)';
-					case 'bf-pixel':			returnString = 'Boyfriend (Pixel)';
-					case 'bf-with-gf':			returnString = 'Boyfriend w/ Girlfriend';
-					case 'bf-with-cyan':		returnString = 'Boyfriend w/ Cyan';
-					case 'gf-player':			returnString = 'Girlfriend (Playable)';
-					case 'rapper-gf':			returnString = 'Rapper Girlfriend';
-					case 'oruta':				returnString = 'Oruta';
-					
-					//gf skins
-					case 'gf': 					returnString = 'Girlfriend';
-					case 'gf-christmas':		returnString = 'Girlfriend (Christmas)';
-					case 'gf-standing':			returnString = 'Girlfriend (Standing)';
-					case 'gf-pixel':			returnString = 'Girlfriend (Pixel)';
-					case 'psyka':				returnString = 'Psyka';
-					case 'psyka-christmas':		returnString = 'Psyka (Christmas)';
-					case 'psyka-standing':		returnString = 'Psyka (Standing)';
-					case 'cyan':				returnString = 'Cyan';
-					case 'cyan-christmas':		returnString = 'Cyan (Christmas)';
-					
-					//horny gf skins
-					case 'gf-hot':				returnString = 'Hot Girlfriend';
-					case 'gf-hot-funny':		returnString = 'Hot Girlfriend (Sex Mod)';
-					case 'gf-hot-christmas':	returnString = 'Hot Girlfriend (Christmas)';
-					case 'gf-hot-standing':		returnString = 'Hot Girlfriend (Standing)';
-					case 'gf-massive':			returnString = 'Massive Girlfriend';
-					case 'three-gfs':			returnString = 'The Three Girlfriends';
-					case 'gf-trepidation':		returnString = 'Trepidation Girlfriend';
-					case 'skyblue':				returnString = 'Skyblue';
-					case 'tails-doll':			returnString = 'Busty Tails Doll';
-					
-					//placeholder
-					default:					returnString = 'Face';
-				}
-				
-				return returnString;
+			//bf skins
+			case 'bf': 					returnString = txtString('char', 0);
+			case 'bf-christmas':		returnString = txtString('char', 1);
+			case 'bf-pixel':			returnString = txtString('char', 2);
+			case 'bf-with-gf':			returnString = txtString('char', 3);
+			case 'bf-with-cyan':		returnString = txtString('char', 4);
+			case 'gf-player':			returnString = txtString('char', 5);
+			case 'rapper-gf':			returnString = txtString('char', 6);
+			case 'oruta':				returnString = txtString('char', 7);
+			
+			//gf skins
+			case 'gf': 					returnString = txtString('char', 8);
+			case 'gf-christmas':		returnString = txtString('char', 9);
+			case 'gf-standing':			returnString = txtString('char', 10);
+			case 'gf-pixel':			returnString = txtString('char', 11);
+			case 'psyka':				returnString = txtString('char', 12);
+			case 'psyka-christmas':		returnString = txtString('char', 13);
+			case 'psyka-standing':		returnString = txtString('char', 14);
+			case 'cyan':				returnString = txtString('char', 15);
+			case 'cyan-christmas':		returnString = txtString('char', 16);
+			
+			//horny gf skins
+			case 'gf-hot':				returnString = txtString('char', 17);
+			case 'gf-hot-funny':		returnString = txtString('char', 18);
+			case 'gf-hot-christmas':	returnString = txtString('char', 19);
+			case 'gf-hot-standing':		returnString = txtString('char', 20);
+			case 'gf-massive':			returnString = txtString('char', 21);
+			case 'three-gfs':			returnString = txtString('char', 22);
+			case 'gf-trepidation':		returnString = txtString('char', 23);
+			case 'skyblue':				returnString = txtString('char', 24);
+			case 'tails-doll':			returnString = txtString('char', 25);
+			
+			//placeholder
+			default:					returnString = curText;
 		}
-	}	
+				
+		return returnString;
+	}
+	public static function console(curText:String)
+	{
+		var returnString:String;
+		
+		switch (curText)
+		{
+			case 'startup':			returnString = txtString('console', 0);
+			case 'startinfo':		returnString = txtString('console', 1);
+			case 'invalid':			returnString = txtString('console', 2);
+			case 'shutdown':		returnString = txtString('console', 3);
+			case 'exenotfound':		returnString = txtString('console', 4);
+			case 'dispenser':		returnString = txtString('console', 5);
+			default:				returnString = curText;
+		}
+				
+		return returnString;
+	}
+	
+	public static function txtString(type:String, num:Int)
+	{
+		var file:Array<String> = [];
+		switch (type)
+		{
+			case 'ui':
+				file = CoolUtil.coolTextFile(Paths.txt('txt/ui'));
+			case 'char':
+				file = CoolUtil.coolTextFile(Paths.txt('txt/characters'));
+			case 'console':
+				file = CoolUtil.coolTextFile(Paths.txt('txt/console'));
+		}
+		
+		var extraLine:Int = 0;
+		if (FlxG.save.data.gameLanguage == 'pt-br')
+			extraLine = 1;
+			
+		var returnedFile:String;
+		returnedFile = file[(num * 2) + extraLine];
+		returnedFile = returnedFile.replace(":break:" , "\n");
+		return returnedFile;
+	}
 }
