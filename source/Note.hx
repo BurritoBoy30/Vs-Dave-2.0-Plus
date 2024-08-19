@@ -41,11 +41,11 @@ class Note extends FlxSprite
 	
 	private var notetolookfor = 0;
 
-	public var MyStrum:StrumNote;
+	public var MyStrum:FlxSprite;
 
 	private var InPlayState:Bool = false;
 
-	public static var CharactersWith3D:Array<String> = ["dave-angey","bambi-3d", 'dave-split-3d', 'bambi-piss-3d'];
+	public static var CharactersWith3D:Array<String> = ["dave-angey", "bambi-3d", 'bambi-unfair', 'dave-split-3d', 'bambi-piss-3d', 'exbungo'];
 
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?musthit:Bool = true, noteStyle:String = "normal")
 	{
@@ -160,36 +160,32 @@ class Note extends FlxSprite
 			}
 		}
 		
-		switch (PlayState.SONG.song.toLowerCase())
+		if (Type.getClassName(Type.getClass(FlxG.state)).contains("PlayState") && (PlayState.SONG.song.toLowerCase() == 'cheating' || PlayState.SONG.song.toLowerCase() == 'unfairness'))
 		{
-			case 'cheating' | 'unfairness':
-				if (Type.getClassName(Type.getClass(FlxG.state)).contains("PlayState"))
+			var state:PlayState = cast(FlxG.state,PlayState);
+			InPlayState = true;
+			if (musthit)
+			{
+				state.playerStrums.forEach(function(spr:FlxSprite)
 				{
-					var state:PlayState = cast(FlxG.state,PlayState);
-					InPlayState = true;
-					if (musthit)
+					if (spr.ID == notetolookfor)
 					{
-						state.playerStrums.forEach(function(spr:StrumNote)
-						{
-							if (spr.ID == notetolookfor)
-							{
-								x = spr.x;
-								MyStrum = spr;
-							}
-						});
+						x = spr.x;
+						MyStrum = spr;
 					}
-					else
+				});
+			}
+			else
+			{
+				state.dadStrums.forEach(function(spr:FlxSprite)
+				{
+					if (spr.ID == notetolookfor)
 					{
-						state.dadStrums.forEach(function(spr:StrumNote)
-						{
-							if (spr.ID == notetolookfor)
-							{
-								x = spr.x;
-								MyStrum = spr;
-							}
-						});
+						x = spr.x;
+						MyStrum = spr;
 					}
-				}
+				});
+			}
 		}
 		
 		if (PlayState.SONG.song.toLowerCase() == 'unfairness')
@@ -230,7 +226,7 @@ class Note extends FlxSprite
 			x -= width / 2;
 
 			if (this.noteStyle == 'pixel')
-				x += 30;
+				x += 60;
 
 			if (prevNote.isSustainNote)
 			{
@@ -245,8 +241,8 @@ class Note extends FlxSprite
 					case 3:
 						prevNote.animation.play('redhold');
 				}
-																											// why didnt i do this before
-				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * (PlayState.SONG.song.toLowerCase() == 'algebra' ? PlayState.swagSpeed: PlayState.SONG.speed * LocalScrollSpeed);
+
+				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * (PlayState.SONG.speed * LocalScrollSpeed);
 				prevNote.updateHitbox();
 				// prevNote.setGraphicSize();
 			}
@@ -288,8 +284,8 @@ class Note extends FlxSprite
 			{
 				var state:PlayState = cast(FlxG.state,PlayState);
 				if (mustPress)
-				{
-					state.playerStrums.forEach(function(spr:StrumNote)
+						{
+					state.playerStrums.forEach(function(spr:FlxSprite)
 					{
 						if (spr.ID == notetolookfor)
 						{
@@ -300,7 +296,7 @@ class Note extends FlxSprite
 				}
 				else
 				{
-					state.dadStrums.forEach(function(spr:StrumNote)
+					state.dadStrums.forEach(function(spr:FlxSprite)
 					{
 						if (spr.ID == notetolookfor)
 						{

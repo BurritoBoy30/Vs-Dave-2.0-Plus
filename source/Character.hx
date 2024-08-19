@@ -32,15 +32,13 @@ class Character extends FlxSprite
 		curCharacter = character;
 		this.isPlayer = isPlayer;
 
-		var tex:FlxAtlasFrames;
 		antialiasing = FlxG.save.data.antiAliasing;
 
 		switch (curCharacter)
 		{
 			// BOYFRIEND LIST START
 			case 'bf':
-				tex = Paths.getSparrowAtlas('characters/BOYFRIEND');
-				frames = tex;
+				getSheet('BOYFRIEND');
 				
 				addAnimation(-5, 'idle', 'BF idle dance');
 				addAnimation(-29, 27, 'singUP', 'BF NOTE UP0');
@@ -64,8 +62,7 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf-christmas':
-				tex = Paths.getSparrowAtlas('characters/bfChristmas');
-				frames = tex;
+				frames = Paths.getSparrowAtlas('characters/bfChristmas');
 				
 				addAnimation(-5, 'idle', 'BF idle dance');
 				addAnimation(-29, 27, 'singUP', 'BF NOTE UP0');
@@ -82,8 +79,7 @@ class Character extends FlxSprite
 				flipX = true;
 			
 			case 'bf-with-gf':
-				tex = Paths.getSparrowAtlas('characters/BFwithGf');
-				frames = tex;
+				frames = Paths.getSparrowAtlas('characters/BFwithGf');
 				
 				addAnimation(-5, 'idle', 'BF idle dance');
 				addAnimation(-29, 33, 'singUP', 'BF NOTE UP0');
@@ -107,8 +103,7 @@ class Character extends FlxSprite
 				flipX = true;
 			
 			case 'bf-with-cyan':
-				tex = Paths.getSparrowAtlas('characters/bf-holding-cyan');
-				frames = tex;
+				getSheet('bf-holding-cyan');
 				
 				addAnimation(-5, 'idle', 'BF idle dance');
 				addAnimation(-29, 27, 'singUP', 'BF NOTE UP0');
@@ -132,8 +127,7 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf-pixel':
-				tex = Paths.getSparrowAtlas('characters/bfPixel');
-				frames = tex;
+				getSheet('bfPixel');
 				
 				addAnimation('idle', 'BF IDLE');
 				addAnimation('singUP', 'BF UP NOTE');
@@ -160,8 +154,7 @@ class Character extends FlxSprite
 
 				flipX = true;
 			case 'bf-pixel-dead':
-				tex = Paths.getSparrowAtlas('characters/bfPixelsDEAD');
-				frames = tex;
+				getSheet('bfPixelsDEAD');
 				
 				addAnimation('firstDeath', "BF Dies pixel");
 				addAnimation(-37, 'deathLoop', "Retry Loop", true);
@@ -176,8 +169,7 @@ class Character extends FlxSprite
 				flipX = true;
 				
 			case 'rapper-gf':
-				tex = Paths.getSparrowAtlas('characters/GF_in_Bf_clothesV2');
-				frames = tex;
+				getSheet('GF_in_Bf_clothesV2');
 				
 				addAnimation(-40, -221, 'idle', 'Idle Dance');
 				addAnimation(-45, -207, 'singUP', 'Up Pose');
@@ -199,8 +191,7 @@ class Character extends FlxSprite
 				charOffset[1] = -340; 
 			
 			case 'rapper-gf-dead':
-				tex = Paths.getSparrowAtlas('characters/GF_in_Bf_clothes_DEAD');
-				frames = tex;
+				getSheet('GF_in_Bf_clothes_DEAD');
 				
 				addAnimation(0, -200, 'firstDeath', "GF first Dead");
 				addAnimation(-4, -215, 'deathLoop', "GF dead loop", true);
@@ -211,8 +202,7 @@ class Character extends FlxSprite
 				flipX = true;
 			
 			case 'gf-player':
-				tex = Paths.getSparrowAtlas('characters/Playable_GF_V2');
-				frames = tex;
+				getSheet('Playable_GF_V2');
 				
 				addAnimation(-6, -1, 'idle', 'GF Idle dance');
 				addAnimation(-60, 17, 'singUP', 'GF Up');
@@ -238,8 +228,7 @@ class Character extends FlxSprite
 				charOffset[1] = -85;
 				
 			case 'oruta':
-				tex = Paths.getSparrowAtlas('characters/oruta');
-				frames = tex;
+				getSheet('oruta');
 				
 				addAnimation(95, 163, 'idle', 'idle');
 				addAnimation(40, 220, 'singUP', 'up');
@@ -258,8 +247,7 @@ class Character extends FlxSprite
 			
 			// DAD LIST START
 			case 'dave':
-				tex = Paths.getSparrowAtlas('characters/dave_sheet');
-				frames = tex;
+				getSheet('dave_sheet');
 				
 				addAnimation('idle', 'Dave Idle', 12);
 				addAnimation(7, 5, 'singUP', 'Dave Sing Up', 12);
@@ -278,8 +266,7 @@ class Character extends FlxSprite
 				charOffset[0] = 150;
 				
 			case 'dave-annoyed':
-				tex = Paths.getSparrowAtlas('characters/Dave_insanity_lol');
-				frames = tex;
+				getSheet('Dave_insanity_lol');
 				
 				addAnimation('idle', 'Dave Idle', 12);
 				addAnimation(7, 5, 'singUP', 'Dave Sing Up', 12);
@@ -299,8 +286,7 @@ class Character extends FlxSprite
 
 			case 'dave-angey':
 				// DAVE SHITE ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('characters/Dave_Furiosity');
-				frames = tex;
+				getSheet('Dave_Furiosity');
 				
 				addAnimation(7, 0, 'idle', 'IDLE');
 				addAnimation(-14, 16, 'singUP', 'UP');
@@ -315,7 +301,7 @@ class Character extends FlxSprite
 				playAnim('idle');
 			
 			case 'dave-splitathon':
-				frames = Paths.getSparrowAtlas('characters/Splitathon_Dave');
+				getSheet('Splitathon_Dave');
 				
 				addAnimation('idle', 'Idle');
 				addAnimation('singUP', 'Up');
@@ -329,7 +315,7 @@ class Character extends FlxSprite
 				charOffset[1] = 300;
 				
 			case 'bambi-new':
-				frames = Paths.getSparrowAtlas('characters/bambiRemake');
+				getSheet('bambiRemake');
 				
 				addAnimation('idle', 'Idle');
 				addAnimation(44, 0, 'singUP', 'up');
@@ -343,7 +329,7 @@ class Character extends FlxSprite
 				charOffset[0] = 200;
 				
 			case 'bambi-splitathon':
-				frames = Paths.getSparrowAtlas('characters/Splitathon_Bambi');
+				getSheet('Splitathon_Bambi');
 				
 				addAnimation('idle', 'Idle', 18);
 				addAnimation(-20, -10, 'singDOWN', 'Down', 27);
@@ -357,7 +343,7 @@ class Character extends FlxSprite
 				charOffset[1] = 450;
 			
 			case 'bambi-angey':
-				frames = Paths.getSparrowAtlas('characters/bambimaddddd');
+				getSheet('bambimaddddd');
 				
 				addAnimation('idle', 'idle');
 				addAnimation('singLEFT', 'left');
@@ -372,8 +358,7 @@ class Character extends FlxSprite
 
 			case 'bambi-3d':
 				// BAMBI SHITE ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('characters/bambi_angryboy');
-				frames = tex;
+				getSheet('bambi_angryboy');
 				
 				addAnimation('idle', 'DaveAngry idle dance');
 				addAnimation('singUP', 'DaveAngry Sing Note UP');
@@ -393,8 +378,7 @@ class Character extends FlxSprite
 				
 			case 'dave-alpha':
 				// DAD ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('characters/alphadave');
-				frames = tex;
+				getSheet('alphadave');
 				
 				addAnimation('idle', 'Dad idle dance');
 				addAnimation(-6, 50, 'singUP', 'Dad Sing Note UP');
@@ -408,8 +392,7 @@ class Character extends FlxSprite
 				
 			case 'dave-split-3d':
 				// DAVE SHITE ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('characters/split_dave_3d');
-				frames = tex;
+				getSheet('split_dave_3d');
 				
 				addAnimation('idle', 'IDLE');
 				addAnimation('singUP', 'UP');
@@ -426,22 +409,23 @@ class Character extends FlxSprite
 				charOffset[1] = 50;
 				
 			case 'bambi-joke':
-				tex = Paths.getSparrowAtlas('characters/bambi-joke', 'shared');
-				frames = tex;
+				getSheet('bambi-joke');
 				
 				addAnimation('idle', 'idle');
 				addAnimation('singUP', 'up');
-				addAnimation('singLEFT', 'left');
-				addAnimation('singRIGHT', 'right');
+				addAnimation('singLEFT', 'right');
+				addAnimation('singRIGHT', 'left');
 				addAnimation('singDOWN', 'down');
 				addAnimation('hey', 'hey');
 
 				flipX = true;
 				playAnim('idle');
 				
+				charOffset[0] = 175;
+				charOffset[1] = 400;
+				
 			case 'bambi-piss-3d':
-				tex = Paths.getSparrowAtlas('characters/bambi_pissyboy');
-				frames = tex;
+				getSheet('bambi_pissyboy');
 				
 				addAnimationIndices('danceLeft', 'idle', [for (i in 0...13) i]);
 				addAnimationIndices('danceRight', 'idle', [for (i in 13...23) i]);
@@ -458,12 +442,42 @@ class Character extends FlxSprite
 				
 				charOffset[0] = -200;
 				charOffset[1] = -75;
+			
+			case 'exbungo':
+				getSheet('exbungo');
+
+				addAnimation('idle', 'idle');
+				addAnimation('singUP', 'up');
+				addAnimation('singLEFT', 'left');
+				addAnimation('singRIGHT', 'right');
+				addAnimation('singDOWN', 'down');
+				
+				setGraphicSize(Std.int((width * 1.3) / furiosityScale));
+				updateHitbox();
+	
+				antialiasing = false;
+
+				playAnim('idle');
+				
+			case 'bambi-unfair':
+				getSheet('unfair_bambi');
+				
+				addAnimation('idle', 'idle');
+				addAnimation(140, 70, 'singUP', 'singUP');
+				addAnimation(-180, -60, 'singRIGHT', 'singRIGHT');
+				addAnimation(150, 50, 'singDOWN', 'singDOWN');
+				addAnimation(250, 0, 'singLEFT', 'singLEFT');
+		
+				setGraphicSize(Std.int((width * 1.3) / furiosityScale));
+				updateHitbox();
+				antialiasing = false;
+		
+				playAnim('idle');
 			// DAD LIST END
 				
 			case 'gf':
 				// GIRLFRIEND CODE
-				tex = Paths.getSparrowAtlas('characters/girlfriends/GF_assets');
-				frames = tex;
+				getSheet('girlfriends/GF_assets');
 				
 				addAnimation('cheer', 'GF Cheer');
 				addAnimation(0, -19,'singLEFT', 'GF left note');
@@ -480,8 +494,7 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 
 			case 'gf-christmas':
-				tex = Paths.getSparrowAtlas('characters/girlfriends/gfChristmas');
-				frames = tex;
+				getSheet('girlfriends/gfChristmas');
 				
 				addAnimation('cheer', 'GF Cheer');
 				addAnimation(0, -19, 'singLEFT', 'GF left note');
@@ -501,8 +514,7 @@ class Character extends FlxSprite
 				charOffset[0] = -80;
 				
 			case 'gf-standing':
-				tex = Paths.getSparrowAtlas('characters/girlfriends/ovaries');
-				frames = tex;
+				getSheet('girlfriends/ovaries');
 				
 				addAnimationIndices(-19, -21, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
 				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
@@ -514,8 +526,7 @@ class Character extends FlxSprite
 				charOffset[1] = 205;
 				
 			case 'gf-pixel':
-				tex = Paths.getSparrowAtlas('characters/girlfriends/gfPixel');
-				frames = tex;
+				getSheet('girlfriends/gfPixel');
 				
 				addAnimationIndices('danceLeft', 'GF IDLE', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
 				addAnimationIndices('danceRight', 'GF IDLE', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]);
@@ -531,8 +542,7 @@ class Character extends FlxSprite
 				
 			case 'cyan':
 				// GIRLFRIEND CODE
-				tex = Paths.getSparrowAtlas('characters/girlfriends/cyan_assets');
-				frames = tex;
+				getSheet('girlfriends/cyan_assets');
 				
 				addAnimation(0, -14, 'cheer', 'GF Cheer');
 				addAnimation(0, -8, 'singLEFT', 'GF left note');
@@ -552,8 +562,7 @@ class Character extends FlxSprite
 				charOffset[1] = -7;
 
 			case 'cyan-christmas':
-				tex = Paths.getSparrowAtlas('characters/girlfriends/cyanChristmas');
-				frames = tex;
+				getSheet('girlfriends/cyanChristmas');
 				
 				addAnimation(0, -14, 'cheer', 'GF Cheer');
 				addAnimation(0, -8, 'singLEFT', 'GF left note');
@@ -574,8 +583,7 @@ class Character extends FlxSprite
 			
 			case 'psyka':
 				// GIRLFRIEND CODE
-				tex = Paths.getSparrowAtlas('characters/girlfriends/Psyka_assets');
-				frames = tex;
+				getSheet('girlfriends/Psyka_assets');
 				
 				addAnimation('cheer', 'GF Cheer');
 				addAnimation(0, -19, 'singLEFT', 'GF left note');
@@ -594,8 +602,7 @@ class Character extends FlxSprite
 				charOffset[1] = -28;
 
 			case 'psyka-christmas':
-				tex = Paths.getSparrowAtlas('characters/girlfriends/psykaChristmas');
-				frames = tex;
+				getSheet('girlfriends/psykaChristmas');
 				
 				addAnimation('cheer', 'GF Cheer');
 				addAnimation(0, -19, 'singLEFT', 'GF left note');
@@ -615,8 +622,7 @@ class Character extends FlxSprite
 				charOffset[1] = -28;
 			
 			case 'psyka-standing':
-				tex = Paths.getSparrowAtlas('characters/girlfriends/obaries');
-				frames = tex;
+				getSheet('girlfriends/obaries');
 				
 				addAnimationIndices(-19, -21, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
 				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
@@ -629,8 +635,7 @@ class Character extends FlxSprite
 				
 			case 'gf-massive':
 				// GIRLFRIEND CODE
-				tex = Paths.getSparrowAtlas('characters/girlfriends/massivegf');
-				frames = tex;
+				getSheet('girlfriends/massivegf');
 				
 				addAnimation(118, 251, 'cheer', 'cheer');
 				addAnimation(11, -35, 'singLEFT', 'left');
@@ -652,8 +657,7 @@ class Character extends FlxSprite
 				
 			case 'gf-hot':
 				// GIRLFRIEND CODE
-				tex = Paths.getSparrowAtlas('characters/girlfriends/GF_Bent_New');
-				frames = tex;
+				getSheet('girlfriends/GF_Bent_New');
 				
 				addAnimation(0, -3, 'cheer', 'GF Cheer');
 				addAnimation(0, -20, 'singLEFT', 'GF left note');
@@ -673,8 +677,7 @@ class Character extends FlxSprite
 			
 			case 'gf-hot-funny':
 				// GIRLFRIEND CODE
-				tex = Paths.getSparrowAtlas('characters/girlfriends/GF_Bent_Funny');
-				frames = tex;
+				getSheet('girlfriends/GF_Bent_Funny');
 				
 				addAnimation(0, -3, 'cheer', 'GF Cheer');
 				addAnimation(0, -20, 'singLEFT', 'GF left note');
@@ -694,8 +697,7 @@ class Character extends FlxSprite
 				charOffset[1] = -5;
 
 			case 'gf-hot-christmas':
-				tex = Paths.getSparrowAtlas('characters/girlfriends/GF_Bent_Christmas');
-				frames = tex;
+				getSheet('girlfriends/GF_Bent_Christmas');
 				
 				addAnimation(0, -3, 'cheer', 'GF Cheer');
 				addAnimation(0, -20, 'singLEFT', 'GF left note');
@@ -716,8 +718,7 @@ class Character extends FlxSprite
 				charOffset[1] = -5;
 				
 			case 'gf-hot-standing':
-				tex = Paths.getSparrowAtlas('characters/girlfriends/GF_Funny_Boombox');
-				frames = tex;
+				getSheet('girlfriends/GF_Funny_Boombox');
 				
 				addAnimationIndices(-19, -21, 'sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
 				addAnimationIndices(0, -9, 'danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
@@ -729,8 +730,7 @@ class Character extends FlxSprite
 				charOffset[1] = 205;
 				
 			case 'tails-doll':
-				tex = Paths.getSparrowAtlas('characters/girlfriends/tailslol_edit');
-				frames = tex;
+				getSheet('girlfriends/tailslol_edit');
 				
 				addAnimation('idle', 'tailslol idle');
 				addAnimation('singUP', 'tailslol up');
@@ -744,8 +744,7 @@ class Character extends FlxSprite
 				charOffset[1] = -170;
 				
 			case 'skyblue':
-				tex = Paths.getSparrowAtlas('characters/girlfriends/SKYBLUE');
-				frames = tex;
+				getSheet('girlfriends/SKYBLUE');
 				
 				addAnimation(0, 0, 'idle', 'SKYBLUE IDLE');
 				addAnimation(-55, 92, 'singUP', 'SKYBLUE UP');
@@ -759,8 +758,7 @@ class Character extends FlxSprite
 				charOffset[1] = -70;
 				
 			case 'three-gfs':
-				tex = Paths.getSparrowAtlas('characters/girlfriends/GFGAWDl');
-				frames = tex;
+				getSheet('girlfriends/GFGAWDl');
 				
 				addAnimation(2, -32, 'cheer', 'GF Cheer');
 				addAnimation(32, -35, 'singLEFT', 'GF left note');
@@ -778,8 +776,7 @@ class Character extends FlxSprite
 				charOffset[1] = -70;
 			
 			case 'gf-trepidation':
-				tex = Paths.getSparrowAtlas('characters/girlfriends/tpgf');
-				frames = tex;
+				getSheet('girlfriends/tpgf');
 				
 				addAnimationIndices('danceLeft1', 'idle a', [29, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13]);
 				addAnimationIndices('danceRight1', 'idle a',[14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]);
@@ -985,6 +982,11 @@ class Character extends FlxSprite
 				danced = !danced;
 			}
 		}
+	}
+	
+	function getSheet(file:String)
+	{
+		frames = Paths.getSparrowAtlas('characters/' + file);
 	}
 	
 	public function addAnimation(xAxis:Float = 0, yAxis:Float = 0, name:String, xmlName:String, looped:Bool = false, fps:Int = 24)

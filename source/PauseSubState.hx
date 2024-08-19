@@ -13,6 +13,8 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.addons.display.FlxBackdrop;
+import flixel.FlxCamera;
+import flixel.addons.transition.Transition;
 
 class PauseSubState extends MusicBeatSubstate
 {
@@ -24,6 +26,8 @@ class PauseSubState extends MusicBeatSubstate
 	var pauseMusic:FlxSound;
 	var bg:FlxBackdrop;
 	var botplayText:FlxText;
+	
+	public static var transCamera:FlxCamera;
 
 	public function new(x:Float, y:Float)
 	{
@@ -132,10 +136,12 @@ class PauseSubState extends MusicBeatSubstate
 				case "resume":
 					close();
 				case "restart":
+					Transition.nextCamera = transCamera;
 					FlxG.resetState();
 				case 'botplay':
 					PlayState.botPlayOn = !PlayState.botPlayOn;
 				case "exit":
+					Transition.nextCamera = transCamera;
 					PlayState.botPlayOn = false;
 					
 					PlayState.boyfriendOverride = "none";

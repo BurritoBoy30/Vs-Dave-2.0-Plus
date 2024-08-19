@@ -6,7 +6,6 @@ using StringTools;
 
 class ReturnLanguage
 {
-	// im lazy enough to not make a function to read .txt files but im competent enough to hard code it to the game
 	public static function text(curText:String)
 	{
 		var returnString:String;
@@ -28,6 +27,11 @@ class ReturnLanguage
 			case 'extreme':			returnString = txtString('ui', 9);
 			case 'stupid':			returnString = txtString('ui', 10);
 			case 'fucked':			returnString = txtString('ui', 11);
+			case 'dave':			returnString = txtString('ui', 26);
+			case 'golden':			returnString = txtString('ui', 27);
+			case 'joke':			returnString = txtString('ui', 28);
+			case 'extra':			returnString = txtString('ui', 29);
+			case 'console':			returnString = txtString('ui', 30);
 			
 			//pause
 			case 'resume':			returnString = txtString('ui', 12);
@@ -110,6 +114,7 @@ class ReturnLanguage
 			case 'shutdown':		returnString = txtString('console', 3);
 			case 'exenotfound':		returnString = txtString('console', 4);
 			case 'dispenser':		returnString = txtString('console', 5);
+			case 'notallowed':		returnString = txtString('console', 6);
 			default:				returnString = curText;
 		}
 				

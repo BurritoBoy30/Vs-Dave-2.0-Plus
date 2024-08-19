@@ -3,6 +3,8 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
+import flixel.group.FlxSpriteGroup;
+import flixel.group.FlxGroup.FlxTypedGroup;
 
 class DispenserBurstState extends MusicBeatState
 {
@@ -15,19 +17,20 @@ class DispenserBurstState extends MusicBeatState
 	var bitchType:String = "none";
 	// none, red-blu, blu-red
 	
-	var buttonRed:FlxSprite;
-	var buttonBlu:FlxSprite;
+	var buttonRed:Button;
+	var buttonBlu:Button;
 	
-	var button1:FlxSprite;
-	var button2:FlxSprite;
-	var button3:FlxSprite;
+	var button1:Button;
+	var button2:Button;
+	var button3:Button;
 	
-	var buttonRedBlu:FlxSprite;
-	var buttonBluRed:FlxSprite;
+	var buttonRedBlu:Button;
+	var buttonBluRed:Button;
 	
 	var bitchFps:Int = 40;
 	
 	public var buttonNumber:Float = 0;
+	var grpButtons:FlxTypedGroup<Button>;
 		
 	override function create()
 	{	
@@ -57,33 +60,29 @@ class DispenserBurstState extends MusicBeatState
 		bluDispenserBitch.animation.play('danceLeft', true);
 		redDispenserBitch.animation.play('danceLeft', true);
 		
-		buttonBlu = new FlxSprite(bluDispenserBitch.width * 1.34, 10).loadGraphic(Paths.image('hornyshit/dispenser/blue_button', 'shared'));
-		buttonBlu.antialiasing = FlxG.save.data.antiAliasing;
-		add(buttonBlu);
+		grpButtons = new FlxTypedGroup<Button>();
+		add(grpButtons);
 		
-		buttonRed = new FlxSprite(buttonBlu.x, buttonBlu.height + buttonBlu.y + 20).loadGraphic(Paths.image('hornyshit/dispenser/red_button', 'shared'));
-		buttonRed.antialiasing = FlxG.save.data.antiAliasing;
-		add(buttonRed);
+		buttonBlu = new Button(bluDispenserBitch.width * 1.34, 10, 'blue_button', 1);
+		grpButtons.add(buttonBlu);
 		
-		buttonBluRed = new FlxSprite(buttonBlu.x + buttonBlu.width + 10, buttonBlu.y).loadGraphic(Paths.image('hornyshit/dispenser/blue-red_typeButton', 'shared'));
-		buttonBluRed.antialiasing = FlxG.save.data.antiAliasing;
-		add(buttonBluRed);
+		buttonRed = new Button(buttonBlu.x, buttonBlu.height + buttonBlu.y + 20, 'red_button', 2);
+		grpButtons.add(buttonRed);
 		
-		buttonRedBlu = new FlxSprite(buttonBluRed.x, buttonBluRed.y + buttonBluRed.height + 20).loadGraphic(Paths.image('hornyshit/dispenser/red-blue_typeButton', 'shared'));
-		buttonRedBlu.antialiasing = FlxG.save.data.antiAliasing;
-		add(buttonRedBlu);
+		buttonBluRed = new Button(buttonBlu.x + buttonBlu.width + 10, buttonBlu.y, 'blue-red_typeButton', 3);
+		grpButtons.add(buttonBluRed);
 		
-		button1 = new FlxSprite(196, 10).loadGraphic(Paths.image('hornyshit/dispenser/1_button', 'shared'));
-		button1.antialiasing = FlxG.save.data.antiAliasing;
-		add(button1);
+		buttonRedBlu = new Button(buttonBluRed.x, buttonBluRed.y + buttonBluRed.height + 20, 'red-blue_typeButton', 4);
+		grpButtons.add(buttonRedBlu);
 		
-		button2 = new FlxSprite(button1.x, button1.height + button1.y + 20).loadGraphic(Paths.image('hornyshit/dispenser/2_button', 'shared'));
-		button2.antialiasing = FlxG.save.data.antiAliasing;
-		add(button2);
+		button1 = new Button(196, 10, '1_button', 5);
+		grpButtons.add(button1);
 		
-		button3 = new FlxSprite(button2.x, button2.height + button2.y + 20).loadGraphic(Paths.image('hornyshit/dispenser/3_button', 'shared'));
-		button3.antialiasing = FlxG.save.data.antiAliasing;
-		add(button3);
+		button2 = new Button(button1.x, button1.height + button1.y + 20, '2_button', 6);
+		grpButtons.add(button2);
+		
+		button3 = new Button(button2.x, button2.height + button2.y + 20, '3_button', 7);
+		grpButtons.add(button3);
 
 		super.create();
 	}
@@ -111,149 +110,76 @@ class DispenserBurstState extends MusicBeatState
 			FlxG.switchState(new ConsoleState());
 		}
 		
-		buttonGetDark();
-		
-		if (FlxG.mouse.overlaps(buttonBlu))
-		{
-			buttonNumber = 1;
-		}
-		else if (FlxG.mouse.overlaps(buttonRed))
-		{
-			buttonNumber = 2;
-		}
-		else if (FlxG.mouse.overlaps(button1))
-		{
-			buttonNumber = 3;
-		}
-		else if (FlxG.mouse.overlaps(button2))
-		{
-			buttonNumber = 4;
-		}
-		else if (FlxG.mouse.overlaps(button3))
-		{
-			buttonNumber = 5;
-		}
-		else if (FlxG.mouse.overlaps(buttonBluRed))
-		{
-			buttonNumber = 6;
-		}
-		else if (FlxG.mouse.overlaps(buttonRedBlu))
-		{
-			buttonNumber = 7;
-		}
-		else
-		{
-			buttonNumber = 0;
-		}
-		
 		if (FlxG.mouse.justPressed)
 		{	
-			buttonUI();
-		}
-	}
-	
-	function buttonGetDark()
-	{
-		if (FlxG.mouse.overlaps(buttonBlu))
-			buttonBlu.color = 0xFF878787;
-		else
-			buttonBlu.color = FlxColor.WHITE;
-			
-		if (FlxG.mouse.overlaps(buttonRed))
-			buttonRed.color = 0xFF878787;
-		else
-			buttonRed.color = FlxColor.WHITE;
-			
-		if (FlxG.mouse.overlaps(button1))
-			button1.color = 0xFF878787;
-		else
-			button1.color = FlxColor.WHITE;
-			
-		if (FlxG.mouse.overlaps(button2))
-			button2.color = 0xFF878787;
-		else
-			button2.color = FlxColor.WHITE;
-			
-		if (FlxG.mouse.overlaps(button3))
-			button3.color = 0xFF878787;
-		else
-			button3.color = FlxColor.WHITE;
-		
-		if (FlxG.mouse.overlaps(buttonBluRed))
-			buttonBluRed.color = 0xFF878787;
-		else
-			buttonBluRed.color = FlxColor.WHITE;
-			
-		if (FlxG.mouse.overlaps(buttonRedBlu))
-			buttonRedBlu.color = 0xFF878787;		
-		else
-			buttonRedBlu.color = FlxColor.WHITE;
-	}
-	
-	function buttonUI()
-	{				
-		switch (buttonNumber)
-		{
-			case 1:
-				if (bitchColor != 'blu')
+			for (item in grpButtons.members)
+			{
+				buttonNumber = item.arrayNum;
+				
+				switch (buttonNumber)
 				{
-					bitchColor = 'blu';
-					bluDispenserBitch.visible = true;
-					redDispenserBitch.visible = false;
-					if (bitchType != 'none')
-					{
-						bitchType = 'none';
-						reloadBitches();
-					}
+					case 1:
+						if (bitchColor != 'blu')
+						{
+							bitchColor = 'blu';
+							bluDispenserBitch.visible = true;
+							redDispenserBitch.visible = false;
+							if (bitchType != 'none')
+							{
+								bitchType = 'none';
+								reloadBitches();
+							}
+						}
+					case 2:
+						if (bitchColor != 'red')
+						{
+							bitchColor = 'red';
+							bluDispenserBitch.visible = false;
+							redDispenserBitch.visible = true;
+							if (bitchType != 'none')
+							{
+								bitchType = 'none';
+								reloadBitches();
+							}
+						}
+					case 3:
+						if (bitchType != 'blu-red')
+						{
+							bitchType = 'blu-red';
+							bitchColor = 'mixed';
+							bluDispenserBitch.visible = true;
+							redDispenserBitch.visible = true;
+							reloadBitches();
+						}
+					case 4:
+						if (bitchType != 'red-blu')
+						{
+							bitchType = 'red-blu';
+							bitchColor = 'mixed';
+							bluDispenserBitch.visible = true;
+							redDispenserBitch.visible = true;
+							reloadBitches();
+						}
+					case 5:
+						if (bitchSize != '1')
+						{
+							bitchSize = '1';
+							reloadBitches();
+						}
+					case 6:
+						if (bitchSize != '2')
+						{
+							bitchSize = '2';
+							reloadBitches();
+						}
+					case 7:
+						if (bitchSize != '3')
+						{
+							bitchSize = '3';
+							reloadBitches();
+						}
 				}
-			case 2:
-				if (bitchColor != 'red')
-				{
-					bitchColor = 'red';
-					bluDispenserBitch.visible = false;
-					redDispenserBitch.visible = true;
-					if (bitchType != 'none')
-					{
-						bitchType = 'none';
-						reloadBitches();
-					}
-				}
-			case 3:
-				if (bitchSize != '1')
-				{
-					bitchSize = '1';
-					reloadBitches();
-				}
-			case 4:
-				if (bitchSize != '2')
-				{
-					bitchSize = '2';
-					reloadBitches();
-				}
-			case 5:
-				if (bitchSize != '3')
-				{
-					bitchSize = '3';
-					reloadBitches();
-				}
-			case 6:
-				if (bitchType != 'blu-red')
-				{
-					bitchType = 'blu-red';
-					bitchColor = 'mixed';
-					bluDispenserBitch.visible = true;
-					redDispenserBitch.visible = true;
-					reloadBitches();
-				}
-			case 7:
-				if (bitchType != 'red-blu')
-				{
-					bitchType = 'red-blu';
-					bitchColor = 'mixed';
-					bluDispenserBitch.visible = true;
-					redDispenserBitch.visible = true;
-					reloadBitches();
-				}
+			}
 		}
 	}
 	
@@ -289,5 +215,39 @@ class DispenserBurstState extends MusicBeatState
 		
 		bluDispenserBitch.animation.play('danceLeft', true);
 		redDispenserBitch.animation.play('danceLeft', true);
+	}
+}
+
+class Button extends FlxSpriteGroup
+{
+	var button:FlxSprite;
+	var arrayNumReal:Float;
+	public var arrayNum:Float;
+	
+	public function new (x:Float, y:Float, buttonImg:String, arrayNumData:Float = 0)
+	{
+		super(x,y);
+		
+		arrayNumReal = arrayNumData;
+		
+		button = new FlxSprite().loadGraphic(Paths.image('hornyshit/dispenser/' + buttonImg, 'shared'));
+		button.antialiasing = FlxG.save.data.antiAliasing;
+		add(button);
+	}
+	
+	override function update(elapsed:Float)
+	{		
+		super.update(elapsed);
+		
+		if (FlxG.mouse.overlaps(button)) 
+		{
+			arrayNum = arrayNumReal;
+			button.color = 0xFF878787;
+		}
+		else
+		{
+			arrayNum = 0;
+			button.color = FlxColor.WHITE;
+		}
 	}
 }

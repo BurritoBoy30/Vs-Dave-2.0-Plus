@@ -40,7 +40,7 @@ class FreeplayState extends MusicBeatState
 	
 	private var CurrentSongIcon:FlxSprite;
 
-	private var AllPossibleSongs:Array<String> = ["Dave","Golden","Joke","Extra"];
+	private var AllPossibleSongs:Array<String> = ["Dave","Golden","Joke","Extra","Console"];
 
 	private var CurrentPack:Int = 0;
 
@@ -65,7 +65,7 @@ class FreeplayState extends MusicBeatState
 		CurrentSongIcon.y = (FlxG.height / 2) - 256;
 		CurrentSongIcon.antialiasing = FlxG.save.data.antiAliasing;
 
-		NameAlpha = new FlxText(0,(FlxG.height / 2) - 282, FlxG.width, AllPossibleSongs[CurrentPack]);
+		NameAlpha = new FlxText(0,(FlxG.height / 2) - 282, FlxG.width, ReturnLanguage.text(AllPossibleSongs[CurrentPack].toLowerCase()));
 		NameAlpha.setFormat(Paths.font("comic.ttf"), 90, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		NameAlpha.borderSize = 3;
 		NameAlpha.antialiasing = FlxG.save.data.antiAliasing;
@@ -96,11 +96,24 @@ class FreeplayState extends MusicBeatState
 				addWeek(['Splitathon'], 3,['the-duo'], ['Hard'], [230]);
 			
 			case 'golden':
-				addWeek(['Disruption'], 5,['bambi-piss-3d'], ['Extreme'], [330]);
+				addWeek(['Disruption'], 6,['bambi-piss-3d'], ['Extreme'], [330]);
 				addWeek(['Disability'], 6,['dave-split-3d'], ['Hard'], [182]);
 				addWeek(['OG'], 7,['dave-alpha'], ['Extreme'], [110]);
 			case 'joke':
-				addWeek(['Cheating'], 4, ['bambi-3d'], ['Stupid'], [125]);
+				addWeek(['Supernovae'], 4, ['bambi-joke'], ['Stupid'], [160]);
+				addWeek(['Glitch'], 4, ['bambi-joke'], ['Stupid'], [110]);
+				if (FlxG.save.data.cheatingFound)
+				{
+					addWeek(['Cheating'], 5, ['bambi-3d'], ['Stupid'], [125]);
+				}
+				if (FlxG.save.data.unfairnessFound)
+				{
+					addWeek(['Unfairness'], 5, ['bambi-unfair'], ['Stupid'], [150]);
+				}
+				if (FlxG.save.data.kabungaFound)
+				{
+					addWeek(['Kabunga'], 5, ['exbungo'], ['Hard'], [174]);
+				}
 			
 			case 'extra':
 				addWeek(['Bonus-Song'], 1, ['dave'], ['Normal'], [140]);
@@ -207,7 +220,7 @@ class FreeplayState extends MusicBeatState
 		{
 			CurrentPack = 0;
 		}
-		NameAlpha.text = AllPossibleSongs[CurrentPack];
+		NameAlpha.text = ReturnLanguage.text(AllPossibleSongs[CurrentPack].toLowerCase());
 		CurrentSongIcon.loadGraphic(Paths.image('week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
 	}
 
@@ -236,23 +249,30 @@ class FreeplayState extends MusicBeatState
 			if (controls.ACCEPT && !loadingPack && canInteract)
 			{	
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
-
-				canInteract = false;
-				loadingPack = true;
-				LoadProperPack();
-				
-				FlxTween.tween(CurrentSongIcon, {alpha: 0}, 0.2);
-				FlxTween.tween(NameAlpha, {alpha: 0}, 0.2);
-				
-				new FlxTimer().start(0.2, function(Dumbshit:FlxTimer)
+				 
+				if (AllPossibleSongs[CurrentPack].toLowerCase() == 'console')
 				{
-					CurrentSongIcon.visible = false;
-					NameAlpha.visible = false;
-					GoToActualFreeplay();
-					InMainFreeplayState = true;
-					loadingPack = false;
-					canInteract = true;
-				});
+					FlxG.switchState(new ConsoleState());
+				}
+				else
+				{
+					canInteract = false;
+					loadingPack = true;
+					LoadProperPack();
+					
+					FlxTween.tween(CurrentSongIcon, {alpha: 0}, 0.2);
+					FlxTween.tween(NameAlpha, {alpha: 0}, 0.2);
+					
+					new FlxTimer().start(0.2, function(Dumbshit:FlxTimer)
+					{
+						CurrentSongIcon.visible = false;
+						NameAlpha.visible = false;
+						GoToActualFreeplay();
+						InMainFreeplayState = true;
+						loadingPack = false;
+						canInteract = true;
+					});
+				}
 			}
 			if (controls.BACK && canInteract)
 			{

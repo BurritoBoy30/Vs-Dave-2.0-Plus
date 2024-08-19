@@ -12,7 +12,7 @@ class ConsoleState extends MusicBeatState
 {
 	public var mainText:FlxText;
 	public var dummyText:FlxText;
-	var ammountOfLines:Int = 0;
+	var ammountOfLines:Float = 0;
 	
 	public var inputText:String;
 
@@ -77,7 +77,7 @@ class ConsoleState extends MusicBeatState
 					addNewLine(ReturnLanguage.console('shutdown'), false); 
 					new FlxTimer().start(1, function(tmr:FlxTimer)
 					{
-						FlxG.switchState(new MainMenuState());
+						FlxG.switchState(new FreeplayState());
 					});
 				}
 				else
@@ -167,16 +167,22 @@ class ConsoleState extends MusicBeatState
 	}
 
 	function addNewLine(newTxt:String, stillTyping:Bool = true)
-	{
-		mainText.text += "\n" + newTxt + (stillTyping ? "\n" + "/" : "");
-		
+	{	
+		var jumpNum:Float;
 		if (stillTyping)
-			ammountOfLines += 2;
+		{
+			jumpNum = 2;
+		}
 		else
-			ammountOfLines += 1;
+		{
+			jumpNum = 1;
+		}
+		ammountOfLines += jumpNum;
 			
-		if(ammountOfLines > 28)
-			mainText.y -= 40;
+		if(ammountOfLines > 27)
+			mainText.y -= (20 * jumpNum);
+			
+		mainText.text += "\n" + newTxt + (stillTyping ? "\n" + "/" : "");
 	}
 
 	function checkForExe()
@@ -189,12 +195,19 @@ class ConsoleState extends MusicBeatState
 		switch (returnText)
 		{
 			case 'dispenser':
-				startingUp = true;
-				addNewLine(ReturnLanguage.console('dispenser'), false);
-				new FlxTimer().start(1, function(tmr:FlxTimer)
+				if (FlxG.save.data.hornyALL)
 				{
-					FlxG.switchState(new DispenserBurstState());
-				});
+					addNewLine(ReturnLanguage.console('notallowed'));
+				}
+				else
+				{
+					startingUp = true;
+					addNewLine(ReturnLanguage.console('dispenser'), false);
+					new FlxTimer().start(1, function(tmr:FlxTimer)
+					{
+						FlxG.switchState(new DispenserBurstState());
+					});
+				}
 			default:
 				addNewLine(ReturnLanguage.console('exenotfound'));
 		}
