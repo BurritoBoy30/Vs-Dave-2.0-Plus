@@ -14,8 +14,6 @@ import flixel.util.FlxColor;
  */
 class AnimationDebug extends MusicBeatState
 {
-	var bf:Boyfriend;
-	var dad:Character;
 	var char:Character;
 	var textAnim:FlxText;
 	var dumbTexts:FlxTypedGroup<FlxText>;
@@ -39,29 +37,11 @@ class AnimationDebug extends MusicBeatState
 		gridBG.scrollFactor.set();
 		add(gridBG);
 
-		if (daAnim == 'bf')
-			isDad = false;
-
-		if (isDad)
-		{
-			dad = new Character(0, 0, daAnim);
-			dad.screenCenter();
-			dad.debugMode = true;
-			add(dad);
-
-			char = dad;
-			dad.flipX = false;
-		}
-		else
-		{
-			bf = new Boyfriend(0, 0);
-			bf.screenCenter();
-			bf.debugMode = true;
-			add(bf);
-
-			char = bf;
-			bf.flipX = false;
-		}
+		char = new Character(0, 0, daAnim);
+		char.screenCenter();
+		char.debugMode = true;
+		add(char);
+		char.flipX = false;
 
 		dumbTexts = new FlxTypedGroup<FlxText>();
 		add(dumbTexts);
@@ -104,7 +84,7 @@ class AnimationDebug extends MusicBeatState
 	{
 		dumbTexts.forEach(function(text:FlxText)
 		{
-			text.kill();
+			text.destroy();
 			dumbTexts.remove(text, true);
 		});
 	}

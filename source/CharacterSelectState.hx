@@ -31,7 +31,7 @@ class CharacterSelectState extends MusicBeatState
 	public var curFormGF:Int = 0;
 	
 	public var boyfriendChar:Boyfriend;
-	public var girlfriendChar:Character;
+	public var girlfriendChar:Girlfriend;
 	
 	var boyfriendText:FlxText;
 	var girlfriendText:FlxText;
@@ -247,11 +247,48 @@ class CharacterSelectState extends MusicBeatState
 		if (!selectedCharacter)
 		{
 			if (FlxG.keys.justPressed.P)
+			{
 				previewMode = !previewMode;
+				
+				if (!previewMode)
+				{
+					if (!boyfriendChar.canDance) {
+						boyfriendChar.canDance = true;
+						boyfriendChar.dance();
+					}
+					if (!girlfriendChar.canDance) {
+						if (gfString()) {
+							girlfriendChar.canDance = true;
+							girlfriendChar.dance();
+						}
+					}
+				}
+			}
 				
 			camHUD.visible = !previewMode;
 				
-			if (!previewMode)
+			if (previewMode)
+			{					
+				if (controls.LEFT_P)
+					charAnim('singLEFT');
+				if (controls.DOWN_P)
+					charAnim('singDOWN');
+				if (controls.UP_P)
+					charAnim('singUP');
+				if (controls.RIGHT_P)
+					charAnim('singRIGHT');
+				
+				if (FlxG.keys.justPressed.SPACE)
+				{
+					boyfriendChar.canDance = true;
+					boyfriendChar.dance();
+					if (gfString()) {
+						girlfriendChar.canDance = true;
+						girlfriendChar.dance();
+					}
+				}
+			}
+			else
 			{
 				if (FlxG.mouse.justPressed && !buttonPressed)
 				{	
@@ -390,9 +427,24 @@ class CharacterSelectState extends MusicBeatState
 					new FlxTimer().start(1.9, endIt);
 				}
 			}
-			else
-			{
-			}
+		}
+	}
+	
+	function gfString()
+	{
+		return girlfriendChar.animation.getByName("singLEFT") != null 
+		|| girlfriendChar.animation.getByName("singUP") != null
+		|| girlfriendChar.animation.getByName("singDOWN") != null
+		|| girlfriendChar.animation.getByName("singRIGHT") != null;
+	}
+	
+	function charAnim(anim:String)
+	{
+		boyfriendChar.canDance = false;
+		boyfriendChar.playAnim(anim, true);
+		if (gfString()) {
+			girlfriendChar.canDance = false;
+			girlfriendChar.playAnim(anim, true);
 		}
 	}
 	
@@ -465,10 +517,10 @@ class CharacterSelectState extends MusicBeatState
 		iconGF.visible = !noGfChar.contains(boyfriendChar.curCharacter);
 		
 		if (noGfChar.contains(boyfriendChar.curCharacter) || isTails) {
-			changeInfoImg.loadGraphic(Paths.image('charselect/changeInfoNoGF'));
-			changeInfoImg.y = FlxG.height - ((changeInfoImg.height / 2) - 2);
+			changeInfoImg.loadGraphic(Paths.image('charselect/' + FlxG.save.data.gameLanguage + '/changeInfoNoGF'));
+			changeInfoImg.y = FlxG.height - ((changeInfoImg.height / 2) + 23);
 		} else {
-			changeInfoImg.loadGraphic(Paths.image('charselect/changeInfo'));
+			changeInfoImg.loadGraphic(Paths.image('charselect/' + FlxG.save.data.gameLanguage + '/changeInfo'));
 			changeInfoImg.y = FlxG.height - changeInfoImg.height;
 		}
 	}
@@ -613,7 +665,7 @@ class CharacterSelectState extends MusicBeatState
 		girlfriendText.text = displayName;
 		iconGF.x += (girlfriendText.textField.textWidth / 2) + iconOffseet;
 		
-		girlfriendChar = new Character(400 + shitOffset[0], 130 + shitOffset[1], name);
+		girlfriendChar = new Girlfriend(400 + shitOffset[0], 130 + shitOffset[1], name);
 		girlfriendChar.x += girlfriendChar.charOffset[0];
 		girlfriendChar.y += girlfriendChar.charOffset[1];
 		insert(members.indexOf(boyfriendChar), girlfriendChar);

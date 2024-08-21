@@ -72,7 +72,7 @@ class PlayState extends MusicBeatState
 	private var vocals:FlxSound;
 
 	public static var dad:Character;
-	public static var gf:Character;
+	public static var gf:Girlfriend;
 	public static var boyfriend:Boyfriend;
 	private var dadmirror:Character;
 	
@@ -160,6 +160,7 @@ class PlayState extends MusicBeatState
 	
 	// shit for songs
 	var place:FlxSprite;
+	var darkStages:Array<String> = ['bambiFarmNight', 'disabled', 'unfairness', 'rsod'];
 	
 	override public function create()
 	{
@@ -239,7 +240,7 @@ class PlayState extends MusicBeatState
 			gfVersion = girlfriendOverride;
 		}
 		
-		gf = new Character(400, 130, gfVersion);
+		gf = new Girlfriend(400, 130, gfVersion);
 		gf.x += gf.charOffset[0];
 		gf.y += gf.charOffset[1];
 		trace('gf load');
@@ -261,7 +262,7 @@ class PlayState extends MusicBeatState
 			inCaseTutorial = SONG.player2;
 		}
 			
-		dad = new Character(100, 100, inCaseTutorial);
+		dad = new Character(100, 100, inCaseTutorial, 'dad');
 		dad.x += dad.charOffset[0];
 		dad.y += dad.charOffset[1];
 		trace('dad load');
@@ -298,12 +299,14 @@ class PlayState extends MusicBeatState
 		else
 			gf.visible = !(Character.tutorialGFs.contains(dad.curCharacter) || CharacterSelectState.noGfChar.contains(boyfriend.curCharacter));
 		
+		if (darkStages.contains(curStage))
+		{
+			dad.color = 0xFF878787;
+			gf.color = 0xFF878787;
+			boyfriend.color = 0xFF878787;
+		}
 		switch (curStage)
 		{
-			case 'bambiFarmNight' | 'disabled' | 'unfairness':
-				dad.color = 0xFF878787;
-				gf.color = 0xFF878787;
-				boyfriend.color = 0xFF878787;
 			case 'exbungo-land':
 				dad.setPosition(298 + dad.charOffset[0], 131 + dad.charOffset[1]);
 				boyfriend.setPosition(1332 + boyfriend.charOffset[0], 513 + boyfriend.charOffset[1]);
@@ -724,6 +727,33 @@ class PlayState extends MusicBeatState
 				
 				createShader(bg, 0.1, 5, 2);
 				
+			case 'computer':
+				defaultCamZoom = 0.75;
+				curStage = 'laptop';
+				
+				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('fanmade/laptop'));
+				bg.antialiasing = false;
+				bg.setGraphicSize(Std.int(bg.width * 1.2));
+				bg.updateHitbox();
+				bg.screenCenter();
+				bg.x -= 400;
+				add(bg);
+				
+				createShader(bg, 0.1, 5, 2);
+				
+			case 'crimson-corridor':
+				defaultCamZoom = 0.7;
+				curStage = 'rsod';
+				
+				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('fanmade/3dFucked2'));
+				bg.antialiasing = false;
+				bg.setGraphicSize(Std.int(bg.width * 2.5));
+				bg.updateHitbox();
+				bg.screenCenter();
+				bg.x -= 350;
+				add(bg);
+				
+				createShader(bg, 0.1, 5, 2);
 			default:
 				defaultCamZoom = 0.9;
 				curStage = 'stage';
@@ -969,6 +999,8 @@ class PlayState extends MusicBeatState
 				creditString = 'Sky!';
 			case 'og':
 				creditString = 'Aadsta';
+			case 'computer' | 'crimson-corridor':
+				creditString = 'Cheemy';
 			default:
 				creditString = 'Placeholder';
 		}
@@ -1284,6 +1316,18 @@ class PlayState extends MusicBeatState
 		if (['dave-angey', 'bambi-3d', 'bambi-unfair', 'dave-split-3d', 'bambi-piss-3d', 'exbungo'].contains(dad.curCharacter))
 		{
 			dad.y += (Math.sin(elapsedtime) * 0.4);
+		}
+		
+		if (dad.curCharacter == 'bombu')
+		{
+			dad.x += (Math.cos(elapsedtime * 1.5) * 1.25);
+			dad.y += (Math.sin(elapsedtime * 1.5) * 1.25);
+		}
+		
+		if (dad.curCharacter == 'bombai')
+		{
+			dad.x += (Math.cos(elapsedtime) * 1.25);
+			dad.y += (Math.sin(elapsedtime) * 1.25);
 		}
 
 		switch (curSong)
@@ -1792,6 +1836,12 @@ class PlayState extends MusicBeatState
 				case 'bambi-unfair':
 					camFollow.x = dad.getMidpoint().x + 50;
 					camFollow.y = dad.getMidpoint().y - 150;
+				case 'bombu':
+					camFollow.x = dad.getMidpoint().x;
+					camFollow.y = dad.getMidpoint().y;
+				case 'bombai':
+					camFollow.x = dad.getMidpoint().x + 225;
+					camFollow.y = dad.getMidpoint().y + 75;
 						
 				case 'gf-massive':
 					camFollow.y = dad.getMidpoint().y - 300;
@@ -1850,16 +1900,31 @@ class PlayState extends MusicBeatState
 			}
 		}
 	}
-	
+		
 	function boyfriendIdleColor()
 	{
-		if (curStage == 'bambiFarmNight' || curStage == 'disabled' || curStage == 'unfairness')
+		if (darkStages.contains(curStage))
 		{
 			boyfriend.color = 0xFF878787;
 		}
 		else
 		{
 			boyfriend.color = FlxColor.WHITE;
+		}
+	}
+	
+	function gfIdleColor()
+	{
+		if (FlxG.save.data.gfCanSing && gfString())
+		{
+			if (darkStages.contains(curStage))
+			{
+				gf.color = 0xFF878787;
+			}
+			else
+			{
+				gf.color = FlxColor.WHITE;
+			}
 		}
 	}
 
@@ -2242,6 +2307,16 @@ class PlayState extends MusicBeatState
 			bfNoteCamOffset[0] = 0;
 			bfNoteCamOffset[1] = 0;
 		}
+		
+		if (FlxG.save.data.gfCanSing && gfString())
+		{
+			if (gf.holdTimer > Conductor.stepCrochet * 4 * 0.001 && (!holdArray.contains(true) || botPlayOn)
+				&& gf.animation.curAnim.name.startsWith('sing'))
+			{
+				gf.dance();
+				gfIdleColor();
+			}
+		}
 
 		playerStrums.forEach(function(spr:StrumNote)
 		{
@@ -2295,8 +2370,13 @@ class PlayState extends MusicBeatState
 			{
 				boyfriend.color = 0xFF000084;
 			}
-			
 			boyfriend.playAnim(animToPlay, true);
+			
+			if (FlxG.save.data.gfCanSing && gfString())
+			{
+				gf.color = 0xFF000084;
+				gf.playAnim(animToPlay, true);
+			}
 
 			updateAccuracy();
 		}
@@ -2362,8 +2442,14 @@ class PlayState extends MusicBeatState
 			var animList:Array<String> = ['LEFT', 'DOWN', 'UP', 'RIGHT'];
 			boyfriend.playAnim('sing' + animList[Math.round(Math.abs(note.noteData))], true);
 			boyfriend.holdTimer = 0;
-			
 			boyfriendIdleColor();
+			
+			if (FlxG.save.data.gfCanSing && gfString())
+			{
+				gf.playAnim('sing' + animList[Math.round(Math.abs(note.noteData))], true);
+				gf.holdTimer = 0;
+				gfIdleColor();
+			}
 			
 			cameraMoveOnNote(note.noteData, 'bf');
 
@@ -2627,7 +2713,7 @@ class PlayState extends MusicBeatState
 			camHUD.zoom += 0.03;
 		}
 		
-		if(shakeCam && gf.animation.getByName("scared") != null)
+		if(!FlxG.save.data.gfCanSing && shakeCam && gf.animation.getByName("scared") != null)
 		{
 			gf.playAnim('scared', true);
 		}
@@ -2652,7 +2738,14 @@ class PlayState extends MusicBeatState
 
 		if (curBeat % (gfBeatSnap + ((curSong == 'disruption' || curSong == 'unfairness') && !CharacterSelectState.singleBop.contains(gf.curCharacter) ? 1 : 0)) == 0)
 		{
-			if (!(shakeCam && gf.animation.getByName("scared") != null) && gf.canDance)
+			if (FlxG.save.data.gfCanSing && gfString())
+			{
+				if (!gf.animation.curAnim.name.startsWith("sing") && gf.canDance)
+				{
+					gf.dance();
+				}
+			}
+			else if (!shakeCam && gf.animation.getByName("scared") != null)
 			{
 				gf.dance();
 			}
@@ -2685,6 +2778,14 @@ class PlayState extends MusicBeatState
 		}
 		
 		gf.trepTransi(SONG.bpm);
+	}
+	
+	function gfString()
+	{
+		return gf.animation.getByName("singLEFT") != null 
+		|| gf.animation.getByName("singUP") != null
+		|| gf.animation.getByName("singDOWN") != null
+		|| gf.animation.getByName("singRIGHT") != null;
 	}
 	
 	public function changeDad(char:String):Void

@@ -50,6 +50,7 @@ class ReturnLanguage
 			case 'changelang':		returnString = txtString('ui', 23);
 			case 'antialiasing':	returnString = txtString('ui', 24);
 			case 'cammove':			returnString = txtString('ui', 25);
+			case 'gfsings':			returnString = txtString('ui', 31);
 			
 			//placeholder	
 			default:				returnString = curText;

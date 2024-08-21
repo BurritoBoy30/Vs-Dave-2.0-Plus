@@ -20,6 +20,7 @@ class Alphabet extends FlxSpriteGroup
 	// for menu shit
 	public var targetY:Float = 0;
 	public var isMenuItem:Bool = false;
+	public var menuStyle:String = '';
 
 	public var text:String = "";
 
@@ -43,6 +44,7 @@ class Alphabet extends FlxSpriteGroup
 
 	var isBold:Bool = false;
 	
+	public var xAdd:Float = 0;
 	public var yAdd:Float = 0;
 
 	public function new(x:Float, y:Float, text:String = "", ?bold:Bool = false, typed:Bool = false)
@@ -120,16 +122,14 @@ class Alphabet extends FlxSpriteGroup
 	}
 
 	public var personTalking:String = 'gf';
-
+	
 	public function startTypedText():Void
 	{
 		_finalText = text;
 		doSplitWords();
 
 		// trace(arrayShit);
-
 		var loopNum:Int = 0;
-
 		var xPos:Float = 0;
 		var curRow:Int = 0;
 
@@ -239,10 +239,19 @@ class Alphabet extends FlxSpriteGroup
 	{
 		if (isMenuItem && !unlockY)
 		{
-			var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
+			switch (menuStyle)
+			{
+				case 'pause':
+					var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
+					screenCenter(X);
+					x += xAdd;
+					y = FlxMath.lerp(y, (scaledY * 140) + (FlxG.height * 0.44) + yAdd, 0.16);
+				default:		
+					var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
 
-			y = FlxMath.lerp(y, (scaledY * (120 + yAdd)) + (FlxG.height * 0.40), 0.16);
-			x = FlxMath.lerp(x, (targetY * 20) + 90, 0.16);
+					y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.40) + yAdd, 0.16);
+					x = FlxMath.lerp(x, (targetY * 20) + 90 + xAdd, 0.16);
+			}
 		}
 
 		super.update(elapsed);

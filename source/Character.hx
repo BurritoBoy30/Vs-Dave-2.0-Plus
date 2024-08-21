@@ -12,7 +12,7 @@ class Character extends FlxSprite
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var debugMode:Bool = false;
 
-	public var isPlayer:Bool = false;
+	public var isPlayer:String = 'bf';
 	public var curCharacter:String = 'bf';
 
 	public var holdTimer:Float = 0;
@@ -24,7 +24,7 @@ class Character extends FlxSprite
 	
 	public static var tutorialGFs:Array<String> = ['gf', 'gf-christmas', 'cyan', 'cyan-christmas', 'psyka', 'psyka-christmas', 'gf-massive', 'gf-hot', 'gf-hot-christmas', 'gf-hot-funny', 'tails-doll', 'skyblue', 'three-gfs'];
 
-	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
+	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:String = 'bf')
 	{
 		super(x, y);
 
@@ -473,6 +473,40 @@ class Character extends FlxSprite
 				antialiasing = false;
 		
 				playAnim('idle');
+				
+			case 'bombu':
+				getSheet('bombu');
+				
+				addAnimation(195, 50, 'idle', 'Idle');
+				addAnimation(295, 207, 'singUP', 'Up');
+				addAnimation(-78, 33, 'singRIGHT', 'Right');
+				addAnimation(270, -1, 'singDOWN', 'Down');
+				addAnimation(385, 44, 'singLEFT', 'Left');
+		
+				scale.set(0.8, 0.8);
+				updateHitbox();
+		
+				playAnim('idle');
+				
+				charOffset[0] = -300;
+				charOffset[1] = -75;
+				
+			case 'bombai':
+				getSheet('bombai');
+				
+				addAnimation(0, 50, 'idle', 'IDLE', 30);
+				addAnimation(60, 50, 'singUP', 'UP');
+				addAnimation(-60, 110, 'singRIGHT', 'RIGHT');
+				addAnimation(-5, 40, 'singDOWN', 'DOWN');
+				addAnimation(0, 30, 'singLEFT', 'LEFT');
+		
+				scale.set(0.8, 0.8);
+				updateHitbox();
+		
+				playAnim('idle');
+				
+				charOffset[0] = -675;
+				charOffset[1] = -500;
 			// DAD LIST END
 				
 			case 'gf':
@@ -637,23 +671,26 @@ class Character extends FlxSprite
 				// GIRLFRIEND CODE
 				getSheet('girlfriends/massivegf');
 				
-				addAnimation(118, 251, 'cheer', 'cheer');
-				addAnimation(11, -35, 'singLEFT', 'left');
-				addAnimation(8, -49, 'singRIGHT', 'right');
-				addAnimation(-19, 18, 'singUP', 'up');
-				addAnimation(0, -20, 'singDOWN', 'down');
+				addAnimation(110, 256, 'cheer', 'cheer');
+				addAnimation(13, 16, 'singLEFT', 'left');
+				addAnimation(8, -15, 'singRIGHT', 'right');
+				addAnimation(-18, 38, 'singUP', 'up');
+				addAnimation(0, 4, 'singDOWN', 'down');
 				
-				addAnimationIndices(11, -35, 'sad', 'sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+				addAnimationIndices(11, -10, 'sad', 'sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
 				addAnimationIndices(6, 310,'danceLeft', 'idle', [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
 				addAnimationIndices(6, 310, 'danceRight', 'idle', [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 0, 1, 2]);
-				addAnimationIndices(205, -35, 'hairBlow', "hairblow", [0, 1, 2, 3], true);
-				addAnimationIndices( 0, -9, 'hairFall', "hairland", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
-				addAnimation(-2, -17, 'scared', 'scared', true);
-
+				addAnimationIndices(190, -10, 'hairBlow', "hairblow", [0, 1, 2, 3], true);
+				addAnimationIndices(0, -9, 'hairFall', "hairland", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+				addAnimation(9, -1, 'scared', 'scared', true);
+				
+				scale.set(0.93, 0.93);
+				updateHitbox();
+				
 				playAnim('danceRight');
 				
 				charOffset[0] = 75;
-				charOffset[1] = -350;
+				charOffset[1] = -300;
 				
 			case 'gf-hot':
 				// GIRLFRIEND CODE
@@ -733,10 +770,10 @@ class Character extends FlxSprite
 				getSheet('girlfriends/tailslol_edit');
 				
 				addAnimation('idle', 'tailslol idle');
-				addAnimation('singUP', 'tailslol up');
-				addAnimation('singLEFT', 'tailslol left');
-				addAnimation('singRIGHT', 'tailslol right');
-				addAnimation('singDOWN', 'tailslol down');
+				addAnimation(1, -5, 'singUP', 'tailslol up');
+				addAnimation(1, -3, 'singLEFT', 'tailslol left');
+				addAnimation(1, -4, 'singRIGHT', 'tailslol right');
+				addAnimation(1, -2, 'singDOWN', 'tailslol down');
 				
 				playAnim('idle');
 				
@@ -796,7 +833,7 @@ class Character extends FlxSprite
 
 		dance();
 
-		if (isPlayer)
+		if (isPlayer == 'bf')
 		{
 			flipX = !flipX;
 
@@ -843,7 +880,7 @@ class Character extends FlxSprite
 	{
 		if(!debugMode && animation.curAnim != null)
 		{
-			if (!isPlayer)
+			if (isPlayer == 'dad')
 			{
 				if (animation.curAnim.name.startsWith('sing'))
 				{
@@ -954,7 +991,7 @@ class Character extends FlxSprite
 		var daOffset = animOffsets.get(AnimName);
 		if (animOffsets.exists(AnimName))
 		{
-			if (isPlayer)
+			if (isPlayer == 'bf')
 			{
 				offset.set(daOffset[0] + globaloffset[0], daOffset[1] + globaloffset[1]);
 			}

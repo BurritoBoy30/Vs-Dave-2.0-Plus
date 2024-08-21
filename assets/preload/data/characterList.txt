@@ -30,4 +30,6 @@ tristan
 tristan-golden
 bambi-3d
 exbungo
+bombu
+bombai
 

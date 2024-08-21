@@ -25,7 +25,8 @@ class OptionsMenu extends MusicBeatState
 		new Option('eyesores', FlxG.save.data.eyesoreson),
 		new Option('changelang'),
 		new Option('antialiasing', FlxG.save.data.antiAliasing),
-		new Option('cammove', FlxG.save.data.noteCamera)
+		new Option('cammove', FlxG.save.data.noteCamera),
+		new Option('gfsings', FlxG.save.data.gfCanSing),
 	];
 	
 	private var grpControls:FlxTypedGroup<Alphabet>;
@@ -55,10 +56,10 @@ class OptionsMenu extends MusicBeatState
 
 		for (i in 0...controlsStrings.length)
 		{
-			var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i].names, true, false);
+			var controlLabel:Alphabet = new Alphabet(0, (90 * i) + 30, controlsStrings[i].names, true, false);
 			controlLabel.isMenuItem = true;
 			controlLabel.targetY = i;
-			controlLabel.yAdd = 20;
+			controlLabel.yAdd = 50;
 			grpControls.add(controlLabel);
 			
 			var controlCheckBox:CheckBox = new CheckBox(controlsStrings[i].selectors);
@@ -120,6 +121,9 @@ class OptionsMenu extends MusicBeatState
 				case 9:
 					FlxG.save.data.noteCamera = !FlxG.save.data.noteCamera;
 					checkArray[curSelected].switchButton(FlxG.save.data.noteCamera);
+				case 10:
+					FlxG.save.data.gfCanSing = !FlxG.save.data.gfCanSing;
+					checkArray[curSelected].switchButton(FlxG.save.data.gfCanSing);
 					
 			}
 		}

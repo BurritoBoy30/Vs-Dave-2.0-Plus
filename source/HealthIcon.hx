@@ -14,7 +14,18 @@ class HealthIcon extends FlxSprite
 	 */
 	public var sprTracker:FlxSprite;
 	
-	var noAa:Array<String> = ['dave-angey', 'bambi-3d', 'bambi-unfair','bf-pixel', 'gf-pixel', 'dave-split-3d', 'bambi-piss-3d', 'exbungo'];
+	var noAa:Array<String> = [
+		'dave-angey',
+		'bambi-3d',
+		'bambi-unfair',
+		'bf-pixel',
+		'gf-pixel',
+		'dave-split-3d',
+		'bambi-piss-3d',
+		'exbungo',
+		'bombu',
+		'bombai'
+	];
 	public var isPlayer:Bool;
 	
 	var char:String;

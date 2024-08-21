@@ -75,5 +75,8 @@ class SaveDataHandler
 			
 		if (FlxG.save.data.noteCamera == null)
 			FlxG.save.data.noteCamera = true;
+			
+		if (FlxG.save.data.gfCanSing == null)
+			FlxG.save.data.gfCanSing = false;
     }
 }
