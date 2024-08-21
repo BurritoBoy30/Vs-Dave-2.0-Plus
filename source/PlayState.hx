@@ -412,15 +412,15 @@ class PlayState extends MusicBeatState
 		switch (SONG.song.toLowerCase())
 		{
 			case 'supernovae':
-				credits = 'Original Song made by ArchWk!';
+				credits = ReturnLanguage.credit('supernovae_cred');
 			case 'glitch':
-				credits = 'Original Song made by DeadShadow and PixelGH!';
+				credits = ReturnLanguage.credit('glitch_cred');
 			case 'unfairness':
-				credits = "Ghost tapping is forced off! Screw you!";
+				credits = ReturnLanguage.credit('unfairness_cred');
 			case 'cheating':
-				credits = 'Screw you!';
+				credits = ReturnLanguage.credit('cheating_cred');
 			case 'kabunga':
-				credits = 'OMFG I JUST DEFLATED';
+				credits = ReturnLanguage.credit('kabunga_cred');
 			default:
 				credits = '';
 		}
@@ -983,7 +983,8 @@ class PlayState extends MusicBeatState
 	
 	function creditPopUp()
 	{
-		creditBG = new FlxSprite(0, 200).makeGraphic(1, 70, FlxColor.BLACK);
+		creditBG = new FlxSprite(0, 200).makeGraphic(1, 1, FlxColor.BLACK);
+		creditBG.antialiasing = FlxG.save.data.antiAliasing;
 		creditBG.alpha = 0.6;
 		
 		var creditString:String;
@@ -995,6 +996,10 @@ class PlayState extends MusicBeatState
 				creditString = 'MoldyGH';
 			case 'mealie':
 				creditString = 'Alexander Copper 19';
+			case 'glitch':
+				creditString = 'DeadShadow & PixelGH\nRemix by MoldyGH';
+			case 'supernovae':
+				creditString = 'ArchWk\nRemix by MoldyGH';
 			case 'disability' | 'disruption':
 				creditString = 'Sky!';
 			case 'og':
@@ -1010,7 +1015,9 @@ class PlayState extends MusicBeatState
 		creditText.antialiasing = FlxG.save.data.antiAliasing;
 		
 		creditBG.scale.x = creditText.textField.textWidth + 20;
+		creditBG.scale.y = creditText.textField.textHeight + 25;
 		creditBG.x = -((creditBG.scale.x / 2) - 1) - 12;
+		creditBG.y += (creditBG.scale.y / 2.5);
 		creditText.x = -creditText.textField.textWidth - 15;
 		
 		add(creditBG);

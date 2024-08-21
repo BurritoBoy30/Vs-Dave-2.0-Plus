@@ -122,6 +122,24 @@ class ReturnLanguage
 		return returnString;
 	}
 	
+	public static function credit(curText:String)
+	{
+		var returnString:String;
+		
+		switch (curText)
+		{
+			case 'supernovae_cred':		returnString = txtString('songcred', 0);
+			case 'glitch_cred':			returnString = txtString('songcred', 1);
+			case 'cheating_cred':		returnString = txtString('songcred', 2);
+			case 'unfairness_cred':		returnString = txtString('songcred', 3);
+			case 'mealie_cred':			returnString = txtString('songcred', 4);
+			case 'kabunga_cred':		returnString = txtString('songcred', 5);
+			default:					returnString = curText;
+		}
+		
+		return returnString;
+	}
+	
 	public static function txtString(type:String, num:Int)
 	{
 		var file:Array<String> = [];
