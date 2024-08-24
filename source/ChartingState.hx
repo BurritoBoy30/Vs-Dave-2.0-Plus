@@ -231,19 +231,25 @@ class ChartingState extends MusicBeatState
 
 			FlxG.sound.music.volume = vol;
 		};
-
-		var isHornyOrNot:String = '';
 		
-		if (FlxG.save.data.hornyALL)
+		var bfList:Array<String>  = CoolUtil.coolTextFile(Paths.txt('boyfriendList'));
+		var gfList:Array<String>  = CoolUtil.coolTextFile(Paths.txt('girlfriendList'));
+		var dadList:Array<String>  = CoolUtil.coolTextFile(Paths.txt('dadList'));		
+		var characters:Array<String> = [];
+		
+		for (i in 0...bfList.length)
 		{
-			isHornyOrNot = 'characterListHorny';
+			characters.push(bfList[i]);
 		}
-		else
+		for (i in 0...gfList.length)
 		{
-			isHornyOrNot = 'characterList';
+			characters.push(gfList[i]);
 		}
-		var characters:Array<String> = CoolUtil.coolTextFile(Paths.txt(isHornyOrNot));
-
+		for (i in 0...dadList.length)
+		{
+			characters.push(dadList[i]);
+		}
+		
 		var player1DropDown = new FlxUIDropDownMenu(10, 200, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			_song.player1 = characters[Std.parseInt(character)];

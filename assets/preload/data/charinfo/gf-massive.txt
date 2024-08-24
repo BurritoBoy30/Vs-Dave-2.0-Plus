@@ -1,0 +1,13 @@
+girlfriends/massivegf
+75' '-300
+prefix' '110' '256' 'cheer' 'cheer' 'false' '24
+prefix' '13' '16' 'singLEFT' 'left' 'false' '24
+prefix' '8' '-15' 'singRIGHT' 'right' 'false' '24
+prefix' '-18' '38' 'singUP' 'up' 'false' '24
+prefix' '0' '4' 'singDOWN' 'down' 'false' '24
+indices' '11' '-10' 'sad' 'sad' '0,1,2,3,4,5,6,7,8,9,10,11,12' 'false' '24
+indices' '6' '310' 'danceLeft' 'idle' '3,4,5,6,7,8,9,10,11,12,13,14,15,16' 'false' '24
+indices' '6' '310' 'danceRight' 'idle' '17,18,19,20,21,22,23,24,25,26,27,0,1,2' 'false' '24
+indices' '190' '-10' 'hairBlow' 'hairblow' '0,1,2,3' 'true' '24
+indices' '0' '-9' 'hairFall' 'hairland' '0,1,2,3,4,5,6,7,8,9,10,11' 'false' '24
+prefix' '9' '-1' 'scared' 'scared' 'true' '24

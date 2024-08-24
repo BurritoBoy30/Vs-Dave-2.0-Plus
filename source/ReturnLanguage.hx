@@ -5,60 +5,7 @@ import flixel.FlxG;
 using StringTools;
 
 class ReturnLanguage
-{
-	public static function text(curText:String)
-	{
-		var returnString:String;
-		
-		switch (curText)
-		{
-			//playstate
-			case 'time':			returnString = txtString('ui', 0);
-			case 'score':			returnString = txtString('ui', 1) + " ";
-			case 'misses':			returnString = txtString('ui', 2) + " ";
-			case 'accuracy':		returnString = txtString('ui', 3) + " ";
-			case 'songcredit':		returnString = txtString('ui', 4) + " ";
-			
-			//freeplay
-			case 'personalbest':	returnString = txtString('ui', 5) + " ";
-			case 'easy':			returnString = txtString('ui', 6);
-			case 'normal':			returnString = txtString('ui', 7);
-			case 'hard':			returnString = txtString('ui', 8);
-			case 'extreme':			returnString = txtString('ui', 9);
-			case 'stupid':			returnString = txtString('ui', 10);
-			case 'fucked':			returnString = txtString('ui', 11);
-			case 'dave':			returnString = txtString('ui', 26);
-			case 'golden':			returnString = txtString('ui', 27);
-			case 'joke':			returnString = txtString('ui', 28);
-			case 'extra':			returnString = txtString('ui', 29);
-			case 'console':			returnString = txtString('ui', 30);
-			
-			//pause
-			case 'resume':			returnString = txtString('ui', 12);
-			case 'restart':			returnString = txtString('ui', 13);
-			case 'botplay':			returnString = txtString('ui', 14);
-			case 'exit':			returnString = txtString('ui', 15);
-			
-			//options
-			case 'ghosttapping':	returnString = txtString('ui', 16);
-			case 'downscroll':		returnString = txtString('ui', 17);
-			case 'accdisplay':		returnString = txtString('ui', 18);
-			case 'naughtiness':		returnString = txtString('ui', 19);
-			case 'changekeys':		returnString = txtString('ui', 20);
-			case 'fullscreen':		returnString = txtString('ui', 21);
-			case 'eyesores':		returnString = txtString('ui', 22);
-			case 'changelang':		returnString = txtString('ui', 23);
-			case 'antialiasing':	returnString = txtString('ui', 24);
-			case 'cammove':			returnString = txtString('ui', 25);
-			case 'gfsings':			returnString = txtString('ui', 31);
-			
-			//placeholder	
-			default:				returnString = curText;
-		}
-		
-		return returnString;
-	}
-	
+{		
 	public static function char(curText:String)
 	{
 		var returnString:String;
@@ -161,5 +108,35 @@ class ReturnLanguage
 		returnedFile = file[(num * 2) + extraLine];
 		returnedFile = returnedFile.replace(":break:" , "\n");
 		return returnedFile;
+	}
+	
+	public static function getLine(curText:String)
+	{
+		var textFile:Array<String> = CoolUtil.coolTextFile(Paths.txt('txt/linesText_' + FlxG.save.data.gameLanguage));
+		
+		var returnedString:String = '';
+		for (i in 0...textFile.length)
+		{
+			var currentValue = textFile[i].trim().split('==');
+			if (currentValue[0] != curText)
+			{
+				continue;
+			}
+			else
+			{
+				returnedString = currentValue[1];
+			}
+		}
+		
+		if (returnedString == '')
+		{
+			return curText;
+		}
+		else
+		{
+			returnedString = returnedString.replace(':break:', '\n');
+			returnedString = returnedString.replace(':space:', ' ');
+			return returnedString;
+		}
 	}
 }

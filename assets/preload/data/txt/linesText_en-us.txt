@@ -1,0 +1,40 @@
+// Song UI //
+time==Time
+score==Score::space:
+misses==Misses::space:
+accuracy==Accuracy::space:
+songcredit==Song by:space:
+
+// Freeplay //
+personalbest==PERSONAL BEST::space:
+easy==Easy
+normal==Normal
+hard==Hard
+extreme==Extreme
+stupid==Stupid
+fucked==You're fucked
+dave==Dave
+golden==Golden
+joke==Joke
+extra==Extras
+console==Open Console
+
+// Pause Menu UI //
+resume==Resume
+restart==Restart Song
+botplay==Botplay
+exit==Exit to Menu
+botplayScreen==BOTPLAY
+
+// Options //
+ghosttapping==Ghost Tapping
+downscroll==Downscroll
+accdisplay==Accuracy Display
+naughtiness==Naughtiness
+changekeys==Change Binds
+fullscreen==Fullscreen
+eyesores==Eyesores
+changelang==Change Language
+antialiasing==Anti Aliasing
+cammove==Camera Movement
+gfsings==Girlfriend Sings

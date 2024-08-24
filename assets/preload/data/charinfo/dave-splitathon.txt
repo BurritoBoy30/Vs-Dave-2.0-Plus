@@ -1,0 +1,7 @@
+Splitathon_Dave
+100' '300
+prefix' '0' '0' 'idle' 'Idle' 'false' '24
+prefix' '0' '0' 'singUP'' 'Up' 'false' '24
+prefix' '-9' '0' 'singRIGHT' 'Right' 'false' '24
+prefix' '40' '0singDOWN' 'Down' 'false' '24
+prefix' '0' '0' 'singLEFT' 'Left' 'false' '24

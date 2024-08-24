@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="tails_doll.png">
+<SubTexture name="tails_doll scare0000" x="0" y="0" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+<SubTexture name="tails_doll scare0001" x="1280" y="0" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+<SubTexture name="tails_doll scare0002" x="0" y="994" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+<SubTexture name="tails_doll scare0003" x="1280" y="994" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+<SubTexture name="tails_doll scare0004" x="2560" y="0" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+<SubTexture name="tails_doll scare0005" x="2560" y="994" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+<SubTexture name="tails_doll scare0006" x="0" y="1988" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+<SubTexture name="tails_doll scare0007" x="1280" y="1988" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+<SubTexture name="tails_doll scare0008" x="2560" y="1988" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+<SubTexture name="tails_doll scare0009" x="3840" y="0" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+<SubTexture name="tails_doll scare0010" x="3840" y="994" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+<SubTexture name="tails_doll scare0011" x="3840" y="1988" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+<SubTexture name="tails_doll scare0012" x="0" y="2982" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+<SubTexture name="tails_doll scare0013" x="1280" y="2982" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+</TextureAtlas>

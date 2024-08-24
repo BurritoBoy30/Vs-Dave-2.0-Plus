@@ -77,7 +77,8 @@ class PauseSubState extends MusicBeatSubstate
 		levelDifficulty.antialiasing = FlxG.save.data.antiAliasing;
 		add(levelDifficulty);
 		
-		botplayText = new FlxText(20, FlxG.height - 70, 0, "BOTPLAY", 32);
+		botplayText = new FlxText(20, FlxG.height - 70, 0, "", 32);
+		botplayText.text = ReturnLanguage.getLine('botplayScreen');
 		botplayText.scrollFactor.set();
 		botplayText.setFormat(Paths.font('comic.ttf'), 32);
 		botplayText.x = FlxG.width - (botplayText.width + 30);
@@ -102,7 +103,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		for (i in 0...menuItems.length)
 		{
-			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, ReturnLanguage.text(menuItems[i]), true, false);
+			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, ReturnLanguage.getLine(menuItems[i]), true, false);
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			songText.menuStyle = 'pause';

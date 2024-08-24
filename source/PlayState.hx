@@ -243,7 +243,6 @@ class PlayState extends MusicBeatState
 		gf = new Girlfriend(400, 130, gfVersion);
 		gf.x += gf.charOffset[0];
 		gf.y += gf.charOffset[1];
-		trace('gf load');
 		
 		var inCaseTutorial:String = '';
 		if (SONG.song.toLowerCase() == 'tutorial')
@@ -265,17 +264,16 @@ class PlayState extends MusicBeatState
 		dad = new Character(100, 100, inCaseTutorial, 'dad');
 		dad.x += dad.charOffset[0];
 		dad.y += dad.charOffset[1];
-		trace('dad load');
 		
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x + 150, dad.getGraphicMidpoint().y - 150);
 		
 		if (Character.tutorialGFs.contains(dad.curCharacter))
 		{
-			dad.setPosition(gf.x, gf.y);
+			dad.x = 400 + dad.charOffset[0];
+			dad.y = 130 + dad.charOffset[1];
 			if (isStoryMode)
 			{
 				camPos.x += 600;
-				tweenCamIn();
 			}
 		}
 		
@@ -291,9 +289,7 @@ class PlayState extends MusicBeatState
 		
 		boyfriend = new Boyfriend(770, 450, boyfriendVersion);
 		boyfriend.x += boyfriend.charOffset[0];
-		boyfriend.y += boyfriend.charOffset[1];
-		trace('boyfriend load');
-		
+		boyfriend.y += boyfriend.charOffset[1];		
 		if (SONG.song.toLowerCase() == 'tutorial')
 			gf.visible = false;
 		else
@@ -346,7 +342,7 @@ class PlayState extends MusicBeatState
 		if(FlxG.save.data.downScroll) timeTxt.y = FlxG.height - 45;
 		add(timeTxt);
 		
-		timeLabelTxt = new FlxText(timeTxt.x, timeTxt.y - 25, FlxG.width, ReturnLanguage.text('time'), 32);
+		timeLabelTxt = new FlxText(timeTxt.x, timeTxt.y - 25, FlxG.width, ReturnLanguage.getLine('time'), 32);
 		timeLabelTxt.setFormat(Paths.font("comic.ttf"), 25, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeLabelTxt.scrollFactor.set();
 		timeLabelTxt.antialiasing = FlxG.save.data.antiAliasing;
@@ -482,6 +478,14 @@ class PlayState extends MusicBeatState
 		{
 			case 'splitathon':
 				preloadChar('bambi-splitathon');
+			case 'mealie':
+				preloadChar('bambi-angey');
+		}
+		
+		if (dad.curCharacter == 'tails-doll' || gf.curCharacter == 'tails-doll')
+		{
+			preloadAsset('tailsDolldeath/tails_doll');
+			preloadAsset('tailsDolldeath/deathStatic');
 		}
 		
 		if (SONG.song.toLowerCase() == 'kabunga') //i desperately wanted it so if you use downscroll it switches it to upscroll and flips the entire hud upside down but i never got to it
@@ -1010,7 +1014,7 @@ class PlayState extends MusicBeatState
 				creditString = 'Placeholder';
 		}
 		
-		creditText = new FlxText(5, creditBG.y - 5, 0, ReturnLanguage.text('songcredit') + creditString, 24);
+		creditText = new FlxText(5, creditBG.y - 5, 0, ReturnLanguage.getLine('songcredit') + creditString, 24);
 		creditText.setFormat(Paths.font("comic.ttf"), 45, FlxColor.WHITE, LEFT);
 		creditText.antialiasing = FlxG.save.data.antiAliasing;
 		
@@ -1241,11 +1245,6 @@ class PlayState extends MusicBeatState
 				});
 		}
 		generateStaticArrows(player, false, fadeIn);
-	}
-
-	function tweenCamIn():Void
-	{
-		FlxTween.tween(FlxG.camera, {zoom: 1.3}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut});
 	}
 
 	override function openSubState(SubState:FlxSubState)
@@ -1509,11 +1508,11 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.save.data.accuracyDisplay)
 		{
-			scoreTxt.text = ReturnLanguage.text('score') + songScore + " | " + ReturnLanguage.text('misses')  + misses + " | " + ReturnLanguage.text('accuracy')  + truncateFloat(accuracy, 2) + "% ";
+			scoreTxt.text = ReturnLanguage.getLine('score') + songScore + " | " + ReturnLanguage.getLine('misses')  + misses + " | " + ReturnLanguage.getLine('accuracy')  + truncateFloat(accuracy, 2) + "%";
 		}
 		else
 		{
-			scoreTxt.text = ReturnLanguage.text('score') + songScore;
+			scoreTxt.text = ReturnLanguage.getLine('score') + songScore;
 		}
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
@@ -1570,12 +1569,16 @@ class PlayState extends MusicBeatState
 				FlxG.switchState(new ChartingState());
 		}	
 		
-		if (FlxG.keys.justPressed.ONE)
-			FlxG.switchState(new AnimationDebug(dad.curCharacter));
-		if (FlxG.keys.justPressed.TWO)
-			FlxG.switchState(new AnimationDebug(gf.curCharacter));
-		if (FlxG.keys.justPressed.THREE)
-			FlxG.switchState(new AnimationDebug(boyfriend.curCharacter));
+		if (FlxG.keys.justPressed.ONE || FlxG.keys.justPressed.TWO || FlxG.keys.justPressed.THREE)
+		{
+			AnimationDebug.cameViaSong = true;
+			if (FlxG.keys.justPressed.ONE)	
+				FlxG.switchState(new AnimationDebug(dad.curCharacter));
+			if (FlxG.keys.justPressed.TWO)
+				FlxG.switchState(new AnimationDebug(gf.curCharacter));
+			if (FlxG.keys.justPressed.THREE)
+				FlxG.switchState(new AnimationDebug(boyfriend.curCharacter));
+		}
 
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
@@ -1688,9 +1691,14 @@ class PlayState extends MusicBeatState
 				screenshader.shader.uampmul.value[0] = 0;
 				screenshader.Enabled = false;
 			}
-
-			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y, boyfriend.curCharacter));
-
+			if (dad.curCharacter == 'tails-doll' || gf.curCharacter == 'tails-doll')
+			{
+				openSubState(new GameOverTailsDoll());
+			}
+			else
+			{
+				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y, boyfriend.curCharacter));
+			}
 			// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 		}
 
@@ -1855,17 +1863,13 @@ class PlayState extends MusicBeatState
 					camFollow.x = dad.getMidpoint().x + 50;
 				case 'three-gfs':
 					camFollow.x = dad.getMidpoint().x + 50;
+					camFollow.y = dad.getMidpoint().y + 50;
 				case 'skyblue':
 					camFollow.x = dad.getMidpoint().x + 100;
 				case 'tails-doll':
 					camFollow.x = dad.getMidpoint().x + 100;
-					camFollow.y = dad.getMidpoint().y - 150;
+					camFollow.y = dad.getMidpoint().y;
 					
-			}
-
-			if (curSong == 'tutorial')
-			{
-				tweenCamIn();
 			}
 			
 			bfNoteCamOffset[0] = 0;
@@ -1899,12 +1903,6 @@ class PlayState extends MusicBeatState
 
 			camFollow.x += bfNoteCamOffset[0];
 			camFollow.y += bfNoteCamOffset[1];
-				
-
-			if (curSong == 'tutorial')
-			{
-				FlxTween.tween(FlxG.camera, {zoom: 1}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut});
-			}
 		}
 	}
 		
@@ -1941,6 +1939,7 @@ class PlayState extends MusicBeatState
 		timeLabelTxt.visible = false;
 		canPause = false;
 		updateTime = false;
+		AnimationDebug.cameViaSong = false;
 		
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
@@ -2756,6 +2755,10 @@ class PlayState extends MusicBeatState
 			{
 				gf.dance();
 			}
+			else
+			{
+				gf.dance();
+			}
 		}
 
 		if (curBeat % 2 == 0)
@@ -2789,17 +2792,14 @@ class PlayState extends MusicBeatState
 	
 	function gfString()
 	{
-		return gf.animation.getByName("singLEFT") != null 
-		|| gf.animation.getByName("singUP") != null
-		|| gf.animation.getByName("singDOWN") != null
-		|| gf.animation.getByName("singRIGHT") != null;
+		return Character.tutorialGFs.contains(gf.curCharacter);
 	}
 	
 	public function changeDad(char:String):Void
 	{
 		boyfriend.stunned = true; //hopefully this stun stuff should prevent BF from randomly missing a note
 		remove(dad);
-		dad = new Character(100, 100, char);
+		dad = new Character(100, 100, char, 'dad');
 		dad.x += dad.charOffset[0];
 		dad.y += dad.charOffset[1];
 		if (curSong == 'splitathon' || curSong == 'mealie')

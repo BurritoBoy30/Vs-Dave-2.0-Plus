@@ -1,0 +1,7 @@
+bambi_angryboy
+0' '-200
+prefix' '0' '0' 'idle' 'DaveAngry idle dance' 'false' '24
+prefix' '0' '0' 'singUP' 'DaveAngry Sing Note UP' 'false' '24
+prefix' '0' '0' 'singRIGHT' 'DaveAngry Sing Note RIGHT' 'false' '24
+prefix' '0' '0' 'singDOWN' 'DaveAngry Sing Note DOWN' 'false' '24
+prefix' '0' '0' 'singLEFT' 'DaveAngry Sing Note LEFT' 'false' '24

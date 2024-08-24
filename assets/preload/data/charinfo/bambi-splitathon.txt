@@ -1,0 +1,7 @@
+Splitathon_Bambi
+175' '450
+prefix' '0' '0' 'idle' 'Idle' 'false' '18
+prefix' '-20' '-10' 'singDOWN' 'Down' 'false' '27
+prefix' '-24' '15' 'singUP' 'Up' 'false' '27
+prefix' '-3' '6' 'singLEFT' 'Left' 'false' '27
+prefix' '-34' '-6' 'singRIGHT' 'Right' 'false' '27

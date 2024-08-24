@@ -1,0 +1,7 @@
+girlfriends/SKYBLUE
+20' '-70
+prefix' '0' '0' 'idle' 'SKYBLUE IDLE' 'false' '24
+prefix' '-55' '92' 'singUP' 'SKYBLUE UP' 'false' '24
+prefix' '271' '-140' 'singLEFT' 'SKYBLUE LEFT' 'false' '24
+prefix' '-191' '28' 'singRIGHT' 'SKYBLUE RIGHT' 'false' '24
+prefix' '-29' '-181' 'singDOWN' 'SKYBLUE DOWN' 'false' '24

@@ -65,7 +65,7 @@ class FreeplayState extends MusicBeatState
 		CurrentSongIcon.y = (FlxG.height / 2) - 256;
 		CurrentSongIcon.antialiasing = FlxG.save.data.antiAliasing;
 
-		NameAlpha = new FlxText(0,(FlxG.height / 2) - 282, FlxG.width, ReturnLanguage.text(AllPossibleSongs[CurrentPack].toLowerCase()));
+		NameAlpha = new FlxText(0,(FlxG.height / 2) - 282, FlxG.width, ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase()));
 		NameAlpha.setFormat(Paths.font("comic.ttf"), 90, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		NameAlpha.borderSize = 3;
 		NameAlpha.antialiasing = FlxG.save.data.antiAliasing;
@@ -222,7 +222,7 @@ class FreeplayState extends MusicBeatState
 		{
 			CurrentPack = 0;
 		}
-		NameAlpha.text = ReturnLanguage.text(AllPossibleSongs[CurrentPack].toLowerCase());
+		NameAlpha.text = ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase());
 		CurrentSongIcon.loadGraphic(Paths.image('week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
 	}
 
@@ -406,7 +406,7 @@ class FreeplayState extends MusicBeatState
 		if (Math.abs(lerpScore - intendedScore) <= 10)
 			lerpScore = intendedScore;
 
-		scoreText.text = ReturnLanguage.text('personalbest') + lerpScore;
+		scoreText.text = ReturnLanguage.getLine('personalbest') + lerpScore;
 	}
 
 	function changeSelection(change:Int = 0)
@@ -467,13 +467,13 @@ class FreeplayState extends MusicBeatState
 		theGF = curGfChar.toLowerCase();
 		
 		if (CharacterSelectState.noGfChar.contains(theBF))
-			diffText.text = ReturnLanguage.text(songs[curSelected].diffculty.toLowerCase()) + " - (" + curBfChar.toUpperCase() + ")";
+			diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toLowerCase()) + " - (" + curBfChar.toUpperCase() + ")";
 		else
 		{
 			if (!FlxG.save.data.hornyALL && CharacterSelectState.hornyGFs.contains(theGF))
-				diffText.text = ReturnLanguage.text(songs[curSelected].diffculty.toLowerCase()) + " - (" + curBfChar.toUpperCase() + " - " + 'GF' + ")";
+				diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toLowerCase()) + " - (" + curBfChar.toUpperCase() + " - " + 'GF' + ")";
 			else
-				diffText.text = ReturnLanguage.text(songs[curSelected].diffculty.toLowerCase()) + " - (" + curBfChar.toUpperCase() + " - " + curGfChar.toUpperCase() + ")";
+				diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toLowerCase()) + " - (" + curBfChar.toUpperCase() + " - " + curGfChar.toUpperCase() + ")";
 		}
 		
 	}

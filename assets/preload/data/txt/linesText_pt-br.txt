@@ -1,0 +1,40 @@
+// Song UI //
+time==Tempo
+score==Pontuação::space:
+misses==Falhas::space:
+accuracy==Precisão::space:
+songcredit==Música por:space:
+
+// Freeplay //
+personalbest==RECORDE PESSOAL::space:
+easy==Fácil
+normal==Normal
+hard==Difícil
+extreme==Extremo
+stupid==Estúpido
+fucked==Você está fudido
+dave==Dave
+golden==Dourado
+joke==Piada
+extra==Extras
+console==Abrir Console
+
+// Pause Menu UI //
+resume==Resumir
+restart==Reiniciar Música
+botplay==Botplay
+exit==Sair para o Menu
+botplayScreen==BOTPLAY
+
+// Options //
+ghosttapping==Ghost Tapping
+downscroll==Downscroll
+accdisplay==Display de Precisão
+naughtiness==Safadeza
+changekeys==Trocar Binds
+fullscreen==Tela Cheia
+eyesores==Efeitos Vibrantes
+changelang==Change Language
+antialiasing==Anti Aliasing
+cammove==Movimento da Câmera
+gfsings==Girlfriend Canta

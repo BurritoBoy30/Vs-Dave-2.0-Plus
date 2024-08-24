@@ -1,0 +1,7 @@
+bombai
+-675' '-500
+prefix' '0' '50' 'idle' 'IDLE' 'false' '30
+prefix' '60' '50' 'singUP' 'UP' 'false' '24
+prefix' '-60' '110' 'singRIGHT' 'RIGHT' 'false' '24
+prefix' '-5' '40' 'singDOWN' 'DOWN' 'false' '24
+prefix' '0' '30' 'singLEFT' 'LEFT' 'false' '24

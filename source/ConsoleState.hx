@@ -77,6 +77,7 @@ class ConsoleState extends MusicBeatState
 					addNewLine(ReturnLanguage.console('shutdown'), false); 
 					new FlxTimer().start(1, function(tmr:FlxTimer)
 					{
+						FlxG.sound.playMusic(Paths.music('freakyMenu'));
 						FlxG.switchState(new FreeplayState());
 					});
 				}
@@ -195,7 +196,7 @@ class ConsoleState extends MusicBeatState
 		switch (returnText)
 		{
 			case 'dispenser':
-				if (FlxG.save.data.hornyALL)
+				if (!FlxG.save.data.hornyALL)
 				{
 					addNewLine(ReturnLanguage.console('notallowed'));
 				}

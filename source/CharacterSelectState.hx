@@ -296,63 +296,7 @@ class CharacterSelectState extends MusicBeatState
 					{
 						buttonNumber = item.arrayNum;
 						
-						switch (buttonNumber)
-						{
-							case 1:
-								isPressed(saveBox);
-								if (!noTextPop)
-								{
-									if (isTails)
-									{
-										popUpText('Tails Doll is On!');
-										FlxG.sound.play(Paths.sound('missnote1'));
-									}
-									else if (!isTails)
-									{
-										popUpText('Saved!');
-										FlxG.sound.play(Paths.sound('confirmMenu'));
-										
-										FlxG.save.data.savedBfData = curBF;	
-										FlxG.save.data.savedBfFormData = curFormBF;
-										FlxG.save.data.savedGfData = curGF;
-										FlxG.save.data.savedGfFormData = curFormGF;
-									}
-								}
-							case 2:
-								isPressed(loadBox);
-								if (!noTextPop)
-								{
-									if (isTails)
-									{
-										popUpText('Tails Doll is On!');
-										FlxG.sound.play(Paths.sound('missnote1'));
-									}
-									else if (!isTails)
-									{
-										popUpText('Loaded!');
-										FlxG.sound.play(Paths.sound('confirmMenu'));
-										
-										curBF = FlxG.save.data.savedBfData;	
-										curFormBF = FlxG.save.data.savedBfFormData;
-										curGF = FlxG.save.data.savedGfData;
-										curFormGF = FlxG.save.data.savedGfFormData;
-														
-										UpdateBF();
-										UpdateGF();	
-										updateGfUI();
-										trace('fully loaded');
-									}
-								}
-							case 3:
-								if (tailsBox.visible)
-								{
-									isPressed(tailsBox);
-									isTails = !isTails;
-								
-									UpdateGF(isTails);	
-									updateGfUI();
-								}
-						}
+						fuckingFunctions();
 					}
 				}
 				
@@ -445,6 +389,67 @@ class CharacterSelectState extends MusicBeatState
 		if (gfString()) {
 			girlfriendChar.canDance = false;
 			girlfriendChar.playAnim(anim, true);
+		}
+	}
+	
+	function fuckingFunctions()
+	{
+		switch (buttonNumber)
+		{
+			case 1:
+				isPressed(saveBox);
+				if (!noTextPop)
+				{
+					if (isTails)
+					{
+						popUpText('Tails Doll is On!');
+						FlxG.sound.play(Paths.sound('missnote1'));
+					}
+					else if (!isTails)
+					{
+						popUpText('Saved!');
+						FlxG.sound.play(Paths.sound('confirmMenu'));
+						
+						FlxG.save.data.savedBfData = curBF;	
+						FlxG.save.data.savedBfFormData = curFormBF;
+						FlxG.save.data.savedGfData = curGF;
+						FlxG.save.data.savedGfFormData = curFormGF;
+					}
+				}
+			case 2:
+				isPressed(loadBox);
+				if (!noTextPop)
+				{
+					if (isTails)
+					{
+						popUpText('Tails Doll is On!');
+						FlxG.sound.play(Paths.sound('missnote1'));
+					}
+					else if (!isTails)
+					{
+						popUpText('Loaded!');
+						FlxG.sound.play(Paths.sound('confirmMenu'));
+						
+						curBF = FlxG.save.data.savedBfData;	
+						curFormBF = FlxG.save.data.savedBfFormData;
+						curGF = FlxG.save.data.savedGfData;
+						curFormGF = FlxG.save.data.savedGfFormData;
+										
+						UpdateBF();
+						UpdateGF();	
+						updateGfUI();
+						trace('fully loaded');
+					}
+				}
+			case 3:
+				if (tailsBox.visible)
+				{
+					isPressed(tailsBox);
+					isTails = !isTails;
+				
+					UpdateGF(isTails);	
+					updateGfUI();
+				}
 		}
 	}
 	

@@ -1,0 +1,13 @@
+girlfriends/GF_Bent_New
+0' '-5
+prefix' '0' '-3' 'cheer' 'GF Cheer' 'false' '24
+prefix' '0' '-20' 'singLEFT' 'GF left note' 'false' '24
+prefix' '0' '-22' 'singRIGHT' 'GF Right Note' 'false' '24
+prefix' '0' '-2' 'singUP' 'GF Up Note' 'false' '24
+prefix' '0' '-23' 'singDOWN' 'GF Down Note' 'false' '24
+indices' '-2' -18' 'sad' 'gf sad' '0,1,2,3,4,5,6,7,8,9,10,11,12' 'false' '24
+indices' '0' '-9' 'danceLeft' 'GF Dancing Beat' '30,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14' 'false' '24
+indices' '0' '-9' 'danceRight' 'GF Dancing Beat' '15,16,17,18,19,20,21,22,23,24,25,26,27,28,29' 'false' '24
+indices' '64' '-7' 'hairBlow' 'GF Dancing Beat Hair blowing' '0,1,2,3' 'true' '24
+indices' '0' '-9' 'hairFall' 'GF Dancing Beat Hair Landing' '0,1,2,3,4,5,6,7,8,9,10,11' 'false' '24
+prefix' '-2' '-20' 'scared' 'GF FEAR' 'true' '24

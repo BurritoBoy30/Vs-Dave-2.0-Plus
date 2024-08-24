@@ -1,0 +1,7 @@
+Dave_insanity_lol
+150' '270
+prefix' '0' '0' 'idle' 'Dave Idle' 'false' '12
+prefix' '7' '5' 'singUP' 'Dave Sing Up' 'false' '12
+prefix' '-36' '-1' 'singRIGHT' 'Dave Sing Right' 'false' '12
+prefix' '-9' '-33' 'singDOWN' 'Dave Sing Down' 'false' '12
+prefix' '7' '4' 'singLEFT' 'Dave Sing Left' 'false' '12

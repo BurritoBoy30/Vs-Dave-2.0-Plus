@@ -178,7 +178,7 @@ class Option
 
 	public function new(namesData:String, ?selectorsData:Bool = false)
 	{
-		names = ReturnLanguage.text(namesData);
+		names = ReturnLanguage.getLine(namesData);
 		
 		selectors = selectorsData;
 	}
