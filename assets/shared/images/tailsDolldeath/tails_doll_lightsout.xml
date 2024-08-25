@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="tails_doll_lightsout.png">
+<SubTexture name="tails_doll nolight0000" x="0" y="0" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+<SubTexture name="tails_doll nolight0001" x="1280" y="0" width="1280" height="994" frameX="0" frameY="0" frameWidth="1280" frameHeight="994" />
+</TextureAtlas>

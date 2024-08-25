@@ -81,6 +81,7 @@ class CharacterSelectState extends MusicBeatState
 		boyfriendData = [
 			new SelectableChar(['bf', 'bf-christmas', 'bf-pixel']),
 			new SelectableChar(['bf-with-gf', 'bf-with-cyan']),
+			new SelectableChar(['chris', 'chris-christmas']),
 			new SelectableChar(['gf-player']),
 			new SelectableChar(['rapper-gf']),
 			new SelectableChar(['oruta'])
@@ -241,7 +242,7 @@ class CharacterSelectState extends MusicBeatState
 		
 		super.update(elapsed);
 		
-		tailsBox.visible = FlxG.save.data.hornyGF && FlxG.save.data.hornyALL;
+		tailsBox.visible = FlxG.save.data.hornyGF && FlxG.save.data.hornyALL && !noGfChar.contains(boyfriendChar.curCharacter);
 		girlfriendChar.visible = !noGfChar.contains(boyfriendChar.curCharacter);
 		
 		if (!selectedCharacter)
@@ -376,10 +377,7 @@ class CharacterSelectState extends MusicBeatState
 	
 	function gfString()
 	{
-		return girlfriendChar.animation.getByName("singLEFT") != null 
-		|| girlfriendChar.animation.getByName("singUP") != null
-		|| girlfriendChar.animation.getByName("singDOWN") != null
-		|| girlfriendChar.animation.getByName("singRIGHT") != null;
+		return Character.tutorialGFs.contains(girlfriendChar.curCharacter);
 	}
 	
 	function charAnim(anim:String)
@@ -511,7 +509,8 @@ class CharacterSelectState extends MusicBeatState
 			girlfriendData = [
 				new SelectableChar(['gf', 'gf-christmas', 'gf-standing', 'gf-pixel']),
 				new SelectableChar(['psyka', 'psyka-christmas', 'psyka-standing']),
-				new SelectableChar(['cyan', 'cyan-christmas'])
+				new SelectableChar(['cyan', 'cyan-christmas']),
+				new SelectableChar(['kaity', 'kaity-christmas'])
 			];
 		}
 	}
@@ -699,7 +698,7 @@ class SelectableChar
 		names = namesData;
 		for (i in 0...namesData.length)
 		{
-			displayNames.push(ReturnLanguage.char(namesData[i]));
+			displayNames.push(ReturnLanguage.getLine(namesData[i]));
 		}
 	}
 }

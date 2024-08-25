@@ -51,6 +51,8 @@ class HealthIcon extends FlxSprite
 				{
 					case 'bf-christmas':
 						realChar = 'bf';
+					case 'chris-christmas':
+						realChar = 'chris';
 					case 'gf-christmas' | 'gf-standing' | 'gf-hot' | 'gf-hot-christmas' | 'gf-hot-funny' | 'gf-hot-standing':
 						realChar = 'gf';
 					case 'psyka-christmas' |  'psyka-standing':

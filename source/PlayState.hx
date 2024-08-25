@@ -485,7 +485,15 @@ class PlayState extends MusicBeatState
 		if (dad.curCharacter == 'tails-doll' || gf.curCharacter == 'tails-doll')
 		{
 			preloadAsset('tailsDolldeath/tails_doll');
+			preloadAsset('tailsDolldeath/tails_doll_lightsout');
+			preloadAsset('tailsDolldeath/bg');
+			preloadAsset('tailsDolldeath/bg_lightsout');
 			preloadAsset('tailsDolldeath/deathStatic');
+		}
+		
+		if (FlxG.save.data.hornyALL)
+		{
+			preloadAsset('gfbounce', 'preload');
 		}
 		
 		if (SONG.song.toLowerCase() == 'kabunga') //i desperately wanted it so if you use downscroll it switches it to upscroll and flips the entire hud upside down but i never got to it
@@ -2852,13 +2860,13 @@ class PlayState extends MusicBeatState
 		}
 	}
 	
-	public function preloadAsset(graphic:String) //preload assets
+	public function preloadAsset(graphic:String, folder:String = 'shared') //preload assets
 	{
 		if (boyfriend != null)
 		{
 			boyfriend.stunned = true;
 		}
-		var newthing:FlxSprite = new FlxSprite(9000,-9000).loadGraphic(Paths.image(graphic));
+		var newthing:FlxSprite = new FlxSprite(9000,-9000).loadGraphic(Paths.image(graphic, folder));
 		add(newthing);
 		remove(newthing);
 		if (boyfriend != null)
@@ -2867,7 +2875,7 @@ class PlayState extends MusicBeatState
 		}
 	}
 	
-	public function preloadChar(graphic:String) //preload assets
+	public function preloadChar(graphic:String) //preload characters
 	{
 		if (boyfriend != null)
 		{

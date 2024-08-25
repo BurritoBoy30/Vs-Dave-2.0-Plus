@@ -22,8 +22,9 @@ class Character extends FlxSprite
 	public var charOffset:Array<Float> = [0,0];
 	public var animationsArray:Array<String> = [];
 	
-	public static var tutorialGFs:Array<String> = ['gf', 'gf-christmas', 'cyan', 'cyan-christmas', 'psyka', 'psyka-christmas', 'gf-massive', 'gf-hot', 'gf-hot-christmas', 'gf-hot-funny', 'tails-doll', 'skyblue', 'three-gfs'];
-
+	public static var tutorialGFs:Array<String> = ['gf', 'gf-christmas', 'cyan', 'cyan-christmas', 'psyka', 'psyka-christmas', 'gf-massive', 'gf-hot', 'gf-hot-christmas', 'gf-hot-funny', 'tails-doll', 'skyblue', 'three-gfs', 'kaity'];
+	var bfList:Array<String> = [];
+	
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:String = 'bf')
 	{
 		super(x, y);
@@ -36,13 +37,13 @@ class Character extends FlxSprite
 		
 		trace('get char: ' + curCharacter);
 		
+		bfList = CoolUtil.coolTextFile(Paths.txt('boyfriendList'));
+		
 		loadCharInfo(curCharacter);
 		
-		switch (curCharacter)
+		if (bfList.contains(curCharacter) || ['bf-pixel-dead', 'rapper-gf-dead', 'bambi-joke'].contains(curCharacter))
 		{
-			case 'bf' | 'bf-christmas' | 'bf-pixel' | 'bf-pixel-dead' | 'bf-with-gf' | 'bf-with-cyan' | 'rapper-gf' | 'rapper-gf-dead' |
-				'gf-player' | 'bambi-joke':
-				flipX = true;
+			flipX = true;
 		}
 		
 		switch (curCharacter)
@@ -56,12 +57,11 @@ class Character extends FlxSprite
 				height -= 100;
 				
 				antialiasing = false;
+				
 			case 'bf-pixel-dead':				
 				setGraphicSize(Std.int(width * 6));
 				updateHitbox();
-			// BOYFRIEND LIST END
-			
-			// DAD LIST START
+				
 			case 'dave':				
 				setGraphicSize(Std.int(width * 1.1));
 				updateHitbox();
@@ -108,8 +108,6 @@ class Character extends FlxSprite
 			case 'bombai':		
 				scale.set(0.8, 0.8);
 				updateHitbox();
-
-			// DAD LIST END
 				
 			case 'gf-pixel':
 				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
@@ -128,7 +126,7 @@ class Character extends FlxSprite
 		switch (curCharacter)
 		{
 			case 'bambi-piss-3d' | 'gf' | 'gf-christmas' | 'gf-standing' | 'gf-pixel' | 'cyan' | 'cyan-christmas' | 'psyka' | 'psyka-christmas' | 'psyka-standing' |
-				'gf-massive' | 'gf-hot' | 'gf-hot-funny' | 'gf-hot-christmas' | 'gf-hot-standing' | 'three-gfs':
+				'gf-massive' | 'gf-hot' | 'gf-hot-funny' | 'gf-hot-christmas' | 'gf-hot-standing' | 'three-gfs' | 'kaity' | 'kaity-christmas':
 				playAnim('danceRight');
 			case 'bf-pixel-dead' | 'rapper-gf-dead':
 				playAnim('firstDeath');
@@ -145,7 +143,7 @@ class Character extends FlxSprite
 			flipX = !flipX;
 
 			// Doesn't flip for BF, since his are already in the right place???
-			if (!(curCharacter.startsWith('bf') || curCharacter == 'gf-player' || curCharacter.startsWith('rapper-gf') || curCharacter == 'oruta'))
+			if (!(bfList.contains(curCharacter)))
 			{
 				// var animArray
 				var oldRight = animation.getByName('singRIGHT').frames;
@@ -247,7 +245,8 @@ class Character extends FlxSprite
 			switch (curCharacter)
 			{
 				case 'gf' | 'gf-christmas' | 'gf-standing' | 'gf-pixel' | 'psyka' | 'psyka-christmas' | 'psyka-standing'  | 'cyan' |
-					'cyan-christmas' | 'gf-massive' | 'gf-hot' | 'gf-hot-christmas' | 'gf-hot-funny' | 'gf-hot-standing' | 'three-gfs':
+					'cyan-christmas' | 'gf-massive' | 'gf-hot' | 'gf-hot-christmas' | 'gf-hot-funny' | 'gf-hot-standing' | 'three-gfs' | 'kaity' |
+					'kaity-christmas':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;

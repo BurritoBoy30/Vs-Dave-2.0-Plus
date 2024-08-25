@@ -38,3 +38,36 @@ changelang==Change Language
 antialiasing==Anti Aliasing
 cammove==Camera Movement
 gfsings==Girlfriend Sings
+
+// Character Names //
+bf==Boyfriend
+bf-christmas==Boyfriend (Christmas)
+bf-pixel==Boyfriend (Pixel)
+bf-with-gf==Boyfriend w/ Girlfriend
+bf-with-cyan==Boyfriend w/ Cyan
+chris==Chris
+chris-christmas==Chris (Christmas)
+gf-player==Girlfriend (Playable)
+rapper-gf==Rapper Girlfriend
+oruta==Oruta
+
+gf==Girlfriend
+gf-christmas==Girlfriend (Christmas)
+gf-standing==Girlfriend (Standing)
+gf-pixel==Girlfriend (Pixel)
+psyka==Psyka
+psyka-christmas==Psyka (Christmas)
+psyka-standing==Psyka (Standing)
+cyan==Cyan
+cyan-christmas==Cyan (Christmas)
+kaity==Kaity
+kaity-christmas==Kaity (Christmas)
+gf-hot==Hot Girlfriend
+gf-hot-funny==Hot Girlfriend (Sex Mod)
+gf-hot-christmas==Hot Girlfriend (Natal)
+gf-hot-standing==Hot Girlfriend (Standing)
+gf-massive==Massive Girlfriend
+three-gfs==The Three Girlfriends
+gf-trepidation==Trepidation Girlfriend
+skyblue==Skyblue
+tails-doll==Busty Tails Doll

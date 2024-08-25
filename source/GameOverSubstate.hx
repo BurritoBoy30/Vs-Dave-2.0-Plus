@@ -27,12 +27,10 @@ class GameOverSubstate extends MusicBeatSubstate
 			case 'bf-pixel':
 				stageSuffix = '-pixel';
 				daBf = 'bf-pixel-dead';
-			case 'gf-player':
-				daBf = 'gf-player';
 			case 'rapper-gf':
 				daBf = 'rapper-gf-dead';
 			default:
-				daBf = 'bf';
+				daBf = char;
 		}
 
 		Conductor.songPosition = 0;
