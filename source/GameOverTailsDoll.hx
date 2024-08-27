@@ -76,7 +76,7 @@ class GameOverTailsDoll extends MusicBeatSubstate
 		//start up cutscene
 		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(blackCutscene, {alpha: 0}, 1.5, {ease: FlxEase.quadOut});
+			FlxTween.tween(blackCutscene, {alpha: 0}, 2, {ease: FlxEase.quadOut});
 			
 			new FlxTimer().start(3, function(tmr:FlxTimer)
 			{

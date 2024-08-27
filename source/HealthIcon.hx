@@ -24,7 +24,8 @@ class HealthIcon extends FlxSprite
 		'bambi-piss-3d',
 		'exbungo',
 		'bombu',
-		'bombai'
+		'bombai',
+		'hell-expunged'
 	];
 	public var isPlayer:Bool;
 	

@@ -45,7 +45,17 @@ class Note extends FlxSprite
 
 	private var InPlayState:Bool = false;
 
-	public static var CharactersWith3D:Array<String> = ["dave-angey", "bambi-3d", 'bambi-unfair', 'dave-split-3d', 'bambi-piss-3d', 'exbungo', 'bombu', 'bombai'];
+	public static var CharactersWith3D:Array<String> = [
+		"dave-angey",
+		"bambi-3d",
+		'bambi-unfair',
+		'dave-split-3d',
+		'bambi-piss-3d',
+		'exbungo',
+		'bombu',
+		'bombai',
+		'hell-expunged'
+	];
 
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?musthit:Bool = true, noteStyle:String = "normal")
 	{

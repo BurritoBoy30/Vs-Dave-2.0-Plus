@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="hell_expunged.png">
+<SubTexture name="hell_expunged left0000" x="0" y="2143" width="1146" height="885" frameX="-3" frameY="-298" frameWidth="1200" frameHeight="1200" />
+<SubTexture name="hell_expunged left0001" x="1146" y="2143" width="984" height="848" frameX="-135" frameY="-310" frameWidth="1200" frameHeight="1200" />
+<SubTexture name="hell_expunged left0002" x="2478" y="891" width="831" height="815" frameX="-267" frameY="-315" frameWidth="1200" frameHeight="1200" />
+<SubTexture name="hell_expunged left0003" x="3417" y="0" width="695" height="778" frameX="-378" frameY="-319" frameWidth="1200" frameHeight="1200" />
+<SubTexture name="hell_expunged up0000" x="0" y="0" width="462" height="1151" frameX="-238" frameY="-3" frameWidth="900" frameHeight="1200" />
+<SubTexture name="hell_expunged up0001" x="462" y="0" width="466" height="1110" frameX="-236" frameY="-44" frameWidth="900" frameHeight="1200" />
+<SubTexture name="hell_expunged up0002" x="928" y="0" width="472" height="1075" frameX="-234" frameY="-79" frameWidth="900" frameHeight="1200" />
+<SubTexture name="hell_expunged up0003" x="1400" y="0" width="476" height="1040" frameX="-232" frameY="-116" frameWidth="900" frameHeight="1200" />
+<SubTexture name="hell_expunged right0000" x="2710" y="3028" width="1141" height="670" frameX="-238" frameY="-350" frameWidth="1400" frameHeight="1200" />
+<SubTexture name="hell_expunged right0001" x="793" y="3028" width="1087" height="727" frameX="-205" frameY="-296" frameWidth="1400" frameHeight="1200" />
+<SubTexture name="hell_expunged right0002" x="2130" y="2143" width="1077" height="825" frameX="-153" frameY="-195" frameWidth="1400" frameHeight="1200" />
+<SubTexture name="hell_expunged right0003" x="2478" y="0" width="939" height="891" frameX="-111" frameY="-122" frameWidth="1400" frameHeight="1200" />
+<SubTexture name="hell_expunged down0000" x="0" y="3792" width="900" height="589" frameX="0" frameY="-490" frameWidth="900" frameHeight="1200" />
+<SubTexture name="hell_expunged down0001" x="4112" y="0" width="872" height="641" frameX="-19" frameY="-439" frameWidth="900" frameHeight="1200" />
+<SubTexture name="hell_expunged down0002" x="1880" y="3028" width="830" height="706" frameX="-43" frameY="-376" frameWidth="900" frameHeight="1200" />
+<SubTexture name="hell_expunged down0003" x="0" y="3028" width="793" height="764" frameX="-61" frameY="-317" frameWidth="900" frameHeight="1200" />
+<SubTexture name="hell_expunged idle0000" x="1468" y="1151" width="845" height="918" frameX="-1" frameY="-122" frameWidth="900" frameHeight="1200" />
+<SubTexture name="hell_expunged idle0001" x="694" y="1151" width="774" height="969" frameX="-45" frameY="-100" frameWidth="900" frameHeight="1200" />
+<SubTexture name="hell_expunged idle0002" x="0" y="1151" width="694" height="992" frameX="-94" frameY="-86" frameWidth="900" frameHeight="1200" />
+<SubTexture name="hell_expunged idle0003" x="1876" y="0" width="602" height="1002" frameX="-151" frameY="-78" frameWidth="900" frameHeight="1200" />
+</TextureAtlas>

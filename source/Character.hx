@@ -24,6 +24,7 @@ class Character extends FlxSprite
 	
 	public static var tutorialGFs:Array<String> = ['gf', 'gf-christmas', 'cyan', 'cyan-christmas', 'psyka', 'psyka-christmas', 'gf-massive', 'gf-hot', 'gf-hot-christmas', 'gf-hot-funny', 'tails-doll', 'skyblue', 'three-gfs', 'kaity'];
 	var bfList:Array<String> = [];
+	var gfList:Array<String> = [];
 	
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:String = 'bf')
 	{
@@ -38,6 +39,7 @@ class Character extends FlxSprite
 		trace('get char: ' + curCharacter);
 		
 		bfList = CoolUtil.coolTextFile(Paths.txt('boyfriendList'));
+		gfList = CoolUtil.coolTextFile(Paths.txt('girlfriendList'));
 		
 		loadCharInfo(curCharacter);
 		
@@ -121,26 +123,35 @@ class Character extends FlxSprite
 			case 'gf-trepidation':			
 				scale.set(0.75, 0.75);
 				updateHitbox();
+				
+			case 'hell-expunged':
+				antialiasing = false;
 		}
 		
-		switch (curCharacter)
+		if (gfList.contains(curCharacter) && !['tails-doll', 'skyblue', 'gf-trepidation'].contains(curCharacter)
+			|| ['bambi-piss-3d'].contains(curCharacter))
 		{
-			case 'bambi-piss-3d' | 'gf' | 'gf-christmas' | 'gf-standing' | 'gf-pixel' | 'cyan' | 'cyan-christmas' | 'psyka' | 'psyka-christmas' | 'psyka-standing' |
-				'gf-massive' | 'gf-hot' | 'gf-hot-funny' | 'gf-hot-christmas' | 'gf-hot-standing' | 'three-gfs' | 'kaity' | 'kaity-christmas':
-				playAnim('danceRight');
-			case 'bf-pixel-dead' | 'rapper-gf-dead':
-				playAnim('firstDeath');
-			case 'gf-trepidation':
-				playAnim('danceRight1');
-			default:
-				playAnim('idle');
+			playAnim('danceRight');
+		}
+		else
+		{
+			switch (curCharacter)
+			{
+				case 'bf-pixel-dead' | 'rapper-gf-dead':
+					playAnim('firstDeath');
+				case 'gf-trepidation':
+					playAnim('danceRight1');
+				default:
+					playAnim('idle');
+			}
 		}
 
 		dance();
 
 		if (isPlayer == 'bf')
 		{
-			flipX = !flipX;
+			if (curCharacter != 'oruta')
+				flipX = !flipX;
 
 			// Doesn't flip for BF, since his are already in the right place???
 			if (!(bfList.contains(curCharacter)))

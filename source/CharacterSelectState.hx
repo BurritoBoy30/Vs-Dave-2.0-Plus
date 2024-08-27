@@ -109,34 +109,20 @@ class CharacterSelectState extends MusicBeatState
 		
 		Conductor.changeBPM(110);
 		
-		var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('dave/sky_night'));
-		bg.antialiasing = FlxG.save.data.antiAliasing;
-		bg.scrollFactor.set(0.9, 0.9);
-		bg.active = false;
+		var bg:BackgroundImg = new BackgroundImg(-600, -200, 'dave/sky_night', 0.9, 0.9);
 		add(bg);
-	
-		var stageHills:FlxSprite = new FlxSprite(-225, -125).loadGraphic(Paths.image('dave/hills_night'));
-		stageHills.setGraphicSize(Std.int(stageHills.width * 1.25));
-		stageHills.updateHitbox();
-		stageHills.antialiasing = FlxG.save.data.antiAliasing;
-		stageHills.scrollFactor.set(1, 1);
-		stageHills.active = false;
-		add(stageHills);
-	
-		var gate:FlxSprite = new FlxSprite(-225, -125).loadGraphic(Paths.image('dave/gate_night'));
-		gate.setGraphicSize(Std.int(gate.width * 1.2));
-		gate.updateHitbox();
-		gate.antialiasing = FlxG.save.data.antiAliasing;
-		gate.scrollFactor.set(0.925, 0.925);
-		gate.active = false;
-		add(gate);
 		
-		var stageFront:FlxSprite = new FlxSprite(-225, -125).loadGraphic(Paths.image('dave/grass_night'));
-		stageFront.setGraphicSize(Std.int(stageFront.width * 1.2));
-		stageFront.updateHitbox();
-		stageFront.antialiasing = FlxG.save.data.antiAliasing;
-		stageFront.scrollFactor.set(0.9, 0.9);
-		stageFront.active = false;
+		var stageHills:BackgroundImg = new BackgroundImg(-225, -125, 'dave/hills_night');
+		stageHills.setImageSize(1.25);
+		add(stageHills);
+		
+		var stageHills:BackgroundImg = new BackgroundImg(-225, -125, 'dave/gate_night', 0.925, 0.925);
+		stageHills.setImageSize(1.2);
+		stageHills.updateHitbox();
+		add(stageHills);
+		
+		var stageFront:BackgroundImg = new BackgroundImg(-225, -125, 'dave/grass_night', 0.9, 0.9);
+		stageFront.setImageSize(1.2);
 		add(stageFront);
 
 		camGame.zoom = 0.75;

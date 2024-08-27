@@ -1,0 +1,7 @@
+hell_expunged
+-550' '-550
+prefix' '0' '0' 'idle' 'hell_expunged idle' 'false' '10
+prefix' '90' '80' 'singUP' 'hell_expunged up' 'false' '18
+prefix' '-150' '-51' 'singRIGHT' 'hell_expunged right' 'false' '18
+prefix' '420' '10' 'singLEFT' 'hell_expunged left' 'false' '18
+prefix' '90' '-10' 'singDOWN' 'hell_expunged down' 'false' '18
