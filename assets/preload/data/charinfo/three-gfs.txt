@@ -1,10 +1,10 @@
 girlfriends/GFGAWDl
 -132' '-70
-prefix' '2' -32' 'cheer' 'GF Cheer' 'false' '24
-prefix' '32' -35' 'singLEFT' 'GF left note' 'false' '24
-prefix' '-47' -35' 'singRIGHT' 'GF Right Note' 'false' '24
-prefix' '-24' -30' 'singUP' 'GF Up Note' 'false' '24
-prefix' '-35' -35' 'singDOWN' 'GF Down Note' 'false' '24
+prefix' '2' '-32' 'cheer' 'GF Cheer' 'false' '24
+prefix' '32' '-35' 'singLEFT' 'GF left note' 'false' '24
+prefix' '-47' '-35' 'singRIGHT' 'GF Right Note' 'false' '24
+prefix' '-24' '-30' 'singUP' 'GF Up Note' 'false' '24
+prefix' '-35' '-35' 'singDOWN' 'GF Down Note' 'false' '24
 indices' '-47' '-35' 'sad' 'gf sad' '0,1,2,3,4,5,6,7,8,9,10,11,12' 'false' '24
 prefix' '0' '-9' 'danceLeft' 'dancingLEFT' 'false' '24
 prefix' '0' '-9' 'danceRight' 'dancingRIGHT' 'false' '24

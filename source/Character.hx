@@ -22,7 +22,23 @@ class Character extends FlxSprite
 	public var charOffset:Array<Float> = [0,0];
 	public var animationsArray:Array<String> = [];
 	
-	public static var tutorialGFs:Array<String> = ['gf', 'gf-christmas', 'cyan', 'cyan-christmas', 'psyka', 'psyka-christmas', 'gf-massive', 'gf-hot', 'gf-hot-christmas', 'gf-hot-funny', 'tails-doll', 'skyblue', 'three-gfs', 'kaity'];
+	public static var tutorialGFs:Array<String> = [
+		'gf',
+		'gf-christmas',
+		'cyan',
+		'cyan-christmas',
+		'psyka',
+		'psyka-christmas',
+		'gf-massive',
+		'gf-hot',
+		'gf-hot-christmas',
+		'gf-hot-funny',
+		'tails-doll',
+		'skyblue',
+		'three-gfs',
+		'kaity'
+	];
+	
 	var bfList:Array<String> = [];
 	var gfList:Array<String> = [];
 	

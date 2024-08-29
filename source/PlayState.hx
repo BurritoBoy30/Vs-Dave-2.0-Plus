@@ -558,37 +558,22 @@ class PlayState extends MusicBeatState
 				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'dave/sky' + (isNight ? "_night" : ""), 0.9, 0.9);
 				add(bg);
 
-				var stageHills:FlxSprite = new FlxSprite(-225, -125).loadGraphic(Paths.image('dave/hills' + (isNight ? "_night" : "")));
-				stageHills.setGraphicSize(Std.int(stageHills.width * 1.25));
-				stageHills.updateHitbox();
-				stageHills.antialiasing = FlxG.save.data.antiAliasing;
-				stageHills.scrollFactor.set(1, 1);
-				stageHills.active = false;
+				var stageHills:BackgroundImg = new  BackgroundImg(-225, -125, 'dave/hills' + (isNight ? "_night" : ""));
+				stageHills.setImageSize(1.25);
 				add(stageHills);
-
-				var gate:FlxSprite = new FlxSprite(-225, -125).loadGraphic(Paths.image('dave/gate' + (isNight ? "_night" : "")));
-				gate.setGraphicSize(Std.int(gate.width * 1.2));
-				gate.updateHitbox();
-				gate.antialiasing = FlxG.save.data.antiAliasing;
-				gate.scrollFactor.set(0.925, 0.925);
+				
+				var gate:BackgroundImg = new BackgroundImg(-225, -125, 'dave/gate' + (isNight ? "_night" : ""), 0.925, 0.925);
+				gate.setImageSize(1.2);
 				gate.x += 25;
-				gate.active = false;
 				add(gate);
-
-				var stageFront:FlxSprite = new FlxSprite(-225, -125).loadGraphic(Paths.image('dave/grass' + (isNight ? "_night" : "")));
-				stageFront.setGraphicSize(Std.int(stageFront.width * 1.2));
-				stageFront.updateHitbox();
-				stageFront.antialiasing = FlxG.save.data.antiAliasing;
-				stageFront.scrollFactor.set(0.9, 0.9);
-				stageFront.active = false;
+				
+				var stageFront:BackgroundImg = new BackgroundImg(-225, -125, 'dave/grass' + (isNight ? "_night" : ""), 0.9, 0.9);
+				stageFront.setImageSize(1.2);
 				add(stageFront);
 				
 				if (curTrack == 'insanity')
 				{
-					var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('dave/redsky'));
-					bg.antialiasing = FlxG.save.data.antiAliasing;
-					bg.scrollFactor.set(0.9, 0.9);
-					bg.active = true;
+					var bg:BackgroundImg = new BackgroundImg(-600, -200, 'dave/redsky', 0.9, 0.9, false, true);
 					bg.visible = false;
 					add(bg);
 
@@ -1889,13 +1874,16 @@ class PlayState extends MusicBeatState
 				case 'hell-expunged':
 					camFollow.x = dad.getMidpoint().x;
 					camFollow.y = dad.getMidpoint().y - 150;
-					
+				
+				case 'gf':
+					camFollow.y = dad.getMidpoint().y;
+					camFollow.x = dad.getMidpoint().x + 50;
 				case 'gf-massive':
 					camFollow.y = dad.getMidpoint().y - 300;
 					camFollow.x = dad.getMidpoint().x + 50;
 				case 'three-gfs':
 					camFollow.x = dad.getMidpoint().x + 50;
-					camFollow.y = dad.getMidpoint().y + 50;
+					camFollow.y = dad.getMidpoint().y + 20;
 				case 'skyblue':
 					camFollow.x = dad.getMidpoint().x + 100;
 				case 'tails-doll':
@@ -2796,7 +2784,7 @@ class PlayState extends MusicBeatState
 				gf.dance();
 			}
 		}
-
+		
 		if (curBeat % 2 == 0)
 		{
 			if (!boyfriend.animation.curAnim.name.startsWith("sing") && boyfriend.canDance
@@ -2808,7 +2796,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 		
-		if (!dad.animation.curAnim.name.startsWith("sing") && curBeat % (dad.curCharacter == 'bambi-piss-3d' ? 4 : 2) == 0)
+		if (!dad.animation.curAnim.name.startsWith("sing") && curBeat % (dad.curCharacter == 'bambi-piss-3d' ? 4 : (Character.tutorialGFs.contains(dad.curCharacter) && !['tails-doll', 'skyblue'].contains(dad.curCharacter)) ? 1 : 2) == 0)
 		{
 			dad.dance();
 			if (curSong == 'insanity') dadmirror.dance();

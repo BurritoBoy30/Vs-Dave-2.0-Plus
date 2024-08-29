@@ -51,7 +51,6 @@ class CharacterSelectState extends MusicBeatState
 	var saveBox:UIButton;
 	var loadBox:UIButton;
 	var tailsBox:UIButton;
-	var grpButtons:FlxTypedGroup<UIButton>;
 	
 	var hornyGfBG:FlxSprite;
 	var hornyGfBOX:FlxUICheckBox;
@@ -179,9 +178,6 @@ class CharacterSelectState extends MusicBeatState
 		hornyGfBG.visible = FlxG.save.data.hornyALL;
 		hornyGfBOX.visible = FlxG.save.data.hornyALL;
 		
-		grpButtons = new FlxTypedGroup<UIButton>();
-		add(grpButtons);
-		
 		if (!FlxG.save.data.hornyALL)
 		{
 			saveOffset = [110, 82];
@@ -193,21 +189,21 @@ class CharacterSelectState extends MusicBeatState
 			loadOffset = [110, 67];
 		}
 		
-		loadBox = new UIButton(hornyGfBG.x, 0, loadOffset, 'charselect/' + FlxG.save.data.gameLanguage + '/loadchar_box', 2);
+		loadBox = new UIButton(hornyGfBG.x, 0, loadOffset, 'charselect/' + FlxG.save.data.gameLanguage + '/loadchar_box', load);
 		if (!FlxG.save.data.hornyALL)
 			loadBox.y = FlxG.height - loadBox.height - 5;
 		else
 			loadBox.y = hornyGfBG.y - 43;
-		grpButtons.add(loadBox);
+		add(loadBox);
 		loadBox.cameras = [camHUD];
 		
-		saveBox = new UIButton(loadBox.x, 0, saveOffset, 'charselect/' + FlxG.save.data.gameLanguage + '/savechar_box', 1);
+		saveBox = new UIButton(loadBox.x, 0, saveOffset, 'charselect/' + FlxG.save.data.gameLanguage + '/savechar_box', save);
 		saveBox.y = loadBox.y - loadBox.height - 5;
-		grpButtons.add(saveBox);
+		add(saveBox);
 		saveBox.cameras = [camHUD];
 		
-		tailsBox = new UIButton(saveBox.x, saveBox.y - saveBox.height - 5, [110, 41], 'charselect/tailsdoll_box', 3);
-		grpButtons.add(tailsBox);
+		tailsBox = new UIButton(saveBox.x, saveBox.y - saveBox.height - 5, [110, 41], 'charselect/tailsdoll_box', loadTailsDoll);
+		add(tailsBox);
 		tailsBox.cameras = [camHUD];
 		
 		overlay = new FlxSprite(0, 0).makeGraphic(1, 1);
@@ -276,17 +272,7 @@ class CharacterSelectState extends MusicBeatState
 				}
 			}
 			else
-			{
-				if (FlxG.mouse.justPressed && !buttonPressed)
-				{	
-					for (item in grpButtons.members)
-					{
-						buttonNumber = item.arrayNum;
-						
-						fuckingFunctions();
-					}
-				}
-				
+			{	
 				if (!noMorePresses)
 				{
 					if (FlxG.keys.justPressed.LEFT)
@@ -376,64 +362,66 @@ class CharacterSelectState extends MusicBeatState
 		}
 	}
 	
-	function fuckingFunctions()
+	function save()
 	{
-		switch (buttonNumber)
+		isPressed(saveBox);
+		if (!noTextPop)
 		{
-			case 1:
-				isPressed(saveBox);
-				if (!noTextPop)
-				{
-					if (isTails)
-					{
-						popUpText('Tails Doll is On!');
-						FlxG.sound.play(Paths.sound('missnote1'));
-					}
-					else if (!isTails)
-					{
-						popUpText('Saved!');
-						FlxG.sound.play(Paths.sound('confirmMenu'));
-						
-						FlxG.save.data.savedBfData = curBF;	
-						FlxG.save.data.savedBfFormData = curFormBF;
-						FlxG.save.data.savedGfData = curGF;
-						FlxG.save.data.savedGfFormData = curFormGF;
-					}
-				}
-			case 2:
-				isPressed(loadBox);
-				if (!noTextPop)
-				{
-					if (isTails)
-					{
-						popUpText('Tails Doll is On!');
-						FlxG.sound.play(Paths.sound('missnote1'));
-					}
-					else if (!isTails)
-					{
-						popUpText('Loaded!');
-						FlxG.sound.play(Paths.sound('confirmMenu'));
-						
-						curBF = FlxG.save.data.savedBfData;	
-						curFormBF = FlxG.save.data.savedBfFormData;
-						curGF = FlxG.save.data.savedGfData;
-						curFormGF = FlxG.save.data.savedGfFormData;
-										
-						UpdateBF();
-						UpdateGF();	
-						updateGfUI();
-						trace('fully loaded');
-					}
-				}
-			case 3:
-				if (tailsBox.visible)
-				{
-					isPressed(tailsBox);
-					isTails = !isTails;
+			if (isTails)
+			{
+				popUpText('Tails Doll is On!');
+				FlxG.sound.play(Paths.sound('missnote1'));
+			}
+			else if (!isTails)
+			{
+				popUpText('Saved!');
+				FlxG.sound.play(Paths.sound('confirmMenu'));
 				
-					UpdateGF(isTails);	
-					updateGfUI();
-				}
+				FlxG.save.data.savedBfData = curBF;	
+				FlxG.save.data.savedBfFormData = curFormBF;
+				FlxG.save.data.savedGfData = curGF;
+				FlxG.save.data.savedGfFormData = curFormGF;
+			}
+		}
+	}
+	
+	function load()
+	{
+		isPressed(loadBox);
+		if (!noTextPop)
+		{
+			if (isTails)
+			{
+				popUpText('Tails Doll is On!');
+				FlxG.sound.play(Paths.sound('missnote1'));
+			}
+			else if (!isTails)
+			{
+				popUpText('Loaded!');
+				FlxG.sound.play(Paths.sound('confirmMenu'));
+				
+				curBF = FlxG.save.data.savedBfData;	
+				curFormBF = FlxG.save.data.savedBfFormData;
+				curGF = FlxG.save.data.savedGfData;
+				curFormGF = FlxG.save.data.savedGfFormData;
+								
+				UpdateBF();
+				UpdateGF();	
+				updateGfUI();
+				trace('fully loaded');
+			}
+		}
+	}
+	
+	function loadTailsDoll()
+	{
+		if (tailsBox.visible)
+		{
+			isPressed(tailsBox);
+			isTails = !isTails;
+		
+			UpdateGF(isTails);	
+			updateGfUI();
 		}
 	}
 	
@@ -689,45 +677,46 @@ class SelectableChar
 	}
 }
 
-class UIButton extends FlxSpriteGroup
+class UIButton extends FlxSprite
 {
-	public var target:FlxSprite;
-	var arrayNumReal:Float;
-	public var arrayNum:Float;
 	var buttonAxis:Array<Float>;
-	
-	public function new (x:Float, y:Float, notButtonAxis:Array<Float>, buttonImg:String, arrayNumData:Float = 0)
+	var callback:Void -> Void;
+
+	public function new (x:Float, y:Float, notButtonAxis:Array<Float>, buttonImg:String, callBack:Void -> Void)
 	{
 		super(x,y);
 		
-		arrayNumReal = arrayNumData;
-		
-		target = new FlxSprite().loadGraphic(Paths.image(buttonImg, 'shared'));
-		target.antialiasing = FlxG.save.data.antiAliasing;
-		add(target);
+		loadGraphic(Paths.image(buttonImg, 'shared'));
+		antialiasing = FlxG.save.data.antiAliasing;
 		
 		buttonAxis = notButtonAxis;
+		
+		callback = callBack;
 	}
 	
-	function mouseOverButton(target:FlxSprite, buttonX:Float, buttonY:Float)
+	function mouseOverButton(buttonX:Float, buttonY:Float)
 	{
-		return (FlxG.mouse.x > target.x + buttonX && FlxG.mouse.x < target.x + target.width + (buttonX * 1.9))
-			&& (FlxG.mouse.y > target.y + buttonY && FlxG.mouse.y < target.y + target.height + (buttonY * 1.2) + 3);
+		return (FlxG.mouse.x > x + buttonX && FlxG.mouse.x < x + width + (buttonX * 1.9))
+			&& (FlxG.mouse.y > y + buttonY && FlxG.mouse.y < y + height + (buttonY * 1.2) + 3);
 	}
 	
 	override function update(elapsed:Float)
 	{		
 		super.update(elapsed);
 		
-		if (mouseOverButton(target, buttonAxis[0], buttonAxis[1]))
+		if (mouseOverButton(buttonAxis[0], buttonAxis[1]))
 		{
-			arrayNum = arrayNumReal;
-			target.color = 0xFF878787;
+			color = 0xFF878787;
+			
+			if (FlxG.mouse.justPressed)
+			{
+				if (callback != null)
+					callback();
+			}
 		}
 		else
 		{
-			arrayNum = 0;
-			target.color = FlxColor.WHITE;
+			color = FlxColor.WHITE;
 		}
 	}
 }
