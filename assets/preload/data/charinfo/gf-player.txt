@@ -1,16 +1,16 @@
 Playable_GF_V2
-0' '-85
-prefix' '-6' '-1' 'idle' 'GF Idle dance' 'false' '24
-prefix' '-60' '17' 'singUP' 'GF Up' 'false' '24
-prefix' '45' '-36' 'singLEFT' 'GF Left' 'false' '24
-prefix' '-49' '-7' 'singRIGHT' 'GF Right' 'false' '24
-prefix' '-6' '-75' 'singDOWN' 'GF Down' 'false' '24
-prefix' '-60' '55' 'singUPmiss' 'GF Miss Up' 'false' '24
-prefix' '35' '-18' 'singLEFTmiss' 'GF Miss Left' 'false' '24
-prefix' '-80' '22' 'singRIGHTmiss' 'GF Miss Right' 'false' '24
-prefix' '-42' '-44' 'singDOWNmiss' 'GF Miss Down' 'false' '24
-prefix' '-36' '1' 'hey' 'GF Hey' 'false' '24
-prefix' '-27' '11' 'firstDeath' 'GF First Death' 'false' '24
-prefix' '-39' '-3' 'deathLoop' 'GF Death Loop' 'true' '24
-prefix' '-33' '-2' 'deathConfirm' 'GF Dead Continue' 'false' '24
-prefix' '-35' '-2' 'scared' 'GF Scared' 'true' '24
+0, -85
+prefix, -6, -1, idle, GF Idle dance, false, 24
+prefix, -60, 17, singUP, GF Up, false, 24
+prefix, 45, -36, singLEFT, GF Left, false, 24
+prefix, -49, -7, singRIGHT, GF Right, false, 24
+prefix, -6, -75, singDOWN, GF Down, false, 24
+prefix, -60, 55, singUPmiss, GF Miss Up, false, 24
+prefix, 35, -18, singLEFTmiss, GF Miss Left, false, 24
+prefix, -80, 22, singRIGHTmiss, GF Miss Right, false, 24
+prefix, -42, -44, singDOWNmiss, GF Miss Down, false, 24
+prefix, -36, 1, hey, GF Hey, false, 24
+prefix, -27, 11, firstDeath, GF First Death, false, 24
+prefix, -39, -3, deathLoop, GF Death Loop, true, 24
+prefix, -33, -2, deathConfirm, GF Dead Continue, false, 24
+prefix, -35, -2, scared, GF Scared, true, 24

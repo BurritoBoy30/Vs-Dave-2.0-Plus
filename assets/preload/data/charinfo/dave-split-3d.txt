@@ -1,7 +1,7 @@
 split_dave_3d
-0' '50
-prefix' '0' '0' 'idle' 'IDLE' 'false' '24
-prefix' '0' '0' 'singUP' 'UP' 'false' '24
-prefix' '0' '0' 'singRIGHT' 'RIGHT' 'false' '24
-prefix' '0' '0' 'singDOWN' 'DOWN' 'false' '24
-prefix' '0' '0' 'singLEFT' 'LEFT' 'false' '24
+0, 50
+prefix, 0, 0, idle, IDLE, false, 24
+prefix, 0, 0, singUP, UP, false, 24
+prefix, 0, 0, singRIGHT, RIGHT, false, 24
+prefix, 0, 0, singDOWN, DOWN, false, 24
+prefix, 0, 0, singLEFT, LEFT, false, 24

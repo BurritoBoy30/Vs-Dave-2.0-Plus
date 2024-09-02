@@ -1,7 +1,10 @@
 Splitathon_Dave
-100' '300
-prefix' '0' '0' 'idle' 'Idle' 'false' '24
-prefix' '0' '0' 'singUP'' 'Up' 'false' '24
-prefix' '-9' '0' 'singRIGHT' 'Right' 'false' '24
-prefix' '40' '0singDOWN' 'Down' 'false' '24
-prefix' '0' '0' 'singLEFT' 'Left' 'false' '24
+75, 150
+prefix, 0, 0, happy, happy, true, 24
+prefix, -17, 0, what, bruh, true, 24
+prefix, 0, 0, scared, waiting, true, 24
+prefix, 0, 0, idle, idle, false, 24
+prefix, 54, -12, singDOWN, down, false, 24
+prefix, 13, -4, singRIGHT, right, false, 24
+prefix, 25, 11, singUP, up, false, 24
+prefix, 54, 1, singLEFT, left, false, 24

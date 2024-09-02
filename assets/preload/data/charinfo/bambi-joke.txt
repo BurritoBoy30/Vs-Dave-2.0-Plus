@@ -1,8 +1,8 @@
 bambi-joke
-175' '400
-prefix' '0' '0' 'idle' 'idle' 'false' '24
-prefix' '0' '0' 'singUP' 'up' 'false' '24
-prefix' '0' '0' 'singLEFT' 'right' 'false' '24
-prefix' '0' '0' 'singRIGHT' 'left' 'false' '24
-prefix' '0' '0' 'singDOWN' 'down' 'false' '24
-prefix' '0' '0' 'hey' 'hey' 'false' '24
+175, 400
+prefix, 0, 0, idle, idle, false, 24
+prefix, 0, 0, singUP, up, false, 24
+prefix, 0, 0, singLEFT, right, false, 24
+prefix, 0, 0, singRIGHT, left, false, 24
+prefix, 0, 0, singDOWN, down, false, 24
+prefix, 0, 0, hey, hey, false, 24

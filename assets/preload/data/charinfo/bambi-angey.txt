@@ -1,7 +1,10 @@
-bambimaddddd
-220' '450
-prefix' '0' '0' 'idle' 'idle' 'false' '24
-prefix' '0' '0' 'singLEFT' 'left' 'false' '24
-prefix' '0' '0' 'singDOWN' 'down' 'false' '24
-prefix' '0' '20' 'singUP' 'up' 'false' '24
-prefix' '0' '0' 'singRIGHT' 'right' 'false' '24
+Angry_Bambi
+0, 0
+prefix, 0, 0, idle, a_bambi idle, true, 24
+prefix, 0, 0, singDOWN, a_bambi down, false, 24
+prefix, 15, 3, singRIGHT, a_bambi right, false, 24
+prefix, 78, 82, singSmash, a_bambi phone, false, 24
+prefix, 21, 43, singUP, a_bambi up, false, 24
+prefix, 94, -6, singLEFT, a_bambi left, false, 24
+prefix, 158, 26, throw, a_bambi throw, false, 24
+prefix, 21, 33, scream, a_bambi scream, false, 24

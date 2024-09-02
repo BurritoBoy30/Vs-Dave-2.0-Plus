@@ -1,5 +1,5 @@
 death/GF_in_Bf_clothes_DEAD
-0' '-340
-prefix' '0' '-200' 'firstDeath' 'GF first Dead' 'false' '24
-prefix' '-4' '-215' 'deathLoop' 'GF dead loop' 'true' '24
-prefix' '2' '-183' 'deathConfirm' 'GF Dead confir' 'false' '24
+0, -340
+prefix, 0, -200, firstDeath, GF first Dead, false, 24
+prefix, -4, -215, deathLoop, GF dead loop, true, 24
+prefix, 2, -183, deathConfirm, GF Dead confir, false, 24

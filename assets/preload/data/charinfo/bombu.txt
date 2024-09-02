@@ -1,7 +1,7 @@
 bombu
--300' '-75
-prefix' '195' '50' 'idle' 'Idle' 'false' '24
-prefix' '295' '207' 'singUP' 'Up' 'false' '24
-prefix' '-78' '33' 'singRIGHT' 'Right' 'false' '24
-prefix' '270' '-1' 'singDOWN' 'Down' 'false' '24
-prefix' '385' '44' 'singLEFT' 'Left' 'false' '24
+-300, -75
+prefix, 195, 50, idle, Idle, false, 24
+prefix, 295, 207, singUP, Up, false, 24
+prefix, -78, 33, singRIGHT, Right, false, 24
+prefix, 270, -1, singDOWN, Down, false, 24
+prefix, 385, 44, singLEFT, Left, false, 24

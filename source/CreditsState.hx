@@ -8,6 +8,7 @@ import flixel.util.FlxColor;
 import flixel.text.FlxText;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxSpriteGroup;
+import flixel.tweens.FlxTween;
 
 class CreditsState extends MusicBeatState
 {
@@ -25,15 +26,15 @@ class CreditsState extends MusicBeatState
 	];
 	
 	var devsArray:Array<CreditsTexts> = [
-		new CreditsTexts("MoldyGH", "placeholder"),
-		new CreditsTexts("rapperep lol", 'placeholder'),
-		new CreditsTexts("MissingTextureMan101", "placeholder"),
-		new CreditsTexts("T5mpler", "placeholder"),
-		new CreditsTexts("Erizur", "placeholder"),
-		new CreditsTexts("Billy Bobbo", "placeholder"),
-		new CreditsTexts("pointy", "placeholder"),
-		new CreditsTexts("TheBuilderXD", "placeholder"),
-		new CreditsTexts("Zmac", "placeholder")
+		new CreditsTexts("MoldyGH", "Director, Creator, Programmer, Musician, Main Developer"),
+		new CreditsTexts("MissingTextureMan101", "Secondary Developer and Programmer"),
+		new CreditsTexts("rapperep lol", 'Main Artist'),
+		new CreditsTexts("TheBuilderXD", "Secondary Artist"),
+		new CreditsTexts("T5mpler", "Programmer & Assistor"),
+		new CreditsTexts("Erizur", "New Main Menu Programmer, Artist & Spanish Translator"),
+		new CreditsTexts("Billy Bobbo", "Moral Support & Idea Suggesting"),
+		new CreditsTexts("pointy", "Artist & Charter"),
+		new CreditsTexts("Zmac", "3D Backgrounds, Intro text help")
 	];
 	
 	var BuildButton:FlxSprite;
@@ -78,14 +79,15 @@ class CreditsState extends MusicBeatState
 	var camoffset:Float = 0;
 	var camoffsetLimit:Float = 0;
 
-	function generateCreditList(dullArray:Array<CreditsTexts>)
+	function generateCreditList(dullArray:Array<CreditsTexts>, limit:Float)
 	{
 		for (i in 0...dullArray.length)
 		{
 			var devSegment:CreditListing = new CreditListing(30, (200 * i), dullArray[i]);
 			grpCredits.add(devSegment);
 		}
-		camoffsetLimit = -(dullArray.length * 130);
+		
+		camoffsetLimit = -limit;
 	}
 	
 	override function update(elapsed:Float)
@@ -99,14 +101,22 @@ class CreditsState extends MusicBeatState
 				transition = true;
 				for (item in grpButtons.members)
 				{
-					item.visible = false;
+					FlxTween.tween(item, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
+					{
+						if (FlxG.mouse.overlaps(BuildButton))
+							generateCreditList(buildArray, 1300);
+						else if (FlxG.mouse.overlaps(DevsButton))
+							generateCreditList(devsArray, 950);
+							
+						for (item in grpCredits.members)
+						{
+							item.alpha = 0;
+							FlxTween.tween(item, {alpha: 1}, 0.2);
+						}
+						currentState = 'reading';
+						transition = false;
+					}});
 				}
-				if (FlxG.mouse.overlaps(BuildButton))
-					generateCreditList(buildArray);
-				else if (FlxG.mouse.overlaps(DevsButton))
-					generateCreditList(devsArray);
-				currentState = 'reading';
-				transition = false;
 			}
 			
 			if (controls.BACK && !transition)
@@ -117,12 +127,12 @@ class CreditsState extends MusicBeatState
 		}
 		else if (currentState == 'reading')
 		{
-			if (FlxG.keys.pressed.UP)
+			if (FlxG.keys.pressed.UP && !transition)
 			{
 				if (camoffset != 0)
 					camoffset += 10;
 			}
-			else if (FlxG.keys.pressed.DOWN)
+			else if (FlxG.keys.pressed.DOWN && !transition)
 			{
 				if (camoffset != camoffsetLimit)
 					camoffset -= 10;
@@ -134,20 +144,27 @@ class CreditsState extends MusicBeatState
 			{
 				item.y = camoffset;
 			}
+			
 			if (controls.BACK && !transition)
 			{
 				transition = true;
-				for (item in grpButtons.members)
-				{
-					item.visible = true;
-				}
-				camoffset = 0;
 				for (item in grpCredits.members)
 				{
-					item.destroy();
+					FlxTween.tween(item, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
+					{
+						for (item in grpButtons.members)
+						{
+							FlxTween.tween(item, {alpha: 1}, 0.2);
+						}
+						camoffset = 0;
+						for (item in grpCredits.members)
+						{
+							item.destroy();
+						}
+						currentState = 'selecting';
+						transition = false;
+					}});
 				}
-				currentState = 'selecting';
-				transition = false;
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 alphadave
-0' '-20
-prefix' '0' '0' 'idle' 'Dad idle dance' 'false' '24
-prefix' '-6' '50' 'singUP' 'Dad Sing Note UP' 'false' '24
-prefix' '0' '27' 'singRIGHT' 'Dad Sing Note RIGHT' 'false' '24
-prefix' '0' '-30' 'singDOWN' 'Dad Sing Note DOWN' 'false' '24
-prefix' '-10' '10' 'singLEFT' 'Dad Sing Note LEFT' 'false' '24
+0, -20
+prefix, 0, 0, idle, Dad idle dance, false, 24
+prefix, -6, 50, singUP, Dad Sing Note UP, false, 24
+prefix, 0, 27, singRIGHT, Dad Sing Note RIGHT, false, 24
+prefix, 0, -30, singDOWN, Dad Sing Note DOWN, false, 24
+prefix, -10, 10, singLEFT, Dad Sing Note LEFT, false, 24

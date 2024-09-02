@@ -52,7 +52,7 @@ class PauseSubState extends MusicBeatSubstate
 		add(bg);
 		
 		gfBounce = new FlxSprite(0, -45);
-		gfBounce.frames = Paths.getSparrowAtlas('gfbounce', 'preload');
+		gfBounce.frames = Paths.getSparrowAtlas('hornyshit/gfbounce', 'shared');
 		gfBounce.animation.addByPrefix('idle', 'gfbounce idle', 25, true);
 		gfBounce.animation.play('idle');
 		gfBounce.alpha = 0;

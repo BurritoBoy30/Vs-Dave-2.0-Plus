@@ -1,11 +1,11 @@
 bfPixel
-200' '150
-prefix' '0' '0' 'idle' 'BF IDLE' 'false' '24
-prefix' '0' '0' 'singUP' 'BF UP NOTE' 'false' '24
-prefix' '0' '0' 'singLEFT' 'BF LEFT NOTE' 'false' '24
-prefix' '0' '0' 'singRIGHT' 'BF RIGHT NOTE' 'false' '24
-prefix' '0' '0' 'singDOWN' 'BF DOWN NOTE' 'false' '24
-prefix' '0' '0' 'singUPmiss' 'BF UP MISS' 'false' '24
-prefix' '0' '0' 'singLEFTmiss' 'BF LEFT MISS' 'false' '24
-prefix' '0' '0' 'singRIGHTmiss' 'BF RIGHT MISS' 'false' '24
-prefix' '0' '0' 'singDOWNmiss' 'BF DOWN MISS' 'false' '24
+200, 150
+prefix, 0, 0, idle, BF IDLE, false, 24
+prefix, 0, 0, singUP, BF UP NOTE, false, 24
+prefix, 0, 0, singLEFT, BF LEFT NOTE, false, 24
+prefix, 0, 0, singRIGHT, BF RIGHT NOTE, false, 24
+prefix, 0, 0, singDOWN, BF DOWN NOTE, false, 24
+prefix, 0, 0, singUPmiss, BF UP MISS, false, 24
+prefix, 0, 0, singLEFTmiss, BF LEFT MISS, false, 24
+prefix, 0, 0, singRIGHTmiss, BF RIGHT MISS, false, 24
+prefix, 0, 0, singDOWNmiss, BF DOWN MISS, false, 24

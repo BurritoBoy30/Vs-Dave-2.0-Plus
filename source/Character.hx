@@ -308,7 +308,7 @@ class Character extends FlxSprite
 					else
 						playAnim('danceLeft', true);
 				default:
-					playAnim('idle', true);
+					playAnim('idle', isPlayer == 'bf' || isPlayer == 'dad' && curCharacter != 'bambi-splitathon' || isPlayer == 'gf' && ['skyblue', 'tails-doll'].contains(curCharacter));
 			}
 		}
 	}
@@ -352,16 +352,16 @@ class Character extends FlxSprite
 		var offsetStuffs:Array<String> = CoolUtil.coolTextFile(Paths.txt('charinfo/' + character, 'preload'));
 		var characterFile:String = offsetStuffs[0];
 		
-		getSheet(characterFile);
+		frames = Paths.getSparrowAtlas('characters/' + characterFile, 'shared');
 		
-		var charoffsetInfo:Array<String> = offsetStuffs[1].split("' '");
+		var charoffsetInfo:Array<String> = offsetStuffs[1].split(', ');
 		charOffset = [Std.parseFloat(charoffsetInfo[0]), Std.parseFloat(charoffsetInfo[1])];
 		
 		for (i in 2...offsetStuffs.length)
 		{
 			for (offsetText in offsetStuffs)
 			{
-				var offsetInfo:Array<String> = offsetText.split("' '");
+				var offsetInfo:Array<String> = offsetText.split(", ");
 					
 				if (offsetInfo[0] == 'prefix')
 				{
@@ -374,7 +374,7 @@ class Character extends FlxSprite
 				else if (offsetInfo[0] == 'indices')
 				{
 					var indicesArray:Array<Int> = [];
-					var indiceData:Array<String> = offsetInfo[5].split(',');
+					var indiceData:Array<String> = offsetInfo[5].split(':');
 						
 					for (i in 0...indiceData.length)
 					{
@@ -389,11 +389,6 @@ class Character extends FlxSprite
 				}
 			}
 		}
-	}
-	
-	function getSheet(file:String)
-	{
-		frames = Paths.getSparrowAtlas('characters/' + file, 'shared');
 	}
 	
 	public function addAnimation(xAxis:Float = 0, yAxis:Float = 0, name:String, xmlName:String, looped:Bool = false, fps:Int = 24)

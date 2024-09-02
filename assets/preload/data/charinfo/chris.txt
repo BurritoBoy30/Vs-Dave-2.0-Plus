@@ -1,16 +1,16 @@
 CHRIS
-0' '0
-prefix' '-5' '0' 'idle' 'BF idle dance' 'false' '24
-prefix' '-29' '27' 'singUP' 'BF NOTE UP0' 'false' '24
-prefix' '12' '-6' 'singLEFT' 'BF NOTE LEFT0' 'false' '24
-prefix' '-38' '-7' 'singRIGHT' 'BF NOTE RIGHT0' 'false' '24
-prefix' '-10' '-50' 'singDOWN' 'BF NOTE DOWN0' 'false' '24
-prefix' '-29' '27' 'singUPmiss' 'BF NOTE UP MISS' 'false' '24
-prefix' '12' '24' 'singLEFTmiss' 'BF NOTE LEFT MISS' 'false' '24
-prefix' '-30' '21' 'singRIGHTmiss' 'BF NOTE RIGHT MISS' 'false' '24
-prefix' '-11' '-19' 'singDOWNmiss' 'BF NOTE DOWN MISS' 'false' '24
-prefix' '-4' '5' 'hey' 'BF HEY' 'false' '24
-prefix' '24' '8' 'firstDeath' 'BF dies' 'false' '24
-prefix' '24' '3' 'deathLoop' 'BF Dead Loop' 'true' '24
-prefix' '24' '66' 'deathConfirm' 'BF Dead confirm' 'false' '24
-prefix' '-4' '0' 'scared' 'BF idle shaking' 'true' '24
+0, 0
+prefix, -5, 0, idle, BF idle dance, false, 24
+prefix, -29, 27, singUP, BF NOTE UP0, false, 24
+prefix, 12, -6, singLEFT, BF NOTE LEFT0, false, 24
+prefix, -38, -7, singRIGHT, BF NOTE RIGHT0, false, 24
+prefix, -10, -50, singDOWN, BF NOTE DOWN0, false, 24
+prefix, -29, 27, singUPmiss, BF NOTE UP MISS, false, 24
+prefix, 12, 24, singLEFTmiss, BF NOTE LEFT MISS, false, 24
+prefix, -30, 21, singRIGHTmiss, BF NOTE RIGHT MISS, false, 24
+prefix, -11, -19, singDOWNmiss, BF NOTE DOWN MISS, false, 24
+prefix, -4, 5, hey, BF HEY, false, 24
+prefix, 24, 8, firstDeath, BF dies, false, 24
+prefix, 24, 3, deathLoop, BF Dead Loop, true, 24
+prefix, 24, 66, deathConfirm, BF Dead confirm, false, 24
+prefix, -4, 0, scared, BF idle shaking, true, 24

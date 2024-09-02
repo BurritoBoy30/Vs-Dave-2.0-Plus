@@ -30,6 +30,7 @@ class HealthIcon extends FlxSprite
 	public var isPlayer:Bool;
 	
 	var char:String;
+	var state:String;
 	
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{		
@@ -60,8 +61,8 @@ class HealthIcon extends FlxSprite
 						realChar = 'psyka';
 					case 'cyan-christmas':
 						realChar = 'cyan';
-					case 'dave-annoyed', 'dave-splitathon':
-						realChar = 'dave';
+					case 'dave-splitathon':
+						realChar = 'dave-annoyed';
 					case 'bambi' | 'bambi-splitathon':
 						realChar = 'bambi-new';
 					default:
@@ -93,6 +94,23 @@ class HealthIcon extends FlxSprite
 
 		if (sprTracker != null)
 			setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y - 30);
+	}
+	
+	public function changeState(charState:String)
+	{
+		switch (charState)
+		{
+			case 'normal':
+				animation.curAnim.curFrame = 0;
+			case 'losing':
+				animation.curAnim.curFrame = 1;
+		}
+		state = charState;
+	}
+	
+	public function getState()
+	{
+		return state;
 	}
 	
 	inline public function getChar():String
