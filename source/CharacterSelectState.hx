@@ -108,20 +108,19 @@ class CharacterSelectState extends MusicBeatState
 		
 		Conductor.changeBPM(110);
 		
-		var bg:BackgroundImg = new BackgroundImg(-600, -200, 'dave/sky_night', 0.9, 0.9);
+		var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/sky_night', 0.7, 0.7);
 		add(bg);
 		
-		var stageHills:BackgroundImg = new BackgroundImg(-225, -125, 'dave/hills_night');
-		stageHills.setImageSize(1.25);
+		var stageHills:BackgroundImg = new  BackgroundImg(-834, -159, 'stages/house/night/hills');
 		add(stageHills);
 		
-		var stageHills:BackgroundImg = new BackgroundImg(-225, -125, 'dave/gate_night', 0.925, 0.925);
-		stageHills.setImageSize(1.2);
-		stageHills.updateHitbox();
-		add(stageHills);
+		var grassbg:BackgroundImg = new BackgroundImg(-1205, 580, 'stages/house/night/grass bg');
+		add(grassbg);
 		
-		var stageFront:BackgroundImg = new BackgroundImg(-225, -125, 'dave/grass_night', 0.9, 0.9);
-		stageFront.setImageSize(1.2);
+		var gate:BackgroundImg = new BackgroundImg(-755, 250, 'stages/house/night/gate');
+		add(gate);
+		
+		var stageFront:BackgroundImg = new BackgroundImg(-832, 505, 'stages/house/night/grass');
 		add(stageFront);
 
 		camGame.zoom = 0.75;

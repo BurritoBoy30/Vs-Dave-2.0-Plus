@@ -1,5 +1,5 @@
 bambiRemake
-0, 0
+200, 400
 prefix, 20, 10, singRIGHT-alt, bambi alt right, false, 24
 prefix, 22, -28, singDOWN, bambi down, false, 24
 prefix, 6, 16, singRIGHTmiss, miss right, false, 24

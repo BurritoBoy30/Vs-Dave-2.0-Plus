@@ -12,7 +12,7 @@ class DispenserBurstState extends MusicBeatState
 	public var redDispenserBitch:FlxSprite;
 	
 	var bitchColor:String = 'blu';
-	var bitchSize:String = '1';
+	var bitchSize:Float = 1;
 	//1, 2, 3
 	var bitchType:String = "none";
 	// none, red-blu, blu-red
@@ -30,7 +30,6 @@ class DispenserBurstState extends MusicBeatState
 	var bitchFps:Int = 40;
 	
 	public var buttonNumber:Float = 0;
-	var grpButtons:FlxTypedGroup<Button>;
 		
 	override function create()
 	{	
@@ -60,29 +59,29 @@ class DispenserBurstState extends MusicBeatState
 		bluDispenserBitch.animation.play('danceLeft', true);
 		redDispenserBitch.animation.play('danceLeft', true);
 		
-		grpButtons = new FlxTypedGroup<Button>();
-		add(grpButtons);
+		buttonBlu = new Button(bluDispenserBitch.width * 1.34, 10, 'blue_button', function()
+		{
+			changeBitchColor('blu');
+		});
+		add(buttonBlu);
 		
-		buttonBlu = new Button(bluDispenserBitch.width * 1.34, 10, 'blue_button', 1);
-		grpButtons.add(buttonBlu);
+		buttonRed = new Button(buttonBlu.x, buttonBlu.height + buttonBlu.y + 20, 'red_button', function(){changeBitchColor('red');});
+		add(buttonRed);
 		
-		buttonRed = new Button(buttonBlu.x, buttonBlu.height + buttonBlu.y + 20, 'red_button', 2);
-		grpButtons.add(buttonRed);
+		buttonBluRed = new Button(buttonBlu.x + buttonBlu.width + 10, buttonBlu.y, 'blue-red_typeButton', function(){changeBitchType('blu-red');});
+		add(buttonBluRed);
 		
-		buttonBluRed = new Button(buttonBlu.x + buttonBlu.width + 10, buttonBlu.y, 'blue-red_typeButton', 3);
-		grpButtons.add(buttonBluRed);
+		buttonRedBlu = new Button(buttonBluRed.x, buttonBluRed.y + buttonBluRed.height + 20, 'red-blue_typeButton', function(){changeBitchType('red-blu');});
+		add(buttonRedBlu);
 		
-		buttonRedBlu = new Button(buttonBluRed.x, buttonBluRed.y + buttonBluRed.height + 20, 'red-blue_typeButton', 4);
-		grpButtons.add(buttonRedBlu);
+		button1 = new Button(196, 10, '1_button', function(){changeBitchSize(1);});
+		add(button1);
 		
-		button1 = new Button(196, 10, '1_button', 5);
-		grpButtons.add(button1);
+		button2 = new Button(button1.x, button1.height + button1.y + 20, '2_button', function(){changeBitchSize(2);});
+		add(button2);
 		
-		button2 = new Button(button1.x, button1.height + button1.y + 20, '2_button', 6);
-		grpButtons.add(button2);
-		
-		button3 = new Button(button2.x, button2.height + button2.y + 20, '3_button', 7);
-		grpButtons.add(button3);
+		button3 = new Button(button2.x, button2.height + button2.y + 20, '3_button', function(){changeBitchSize(3);});
+		add(button3);
 
 		super.create();
 	}
@@ -109,77 +108,44 @@ class DispenserBurstState extends MusicBeatState
 		{	
 			FlxG.switchState(new ConsoleState());
 		}
+	}
+	
+	function changeBitchColor(cor:String)
+	{
+		var curColor:String = '';
+		curColor = cor;
 		
-		if (FlxG.mouse.justPressed)
-		{	
-			for (item in grpButtons.members)
+		if (bitchColor != curColor)
+		{
+			bluDispenserBitch.visible = curColor == 'blu';
+			redDispenserBitch.visible = curColor == 'red';
+			bitchColor = curColor;
+			if (bitchType != 'none')
 			{
-				buttonNumber = item.arrayNum;
-				
-				switch (buttonNumber)
-				{
-					case 1:
-						if (bitchColor != 'blu')
-						{
-							bitchColor = 'blu';
-							bluDispenserBitch.visible = true;
-							redDispenserBitch.visible = false;
-							if (bitchType != 'none')
-							{
-								bitchType = 'none';
-								reloadBitches();
-							}
-						}
-					case 2:
-						if (bitchColor != 'red')
-						{
-							bitchColor = 'red';
-							bluDispenserBitch.visible = false;
-							redDispenserBitch.visible = true;
-							if (bitchType != 'none')
-							{
-								bitchType = 'none';
-								reloadBitches();
-							}
-						}
-					case 3:
-						if (bitchType != 'blu-red')
-						{
-							bitchType = 'blu-red';
-							bitchColor = 'mixed';
-							bluDispenserBitch.visible = true;
-							redDispenserBitch.visible = true;
-							reloadBitches();
-						}
-					case 4:
-						if (bitchType != 'red-blu')
-						{
-							bitchType = 'red-blu';
-							bitchColor = 'mixed';
-							bluDispenserBitch.visible = true;
-							redDispenserBitch.visible = true;
-							reloadBitches();
-						}
-					case 5:
-						if (bitchSize != '1')
-						{
-							bitchSize = '1';
-							reloadBitches();
-						}
-					case 6:
-						if (bitchSize != '2')
-						{
-							bitchSize = '2';
-							reloadBitches();
-						}
-					case 7:
-						if (bitchSize != '3')
-						{
-							bitchSize = '3';
-							reloadBitches();
-						}
-				}
+				bitchType = 'none';
+				reloadBitches();
 			}
+		}
+	}
+	
+	function changeBitchType(type:String)
+	{
+		if (bitchType != type)
+		{
+			bitchType = type;
+			bitchColor = 'mixed';
+			bluDispenserBitch.visible = true;
+			redDispenserBitch.visible = true;
+			reloadBitches();
+		}
+	}
+	
+	function changeBitchSize(size:Float)
+	{
+		if (bitchSize != size)
+		{
+			bitchSize = size;
+			reloadBitches();
 		}
 	}
 	
@@ -218,36 +184,37 @@ class DispenserBurstState extends MusicBeatState
 	}
 }
 
-class Button extends FlxSpriteGroup
+class Button extends FlxSprite
 {
-	var button:FlxSprite;
-	var arrayNumReal:Float;
-	public var arrayNum:Float;
+	var callback:Void -> Void;
 	
-	public function new (x:Float, y:Float, buttonImg:String, arrayNumData:Float = 0)
+	public function new (x:Float, y:Float, buttonImg:String, callBack:Void -> Void)
 	{
 		super(x,y);
+	
+		loadGraphic(Paths.image('hornyshit/dispenser/' + buttonImg, 'shared'));
+		antialiasing = FlxG.save.data.antiAliasing;
 		
-		arrayNumReal = arrayNumData;
-		
-		button = new FlxSprite().loadGraphic(Paths.image('hornyshit/dispenser/' + buttonImg, 'shared'));
-		button.antialiasing = FlxG.save.data.antiAliasing;
-		add(button);
+		callback = callBack;
 	}
 	
 	override function update(elapsed:Float)
 	{		
 		super.update(elapsed);
 		
-		if (FlxG.mouse.overlaps(button)) 
+		if (FlxG.mouse.overlaps(this)) 
 		{
-			arrayNum = arrayNumReal;
-			button.color = 0xFF878787;
+			color = 0xFF878787;
+			
+			if (FlxG.mouse.justPressed)
+			{
+				if (callback != null)
+					callback();
+			}
 		}
 		else
 		{
-			arrayNum = 0;
-			button.color = FlxColor.WHITE;
+			color = FlxColor.WHITE;
 		}
 	}
 }

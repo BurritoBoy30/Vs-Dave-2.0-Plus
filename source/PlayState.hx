@@ -162,7 +162,7 @@ class PlayState extends MusicBeatState
 	public static var dadNoteCamOffset:Array<Float> = new Array<Float>();
 	
 	// shit for songs
-	var place:FlxSprite;
+	var place:BackgroundImg;
 	var darkStages:Array<String> = ['bambiFarmNight', 'disabled', 'unfairness', 'rsod'];
 	
 	override public function create()
@@ -585,7 +585,7 @@ class PlayState extends MusicBeatState
 				
 				if (curTrack == 'insanity')
 				{
-					var bg:BackgroundImg = new BackgroundImg(-600, -200, 'dave/redsky', 0.9, 0.9, false, true);
+					var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/singleimages/redsky', 0.9, 0.9, false, true);
 					bg.visible = false;
 					add(bg);
 
@@ -656,55 +656,53 @@ class PlayState extends MusicBeatState
 			case 'polygonized' | 'cheating' | 'unfairness':
 				defaultCamZoom = 0.8;
 				
-				var bg:FlxSprite = new FlxSprite(-600, -200);
+				var bgString:String = '';
 				switch (curTrack)
 				{
 					case 'cheating':
-						bg.loadGraphic(Paths.image('dave/cheater'));
+						bgString = 'stages/singleimages/cheater';
 						curStage = 'greenVoid';
 					case 'unfairness':
-						bg.loadGraphic(Paths.image('dave/scarybg'));
+						bgString = 'stages/singleimages/scarybg';
 						curStage = 'unfairness';
 					default:
-						bg.loadGraphic(Paths.image('dave/redsky'));
+						bgString = 'stages/singleimages/redsky';
 						curStage = 'redVoid';
 				}
-				bg.antialiasing = FlxG.save.data.antiAliasing;
-				bg.scrollFactor.set(0.9, 0.9);
-				bg.active = true;
+				var bg:BackgroundImg = new BackgroundImg(-600, -200, bgString, 0.9, 0.9, false, true);
 				add(bg);
 				
 				createShader(bg, 0.1, 5, 2);
 			case 'disability' | 'disruption':
 				defaultCamZoom = 0.8;
 				
-				curStage = curTrack == 'disability' ? 'disabled' : 'disrupt';
-				var bg:FlxSprite = new FlxSprite(-800, -300);
+				var bgString:String = '';
 				switch (curTrack)
 				{
 					case 'disruption':
-						bg.loadGraphic(Paths.image('golden/disruptor'));
+						bgString = 'stages/singleimages/disruptor';
+						curStage = 'disabled';
 					default:
-						bg.loadGraphic(Paths.image('golden/disabled'));
+						bgString = 'stages/singleimages/disabled';
+						curStage = 'disrupt';
 				}
-				bg.scrollFactor.set(0.95, 0.95);
-				bg.active = true;
+				
+				var bg:BackgroundImg = new BackgroundImg(-800, -300, bgString, 0.95, 0.95, false, true);
 				add(bg);
 				
 				createShader(bg, 0.1, 5, 2);
 			case 'og':
 				defaultCamZoom = 0.8;			
 				curStage = 'alphaHouse';
-				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('dave/daveoldbg'));
-				bg.antialiasing = FlxG.save.data.antiAliasing;
-				bg.scrollFactor.set(0.9, 0.9);
+
+				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/singleimages/daveoldbg', 0.9, 0.9);
 				add(bg);
 				
 			case 'algebra':
 				curStage = 'algebra';
 				defaultCamZoom = 0.85;
 				swagSpeed = 1.6;
-				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('algebra/algebraBg'));
+				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('stages/singleimages/algebraBg'));
 				bg.setGraphicSize(Std.int(bg.width * 1.35), Std.int(bg.height * 1.35));
 				bg.updateHitbox();
 				//this is temp until good positioning gets done
@@ -715,17 +713,14 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.7;
 				curStage = 'exbungo-land';
 				
-				var bg:FlxSprite = new FlxSprite(-320, -160).loadGraphic(Paths.image('stages/exbongo/Exbongo'));
-				bg.antialiasing = false;
-				bg.setGraphicSize(Std.int(bg.width * 1.5));
+				var bg:BackgroundImg = new BackgroundImg(-320, -160, 'stages/exbongo/Exbongo', 1, 1, false, true);
+				bg.setImageSize(1.5);
 				add(bg);
 				
-				var circle:FlxSprite = new FlxSprite(-30, 550).loadGraphic(Paths.image('stages/exbongo/Circle'));
-				circle.antialiasing = false;
+				var circle:BackgroundImg = new BackgroundImg(-30, 550, 'stages/exbongo/Circle', 1, 1, false);
 				add(circle);
 
-				place = new FlxSprite(860, -15).loadGraphic(Paths.image('stages/exbongo/Place'));
-				place.antialiasing = false;
+				place = new BackgroundImg(860, -15, 'stages/exbongo/Place', 1, 1, false);
 				add(place);
 				
 				createShader(bg, 0.1, 5, 2);
@@ -734,10 +729,8 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.75;
 				curStage = 'laptop';
 				
-				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('fanmade/laptop'));
-				bg.antialiasing = false;
-				bg.setGraphicSize(Std.int(bg.width * 1.2));
-				bg.updateHitbox();
+				var bg:BackgroundImg = new BackgroundImg(0, 0, 'stages/singleimages/laptop', 1, 1, false, true);
+				bg.setImageSize(1.2);
 				bg.screenCenter();
 				bg.x -= 400;
 				add(bg);
@@ -748,10 +741,8 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.7;
 				curStage = 'rsod';
 				
-				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('fanmade/3dFucked2'));
-				bg.antialiasing = false;
-				bg.setGraphicSize(Std.int(bg.width * 2.5));
-				bg.updateHitbox();
+				var bg:BackgroundImg = new BackgroundImg(0, 0, 'stages/singleimages/3dFucked2', 1, 1, false, true);
+				bg.setImageSize(2.5);
 				bg.screenCenter();
 				bg.x -= 350;
 				add(bg);
@@ -766,27 +757,15 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.9;
 				curStage = 'stage';
 				
-				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback'));
-				bg.antialiasing = FlxG.save.data.antiAliasing;
-				bg.scrollFactor.set(0.9, 0.9);
-				bg.active = false;
+				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/default/stageback', 0.9, 0.9);
 				add(bg);
 
-				var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront'));
-				stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
-				stageFront.updateHitbox();
-				stageFront.antialiasing = FlxG.save.data.antiAliasing;
-				stageFront.scrollFactor.set(0.9, 0.9);
-				stageFront.active = false;
+				var stageFront:BackgroundImg = new BackgroundImg(-650, 600, 'stages/defaultstagefront', 0.9, 0.9);
+				stageFront.setImageSize(1.1);
 				add(stageFront);
 
-				var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stagecurtains'));
-				stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
-				stageCurtains.updateHitbox();
-				stageCurtains.antialiasing = FlxG.save.data.antiAliasing;
-				stageCurtains.scrollFactor.set(1.3, 1.3);
-				stageCurtains.active = false;
-
+				var stageCurtains:BackgroundImg = new BackgroundImg(-500, -300, 'stages/defaultstagecurtains', 1.3, 1.3);
+				stageCurtains.setImageSize(0.9);
 				add(stageCurtains);
 		}
 	}

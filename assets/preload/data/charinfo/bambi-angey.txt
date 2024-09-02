@@ -1,7 +1,7 @@
 Angry_Bambi
-0, 0
+200, 400
 prefix, 0, 0, idle, a_bambi idle, true, 24
-prefix, 0, 0, singDOWN, a_bambi down, false, 24
+prefix, 7, -25, singDOWN, a_bambi down, false, 24
 prefix, 15, 3, singRIGHT, a_bambi right, false, 24
 prefix, 78, 82, singSmash, a_bambi phone, false, 24
 prefix, 21, 43, singUP, a_bambi up, false, 24
