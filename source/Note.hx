@@ -75,6 +75,8 @@ class Note extends FlxSprite
 		this.strumTime = strumTime + FlxG.save.data.offset;
 
 		this.noteData = noteData;
+		
+		var notePath:String = 'NOTE_assets';
 
 		if (((CharactersWith3D.contains(PlayState.dad.curCharacter) && !musthit)
 			|| (CharactersWith3D.contains(PlayState.boyfriend.curCharacter) && musthit))
@@ -82,9 +84,7 @@ class Note extends FlxSprite
 			&& ((this.strumTime / 50) % 20 > 10)))
 		{
 			this.noteStyle = '3d';
-			frames = Paths.getSparrowAtlas('notes/NOTE_assets_3D');
-			animList();
-			antialiasing = FlxG.save.data.antiAliasing;
+			notePath = 'NOTE_assets_3D';
 		}
 		else if (PlayState.boyfriend.curCharacter == 'bf-pixel' && musthit)
 		{
@@ -113,14 +113,36 @@ class Note extends FlxSprite
 
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 			updateHitbox();
-
 		}
-		else
+		
+		switch (noteStyle)
 		{
-			frames = Paths.getSparrowAtlas('notes/NOTE_assets');
+			case 'phone' | 'phone-alt':
+				notePath = 'NOTE_phone';
+		}
+		
+		switch (this.noteStyle)
+		{
+			case 'phone' | 'phone-alt':
+				if (!isSustainNote)
+				{
+					frames = Paths.getSparrowAtlas('notes/NOTE_phone', 'shared');
+				}
+				else
+				{
+					frames = Paths.getSparrowAtlas('notes/NOTE_assets', 'shared');
+				}
+				animList();
+				
+				LocalScrollSpeed = 1.08;
+			
+				x += 20;
+				
+			default:
+				frames = Paths.getSparrowAtlas('notes/' + notePath);
 
-			animList();
-			antialiasing = FlxG.save.data.antiAliasing;
+				animList();
+				antialiasing = FlxG.save.data.antiAliasing;
 		}
 
 		if (PlayState.SONG.song.toLowerCase() == "cheating")

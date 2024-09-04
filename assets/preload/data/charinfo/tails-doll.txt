@@ -1,7 +1,7 @@
-girlfriends/tailslol_edit
--140, -170
-prefix, 0, 0, idle, tailslol idle, false, 24
-prefix, 0, -4, singUP, tailslol up, false, 24
-prefix, 1, -3, singLEFT, tailslol left, false, 24
-prefix, 1, -4, singRIGHT, tailslol right, false, 24
-prefix, 1, -2, singDOWN, tailslol down, false, 24
+girlfriends/tdoll-assets
+-75, -120
+prefix, 0, 0, idle, Doll idle dance, false, 24
+prefix, 7, 101, singUP, Doll Sing note UP, false, 24
+prefix, 17, 44, singDOWN, Doll Sing Note DOWN, false, 24
+prefix, -9, 26, singLEFT, doll sing note right, false, 24
+prefix,  -14, 25, singRIGHT, Doll Sing Note LEFT, false, 24

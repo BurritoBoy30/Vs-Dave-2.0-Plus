@@ -497,11 +497,11 @@ class PlayState extends MusicBeatState
 		
 		if (isTails())
 		{
-			preloadAsset('tailsDolldeath/tails_doll');
-			preloadAsset('tailsDolldeath/tails_doll_lightsout');
-			preloadAsset('tailsDolldeath/bg');
-			preloadAsset('tailsDolldeath/bg_lightsout');
-			preloadAsset('tailsDolldeath/deathStatic');
+			var preloadArray:Array<String> = ['tails_doll', 'tails_doll_lightsout', 'bg', 'bg_lightsout', 'deathStatic'];
+			for (i in 0...preloadArray.length)
+			{
+				preloadAsset('tailsDolldeath/' + preloadArray[i]);
+			}
 		}
 		
 		if (FlxG.save.data.hornyALL)
@@ -681,10 +681,10 @@ class PlayState extends MusicBeatState
 				{
 					case 'disruption':
 						bgString = 'stages/singleimages/disruptor';
-						curStage = 'disabled';
+						curStage = 'disrupt';
 					default:
 						bgString = 'stages/singleimages/disabled';
-						curStage = 'disrupt';
+						curStage = 'disabled';
 				}
 				
 				var bg:BackgroundImg = new BackgroundImg(-800, -300, bgString, 0.95, 0.95, false, true);
@@ -1730,7 +1730,13 @@ class PlayState extends MusicBeatState
 					daNote.visible = true;
 					daNote.active = true;
 				}
-
+				
+				if (daNote.mustPress && (Conductor.songPosition >= daNote.strumTime) && daNote.health != 2 && daNote.noteStyle == 'phone')
+				{
+					daNote.health = 2;
+					dad.playAnim(dad.animation.getByName("singThrow") == null ? 'singSmash' : 'singThrow', true);
+				}
+				
 				if (!daNote.mustPress && daNote.wasGoodHit)
 				{
 					dadNoteHit(daNote);
@@ -1877,8 +1883,8 @@ class PlayState extends MusicBeatState
 				case 'skyblue':
 					camFollow.x = dad.getMidpoint().x + 100;
 				case 'tails-doll':
-					camFollow.x = dad.getMidpoint().x + 100;
-					camFollow.y = dad.getMidpoint().y;
+					camFollow.x = dad.getMidpoint().x + 75;
+					camFollow.y = dad.getMidpoint().y + 10;
 					
 			}
 			
@@ -2460,7 +2466,20 @@ class PlayState extends MusicBeatState
 			health += 0.04;
 
 			var animList:Array<String> = ['LEFT', 'DOWN', 'UP', 'RIGHT'];
-			boyfriend.playAnim('sing' + animList[Math.round(Math.abs(note.noteData))], true);
+			switch (note.noteStyle)
+			{
+				default:
+					boyfriend.playAnim('sing' + animList[Math.round(Math.abs(note.noteData))], true);
+				case 'phone':
+					var hitAnimation:Bool = boyfriend.animation.getByName("dodge") != null;
+					var heyAnimation:Bool = boyfriend.animation.getByName("hey") != null;
+					boyfriend.playAnim(hitAnimation ? 'dodge' : (heyAnimation ? 'hey' : 'singUPmiss'), true);
+					if (gf.animation.getByName("cheer") != null) gf.playAnim('cheer', true);
+					if (note.health != 2)
+					{
+						dad.playAnim(dad.animation.getByName("singThrow") == null ? 'singSmash' : 'singThrow', true);
+					}
+			}
 			boyfriend.holdTimer = 0;
 			boyfriendIdleColor();
 			
@@ -2502,7 +2521,12 @@ class PlayState extends MusicBeatState
 
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
 		{
+			if (daNote.noteStyle == 'phone-alt')
+			{
+				altAnim = '-alt';
+			}
 			if (SONG.notes[Math.floor(curStep / 16)].altAnim)
+			{
 				if (SONG.song.toLowerCase() != "cheating")
 				{
 					altAnim = '-alt';
@@ -2511,6 +2535,7 @@ class PlayState extends MusicBeatState
 				{
 					healthtolower = 0.005;
 				}
+			}
 		}
 		
 		var animToPlay:String = ''; 
@@ -2526,7 +2551,13 @@ class PlayState extends MusicBeatState
 				animToPlay = 'singRIGHT';
 		}
 		
-		dad.playAnim(animToPlay + altAnim, true);
+		switch (daNote.noteStyle)
+		{
+			case 'phone':
+				dad.playAnim('singSmash', true);
+			default:
+				dad.playAnim(animToPlay + altAnim, true);
+		}
 		dad.holdTimer = 0;
 		
 		switch (curSong)
@@ -2612,7 +2643,7 @@ class PlayState extends MusicBeatState
 						FlxG.sound.play(Paths.sound('static'), 0.1);
 						dad.visible = false;
 						dadmirror.visible = true;
-						curbg.loadGraphic(Paths.image('dave/redsky_fix_attempt'));
+						curbg.loadGraphic(Paths.image('stages/singleimages/redsky_fix_attempt'));
 						curbg.visible = true;
 						iconP2.createIcon('dave-angey');
 					case 1180:
@@ -2668,10 +2699,10 @@ class PlayState extends MusicBeatState
 					case 1024:
 						defaultCamZoom = 1;
 						shakeCam = true;
-						FlxTween.linearMotion(dad, dad.x, dad.y, 25, 50, 15, true);
+						FlxTween.linearMotion(dad, dad.x, dad.y, 100 + dad.charOffset[0], 50, 15, true);
 
 					case 1280:
-						FlxTween.linearMotion(dad, dad.x, dad.y, 50, 280, 0.6, true);
+						FlxTween.linearMotion(dad, dad.x, dad.y, 100 + dad.charOffset[0], 100 + dad.charOffset[1], 0.6, true);
 						shakeCam = false;
 						defaultCamZoom = 1;
 				}
@@ -2690,7 +2721,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 1.1;
 					case 464:
 						defaultCamZoom = 1;
-						FlxTween.linearMotion(dad, dad.x, dad.y, 25, 50, 20, true);
+						FlxTween.linearMotion(dad, dad.x, dad.y, 100 + dad.charOffset[0], 50, 20, true);
 					case 848:
 						shakeCam = false;
 						crazyZooming = false;
@@ -2705,7 +2736,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.8;
 					case 1231:
 						defaultCamZoom = 0.8;
-						FlxTween.linearMotion(dad, dad.x, dad.y, 50, 280, 1, true);
+						FlxTween.linearMotion(dad, dad.x, dad.y, 100 + dad.charOffset[0], 100 + dad.charOffset[1], 1, true);
 				}
 			case 'splitathon':
 				switch (curStep)

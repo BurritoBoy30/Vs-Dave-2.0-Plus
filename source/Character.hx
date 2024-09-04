@@ -308,7 +308,7 @@ class Character extends FlxSprite
 					else
 						playAnim('danceLeft', true);
 				default:
-					playAnim('idle', isPlayer == 'bf' || isPlayer == 'dad' && curCharacter != 'bambi-splitathon' || isPlayer == 'gf' && ['skyblue', 'tails-doll'].contains(curCharacter));
+					playAnim('idle', isPlayer == 'bf' || (isPlayer == 'dad' && curCharacter != 'bambi-splitathon') || (isPlayer == 'gf' && ['skyblue', 'tails-doll'].contains(curCharacter)));
 			}
 		}
 	}
@@ -369,7 +369,10 @@ class Character extends FlxSprite
 					if (offsetInfo[5] == 'true')
 						loopedBool = true;
 						
-					addAnimation(Std.parseFloat(offsetInfo[1]), Std.parseFloat(offsetInfo[2]), offsetInfo[3], offsetInfo[4], loopedBool, Std.parseInt(offsetInfo[6]));
+					animation.addByPrefix(offsetInfo[3], offsetInfo[4], Std.parseInt(offsetInfo[6]), loopedBool);
+					animOffsets[offsetInfo[3]] = [Std.parseFloat(offsetInfo[1]), Std.parseFloat(offsetInfo[2])];
+					animationsArray.push(offsetInfo[3]);
+				
 				}
 				else if (offsetInfo[0] == 'indices')
 				{
@@ -385,23 +388,11 @@ class Character extends FlxSprite
 					if (offsetInfo[6] == 'true')
 						loopedBool = true;
 						
-					addAnimationIndices(Std.parseFloat(offsetInfo[1]), Std.parseFloat(offsetInfo[2]), offsetInfo[3], offsetInfo[4], indicesArray, loopedBool, Std.parseInt(offsetInfo[7]));
+					animation.addByIndices(offsetInfo[3], offsetInfo[4], indicesArray, "", Std.parseInt(offsetInfo[7]), loopedBool);
+					animOffsets[offsetInfo[3]] = [Std.parseFloat(offsetInfo[1]), Std.parseFloat(offsetInfo[2])];
+					animationsArray.push(offsetInfo[3]);
 				}
 			}
 		}
-	}
-	
-	public function addAnimation(xAxis:Float = 0, yAxis:Float = 0, name:String, xmlName:String, looped:Bool = false, fps:Int = 24)
-	{
-		animation.addByPrefix(name, xmlName, fps, looped);
-		animOffsets[name] = [xAxis, yAxis];
-		animationsArray.push(name);
-	}
-	
-	public function addAnimationIndices(xAxis:Float = 0, yAxis:Float = 0, name:String, xmlName:String, indicesArray:Array<Int>, looped:Bool = false, fps:Int = 24)
-	{
-		animation.addByIndices(name, xmlName, indicesArray, "", fps, looped);
-		animOffsets[name] = [xAxis, yAxis];
-		animationsArray.push(name);
 	}
 }

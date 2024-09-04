@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="tdoll-assets.png">
+	<!-- Created with Adobe Animate version 22.0.2.168 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Doll Sing Note DOWN0000" x="0" y="0" width="912" height="825"/>
+	<SubTexture name="Doll Sing Note DOWN0001" x="0" y="0" width="912" height="825"/>
+	<SubTexture name="Doll Sing Note DOWN0002" x="912" y="0" width="912" height="825"/>
+	<SubTexture name="Doll Sing Note DOWN0003" x="912" y="0" width="912" height="825"/>
+	<SubTexture name="Doll Sing Note DOWN0004" x="1824" y="0" width="912" height="825"/>
+	<SubTexture name="Doll Sing Note DOWN0005" x="1824" y="0" width="912" height="825"/>
+	<SubTexture name="Doll Sing Note DOWN0006" x="2736" y="0" width="912" height="825"/>
+	<SubTexture name="Doll Sing Note DOWN0007" x="2736" y="0" width="912" height="825"/>
+	<SubTexture name="Doll Sing Note LEFT0000" x="3648" y="0" width="857" height="805"/>
+	<SubTexture name="Doll Sing Note LEFT0001" x="3648" y="0" width="857" height="805"/>
+	<SubTexture name="Doll Sing Note LEFT0002" x="4505" y="0" width="854" height="805"/>
+	<SubTexture name="Doll Sing Note LEFT0003" x="4505" y="0" width="854" height="805"/>
+	<SubTexture name="Doll Sing Note LEFT0004" x="5362" y="0" width="854" height="805"/>
+	<SubTexture name="Doll Sing Note LEFT0005" x="5362" y="0" width="854" height="805"/>
+	<SubTexture name="Doll Sing Note LEFT0006" x="6219" y="0" width="857" height="805"/>
+	<SubTexture name="Doll Sing Note LEFT0007" x="6219" y="0" width="857" height="805"/>
+	<SubTexture name="Doll Sing note UP0000" x="7076" y="0" width="892" height="881"/>
+	<SubTexture name="Doll Sing note UP0001" x="7076" y="0" width="892" height="881"/>
+	<SubTexture name="Doll Sing note UP0002" x="0" y="883" width="888" height="881"/>
+	<SubTexture name="Doll Sing note UP0003" x="0" y="883" width="888" height="881"/>
+	<SubTexture name="Doll Sing note UP0004" x="892" y="883" width="892" height="883"/>
+	<SubTexture name="Doll Sing note UP0005" x="892" y="883" width="892" height="883"/>
+	<SubTexture name="Doll Sing note UP0006" x="1784" y="883" width="890" height="883"/>
+	<SubTexture name="Doll Sing note UP0007" x="1784" y="883" width="890" height="883"/>
+	<SubTexture name="Doll idle dance0000" x="2676" y="883" width="877" height="781"/>
+	<SubTexture name="Doll idle dance0001" x="2676" y="883" width="877" height="781"/>
+	<SubTexture name="Doll idle dance0002" x="3553" y="883" width="877" height="781"/>
+	<SubTexture name="Doll idle dance0003" x="3553" y="883" width="877" height="781"/>
+	<SubTexture name="Doll idle dance0004" x="4430" y="883" width="877" height="781"/>
+	<SubTexture name="Doll idle dance0005" x="4430" y="883" width="877" height="781"/>
+	<SubTexture name="Doll idle dance0006" x="5307" y="883" width="877" height="781"/>
+	<SubTexture name="Doll idle dance0007" x="5307" y="883" width="877" height="781"/>
+	<SubTexture name="Doll idle dance0008" x="6184" y="883" width="877" height="781"/>
+	<SubTexture name="Doll idle dance0009" x="6184" y="883" width="877" height="781"/>
+	<SubTexture name="Doll idle dance0010" x="7061" y="883" width="877" height="781"/>
+	<SubTexture name="Doll idle dance0011" x="7061" y="883" width="877" height="781"/>
+	<SubTexture name="Doll idle dance0012" x="0" y="1766" width="874" height="781"/>
+	<SubTexture name="Doll idle dance0013" x="0" y="1766" width="874" height="781"/>
+	<SubTexture name="doll sing note right0000" x="877" y="1766" width="854" height="806"/>
+	<SubTexture name="doll sing note right0001" x="877" y="1766" width="854" height="806"/>
+	<SubTexture name="doll sing note right0002" x="1731" y="1766" width="854" height="806"/>
+	<SubTexture name="doll sing note right0003" x="1731" y="1766" width="854" height="806"/>
+	<SubTexture name="doll sing note right0004" x="2585" y="1766" width="854" height="806"/>
+	<SubTexture name="doll sing note right0005" x="2585" y="1766" width="854" height="806"/>
+	<SubTexture name="doll sing note right0006" x="3439" y="1766" width="854" height="806"/>
+	<SubTexture name="doll sing note right0007" x="3439" y="1766" width="854" height="806"/>
+</TextureAtlas>

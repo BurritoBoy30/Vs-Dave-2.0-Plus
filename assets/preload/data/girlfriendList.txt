@@ -16,3 +16,5 @@ psyka-christmas
 psyka-standing
 skyblue
 tails-doll
+kaity
+kaity-christmas

@@ -7,9 +7,9 @@ prefix, 24, 4, singLEFT-alt, bambi alt left, false, 24
 prefix, 66, 19, singLEFTmiss, miss left, false, 24
 prefix, 55, 36, singUP, bambi up, false, 24
 prefix, 0, 0, idle, bambi idle, false, 24
-prefix, 0, 0, hey, bambi look, false, 24
-prefix, -16, 8, singRIGHT, bambi right, false, 24
-prefix, 98, 81, singSmash, bambi smash, false, 24
+prefix, 2, 8, hey, bambi look, false, 24
+prefix, -10, 7, singRIGHT, bambi right, false, 24
+prefix, 98, 81, singSmash, bambi phone, false, 24
 prefix, 27, 2, singDOWNmiss, miss down, false, 24
 prefix, 70, 6, singLEFT, bambi left, false, 24
 prefix, 66, 34, singUPmiss, miss up, false, 24
