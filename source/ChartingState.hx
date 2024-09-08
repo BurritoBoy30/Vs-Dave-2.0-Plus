@@ -84,8 +84,8 @@ class ChartingState extends MusicBeatState
 	var leftIcon:HealthIcon;
 	var rightIcon:HealthIcon;
 	
-	var noteTypes = ['normal', 'phone', 'phone-alt'];
-	var curNoteType:Int;
+	var noteTypes:Array<String> = ['normal', 'phone', 'phone-alt'];
+	var curNoteType:String;
 	
 	override function create()
 	{
@@ -345,6 +345,7 @@ class ChartingState extends MusicBeatState
 		check_changeBPM.name = 'check_changeBPM';
 
 		tab_group_section.add(stepperLength);
+		tab_group_section.add(new FlxText(74,10,'Section Length (in steps)'));
 		tab_group_section.add(stepperSectionBPM);
 		tab_group_section.add(stepperCopy);
 		tab_group_section.add(check_mustHitSection);
@@ -363,15 +364,24 @@ class ChartingState extends MusicBeatState
 	{
 		var tab_group_note = new FlxUI(null, UI_box);
 		tab_group_note.name = 'Note';
-
-		stepperSusLength = new FlxUINumericStepper(10, 10, Conductor.stepCrochet / 2, 0, 0, Conductor.stepCrochet * 16);
+		
+		stepperSusLength = new FlxUINumericStepper(10, 80, Conductor.stepCrochet / 2, 0, 0, Conductor.stepCrochet * _song.notes[curSection].lengthInSteps * 4);
 		stepperSusLength.value = 0;
 		stepperSusLength.name = 'note_susLength';
 
-		var applyLength:FlxButton = new FlxButton(100, 10, 'Apply');
-
+		var applyLength:FlxButton = new FlxButton(stepperSusLength.x, stepperSusLength.y + 20, 'Apply');
+		
+		var noteTypeDropDown = new FlxUIDropDownMenu(10, 20, FlxUIDropDownMenu.makeStrIdLabelArray(noteTypes, true), function(noteType:String)
+		{
+			curNoteType = noteTypes[Std.parseInt(noteType)];
+		});
+		noteTypeDropDown.selectedLabel = curNoteType;
+		
 		tab_group_note.add(stepperSusLength);
+		tab_group_note.add(new FlxText(stepperSusLength.x + 65, stepperSusLength.y, 'Note Sustain Length'));
 		tab_group_note.add(applyLength);
+		tab_group_note.add(noteTypeDropDown);
+		tab_group_note.add(new FlxText(noteTypeDropDown.x, noteTypeDropDown.y - 15, 'Note Type:'));
 
 		UI_box.addGroup(tab_group_note);
 	}
@@ -432,9 +442,6 @@ class ChartingState extends MusicBeatState
 			{
 				case 'Must hit section':
 					_song.notes[curSection].mustHitSection = check.checked;
-
-					//updateHeads();
-
 				case 'Change BPM':
 					_song.notes[curSection].changeBPM = check.checked;
 					FlxG.log.add('changed bpm shit');
@@ -519,16 +526,9 @@ class ChartingState extends MusicBeatState
 	
 	override function update(elapsed:Float)
 	{
-		curStep = recalculateSteps();
+		updateHeads();
 		
-		if (FlxG.keys.justPressed.O)
-		{
-			curNoteType++;
-			if (curNoteType > noteTypes.length - 1)
-			{
-				curNoteType = 0;
-			}
-		}
+		curStep = recalculateSteps();
 		
 		Conductor.songPosition = FlxG.sound.music.time;
 		_song.song = typingShit.text;
@@ -547,6 +547,8 @@ class ChartingState extends MusicBeatState
 			}
 
 			changeSection(curSection + 1, false);
+		} else if(strumLine.y < -5 && curSection != 0) {
+			changeSection(curSection - 1, false);
 		}
 
 		FlxG.watch.addQuick('daBeat', curBeat);
@@ -601,7 +603,7 @@ class ChartingState extends MusicBeatState
 			autosaveSong();
 			FlxG.mouse.visible = false;
 			
-			lastSection = curSection;
+			changeSection();
 			
 			PlayState.SONG = _song;
 			FlxG.sound.music.stop();
@@ -691,6 +693,7 @@ class ChartingState extends MusicBeatState
 			var shiftThing:Int = 1;
 			if (FlxG.keys.pressed.SHIFT)
 				shiftThing = 4;
+				
 			if (FlxG.keys.justPressed.RIGHT || FlxG.keys.justPressed.D)
 			{
 				if (_song.notes[curSection + 1] == null)
@@ -707,8 +710,6 @@ class ChartingState extends MusicBeatState
 
 		Conductor.songPosition = FlxG.sound.music.time;
 		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
-			
-		updateHeads();
 
 		bpmTxt.text = bpmTxt.text = Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2))
 			+ " / "
@@ -718,9 +719,7 @@ class ChartingState extends MusicBeatState
 			+ "\nCurBeat: " 
 			+ curBeat
 			+ "\nCurStep: " 
-			+ curStep
-			+ "\n\nCurrent Note Type \n(Press O to change): \n"
-			+ noteTypes[curNoteType];
+			+ curStep;
 			
 		super.update(elapsed);
 	}
@@ -902,20 +901,6 @@ class ChartingState extends MusicBeatState
 			Conductor.changeBPM(daBPM);
 		}
 
-		/* // PORT BULLSHIT, INCASE THERE'S NO SUSTAIN DATA FOR A NOTE
-			for (sec in 0..._song.notes.length)
-			{
-				for (notesse in 0..._song.notes[sec].sectionNotes.length)
-				{
-					if (_song.notes[sec].sectionNotes[notesse][2] == null)
-					{
-						trace('SUS NULL');
-						_song.notes[sec].sectionNotes[notesse][2] = 0;
-					}
-				}
-			}
-		 */
-		 
 		for (i in sectionInfo)
 		{
 			var daNoteInfo = i[1];
@@ -1017,9 +1002,16 @@ class ChartingState extends MusicBeatState
 		var noteStrum = getStrumTime(dummyArrow.y) + sectionStartTime();
 		var noteData = Math.floor(FlxG.mouse.x / GRID_SIZE);
 		var noteSus = 0;
-		var noteStyle = noteTypes[curNoteType];
+		var noteStyle = curNoteType;
 
-		_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus, noteStyle]);
+		if (curNoteType == 'normal')
+		{
+			_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus]);
+		}
+		else
+		{
+			_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus, noteStyle]);
+		}
 
 		var thingy = _song.notes[curSection].sectionNotes[_song.notes[curSection].sectionNotes.length - 1];
 
@@ -1035,35 +1027,12 @@ class ChartingState extends MusicBeatState
 	{
 		return FlxMath.remapToRange(yPos, gridBG.y, gridBG.y + gridBG.height, 0, 16 * Conductor.stepCrochet);
 	}
-
+	
 	function getYfromStrum(strumTime:Float):Float
 	{
 		return FlxMath.remapToRange(strumTime, 0, 16 * Conductor.stepCrochet, gridBG.y, gridBG.y + gridBG.height);
 	}
 
-	/*
-		function calculateSectionLengths(?sec:SwagSection):Int
-		{
-			var daLength:Int = 0;
-
-			for (i in _song.notes)
-			{
-				var swagLength = i.lengthInSteps;
-
-				if (i.typeOfSection == Section.COPYCAT)
-					swagLength * 2;
-
-				daLength += swagLength;
-
-				if (sec != null && sec == i)
-				{
-					trace('swag loop??');
-					break;
-				}
-			}
-
-			return daLength;
-	}*/
 	private var daSpacing:Float = 0.3;
 
 	function loadLevel():Void

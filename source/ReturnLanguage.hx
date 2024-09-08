@@ -6,50 +6,6 @@ using StringTools;
 
 class ReturnLanguage
 {		
-	public static function char(curText:String)
-	{
-		var returnString:String;
-		
-		switch (curText)
-		{
-			//bf skins
-			case 'bf': 					returnString = txtString('char', 0);
-			case 'bf-christmas':		returnString = txtString('char', 1);
-			case 'bf-pixel':			returnString = txtString('char', 2);
-			case 'bf-with-gf':			returnString = txtString('char', 3);
-			case 'bf-with-cyan':		returnString = txtString('char', 4);
-			case 'gf-player':			returnString = txtString('char', 5);
-			case 'rapper-gf':			returnString = txtString('char', 6);
-			case 'oruta':				returnString = txtString('char', 7);
-			
-			//gf skins
-			case 'gf': 					returnString = txtString('char', 8);
-			case 'gf-christmas':		returnString = txtString('char', 9);
-			case 'gf-standing':			returnString = txtString('char', 10);
-			case 'gf-pixel':			returnString = txtString('char', 11);
-			case 'psyka':				returnString = txtString('char', 12);
-			case 'psyka-christmas':		returnString = txtString('char', 13);
-			case 'psyka-standing':		returnString = txtString('char', 14);
-			case 'cyan':				returnString = txtString('char', 15);
-			case 'cyan-christmas':		returnString = txtString('char', 16);
-			
-			//horny gf skins
-			case 'gf-hot':				returnString = txtString('char', 17);
-			case 'gf-hot-funny':		returnString = txtString('char', 18);
-			case 'gf-hot-christmas':	returnString = txtString('char', 19);
-			case 'gf-hot-standing':		returnString = txtString('char', 20);
-			case 'gf-massive':			returnString = txtString('char', 21);
-			case 'three-gfs':			returnString = txtString('char', 22);
-			case 'gf-trepidation':		returnString = txtString('char', 23);
-			case 'skyblue':				returnString = txtString('char', 24);
-			case 'tails-doll':			returnString = txtString('char', 25);
-			
-			//placeholder
-			default:					returnString = curText;
-		}
-				
-		return returnString;
-	}
 	public static function console(curText:String)
 	{
 		var returnString:String;
@@ -66,24 +22,6 @@ class ReturnLanguage
 			default:				returnString = curText;
 		}
 				
-		return returnString;
-	}
-	
-	public static function credit(curText:String)
-	{
-		var returnString:String;
-		
-		switch (curText)
-		{
-			case 'supernovae_cred':		returnString = txtString('songcred', 0);
-			case 'glitch_cred':			returnString = txtString('songcred', 1);
-			case 'cheating_cred':		returnString = txtString('songcred', 2);
-			case 'unfairness_cred':		returnString = txtString('songcred', 3);
-			case 'mealie_cred':			returnString = txtString('songcred', 4);
-			case 'kabunga_cred':		returnString = txtString('songcred', 5);
-			default:					returnString = curText;
-		}
-		
 		return returnString;
 	}
 	
