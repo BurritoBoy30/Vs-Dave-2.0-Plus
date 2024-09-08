@@ -21,7 +21,6 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 class CharacterSelectState extends MusicBeatState
 {
 	var boyfriendData:Array<SelectableChar> = [];
-	
 	var girlfriendData:Array<SelectableChar> = [];
 	
 	public var curBF:Int = 0;
@@ -625,7 +624,7 @@ class CharacterSelectState extends MusicBeatState
 		if (isTails)
 		{
 			name = 'tails-doll';
-			displayName = ReturnLanguage.char(name);
+			displayName = ReturnLanguage.getLine(name);
 		}
 		else
 		{

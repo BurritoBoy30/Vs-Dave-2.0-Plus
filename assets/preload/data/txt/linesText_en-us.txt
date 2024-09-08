@@ -5,6 +5,12 @@ misses==Misses::space:
 accuracy==Accuracy::space:
 songcredit==Song by:space:
 
+// Story Mode //
+story mode==Story Mode
+freeplay==Freeplay
+options==Options
+credits==Credits
+
 // Freeplay //
 personalbest==PERSONAL BEST::space:
 easy==Easy
@@ -71,3 +77,12 @@ three-gfs==The Three Girlfriends
 gf-trepidation==Trepidation Girlfriend
 skyblue==Skyblue
 tails-doll==Busty Tails Doll
+
+// Song Credits //
+supernovae_cred==Original Song made by ArchWk!
+glitch_cred==Original Song made by DeadShadow and PixelGH!
+cheating_cred==Notes are scrambled! FUCK YOU!
+unfairness_cred==Ghost Tapping is forced off! FUCK YOU!
+mealie_cred==Original Song made by Alexander Cooper 19!
+kabunga_cred=OH MY GOD I JUST DEFLATED
+

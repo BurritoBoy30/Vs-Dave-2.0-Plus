@@ -308,7 +308,7 @@ class Character extends FlxSprite
 					else
 						playAnim('danceLeft', true);
 				default:
-					playAnim('idle', isPlayer == 'bf' || (isPlayer == 'dad' && curCharacter != 'bambi-splitathon') || (isPlayer == 'gf' && ['skyblue', 'tails-doll'].contains(curCharacter)));
+					playAnim('idle', isPlayer == 'bf' || (isPlayer == 'dad' && !['bambi-splitathon', 'bambi-angey'].contains(curCharacter)) || (isPlayer == 'gf' && ['skyblue', 'tails-doll'].contains(curCharacter)));
 			}
 		}
 	}

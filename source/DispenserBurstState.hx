@@ -112,14 +112,11 @@ class DispenserBurstState extends MusicBeatState
 	
 	function changeBitchColor(cor:String)
 	{
-		var curColor:String = '';
-		curColor = cor;
-		
-		if (bitchColor != curColor)
+		if (bitchColor != cor)
 		{
-			bluDispenserBitch.visible = curColor == 'blu';
-			redDispenserBitch.visible = curColor == 'red';
-			bitchColor = curColor;
+			bluDispenserBitch.visible = cor == 'blu';
+			redDispenserBitch.visible = cor == 'red';
+			bitchColor = cor;
 			if (bitchType != 'none')
 			{
 				bitchType = 'none';
@@ -169,6 +166,7 @@ class DispenserBurstState extends MusicBeatState
 			blufolder = 'none';
 			redfolder = 'none';
 		}
+		
 		bluDispenserBitch.frames = Paths.getSparrowAtlas('hornyshit/dispenser/' + blufolder + '/size' + bitchSize + '_blu', 'shared');
 		bluDispenserBitch.animation.addByIndices('danceLeft', "size" + bitchSize + '_blu idle', [28, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12], "", bitchFps, false);
 		bluDispenserBitch.animation.addByIndices('danceRight', "size" + bitchSize + '_blu idle', [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", bitchFps, false);

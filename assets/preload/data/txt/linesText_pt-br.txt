@@ -5,6 +5,12 @@ misses==Falhas::space:
 accuracy==Precisão::space:
 songcredit==Música por:space:
 
+// Story Mode //
+story mode==Modo História
+freeplay==Freeplay
+options==Opções
+credits==Créditos
+
 // Freeplay //
 personalbest==RECORDE PESSOAL::space:
 easy==Fácil
@@ -71,3 +77,12 @@ three-gfs==Trio Girlfriend
 gf-trepidation==Girlfriend Trepidation
 skyblue==Skyblue
 tails-doll==Tails Doll Peituda
+
+// Song Credits //
+supernovae_cred==Original Song made by ArchWk!
+glitch_cred==Música original feita por DeadShadow e PixelGH!
+cheating_cred==Notas embaralhadas! SE FODEU!
+unfairness_cred==Ghost Tapping está desligado! SE FODEU!
+mealie_cred==Música original feita por Alexander Cooper 19!
+kabunga_cred==CARALHO EU MURCHEI
+

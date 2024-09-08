@@ -58,14 +58,11 @@ class FreeplayState extends MusicBeatState
 		bg.color = 0xFF9271FD;
 		add(bg);
 		
-		CurrentSongIcon = new FlxSprite(0,0).loadGraphic(Paths.image('week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
-
-		CurrentSongIcon.centerOffsets(false);
-		CurrentSongIcon.x = (FlxG.width / 2) - 256;
-		CurrentSongIcon.y = (FlxG.height / 2) - 256;
+		CurrentSongIcon = new FlxSprite().loadGraphic(Paths.image('packs/week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
+		CurrentSongIcon.screenCenter();
 		CurrentSongIcon.antialiasing = FlxG.save.data.antiAliasing;
 
-		NameAlpha = new FlxText(0,(FlxG.height / 2) - 282, FlxG.width, ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase()));
+		NameAlpha = new FlxText(0, (FlxG.height / 2) - 282, FlxG.width, ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase()));
 		NameAlpha.setFormat(Paths.font("comic.ttf"), 90, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		NameAlpha.borderSize = 3;
 		NameAlpha.antialiasing = FlxG.save.data.antiAliasing;
@@ -224,7 +221,7 @@ class FreeplayState extends MusicBeatState
 			CurrentPack = 0;
 		}
 		NameAlpha.text = ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase());
-		CurrentSongIcon.loadGraphic(Paths.image('week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
+		CurrentSongIcon.loadGraphic(Paths.image('packs/week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
 	}
 
 	override function update(elapsed:Float)

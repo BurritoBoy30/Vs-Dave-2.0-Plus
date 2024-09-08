@@ -165,11 +165,14 @@ class PlayState extends MusicBeatState
 	var place:BackgroundImg;
 	var darkStages:Array<String> = ['bambiFarmNight', 'disabled', 'unfairness', 'rsod'];
 	
+	public var isDownScroll:Bool = false;
 	override public function create()
 	{
 		theFunne = FlxG.save.data.newInput;
+		
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
+			
 		eyesoreson = FlxG.save.data.eyesores;
 
 		sicks = 0;
@@ -202,6 +205,11 @@ class PlayState extends MusicBeatState
 
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
+		
+		if (SONG.song.toLowerCase() == 'unfairness')
+			isDownScroll = true;
+		else
+			isDownScroll = FlxG.save.data.downscroll;
 
 		switch (SONG.song.toLowerCase())
 		{
@@ -333,7 +341,7 @@ class PlayState extends MusicBeatState
 		strumLine = new FlxSprite(0, 50).makeGraphic(FlxG.width, 10);
 		strumLine.scrollFactor.set();
 
-		if (FlxG.save.data.downscroll || SONG.song.toLowerCase() == "unfairness")
+		if (isDownScroll)
 			strumLine.y = FlxG.height - 165;
 		
 		timeTxt = new FlxText(FlxG.width / 2.28, 65, FlxG.width, "", 32);
@@ -342,7 +350,7 @@ class PlayState extends MusicBeatState
 		timeTxt.antialiasing = FlxG.save.data.antiAliasing;
 		timeTxt.alpha = 0;
 		timeTxt.borderSize = 2;
-		if(FlxG.save.data.downScroll) timeTxt.y = FlxG.height - 45;
+		if(isDownScroll) timeTxt.y = FlxG.height - 105;
 		add(timeTxt);
 		
 		timeLabelTxt = new FlxText(timeTxt.x, timeTxt.y - 25, FlxG.width, ReturnLanguage.getLine('time'), 32);
@@ -386,7 +394,7 @@ class PlayState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 
 		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('healthBar'));
-		if (FlxG.save.data.downscroll || SONG.song.toLowerCase() == "unfairness")
+		if (isDownScroll)
 			healthBarBG.y = 50;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
@@ -420,15 +428,17 @@ class PlayState extends MusicBeatState
 		switch (SONG.song.toLowerCase())
 		{
 			case 'supernovae':
-				credits = ReturnLanguage.credit('supernovae_cred');
+				credits = ReturnLanguage.getLine('supernovae_cred');
 			case 'glitch':
-				credits = ReturnLanguage.credit('glitch_cred');
+				credits = ReturnLanguage.getLine('glitch_cred');
 			case 'unfairness':
-				credits = ReturnLanguage.credit('unfairness_cred');
+				credits = ReturnLanguage.getLine('unfairness_cred');
 			case 'cheating':
-				credits = ReturnLanguage.credit('cheating_cred');
+				credits = ReturnLanguage.getLine('cheating_cred');
+			case 'mealie':
+				credits = ReturnLanguage.getLine('mealie_cred');
 			case 'kabunga':
-				credits = ReturnLanguage.credit('kabunga_cred');
+				credits = ReturnLanguage.getLine('kabunga_cred');
 			default:
 				credits = '';
 		}
@@ -463,7 +473,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.antialiasing = FlxG.save.data.antiAliasing;
 		add(scoreTxt);
 		
-		botPlayState = new FlxText(-45, (FlxG.save.data.downscroll || SONG.song.toLowerCase() == 'unfairness' ? FlxG.height - 65 : 65), FlxG.width, "Botplay", 20);
+		botPlayState = new FlxText(-45, (isDownScroll ? FlxG.height - 85 : 65), FlxG.width, "Botplay", 20);
 		botPlayState.setFormat(Paths.font("comic.ttf"), 40, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botPlayState.scrollFactor.set();
 		botPlayState.borderSize = 2;
@@ -916,10 +926,7 @@ class PlayState extends MusicBeatState
 					var ready:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));
 					ready.scrollFactor.set();
 					ready.updateHitbox();
-
-					if (curStage.startsWith('school'))
-						ready.setGraphicSize(Std.int(ready.width * daPixelZoom));
-
+					ready.antialiasing = FlxG.save.data.antiAliasing;
 					ready.screenCenter();
 					add(ready);
 					FlxTween.tween(ready, {y: ready.y += 100, alpha: 0}, Conductor.crochet / 1000, {
@@ -933,10 +940,8 @@ class PlayState extends MusicBeatState
 				case 2:
 					var set:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 					set.scrollFactor.set();
-
-					if (curStage.startsWith('school'))
-						set.setGraphicSize(Std.int(set.width * daPixelZoom));
-
+					set.updateHitbox();
+					set.antialiasing = FlxG.save.data.antiAliasing;
 					set.screenCenter();
 					add(set);
 					FlxTween.tween(set, {y: set.y += 100, alpha: 0}, Conductor.crochet / 1000, {
@@ -950,12 +955,8 @@ class PlayState extends MusicBeatState
 				case 3:
 					var go:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
 					go.scrollFactor.set();
-
-					if (curStage.startsWith('school'))
-						go.setGraphicSize(Std.int(go.width * daPixelZoom));
-
 					go.updateHitbox();
-
+					go.antialiasing = FlxG.save.data.antiAliasing;
 					go.screenCenter();
 					add(go);
 					FlxTween.tween(go, {y: go.y += 100, alpha: 0}, Conductor.crochet / 1000, {
@@ -1749,18 +1750,18 @@ class PlayState extends MusicBeatState
 					case 'unfairness':
 						if (daNote.MyStrum != null)
 						{
-							daNote.y = noteSetup(daNote.MyStrum.y, true, daNote.strumTime, SONG.speed * noteSpeed);
+							daNote.y = noteSetup(daNote.MyStrum.y, isDownScroll, daNote.strumTime, SONG.speed * noteSpeed);
 						}
 					case 'algebra':
-						daNote.y = noteSetup(strumLine.y, FlxG.save.data.downscroll, daNote.strumTime, swagSpeed);
+						daNote.y = noteSetup(strumLine.y, isDownScroll, daNote.strumTime, swagSpeed);
 					default:
 						if (daNote.MyStrum != null)
 						{
-							daNote.y = noteSetup(daNote.MyStrum.y, FlxG.save.data.downscroll, daNote.strumTime, SONG.speed * noteSpeed);
+							daNote.y = noteSetup(daNote.MyStrum.y, isDownScroll, daNote.strumTime, SONG.speed * noteSpeed);
 						}
 						else
 						{
-							daNote.y = noteSetup(strumLine.y, FlxG.save.data.downscroll, daNote.strumTime, SONG.speed * noteSpeed);
+							daNote.y = noteSetup(strumLine.y, isDownScroll, daNote.strumTime, SONG.speed * noteSpeed);
 						}
 				}
 				//trace(daNote.y);
@@ -2124,6 +2125,9 @@ class PlayState extends MusicBeatState
 
 		comboSpr.velocity.x += FlxG.random.int(1, 10);
 		add(rating);
+		
+		if (combo >= 10)
+			add(comboSpr);
 
 		if (daStyle != 'pixel')
 		{
@@ -2144,9 +2148,6 @@ class PlayState extends MusicBeatState
 		var seperatedScore:Array<Int> = [];
 
 		var comboSplit:Array<String> = (combo + "").split('');
-
-		if (comboSplit.length == 2)
-			seperatedScore.push(0); // make sure theres a 0 in front or it looks weird lol!
 
 		for(i in 0...comboSplit.length)
 		{
@@ -2176,9 +2177,7 @@ class PlayState extends MusicBeatState
 			numScore.acceleration.y = FlxG.random.int(200, 300);
 			numScore.velocity.y -= FlxG.random.int(140, 160);
 			numScore.velocity.x = FlxG.random.float(-5, 5);
-
-			if (combo >= 10 || combo == 0)
-				add(numScore);
+			add(numScore);
 
 			FlxTween.tween(numScore, {alpha: 0}, 0.2, {
 				onComplete: function(tween:FlxTween)
@@ -2315,7 +2314,7 @@ class PlayState extends MusicBeatState
 					else
 						noteLine = strumLine.y;
 						
-					if(FlxG.save.data.downscroll && daNote.y > noteLine || !FlxG.save.data.downscroll && daNote.y < noteLine)
+					if(isDownScroll && daNote.y > noteLine || !isDownScroll && daNote.y < noteLine)
 					{
 						if(daNote.canBeHit && daNote.mustPress || daNote.tooLate && daNote.mustPress)
 							goodNoteHit(daNote);
@@ -2455,8 +2454,8 @@ class PlayState extends MusicBeatState
 		{
 			if (!note.isSustainNote)
 			{
-				popUpScore(note.strumTime, note.noteStyle);
 				combo += 1;
+				popUpScore(note.strumTime, note.noteStyle);
 			}
 			else
 			{
@@ -2517,7 +2516,7 @@ class PlayState extends MusicBeatState
 			camZooming = true;
 
 		var altAnim:String = "";
-		var healthtolower:Float = 0.017;
+		var healthtolower:Float = 0.02;
 
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
 		{
@@ -2567,7 +2566,7 @@ class PlayState extends MusicBeatState
 			case 'unfairness':
 				health -= (healthtolower / 6);
 			case 'disruption':
-				health -= healthtolower / 2.7;
+				health -= healthtolower / 2.8;
 		}
 		
 		cameraMoveOnNote(daNote.noteData, 'dad');
