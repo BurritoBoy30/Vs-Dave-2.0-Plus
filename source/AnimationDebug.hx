@@ -135,7 +135,7 @@ class AnimationDebug extends MusicBeatState
 		var tab_stuff_song = new FlxUI(null, UI_box);
 		tab_stuff_song.name = "Stuff";
 		
-		var check_flip_x = new FlxUICheckBox(10, 40, null, null, "Flip X", 40);
+		var check_flip_x = new FlxUICheckBox(10, 40, null, null, "", 0);
 		check_flip_x.checked = false;
 		check_flip_x.callback = function()
 		{
@@ -159,6 +159,7 @@ class AnimationDebug extends MusicBeatState
 		reloadCharacterDropDown();
 	
 		tab_stuff_song.add(check_flip_x);
+		tab_stuff_song.add(new FlxText(check_flip_x.x + 20, check_flip_x.y, 'Flip X'));
 		tab_stuff_song.add(loadChar);
 		tab_stuff_song.add(curCharDropDown);
 

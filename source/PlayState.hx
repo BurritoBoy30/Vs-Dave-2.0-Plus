@@ -417,11 +417,9 @@ class PlayState extends MusicBeatState
 		add(healthBarBG);
 		
 		iconP1 = new HealthIcon((boyfriendOverride == "none" || boyfriendOverride == "bf") ? SONG.player1 : boyfriendOverride, true);
-		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
 
 		iconP2 = new HealthIcon(SONG.song.toLowerCase() == 'tutorial' ? inCaseTutorial : SONG.player2);
-		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
 		
 		var credits:String;
@@ -770,11 +768,11 @@ class PlayState extends MusicBeatState
 				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/default/stageback', 0.9, 0.9);
 				add(bg);
 
-				var stageFront:BackgroundImg = new BackgroundImg(-650, 600, 'stages/defaultstagefront', 0.9, 0.9);
+				var stageFront:BackgroundImg = new BackgroundImg(-650, 600, 'stages/default/stagefront', 0.9, 0.9);
 				stageFront.setImageSize(1.1);
 				add(stageFront);
 
-				var stageCurtains:BackgroundImg = new BackgroundImg(-500, -300, 'stages/defaultstagecurtains', 1.3, 1.3);
+				var stageCurtains:BackgroundImg = new BackgroundImg(-500, -300, 'stages/default/stagecurtains', 1.3, 1.3);
 				stageCurtains.setImageSize(0.9);
 				add(stageCurtains);
 		}
@@ -1298,6 +1296,8 @@ class PlayState extends MusicBeatState
 		return num;
 	}
 	
+	var ohungiOffset:Array<Float> = [0, 0];
+	
 	override public function update(elapsed:Float)
 	{
 		elapsedtime += elapsed;
@@ -1580,30 +1580,43 @@ class PlayState extends MusicBeatState
 
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
-
-		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, 0.8)),Std.int(FlxMath.lerp(150, iconP1.height, 0.8)));
-		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.8)),Std.int(FlxMath.lerp(150, iconP2.height, 0.8)));
+		
+		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width * iconP1.realSize, 0.8)));
+		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width * (iconP2.realSize * (iconP2.whosthisfucker == 'ohungi' ? 1.4 : 0)), 0.8)));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
-
+		
+		if (health > 2)
+			health = 2;
+		
 		var iconOffset:Int = 26;
 
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
-		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
-
-		if (health > 2)
-			health = 2;
+		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset) + ohungiOffset[0];
+		
+		iconP1.y = healthBar.y - (iconP1.height / 2);
+		iconP2.y = healthBar.y - (iconP2.height / 2) + ohungiOffset[1];
 
 		if (healthBar.percent < 20)
+		{
 			iconP1.changeState('losing');
+		}
 		else
+		{
 			iconP1.changeState('normal');
-
+		}
+		
 		if (healthBar.percent > 80)
-			iconP2.changeState('losing')
+		{
+			iconP2.changeState('losing');
+			ohungiOffset = [22,0];
+		}
 		else
+		{
 			iconP2.changeState('normal');
+			ohungiOffset = [0,0];
+		}
 
 		if (startingSong)
 		{
@@ -2815,12 +2828,9 @@ class PlayState extends MusicBeatState
 			gf.playAnim('scared', true);
 		}
 		
-		var funny:Float = (healthBar.percent * 0.01) + 0.01;
+		iconP1.scale.set(iconP1.realSize + 0.2, iconP1.realSize + 0.2);
+		iconP2.scale.set(iconP2.realSize + 0.2, iconP2.realSize + 0.2);
 		
-		//health icon bounce but epic
-		iconP1.setGraphicSize(Std.int(iconP1.width + (50 * funny)), Std.int(iconP2.height - (25 * funny)));
-		iconP2.setGraphicSize(Std.int(iconP2.width + (50 * (2 - funny))), Std.int(iconP2.height - (25 * (2 - funny))));
-
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
 		

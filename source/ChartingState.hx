@@ -84,7 +84,7 @@ class ChartingState extends MusicBeatState
 	var leftIcon:HealthIcon;
 	var rightIcon:HealthIcon;
 	
-	var noteTypes:Array<String> = ['normal', 'phone', 'phone-alt'];
+	var noteTypes:Array<String> = ['normal', 'phone', 'phone-alt', 'Alt Animation'];
 	var curNoteType:String;
 	
 	override function create()
@@ -222,7 +222,7 @@ class ChartingState extends MusicBeatState
 		stepperBPM.value = Conductor.bpm;
 		stepperBPM.name = 'song_bpm';
 		
-		var stepperSpeed:FlxUINumericStepper = new FlxUINumericStepper(10, stepperBPM.y + 25, 0.1, 1, 0.1, 10, 1);
+		var stepperSpeed:FlxUINumericStepper = new FlxUINumericStepper(10, stepperBPM.y + 20, 0.1, 1, 0.1, 10, 1);
 		stepperSpeed.value = _song.speed;
 		stepperSpeed.name = 'song_speed';
 
@@ -281,8 +281,8 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(loadAutosaveBtn);
 		tab_group_song.add(stepperBPM);
 		tab_group_song.add(stepperSpeed);
-		tab_group_song.add(new FlxText(stepperBPM.x + stepperBPM.width - 1, stepperBPM.y - 1, 0, 'Song BPM'));
-		tab_group_song.add(new FlxText(stepperSpeed.x + stepperSpeed.width - 1, stepperSpeed.y - 1, 0, 'Song Speed'));
+		tab_group_song.add(new FlxText(stepperBPM.x + stepperBPM.width + 5, stepperBPM.y - 1, 0, 'Song BPM'));
+		tab_group_song.add(new FlxText(stepperSpeed.x + stepperSpeed.width + 5, stepperSpeed.y - 1, 0, 'Song Speed'));
 		tab_group_song.add(new FlxText(player2DropDown.x, player2DropDown.y - 15, 0, 'Opponent:'));
 		tab_group_song.add(new FlxText(player1DropDown.x, player1DropDown.y - 15, 0, 'Boyfriend:'));
 		tab_group_song.add(player1DropDown);

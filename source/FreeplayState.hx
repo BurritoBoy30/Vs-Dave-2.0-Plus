@@ -118,6 +118,7 @@ class FreeplayState extends MusicBeatState
 				addWeek(['Computer'], 8, ['bombu'], ['Easy'], [130]);
 				addWeek(['Crimson-Corridor'], 8, ['bombai'], ['Normal'], [150]);
 				addWeek(['Disposition'], 9, ['hell-expunged'], ['Extreme'], [115]);
+				addWeek(['Decimal'], 10, ['ohungi'], ['Hard'], [140]);
 		}
 	}
 	

@@ -1,0 +1,11 @@
+ohungi
+0, 270
+prefix, -70, 60, idle, idle, false, 24
+prefix, -72, 147, singUP, singUP, false, 24
+prefix, 118, 89, singLEFT, singLEFT, false, 24
+prefix, -156, 108, singRIGHT, singRIGHT, false, 24
+prefix, -69, -57, singDOWN, singDOWN, false, 24
+prefix, -79, 75, singUP-alt, mini singUP, false, 24
+prefix, -53, 59, singLEFT-alt, mini singLEFT, false, 24
+prefix, -80, 59, singRIGHT-alt, mini singRIGHT, false, 24
+prefix, -75, 59, singDOWN-alt, mini singDOWN, false, 24

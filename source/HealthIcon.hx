@@ -32,11 +32,15 @@ class HealthIcon extends FlxSprite
 	var char:String;
 	var state:String;
 	
+	public var whosthisfucker:String = '';
+	public var realSize:Float = 1;
+	
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{		
 		super();
 		this.isPlayer = isPlayer;
 		createIcon(char);
+		whosthisfucker = char;
 		scrollFactor.set();
 	}
 	
@@ -46,43 +50,56 @@ class HealthIcon extends FlxSprite
 	{
 		if (this.char != char)
 		{
-			var realChar:String;
-			if (!FileSystem.exists(Paths.image('ui/icons/' + char, 'preload')))
+			if (char == 'ohungi')
 			{
-				switch (char)
-				{
-					case 'bf-christmas':
-						realChar = 'bf';
-					case 'chris-christmas':
-						realChar = 'chris';
-					case 'gf-christmas' | 'gf-standing' | 'gf-hot' | 'gf-hot-christmas' | 'gf-hot-funny' | 'gf-hot-standing':
-						realChar = 'gf';
-					case 'psyka-christmas' |  'psyka-standing':
-						realChar = 'psyka';
-					case 'cyan-christmas':
-						realChar = 'cyan';
-					case 'dave-splitathon':
-						realChar = 'dave-annoyed';
-					case 'bambi' | 'bambi-splitathon':
-						realChar = 'bambi-new';
-					default:
-						realChar = 'face';
-				}
+				frames = Paths.getSparrowAtlas('ui/icon_ohungi', 'preload');
+				animation.addByPrefix('normal', "NORMAL", 24, true);
+				animation.addByPrefix('losing', "LOSE", 24, true);
+				animation.play('normal');
+				whosthisfucker = 'ohungi';
+				realSize = 0.75;
 			}
 			else
 			{
-				realChar = char;
+				var realChar:String;
+				if (!FileSystem.exists(Paths.image('ui/icons/' + char, 'preload')))
+				{
+					switch (char)
+					{
+						case 'bf-christmas':
+							realChar = 'bf';
+						case 'chris-christmas':
+							realChar = 'chris';
+						case 'gf-christmas' | 'gf-standing' | 'gf-hot' | 'gf-hot-christmas' | 'gf-hot-funny' | 'gf-hot-standing':
+							realChar = 'gf';
+						case 'psyka-christmas' |  'psyka-standing':
+							realChar = 'psyka';
+						case 'cyan-christmas':
+							realChar = 'cyan';
+						case 'dave-splitathon':
+							realChar = 'dave-annoyed';
+						case 'bambi' | 'bambi-splitathon':
+							realChar = 'bambi-new';
+						default:
+							realChar = 'face';
+					}
+				}
+				else
+				{
+					realChar = char;
+				}
+				
+				loadGraphic(Paths.image('ui/icons/' + realChar, 'preload'), true, 150, 150);
+				animation.add(char, [0, 1], 0, false, isPlayer);
+				animation.play(char);
+				whosthisfucker = char;
 			}
-			
-			loadGraphic(Paths.image('ui/icons/' + realChar, 'preload'), true, 150, 150);
+			scale.set(realSize,realSize);
 			
 			if (noAa.contains(char))
 				antialiasing = false;
 			else
-				antialiasing = FlxG.save.data.antiAliasing;
-				
-			animation.add(char, [0, 1], 0, false, isPlayer);
-			animation.play(char);
+				antialiasing = FlxG.save.data.antiAliasing;		
 		}
 	}
 
@@ -90,10 +107,15 @@ class HealthIcon extends FlxSprite
 	{
 		super.update(elapsed);
 		
-		offset.set(Std.int(FlxMath.bound(width - 150,0)),Std.int(FlxMath.bound(height - 150,0)));
-
 		if (sprTracker != null)
-			setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y - 30);
+		{
+			var ohungiOffset:Array<Float> = [0, 0];
+			
+			if (whosthisfucker == 'ohungi')
+				ohungiOffset = [-40, -50];
+				
+			setPosition(sprTracker.x + sprTracker.width + 10 + ohungiOffset[0], sprTracker.y - 30 + ohungiOffset[1]);
+		}
 	}
 	
 	public function changeState(charState:String)
@@ -101,9 +123,16 @@ class HealthIcon extends FlxSprite
 		switch (charState)
 		{
 			case 'normal':
-				animation.curAnim.curFrame = 0;
+				if (whosthisfucker == 'ohungi')
+					animation.play('normal');
+				else
+					animation.curAnim.curFrame = 0;
+					
 			case 'losing':
-				animation.curAnim.curFrame = 1;
+				if (whosthisfucker == 'ohungi')
+					animation.play('losing');
+				else
+					animation.curAnim.curFrame = 1;
 		}
 		state = charState;
 	}
