@@ -1,5 +1,9 @@
-girlfriends/GF_Bent_New
-0, -5
+file: girlfriends/GF_Bent_New
+offsets: 0, -5
+camoffsets: 0, 0
+scale: 1
+anti-aliasing: true
+flipX: false	
 prefix, 0, -3, cheer, GF Cheer, false, 24
 prefix, 0, -20, singLEFT, GF left note, false, 24
 prefix, 0, -22, singRIGHT, GF Right Note, false, 24

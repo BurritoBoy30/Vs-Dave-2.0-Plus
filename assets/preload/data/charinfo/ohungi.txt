@@ -1,5 +1,9 @@
-ohungi
-0, 270
+file: ohungi
+offsets: 0, 250
+camoffsets: 0, 0
+scale: 1
+anti-aliasing: true
+flipX: false
 prefix, -70, 60, idle, idle, false, 24
 prefix, -72, 147, singUP, singUP, false, 24
 prefix, 118, 89, singLEFT, singLEFT, false, 24

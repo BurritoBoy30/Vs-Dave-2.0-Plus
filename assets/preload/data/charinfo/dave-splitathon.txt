@@ -1,5 +1,9 @@
-Splitathon_Dave
-75, 150
+file: Splitathon_Dave
+offsets: 75, 150
+camoffsets: 0, 50
+scale: 1
+anti-aliasing: true
+flipX: false
 prefix, 0, 0, happy, happy, true, 24
 prefix, -17, 0, what, bruh, true, 24
 prefix, 0, 0, scared, waiting, true, 24

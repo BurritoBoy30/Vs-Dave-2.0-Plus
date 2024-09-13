@@ -1,5 +1,9 @@
-girlfriends/cyan_assets
-0, -7
+file: girlfriends/cyan_assets
+offsets: 0, -7
+camoffsets: 0, 0
+scale: 1
+anti-aliasing: true
+flipX: false
 prefix, 0, -14, cheer, GF Cheer, false, 24
 prefix, 0, -8, singLEFT, GF left note, false, 24
 prefix, 0, -32, singRIGHT, GF Right Note, false, 24

@@ -1,5 +1,9 @@
-Playable_GF_V2
-0, -85
+file: Playable_GF_V2
+offsets: 0, -85
+camoffsets: 0, 0
+scale: 1
+anti-aliasing: true
+flipX: false
 prefix, -6, -1, idle, GF Idle dance, false, 24
 prefix, -60, 17, singUP, GF Up, false, 24
 prefix, 45, -36, singLEFT, GF Left, false, 24

@@ -1,5 +1,9 @@
-girlfriends/cyanChristmas
--80, -7
+file: girlfriends/cyanChristmas
+offsets: -80, -7
+camoffsets: 0, 0
+scale: 1
+anti-aliasing: true
+flipX: false
 prefix, 0, -14, cheer, GF Cheer, false, 24
 prefix, 0, -8, singLEFT, GF left note, 24
 prefix, 0, -32, singRIGHT, GF Right Note, 24

@@ -1,5 +1,9 @@
-bombu
--300, -75
+file: bombu
+offsets: -300, -75
+camoffsets: -150, 100
+scale: 0.8
+anti-aliasing: true
+flipX: false
 prefix, 195, 50, idle, Idle, false, 24
 prefix, 295, 207, singUP, Up, false, 24
 prefix, -78, 33, singRIGHT, Right, false, 24

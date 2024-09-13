@@ -1,5 +1,9 @@
-alphadave
-0, -20
+file: alphadave
+offsets: 0, -20
+camoffsets: 0, 50
+scale: 1
+anti-aliasing: true
+flipX: false
 prefix, 0, 0, idle, Dad idle dance, false, 24
 prefix, -6, 50, singUP, Dad Sing Note UP, false, 24
 prefix, 0, 27, singRIGHT, Dad Sing Note RIGHT, false, 24

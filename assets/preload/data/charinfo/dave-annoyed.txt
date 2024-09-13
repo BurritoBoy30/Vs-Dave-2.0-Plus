@@ -1,5 +1,9 @@
-Dave_insanity_lol
-75, 150
+file: Dave_insanity_lol
+offsets: 75, 150
+camoffsets: 0, 0
+scale: 1
+anti-aliasing: true
+flipX: false
 prefix, 0, 0, idle, idle, false, 24
 prefix, -14, 22, singUP, up, false, 24
 prefix, -29, 3, singRIGHT, right, false, 24

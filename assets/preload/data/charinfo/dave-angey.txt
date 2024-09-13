@@ -1,5 +1,9 @@
-Dave_Furiosity
-0, 0
+file: Dave_Furiosity
+offsets: 0, 0
+camoffsets: 0, 100
+scale: 1.02
+anti-aliasing: false
+flipX: false
 prefix, 7, 0, idle, IDLE, false, 24
 prefix, -14, 16, singUP, UP, false, 24
 prefix, 13, 23, singRIGHT, RIGHT, false, 24

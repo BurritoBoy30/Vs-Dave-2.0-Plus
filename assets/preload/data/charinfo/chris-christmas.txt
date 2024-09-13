@@ -1,5 +1,8 @@
-chrisChristmas
-0, 0
+file: chrisChristmas
+offsets: 0, 0
+scale: 1
+anti-aliasing: true
+flipX: false
 prefix, -5, 0, idle, BF idle dance, false, 24
 prefix, -29, 27, singUP, BF NOTE UP0, false, 24
 prefix, 12, -6, singLEFT, BF NOTE LEFT0, false, 24

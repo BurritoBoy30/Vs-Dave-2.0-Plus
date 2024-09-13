@@ -316,7 +316,7 @@ class Note extends FlxSprite
 			{
 				var state:PlayState = cast(FlxG.state,PlayState);
 				if (mustPress)
-						{
+				{
 					state.playerStrums.forEach(function(spr:FlxSprite)
 					{
 						if (spr.ID == notetolookfor)

@@ -1,5 +1,9 @@
-bambi-joke
-175, 400
+file: bambi-joke
+offsets: 175, 400
+camoffsets: 0, 0
+scale: 1
+anti-aliasing: true
+flipX: true
 prefix, 0, 0, idle, idle, false, 24
 prefix, 0, 0, singUP, up, false, 24
 prefix, 0, 0, singLEFT, right, false, 24

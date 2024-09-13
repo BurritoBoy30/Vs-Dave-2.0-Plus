@@ -1,5 +1,9 @@
-girlfriends/tdoll-assets
--75, -120
+file: girlfriends/tdoll-assets
+offsets: -75, -120
+camoffsets: -75, 110
+scale: 1
+anti-aliasing: true
+flipX: false
 prefix, 0, 0, idle, Doll idle dance, false, 24
 prefix, 7, 101, singUP, Doll Sing note UP, false, 24
 prefix, 17, 44, singDOWN, Doll Sing Note DOWN, false, 24

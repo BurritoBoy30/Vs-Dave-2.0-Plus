@@ -1,5 +1,9 @@
-Angry_Bambi
-200, 400
+file: Angry_Bambi
+offsets: 200, 400
+camoffsets: 0, 0
+scale: 1
+anti-aliasing: true
+flipX: false
 prefix, 0, 0, idle, a_bambi idle, true, 24
 prefix, 7, -25, singDOWN, a_bambi down, false, 24
 prefix, 15, 3, singRIGHT, a_bambi right, false, 24

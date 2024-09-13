@@ -1,5 +1,9 @@
-dave_sheet
-75, 150
+file: dave_sheet
+offsets: 75, 150
+camoffsets: 0, 0
+scale: 1
+anti-aliasing: true
+flipX: false
 prefix, 0, 0, idle, idle, false, 24
 prefix, -15, 22, singUP, up0, false, 24
 prefix, -29, 3, singRIGHT, right0, false, 24

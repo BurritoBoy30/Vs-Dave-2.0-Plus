@@ -1,5 +1,9 @@
-unfair_bambi
-0, 0		
+file: unfair_bambi
+offsets: 0, 0
+camoffsets: -100, -50
+scale: 1.2
+anti-aliasing: false
+flipX: false
 prefix, 0, 0, idle, idle, false, 24
 prefix, 140, 70, singUP, singUP, false, 24
 prefix, -180, -60, singRIGHT, singRIGHT, false, 24

@@ -1,5 +1,9 @@
-Splitathon_Bambi
-200, 400
+file: Splitathon_Bambi
+offset: 200, 400
+camoffsets: 0, 50
+scale: 1
+anti-aliasing: true
+flipX: false
 prefix, 0, 0, idle, splitathon idle0, true, 24
 prefix, -20, 42, singUP, splitathon up, false, 24
 prefix, -90, 3, singRIGHT, splitathon right, false, 24

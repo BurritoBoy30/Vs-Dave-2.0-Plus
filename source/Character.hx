@@ -21,6 +21,10 @@ class Character extends FlxSprite
 
 	public var charOffset:Array<Float> = [0,0];
 	public var animationsArray:Array<String> = [];
+	public var camOffsets:Array<Float> = [0,0];
+	
+	var startedAnim:String = '';
+	var startedVarAnims:Array<String> = [];
 	
 	public static var tutorialGFs:Array<String> = [
 		'gf',
@@ -59,91 +63,6 @@ class Character extends FlxSprite
 		
 		loadCharInfo(curCharacter);
 		
-		if (bfList.contains(curCharacter) || ['bf-pixel-dead', 'rapper-gf-dead', 'bambi-joke'].contains(curCharacter))
-		{
-			flipX = true;
-		}
-		
-		switch (curCharacter)
-		{
-			// BOYFRIEND LIST START
-			case 'bf-pixel':
-				setGraphicSize(Std.int(width * 6));
-				updateHitbox();
-
-				width -= 100;
-				height -= 100;
-				
-				antialiasing = false;
-				
-			case 'bf-pixel-dead':				
-				setGraphicSize(Std.int(width * 6));
-				updateHitbox();
-				
-			case 'dave':				
-				setGraphicSize(Std.int(width * 1.1));
-				updateHitbox();
-			
-			case 'dave-annoyed':				
-				setGraphicSize(Std.int(width * 1.1));
-				updateHitbox();
-				
-			case 'dave-angey':				
-				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-				
-			case 'bambi-3d':
-				setGraphicSize(Std.int(width / furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-	
-			case 'dave-split-3d':		
-				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-				
-			case 'bambi-piss-3d':		
-				setGraphicSize(Std.int(width / furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-					
-			case 'exbungo':				
-				setGraphicSize(Std.int((width * 1.3) / furiosityScale));
-				updateHitbox();
-	
-				antialiasing = false;
-				
-			case 'bambi-unfair':		
-				setGraphicSize(Std.int((width * 1.3) / furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-			
-			case 'bombu':		
-				scale.set(0.8, 0.8);
-				updateHitbox();
-			
-			case 'bombai':		
-				scale.set(0.8, 0.8);
-				updateHitbox();
-				
-			case 'gf-pixel':
-				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
-				updateHitbox();
-				antialiasing = false;
-				
-			case 'gf-massive':
-				scale.set(0.93, 0.93);
-				updateHitbox();
-				
-			case 'gf-trepidation':			
-				scale.set(0.75, 0.75);
-				updateHitbox();
-				
-			case 'hell-expunged':
-				antialiasing = false;
-		}
-		
 		if (gfList.contains(curCharacter) && !['tails-doll', 'skyblue', 'gf-trepidation'].contains(curCharacter)
 			|| ['bambi-piss-3d'].contains(curCharacter))
 		{
@@ -166,12 +85,11 @@ class Character extends FlxSprite
 
 		if (isPlayer == 'bf')
 		{
-			if (curCharacter != 'oruta')
-				flipX = !flipX;
-
 			// Doesn't flip for BF, since his are already in the right place???
 			if (!(bfList.contains(curCharacter)))
 			{
+				flipX = !flipX;
+				
 				// var animArray
 				var oldRight = animation.getByName('singRIGHT').frames;
 				animation.getByName('singRIGHT').frames = animation.getByName('singLEFT').frames;
@@ -223,6 +141,7 @@ class Character extends FlxSprite
 
 				if (curCharacter == 'dad')
 					dadVar = 6.1;
+					
 				if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
 				{
 					dance();
@@ -350,14 +269,47 @@ class Character extends FlxSprite
 	function loadCharInfo(character:String)
 	{
 		var offsetStuffs:Array<String> = CoolUtil.coolTextFile(Paths.txt('charinfo/' + character, 'preload'));
-		var characterFile:String = offsetStuffs[0];
 		
-		frames = Paths.getSparrowAtlas('characters/' + characterFile, 'shared');
+		for (i in 0...5)
+		{
+			for (charText in offsetStuffs)
+			{
+				var charInfo:Array<String> = charText.split(": ");
+				
+				switch (charInfo[0])
+				{
+					case 'file':
+						frames = Paths.getSparrowAtlas('characters/' + charInfo[1], 'shared');
+						
+					case 'offsets':
+						var charoffsetInfo:Array<String> = charInfo[1].split(', ');
+						charOffset = [Std.parseFloat(charoffsetInfo[0]), Std.parseFloat(charoffsetInfo[1])];
+						
+					case 'camoffsets':
+						var camoffsetInfo:Array<String> = charInfo[1].split(', ');
+						camOffsets = [Std.parseFloat(camoffsetInfo[0]), Std.parseFloat(camoffsetInfo[1])];
+						
+					case 'scale':
+						var shitSize:Float = 1;
+						shitSize = Std.parseFloat(charInfo[1]);
+						
+						if (shitSize != 1)
+						{
+							setGraphicSize(Std.int(width * shitSize));
+							updateHitbox();
+						}
+						
+					case 'anti-aliasing':
+						antialiasing = charInfo[1] == 'true';
+						
+					case 'flipX':
+						flipX = charInfo[1] == 'true';
+						
+				}
+			}
+		}
 		
-		var charoffsetInfo:Array<String> = offsetStuffs[1].split(', ');
-		charOffset = [Std.parseFloat(charoffsetInfo[0]), Std.parseFloat(charoffsetInfo[1])];
-		
-		for (i in 2...offsetStuffs.length)
+		for (i in 6...offsetStuffs.length)
 		{
 			for (offsetText in offsetStuffs)
 			{

@@ -40,7 +40,6 @@ class HealthIcon extends FlxSprite
 		super();
 		this.isPlayer = isPlayer;
 		createIcon(char);
-		whosthisfucker = char;
 		scrollFactor.set();
 	}
 	
@@ -94,7 +93,7 @@ class HealthIcon extends FlxSprite
 				animation.play(char);
 				whosthisfucker = char;
 			}
-			scale.set(realSize,realSize);
+			scale.set(realSize, realSize);
 			
 			if (noAa.contains(char))
 				antialiasing = false;
@@ -112,7 +111,7 @@ class HealthIcon extends FlxSprite
 			var ohungiOffset:Array<Float> = [0, 0];
 			
 			if (whosthisfucker == 'ohungi')
-				ohungiOffset = [-40, -50];
+				ohungiOffset = [-60, -60];
 				
 			setPosition(sprTracker.x + sprTracker.width + 10 + ohungiOffset[0], sprTracker.y - 30 + ohungiOffset[1]);
 		}

@@ -1,5 +1,9 @@
-bfPixel
-200, 150
+file: bfPixel
+offsets: 200, 150
+camoffsets: -170, -130 
+scale: 6
+anti-aliasing: false
+flipX: false
 prefix, 0, 0, idle, BF IDLE, false, 24
 prefix, 0, 0, singUP, BF UP NOTE, false, 24
 prefix, 0, 0, singLEFT, BF LEFT NOTE, false, 24

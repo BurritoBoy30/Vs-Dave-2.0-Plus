@@ -143,6 +143,8 @@ class PlayState extends MusicBeatState
 	var creditsWatermark:FlxText;
 	var botPlayState:FlxText;
 	
+	public var noteTweens:Array<FlxTween> = [];
+	
 	public static var campaignScore:Int = 0;
 
 	var defaultCamZoom:Float = 1.05;
@@ -1331,6 +1333,8 @@ class PlayState extends MusicBeatState
 			dad.y += (Math.sin(elapsedtime) * 1.25);
 		}
 		
+		var krunkThing = 60;
+		
 		if (!inCutscene)
 		{
 			switch (curSong)
@@ -1382,8 +1386,6 @@ class PlayState extends MusicBeatState
 						}
 					}
 				case 'disruption':
-					var krunkThing = 60;
-
 					playerStrums.forEach(function(spr:StrumNote)
 					{
 						spr.x = arrowJunks[spr.ID + 4][0] + (Math.sin(elapsedtime) * ((spr.ID % 2) == 0 ? 1 : -1)) * krunkThing;
@@ -1501,6 +1503,45 @@ class PlayState extends MusicBeatState
 				}
 			});
 		}
+		
+		playerStrums.forEach(function(spr:StrumNote)
+		{
+			var noteYaxis:Float = 0;
+			notes.forEachAlive(function(daNote:Note)
+			{
+				if (SONG.song.toLowerCase() == 'disruption')
+				{
+					noteYaxis = arrowJunks[spr.ID + 4][1] + Math.sin(elapsedtime - 5) * ((spr.ID % 2) == 0 ? 1 : -1) * krunkThing;
+				}
+				else
+				{
+					if (daNote.MyStrum != null)
+					{
+						noteYaxis = daNote.MyStrum.y;
+					}
+					else
+					{
+						noteYaxis = strumLine.y;
+					}
+				}
+			});
+			
+			if (spr.animation.curAnim.name == 'confirm')
+			{
+				if (noteTweens[spr.ID] != null) { // this is so trash
+					noteTweens[spr.ID].cancel();
+				}
+				spr.y = noteYaxis - 20;
+			}
+			else
+			{
+				noteTweens[spr.ID] = FlxTween.tween(spr, {y: noteYaxis}, 0.1, {
+					onComplete: function(twn:FlxTween) {
+						noteTweens[spr.ID] = null;
+					}
+				});
+			}
+		});
 
 		super.update(elapsed);
 
@@ -1581,8 +1622,8 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 		
-		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width * iconP1.realSize, 0.8)));
-		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width * (iconP2.realSize * (iconP2.whosthisfucker == 'ohungi' ? 1.4 : 0)), 0.8)));
+		iconP1.centerOffsets();
+		iconP2.centerOffsets();
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -1593,10 +1634,10 @@ class PlayState extends MusicBeatState
 		var iconOffset:Int = 26;
 
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
-		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset) + ohungiOffset[0];
+		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset) + (iconP2.whosthisfucker == 'ohungi' ? ohungiOffset[0] : 0);
 		
 		iconP1.y = healthBar.y - (iconP1.height / 2);
-		iconP2.y = healthBar.y - (iconP2.height / 2) + ohungiOffset[1];
+		iconP2.y = healthBar.y - (iconP2.height / 2) + (iconP2.whosthisfucker == 'ohungi' ? ohungiOffset[1] : 0);
 
 		if (healthBar.percent < 20)
 		{
@@ -1610,12 +1651,12 @@ class PlayState extends MusicBeatState
 		if (healthBar.percent > 80)
 		{
 			iconP2.changeState('losing');
-			ohungiOffset = [22,0];
+			ohungiOffset = [35,0];
 		}
 		else
 		{
 			iconP2.changeState('normal');
-			ohungiOffset = [0,0];
+			ohungiOffset = [5,0];
 		}
 
 		if (startingSong)
@@ -1856,51 +1897,7 @@ class PlayState extends MusicBeatState
 	{
 		if (isDad)
 		{
-			camFollow.setPosition(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
-			
-			switch (dad.curCharacter)
-			{
-				case 'dave-angey':
-					camFollow.y = dad.getMidpoint().y;
-				case 'dave-split-3d':
-					camFollow.y = dad.getMidpoint().y - 50;
-				case 'dave-alpha':
-					camFollow.y = dad.getMidpoint().y - 50;	
-				case 'dave-splitathon':
-					camFollow.y = dad.getMidpoint().y - 50;
-				case 'bambi-splitathon':
-					camFollow.y = dad.getMidpoint().y - 50;
-				case 'bambi-piss-3d':
-					camFollow.y = dad.getMidpoint().y - 50;
-				case 'bambi-unfair':
-					camFollow.x = dad.getMidpoint().x + 50;
-					camFollow.y = dad.getMidpoint().y - 150;
-				case 'bombu':
-					camFollow.x = dad.getMidpoint().x;
-					camFollow.y = dad.getMidpoint().y;
-				case 'bombai':
-					camFollow.x = dad.getMidpoint().x + 225;
-					camFollow.y = dad.getMidpoint().y + 75;
-				case 'hell-expunged':
-					camFollow.x = dad.getMidpoint().x;
-					camFollow.y = dad.getMidpoint().y - 150;
-				
-				case 'gf':
-					camFollow.y = dad.getMidpoint().y;
-					camFollow.x = dad.getMidpoint().x + 50;
-				case 'gf-massive':
-					camFollow.y = dad.getMidpoint().y - 300;
-					camFollow.x = dad.getMidpoint().x + 50;
-				case 'three-gfs':
-					camFollow.x = dad.getMidpoint().x + 50;
-					camFollow.y = dad.getMidpoint().y + 20;
-				case 'skyblue':
-					camFollow.x = dad.getMidpoint().x + 100;
-				case 'tails-doll':
-					camFollow.x = dad.getMidpoint().x + 75;
-					camFollow.y = dad.getMidpoint().y + 10;
-					
-			}
+			camFollow.setPosition(dad.getMidpoint().x + 150 + dad.camOffsets[0], dad.getMidpoint().y - 100 + dad.camOffsets[1]);
 			
 			bfNoteCamOffset[0] = 0;
 			bfNoteCamOffset[1] = 0;
@@ -1910,23 +1907,7 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
-			camFollow.setPosition(boyfriend.getMidpoint().x - 100, boyfriend.getMidpoint().y - 100);
-
-			switch (boyfriend.curCharacter)
-			{
-				case 'bf-pixel':
-					camFollow.x = boyfriend.getMidpoint().x - 270;
-					camFollow.y = boyfriend.getMidpoint().y - 230;
-				case 'bf-with-gf':
-					camFollow.y = boyfriend.getMidpoint().y;
-				case 'rapper-gf':
-					camFollow.x = boyfriend.getMidpoint().x - 150;
-					camFollow.y = boyfriend.getMidpoint().y + 150;
-				case 'oruta':
-					camFollow.x = boyfriend.getMidpoint().x - 170;
-					camFollow.y = boyfriend.getMidpoint().y - 170;
-					
-			}
+			camFollow.setPosition(boyfriend.getMidpoint().x - 100 + boyfriend.camOffsets[0], boyfriend.getMidpoint().y - 100 + boyfriend.camOffsets[0]);
 			
 			dadNoteCamOffset[0] = 0;
 			dadNoteCamOffset[1] = 0;
@@ -2830,7 +2811,10 @@ class PlayState extends MusicBeatState
 		
 		iconP1.scale.set(iconP1.realSize + 0.2, iconP1.realSize + 0.2);
 		iconP2.scale.set(iconP2.realSize + 0.2, iconP2.realSize + 0.2);
-		
+
+		FlxTween.tween(iconP1, {'scale.x': iconP1.realSize, 'scale.y': iconP1.realSize}, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
+		FlxTween.tween(iconP2, {'scale.x': iconP2.realSize, 'scale.y': iconP2.realSize}, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
+
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
 		

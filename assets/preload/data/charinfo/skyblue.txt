@@ -1,5 +1,9 @@
-girlfriends/SKYBLUE
-20, -70
+file: girlfriends/SKYBLUE
+offsets: 20, -70
+camoffsets: -100, 0
+scale: 1
+anti-aliasing: true
+flipX: false
 prefix, 0, 0, idle, SKYBLUE IDLE, false, 24
 prefix, -55, 92, singUP, SKYBLUE UP, false, 24
 prefix, 271, -140, singLEFT, SKYBLUE LEFT, false, 24

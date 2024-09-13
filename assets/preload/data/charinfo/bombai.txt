@@ -1,5 +1,9 @@
-bombai
--675, -500
+file: bombai
+offsets: -675, -500
+camoffsets: 125, 175
+scale: 0.8
+anti-aliasing: true
+flipX: false
 prefix, 0, 50, idle, IDLE, false, 30
 prefix, 60, 50, singUP, UP, false, 24
 prefix, -60, 110, singRIGHT, RIGHT, false, 24
