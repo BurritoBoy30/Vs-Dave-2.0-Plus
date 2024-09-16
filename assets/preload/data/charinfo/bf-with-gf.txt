@@ -1,6 +1,6 @@
 file: BFwithGf
 offsets: 0, 0
-camoffsets: 0, 100
+camoffsets: 0, 150
 scale: 1
 anti-aliasing: true
 flipX: false
@@ -20,3 +20,4 @@ prefix, 24, 66, deathConfirm, BF Dead confirm, false, 24
 prefix, -4, -2, scared, BF idle shaking, true, 24
 prefix, 0, 0, dodge, boyfriend dodge, false, 24
 prefix, 0, 0, hit, BF hit, false, 24
+starterIdle: idle, false

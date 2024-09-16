@@ -9,3 +9,4 @@ prefix, 7, 101, singUP, Doll Sing note UP, false, 24
 prefix, 17, 44, singDOWN, Doll Sing Note DOWN, false, 24
 prefix, -9, 26, singLEFT, doll sing note right, false, 24
 prefix,  -14, 25, singRIGHT, Doll Sing Note LEFT, false, 24
+starterIdle: idle, true

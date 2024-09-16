@@ -18,3 +18,4 @@ prefix, 27, 2, singDOWNmiss, miss down, false, 24
 prefix, 70, 6, singLEFT, bambi left, false, 24
 prefix, 66, 34, singUPmiss, miss up, false, 24
 prefix, 37, 23, singThrow, bambi throw, false, 24
+starterIdle: idle, true

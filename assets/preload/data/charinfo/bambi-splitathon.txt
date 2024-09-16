@@ -11,3 +11,4 @@ prefix, 42, -7, singLEFT, splitathon left, false, 24
 prefix, -37, -19, singDOWN, splitathon down, false, 24
 prefix, -29, 7, yummyCornLol, splitathon corn, true, 24
 prefix, -32, 1, umWhatIsHappening, splitathon idle 2, true, 24
+starterIdle: idle, true

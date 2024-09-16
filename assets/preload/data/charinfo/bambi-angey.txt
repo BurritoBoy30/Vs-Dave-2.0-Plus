@@ -12,3 +12,4 @@ prefix, 21, 43, singUP, a_bambi up, false, 24
 prefix, 94, -6, singLEFT, a_bambi left, false, 24
 prefix, 158, 26, throw, a_bambi throw, false, 24
 prefix, 21, 33, scream, a_bambi scream, false, 24
+starterIdle: idle, false

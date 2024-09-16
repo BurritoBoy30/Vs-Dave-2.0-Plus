@@ -14,3 +14,4 @@ prefix, -40, 1, singRIGHTmiss, right miss, false, 24
 prefix, -26, 13, singDOWNmiss, down miss, false, 24
 prefix, 5, 14, singLEFTmiss, left miss, false, 24
 prefix, 8, 11, hey, hey, false, 24
+starterIdle: idle, false

@@ -25,6 +25,9 @@ class Character extends FlxSprite
 	
 	var startedAnim:String = '';
 	var startedVarAnims:Array<String> = [];
+	var forceAnim:Bool = true;
+	var danceType:String = 'idle';
+	var hasHair:Bool = false;
 	
 	public static var tutorialGFs:Array<String> = [
 		'gf',
@@ -58,33 +61,13 @@ class Character extends FlxSprite
 		
 		trace('get char: ' + curCharacter);
 		
-		bfList = CoolUtil.coolTextFile(Paths.txt('boyfriendList'));
-		gfList = CoolUtil.coolTextFile(Paths.txt('girlfriendList'));
-		
 		loadCharInfo(curCharacter);
-		
-		if (gfList.contains(curCharacter) && !['tails-doll', 'skyblue', 'gf-trepidation'].contains(curCharacter)
-			|| ['bambi-piss-3d'].contains(curCharacter))
-		{
-			playAnim('danceRight');
-		}
-		else
-		{
-			switch (curCharacter)
-			{
-				case 'bf-pixel-dead' | 'rapper-gf-dead':
-					playAnim('firstDeath');
-				case 'gf-trepidation':
-					playAnim('danceRight1');
-				default:
-					playAnim('idle');
-			}
-		}
-
+	
 		dance();
 
 		if (isPlayer == 'bf')
 		{
+			bfList = CoolUtil.coolTextFile(Paths.txt('boyfriendList'));
 			// Doesn't flip for BF, since his are already in the right place???
 			if (!(bfList.contains(curCharacter)))
 			{
@@ -188,46 +171,35 @@ class Character extends FlxSprite
 	{
 		if (!debugMode && canDance)
 		{
-			switch (curCharacter)
+			if (danceType == 'dance')
+			{	
+				var stupidthingforgfshair:Bool = true;
+				
+				if (hasHair)
+					stupidthingforgfshair = animation.curAnim.name.startsWith('hair');
+					
+				if (!stupidthingforgfshair)
+				{
+					danced = !danced;
+					
+					if (curCharacter == 'gf-trepidation')
+					{
+						if (trepTransition)
+						{
+							startedVarAnims[0] = startedVarAnims[0].replace('1', '2');
+							startedVarAnims[1] = startedVarAnims[1].replace('1', '2');
+						}
+					}
+					
+					if (danced)
+						playAnim(startedVarAnims[0], forceAnim);
+					else
+						playAnim(startedVarAnims[1], forceAnim);
+				}
+			}
+			else
 			{
-				case 'gf' | 'gf-christmas' | 'gf-standing' | 'gf-pixel' | 'psyka' | 'psyka-christmas' | 'psyka-standing'  | 'cyan' |
-					'cyan-christmas' | 'gf-massive' | 'gf-hot' | 'gf-hot-christmas' | 'gf-hot-funny' | 'gf-hot-standing' | 'three-gfs' | 'kaity' |
-					'kaity-christmas':
-					if (!animation.curAnim.name.startsWith('hair'))
-					{
-						danced = !danced;
-
-						if (danced)
-							playAnim('danceRight', true);
-						else
-							playAnim('danceLeft', true);
-					}
-				case 'gf-trepidation':
-					danced = !danced;
-
-					if (danced)
-					{
-						if (!trepTransition)
-							playAnim('danceRight1', true);
-						else
-							playAnim('danceRight2', true);
-					}
-					else
-					{
-						if (!trepTransition)
-							playAnim('danceLeft1', true);
-						else
-							playAnim('danceLeft2', true);
-					}
-				case 'bambi-piss-3d':
-					danced = !danced;
-
-					if (danced)
-						playAnim('danceRight', true);
-					else
-						playAnim('danceLeft', true);
-				default:
-					playAnim('idle', isPlayer == 'bf' || (isPlayer == 'dad' && !['bambi-splitathon', 'bambi-angey'].contains(curCharacter)) || (isPlayer == 'gf' && ['skyblue', 'tails-doll'].contains(curCharacter)));
+				playAnim(startedAnim, forceAnim);
 			}
 		}
 	}
@@ -309,7 +281,7 @@ class Character extends FlxSprite
 			}
 		}
 		
-		for (i in 6...offsetStuffs.length)
+		for (i in 6...offsetStuffs.length - 1)
 		{
 			for (offsetText in offsetStuffs)
 			{
@@ -343,6 +315,35 @@ class Character extends FlxSprite
 					animation.addByIndices(offsetInfo[3], offsetInfo[4], indicesArray, "", Std.parseInt(offsetInfo[7]), loopedBool);
 					animOffsets[offsetInfo[3]] = [Std.parseFloat(offsetInfo[1]), Std.parseFloat(offsetInfo[2])];
 					animationsArray.push(offsetInfo[3]);
+				}
+			}
+		}
+		
+		for (i in (offsetStuffs.length - 1)...offsetStuffs.length)
+		{
+			for (animText in offsetStuffs)
+			{
+				var starterAnimInfo:Array<String> = animText.split(": ");
+				
+				if (starterAnimInfo[0] == 'starterIdle')
+				{
+					danceType = 'idle';
+					var idleInfo:Array<String> = starterAnimInfo[1].split(", ");
+					startedAnim = idleInfo[0];
+					forceAnim = idleInfo[1] == 'true';
+					
+					playAnim(startedAnim, forceAnim);
+				}
+				else if (starterAnimInfo[0] == 'starterDance')
+				{
+					danceType = 'dance';
+					var danceInfo:Array<String> = starterAnimInfo[1].split(", ");
+					startedVarAnims = [danceInfo[0], danceInfo[1]];
+					forceAnim = danceInfo[2] == 'true';
+					
+					hasHair = danceInfo[3] != null && danceInfo[3] == 'hasHair';
+					
+					playAnim(startedVarAnims[0], forceAnim);
 				}
 			}
 		}

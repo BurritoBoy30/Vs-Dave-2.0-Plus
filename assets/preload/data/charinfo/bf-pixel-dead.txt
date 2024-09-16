@@ -7,3 +7,4 @@ flipX: false
 prefix, firstDeath, BF Dies pixel, false, 24
 prefix, -37, 0, deathLoop, Retry Loop, true, 24
 prefix, -37, 0, deathConfirm, RETRY CONFIRM, false, 24
+starterIdle: firstDeath, false

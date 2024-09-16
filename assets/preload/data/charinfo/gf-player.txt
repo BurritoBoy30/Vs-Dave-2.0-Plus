@@ -19,3 +19,4 @@ prefix, -39, -3, deathLoop, GF Death Loop, true, 24
 prefix, -33, -2, deathConfirm, GF Dead Continue, false, 24
 prefix, -35, -2, scared, GF Scared, true, 24
 prefix, -92, -23, dodge, GF Dodge, false, 24
+starterIdle: idle, true

@@ -320,6 +320,9 @@ class PlayState extends MusicBeatState
 				dad.setPosition(298 + dad.charOffset[0], 131 + dad.charOffset[1]);
 				boyfriend.setPosition(1332 + boyfriend.charOffset[0], 513 + boyfriend.charOffset[1]);
 				gf.setPosition(756 + gf.charOffset[0], 200 + gf.charOffset[1]);
+			case 'ohungi stage':
+				dad.setPosition(300 + dad.charOffset[0], 100 + dad.charOffset[1]);
+				boyfriend.setPosition(1200 + boyfriend.charOffset[0], 450 + boyfriend.charOffset[1]);
 		}
 		
 		add(gf);
@@ -458,16 +461,16 @@ class PlayState extends MusicBeatState
 		add(kadeEngineWatermark);
 		
 		creditsWatermark = new FlxText(4, healthBarBG.y + 40, 0, credits, 16);
-		creditsWatermark.setFormat(Paths.font("comic.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		creditsWatermark.setFormat(Paths.font("comic.ttf"), 18, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		creditsWatermark.scrollFactor.set();
 		creditsWatermark.borderSize = 1.25;
 		creditsWatermark.antialiasing = FlxG.save.data.antiAliasing;
 		add(creditsWatermark);
 
-		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 150, healthBarBG.y + 40, 0, "", 20);
+		scoreTxt = new FlxText(0, healthBarBG.y + 40, FlxG.width, "", 20);
 		if (!FlxG.save.data.accuracyDisplay)
 			scoreTxt.x = healthBarBG.x + healthBarBG.width / 2;
-		scoreTxt.setFormat(Paths.font("comic.ttf"), 18, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		scoreTxt.setFormat(Paths.font("comic.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.antialiasing = FlxG.save.data.antiAliasing;
@@ -762,6 +765,18 @@ class PlayState extends MusicBeatState
 			case 'disposition':
 				defaultCamZoom = 0.65;
 				curStage = 'hell';
+				
+			case 'decimal':
+				defaultCamZoom = 0.8;
+				curStage = 'ohungi stage';
+				
+				var bg:BackgroundImg = new BackgroundImg(-800, -400, 'stages/ohungi/ohungi skybox', 0.9, 0.9, true, true);
+				add(bg);
+				
+				createShader(bg, 0.1, 5, 2);
+				
+				var frontground:BackgroundImg = new BackgroundImg(-750, 200, 'stages/ohungi/ohungi ground', 1, 1);
+				add(frontground);
 				
 			default:
 				defaultCamZoom = 0.9;
@@ -1503,45 +1518,6 @@ class PlayState extends MusicBeatState
 				}
 			});
 		}
-		
-		playerStrums.forEach(function(spr:StrumNote)
-		{
-			var noteYaxis:Float = 0;
-			notes.forEachAlive(function(daNote:Note)
-			{
-				if (SONG.song.toLowerCase() == 'disruption')
-				{
-					noteYaxis = arrowJunks[spr.ID + 4][1] + Math.sin(elapsedtime - 5) * ((spr.ID % 2) == 0 ? 1 : -1) * krunkThing;
-				}
-				else
-				{
-					if (daNote.MyStrum != null)
-					{
-						noteYaxis = daNote.MyStrum.y;
-					}
-					else
-					{
-						noteYaxis = strumLine.y;
-					}
-				}
-			});
-			
-			if (spr.animation.curAnim.name == 'confirm')
-			{
-				if (noteTweens[spr.ID] != null) { // this is so trash
-					noteTweens[spr.ID].cancel();
-				}
-				spr.y = noteYaxis - 20;
-			}
-			else
-			{
-				noteTweens[spr.ID] = FlxTween.tween(spr, {y: noteYaxis}, 0.1, {
-					onComplete: function(twn:FlxTween) {
-						noteTweens[spr.ID] = null;
-					}
-				});
-			}
-		});
 
 		super.update(elapsed);
 
@@ -1897,7 +1873,7 @@ class PlayState extends MusicBeatState
 	{
 		if (isDad)
 		{
-			camFollow.setPosition(dad.getMidpoint().x + 150 + dad.camOffsets[0], dad.getMidpoint().y - 100 + dad.camOffsets[1]);
+			camFollow.setPosition((dad.getMidpoint().x + 150) + dad.camOffsets[0], (dad.getMidpoint().y - 100) + dad.camOffsets[1]);
 			
 			bfNoteCamOffset[0] = 0;
 			bfNoteCamOffset[1] = 0;
@@ -1907,7 +1883,7 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
-			camFollow.setPosition(boyfriend.getMidpoint().x - 100 + boyfriend.camOffsets[0], boyfriend.getMidpoint().y - 100 + boyfriend.camOffsets[0]);
+			camFollow.setPosition((boyfriend.getMidpoint().x - 100) + boyfriend.camOffsets[0], (boyfriend.getMidpoint().y - 100) + boyfriend.camOffsets[1]);
 			
 			dadNoteCamOffset[0] = 0;
 			dadNoteCamOffset[1] = 0;

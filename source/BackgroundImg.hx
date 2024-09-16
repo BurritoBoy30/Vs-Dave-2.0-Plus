@@ -26,3 +26,8 @@ class BackgroundImg extends FlxSprite
 		updateHitbox();
 	}
 }
+
+class ImgInfo
+{
+	public var file:String = '';
+}

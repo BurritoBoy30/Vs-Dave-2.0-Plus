@@ -16,3 +16,4 @@ prefix, 102, -257, singDOWNmiss, Down Miss pose, false, 24
 prefix, -63, -216, hey, Hey Pose, false, 24
 prefix, -61, -216, scared, Fear, true, 24
 prefix, -35, -239, dodge, Dodge Up, false, 24
+starterIdle: idle, true

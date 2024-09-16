@@ -11,3 +11,4 @@ prefix, 9, 8, singDOWN, down, false, 24
 prefix, 16, -3, singLEFT, left, false, 24
 prefix, 42, 11, um, um, true, 24
 prefix, -21, 0, scared, scared, true, 24
+starterIdle: idle, false

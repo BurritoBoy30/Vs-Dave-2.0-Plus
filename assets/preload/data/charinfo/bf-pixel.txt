@@ -13,3 +13,4 @@ prefix, 0, 0, singUPmiss, BF UP MISS, false, 24
 prefix, 0, 0, singLEFTmiss, BF LEFT MISS, false, 24
 prefix, 0, 0, singRIGHTmiss, BF RIGHT MISS, false, 24
 prefix, 0, 0, singDOWNmiss, BF DOWN MISS, false, 24
+starterIdle: idle, false

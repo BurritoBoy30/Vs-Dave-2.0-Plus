@@ -18,3 +18,4 @@ prefix, 24, 8, firstDeath, BF dies, false, 24
 prefix, 24, 3, deathLoop, BF Dead Loop, true, 24
 prefix, 24, 66, deathConfirm, BF Dead confirm, false, 24
 prefix, -4, 0, scared, BF idle shaking, true, 24
+starterIdle: idle, false

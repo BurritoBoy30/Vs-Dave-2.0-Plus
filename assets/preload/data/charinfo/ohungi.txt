@@ -13,3 +13,4 @@ prefix, -79, 75, singUP-alt, mini singUP, false, 24
 prefix, -53, 59, singLEFT-alt, mini singLEFT, false, 24
 prefix, -80, 59, singRIGHT-alt, mini singRIGHT, false, 24
 prefix, -75, 59, singDOWN-alt, mini singDOWN, false, 24
+starterIdle: idle, true

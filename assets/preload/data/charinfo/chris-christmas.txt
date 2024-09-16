@@ -13,3 +13,4 @@ prefix, 12, 24, singLEFTmiss, BF NOTE LEFT MISS, false, 24
 prefix, -30, 21, singRIGHTmiss, BF NOTE RIGHT MISS, false, 24
 prefix, -11, -19, singDOWNmiss, BF NOTE DOWN MISS, false, 24
 prefix, -4, 0, scared, BF idle shaking, true, 24
+starterIdle: idle, false

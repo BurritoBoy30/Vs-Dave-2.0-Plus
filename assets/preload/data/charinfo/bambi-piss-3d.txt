@@ -10,3 +10,4 @@ prefix, 30, 0, singLEFT, left, false, 24
 prefix, 0, -10, singDOWN, down, false, 24
 prefix, 10, 20, singUP, up, false, 24
 prefix, 30, 20, singRIGHT, right, false, 24
+starterDance: danceRight, danceLeft, false

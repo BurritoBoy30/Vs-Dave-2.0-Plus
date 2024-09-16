@@ -12,3 +12,4 @@ prefix, 54, -12, singDOWN, down, false, 24
 prefix, 13, -4, singRIGHT, right, false, 24
 prefix, 25, 11, singUP, up, false, 24
 prefix, 54, 1, singLEFT, left, false, 24
+starterIdle: idle, false

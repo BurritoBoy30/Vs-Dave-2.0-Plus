@@ -9,3 +9,4 @@ prefix, 40, 220, singUP, up, false, 24
 prefix, 100, 160, singLEFT, right, false, 24
 prefix, -23, 132, singRIGHT, left, false, 24
 prefix, 109, 79, singDOWN, down, false, 24
+starterIdle: idle, true
