@@ -321,7 +321,7 @@ class PlayState extends MusicBeatState
 				boyfriend.setPosition(1332 + boyfriend.charOffset[0], 513 + boyfriend.charOffset[1]);
 				gf.setPosition(756 + gf.charOffset[0], 200 + gf.charOffset[1]);
 			case 'ohungi stage':
-				dad.setPosition(300 + dad.charOffset[0], 100 + dad.charOffset[1]);
+				dad.setPosition(350 + dad.charOffset[0], 100 + dad.charOffset[1]);
 				boyfriend.setPosition(1200 + boyfriend.charOffset[0], 450 + boyfriend.charOffset[1]);
 		}
 		
@@ -329,7 +329,7 @@ class PlayState extends MusicBeatState
 		add(dad);
 		if (SONG.song.toLowerCase() == 'insanity')
 		{
-			dadmirror = new Character(dad.x - 100, dad.y - 200, "dave-angey");
+			dadmirror = new Character(dad.x - 100, dad.y - 200, "dave-angey", 'dad');
 			dadmirror.visible = false;
 			add(dadmirror);
 		}
@@ -581,10 +581,10 @@ class PlayState extends MusicBeatState
 				
 				curStage = isNight ? 'daveHouseNight' : 'daveHouse';
 				
-				var bg:BackgroundImg = new BackgroundImg(-600, -300, 'stages/sky' + (isNight ? "_night" : ""), 0.7, 0.7);
+				var bg:BackgroundImg = new BackgroundImg(-600, -300, 'stages/sky' + (isNight ? "_night" : ""), 0.7);
 				add(bg);
 
-				var stageHills:BackgroundImg = new  BackgroundImg(-834, -159, 'stages/house/' + (isNight ? 'night/' : '') + 'hills');
+				var stageHills:BackgroundImg = new BackgroundImg(-834, -159, 'stages/house/' + (isNight ? 'night/' : '') + 'hills');
 				add(stageHills);
 				
 				var grassbg:BackgroundImg = new BackgroundImg(-1205, 580, 'stages/house/' + (isNight ? 'night/' : '') + 'grass bg');
@@ -598,7 +598,7 @@ class PlayState extends MusicBeatState
 				
 				if (curTrack == 'insanity')
 				{
-					var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/singleimages/redsky', 0.9, 0.9, false, true);
+					var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/singleimages/redsky', 0.9, false, true);
 					bg.visible = false;
 					add(bg);
 
@@ -615,18 +615,16 @@ class PlayState extends MusicBeatState
 
 				var skyType:String = isNight ? 'sky_night' : 'sky';
 
-				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/' + skyType, 0.6, 0.6);
+				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/' + skyType, 0.6);
 				add(bg);
 
-				var flatgrass:BackgroundImg = new BackgroundImg(350, 75, 'stages/farm/gm_flatgrass', 0.65, 0.65);
-				flatgrass.setImageSize(0.34);
+				var flatgrass:BackgroundImg = new BackgroundImg(350, 75, 'stages/farm/gm_flatgrass', 0.65, 0.34);
 				add(flatgrass);
 				
-				var hills:BackgroundImg = new BackgroundImg(-173, 100, 'stages/farm/orangey hills', 0.65, 0.65);
+				var hills:BackgroundImg = new BackgroundImg(-173, 100, 'stages/farm/orangey hills', 0.65);
 				add(hills);
 				
-				var farmHouse:BackgroundImg = new BackgroundImg(100, 125, 'stages/farm/funfarmhouse', 0.7, 0.7);
-				farmHouse.setImageSize(0.9);
+				var farmHouse:BackgroundImg = new BackgroundImg(100, 125, 'stages/farm/funfarmhouse', 0.7, 0.9);
 				add(farmHouse);
 
 				var grassLand:BackgroundImg = new BackgroundImg(-600, 500, 'stages/farm/grass lands');
@@ -682,7 +680,7 @@ class PlayState extends MusicBeatState
 						bgString = 'stages/singleimages/redsky';
 						curStage = 'redVoid';
 				}
-				var bg:BackgroundImg = new BackgroundImg(-600, -200, bgString, 0.9, 0.9, false, true);
+				var bg:BackgroundImg = new BackgroundImg(-600, -200, bgString, 0.9, false, true);
 				add(bg);
 				
 				createShader(bg, 0.1, 5, 2);
@@ -700,7 +698,7 @@ class PlayState extends MusicBeatState
 						curStage = 'disabled';
 				}
 				
-				var bg:BackgroundImg = new BackgroundImg(-800, -300, bgString, 0.95, 0.95, false, true);
+				var bg:BackgroundImg = new BackgroundImg(-800, -300, bgString, 0.95, false, true);
 				add(bg);
 				
 				createShader(bg, 0.1, 5, 2);
@@ -726,14 +724,13 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.7;
 				curStage = 'exbungo-land';
 				
-				var bg:BackgroundImg = new BackgroundImg(-320, -160, 'stages/exbongo/Exbongo', 1, 1, false, true);
-				bg.setImageSize(1.5);
+				var bg:BackgroundImg = new BackgroundImg(-320, -160, 'stages/exbongo/Exbongo', false, true, 1.5);
 				add(bg);
 				
-				var circle:BackgroundImg = new BackgroundImg(-30, 550, 'stages/exbongo/Circle', 1, 1, false);
+				var circle:BackgroundImg = new BackgroundImg(-30, 550, 'stages/exbongo/Circle', false);
 				add(circle);
 
-				place = new BackgroundImg(860, -15, 'stages/exbongo/Place', 1, 1, false);
+				place = new BackgroundImg(860, -15, 'stages/exbongo/Place', false);
 				add(place);
 				
 				createShader(bg, 0.1, 5, 2);
@@ -742,8 +739,7 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.75;
 				curStage = 'laptop';
 				
-				var bg:BackgroundImg = new BackgroundImg(0, 0, 'stages/singleimages/laptop', 1, 1, false, true);
-				bg.setImageSize(1.2);
+				var bg:BackgroundImg = new BackgroundImg(0, 0, 'stages/singleimages/laptop', false, true, 1.2);
 				bg.screenCenter();
 				bg.x -= 400;
 				add(bg);
@@ -754,8 +750,7 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.7;
 				curStage = 'rsod';
 				
-				var bg:BackgroundImg = new BackgroundImg(0, 0, 'stages/singleimages/3dFucked2', 1, 1, false, true);
-				bg.setImageSize(2.5);
+				var bg:BackgroundImg = new BackgroundImg(0, 0, 'stages/singleimages/3dFucked2', 1, false, true, 2.5);
 				bg.screenCenter();
 				bg.x -= 350;
 				add(bg);
@@ -770,27 +765,25 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.8;
 				curStage = 'ohungi stage';
 				
-				var bg:BackgroundImg = new BackgroundImg(-800, -400, 'stages/ohungi/ohungi skybox', 0.9, 0.9, true, true);
+				var bg:BackgroundImg = new BackgroundImg(-800, -400, 'stages/ohungi/ohungi skybox', 0.9, true, true);
 				add(bg);
 				
 				createShader(bg, 0.1, 5, 2);
 				
-				var frontground:BackgroundImg = new BackgroundImg(-750, 200, 'stages/ohungi/ohungi ground', 1, 1);
+				var frontground:BackgroundImg = new BackgroundImg(-750, 200, 'stages/ohungi/ohungi ground', 1);
 				add(frontground);
 				
 			default:
 				defaultCamZoom = 0.9;
 				curStage = 'stage';
 				
-				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/default/stageback', 0.9, 0.9);
+				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/default/stageback', 0.9);
 				add(bg);
 
-				var stageFront:BackgroundImg = new BackgroundImg(-650, 600, 'stages/default/stagefront', 0.9, 0.9);
-				stageFront.setImageSize(1.1);
+				var stageFront:BackgroundImg = new BackgroundImg(-650, 600, 'stages/default/stagefront', 0.9, 1.1);
 				add(stageFront);
 
-				var stageCurtains:BackgroundImg = new BackgroundImg(-500, -300, 'stages/default/stagecurtains', 1.3, 1.3);
-				stageCurtains.setImageSize(0.9);
+				var stageCurtains:BackgroundImg = new BackgroundImg(-500, -300, 'stages/default/stagecurtains', 1.3, 0.9);
 				add(stageCurtains);
 		}
 	}
@@ -1313,7 +1306,7 @@ class PlayState extends MusicBeatState
 		return num;
 	}
 	
-	var ohungiOffset:Array<Float> = [0, 0];
+	var ohungiOffset:Float = 0;
 	
 	override public function update(elapsed:Float)
 	{
@@ -1610,10 +1603,10 @@ class PlayState extends MusicBeatState
 		var iconOffset:Int = 26;
 
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
-		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset) + (iconP2.whosthisfucker == 'ohungi' ? ohungiOffset[0] : 0);
+		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset) + (iconP2.whosthisfucker == 'ohungi' ? ohungiOffset : 0);
 		
 		iconP1.y = healthBar.y - (iconP1.height / 2);
-		iconP2.y = healthBar.y - (iconP2.height / 2) + (iconP2.whosthisfucker == 'ohungi' ? ohungiOffset[1] : 0);
+		iconP2.y = healthBar.y - (iconP2.height / 2);
 
 		if (healthBar.percent < 20)
 		{
@@ -1627,12 +1620,12 @@ class PlayState extends MusicBeatState
 		if (healthBar.percent > 80)
 		{
 			iconP2.changeState('losing');
-			ohungiOffset = [35,0];
+			ohungiOffset = 35;
 		}
 		else
 		{
 			iconP2.changeState('normal');
-			ohungiOffset = [5,0];
+			ohungiOffset = 50;
 		}
 
 		if (startingSong)
@@ -2607,7 +2600,10 @@ class PlayState extends MusicBeatState
 						iconP2.createIcon('dave');
 					case 708:
 						defaultCamZoom = 0.8;
+						dad.canDance = false;
 						dad.playAnim('um', true);
+					case 784:
+						dad.canDance = true;
 					case 1176:
 						FlxG.sound.play(Paths.sound('static'), 0.1);
 						dad.visible = false;
@@ -2788,8 +2784,8 @@ class PlayState extends MusicBeatState
 		iconP1.scale.set(iconP1.realSize + 0.2, iconP1.realSize + 0.2);
 		iconP2.scale.set(iconP2.realSize + 0.2, iconP2.realSize + 0.2);
 
-		FlxTween.tween(iconP1, {'scale.x': iconP1.realSize, 'scale.y': iconP1.realSize}, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
-		FlxTween.tween(iconP2, {'scale.x': iconP2.realSize, 'scale.y': iconP2.realSize}, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
+		FlxTween.tween(iconP1.scale, {x: iconP1.realSize, y: iconP1.realSize}, Conductor.crochet / 1200 * gfSpeed, {ease: FlxEase.quadOut});
+		FlxTween.tween(iconP2.scale, {x: iconP2.realSize, y: iconP2.realSize}, Conductor.crochet / 1200 * gfSpeed, {ease: FlxEase.quadOut});
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();

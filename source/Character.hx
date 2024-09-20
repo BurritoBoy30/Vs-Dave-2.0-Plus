@@ -45,10 +45,7 @@ class Character extends FlxSprite
 		'three-gfs',
 		'kaity'
 	];
-	
-	var bfList:Array<String> = [];
-	var gfList:Array<String> = [];
-	
+		
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:String = 'bf')
 	{
 		super(x, y);
@@ -67,7 +64,8 @@ class Character extends FlxSprite
 
 		if (isPlayer == 'bf')
 		{
-			bfList = CoolUtil.coolTextFile(Paths.txt('boyfriendList'));
+			var bfList:Array<String> = CoolUtil.coolTextFile(Paths.txt('boyfriendList'));
+
 			// Doesn't flip for BF, since his are already in the right place???
 			if (!(bfList.contains(curCharacter)))
 			{
@@ -173,12 +171,7 @@ class Character extends FlxSprite
 		{
 			if (danceType == 'dance')
 			{	
-				var stupidthingforgfshair:Bool = true;
-				
-				if (hasHair)
-					stupidthingforgfshair = animation.curAnim.name.startsWith('hair');
-					
-				if (!stupidthingforgfshair)
+				if (hasHair ? !animation.curAnim.name.startsWith('hair') : true)
 				{
 					danced = !danced;
 					
@@ -220,7 +213,7 @@ class Character extends FlxSprite
 		else
 			offset.set(0, 0);
 			
-		if (tutorialGFs.contains(curCharacter) && (curCharacter != 'tails-doll' || curCharacter != 'skyblue'))
+		if (tutorialGFs.contains(curCharacter) && danceType == 'dance')
 		{
 			if (AnimName == 'singLEFT')
 			{
@@ -238,6 +231,7 @@ class Character extends FlxSprite
 		}
 	}
 	
+	//my magnum opus or whatever the people say
 	function loadCharInfo(character:String)
 	{
 		var offsetStuffs:Array<String> = CoolUtil.coolTextFile(Paths.txt('charinfo/' + character, 'preload'));

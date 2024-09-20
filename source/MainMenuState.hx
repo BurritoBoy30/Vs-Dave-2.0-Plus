@@ -66,7 +66,7 @@ class MainMenuState extends MusicBeatState
 
 		for (i in 0...optionShit.length)
 		{
-			var menuItem:FlxSprite = new FlxSprite(50 - (i * 75), 100 + (i * 210));
+			var menuItem:FlxSprite = new FlxSprite(50 - (i * 56), 100 + (i * 250));
 			menuItem.frames = Paths.getSparrowAtlas('ui/main_menu_icons');
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
@@ -202,7 +202,7 @@ class MainMenuState extends MusicBeatState
 			if (spr.ID == curSelected)
 			{
 				spr.animation.play('selected');
-				camFollow.setPosition(spr.getGraphicMidpoint().x + 325, spr.getGraphicMidpoint().y);
+				camFollow.setPosition(spr.getGraphicMidpoint().x + 350, spr.getGraphicMidpoint().y);
 				thingText.text = ReturnLanguage.getLine(optionShit[curSelected]);
 				thingText.setPosition(spr.x + spr.width + 20, spr.y + 20);
 			}

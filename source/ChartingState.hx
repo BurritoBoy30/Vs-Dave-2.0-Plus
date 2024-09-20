@@ -120,8 +120,8 @@ class ChartingState extends MusicBeatState
 		leftIcon.scrollFactor.set(1, 1);
 		rightIcon.scrollFactor.set(1, 1);
 
-		leftIcon.setGraphicSize(0, 45);
-		rightIcon.setGraphicSize(0, 45);
+		leftIcon.scale.set(leftIcon.realSize / 2, leftIcon.realSize / 2);
+		rightIcon.scale.set(rightIcon.realSize / 2, rightIcon.realSize / 2);
 
 		add(leftIcon);
 		add(rightIcon);

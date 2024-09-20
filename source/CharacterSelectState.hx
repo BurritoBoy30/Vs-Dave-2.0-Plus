@@ -37,7 +37,6 @@ class CharacterSelectState extends MusicBeatState
 	
 	public var iconBF:HealthIcon;
 	public var iconGF:HealthIcon;
-	var iconOffseet:Float;
 	
 	private var camHUD:FlxCamera;
 	private var camGame:FlxCamera;
@@ -81,10 +80,12 @@ class CharacterSelectState extends MusicBeatState
 			new SelectableChar(['bf-with-gf', 'bf-with-cyan']),
 			new SelectableChar(['chris', 'chris-christmas']),
 			new SelectableChar(['gf-player']),
-			new SelectableChar(['rapper-gf']),
-			new SelectableChar(['oruta'])
+			new SelectableChar(['rapper-gf'])
 		];
 		
+		if (FlxG.save.data.hornyGF && FlxG.save.data.hornyALL)
+			boyfriendData.push(new SelectableChar(['oruta']));
+			
 		loadGirlfriendListing(FlxG.save.data.hornyGF && FlxG.save.data.hornyALL);
 		
 		FlxG.mouse.visible = true;
@@ -107,10 +108,10 @@ class CharacterSelectState extends MusicBeatState
 		
 		Conductor.changeBPM(110);
 		
-		var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/sky_night', 0.7, 0.7);
+		var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/sky_night', 0.7);
 		add(bg);
 		
-		var stageHills:BackgroundImg = new  BackgroundImg(-834, -159, 'stages/house/night/hills');
+		var stageHills:BackgroundImg = new BackgroundImg(-834, -159, 'stages/house/night/hills');
 		add(stageHills);
 		
 		var grassbg:BackgroundImg = new BackgroundImg(-1205, 580, 'stages/house/night/grass bg');
@@ -137,8 +138,6 @@ class CharacterSelectState extends MusicBeatState
 		girlfriendText.antialiasing = FlxG.save.data.antiAliasing;
 		add(girlfriendText);
 		girlfriendText.cameras = [camHUD];
-		
-		iconOffseet = 15;
 		
 		iconBF = new HealthIcon(boyfriendData[curBF].names[curFormBF], false);
 		iconBF.y = boyfriendText.y - 10;
@@ -444,7 +443,10 @@ class CharacterSelectState extends MusicBeatState
 			if (!isTails)
 			{
 				FlxG.save.data.hornyGF = !FlxG.save.data.hornyGF;
-				updateGfListing();
+				curGF = 0;
+				curFormGF = 0;
+		
+				loadGirlfriendListing(FlxG.save.data.hornyGF);
 				UpdateGF();
 			}
 			else
@@ -454,14 +456,6 @@ class CharacterSelectState extends MusicBeatState
 				hornyGfBOX.checked = true;
 			}
 		}
-	}
-
-	function updateGfListing()
-	{
-		curGF = 0;
-		curFormGF = 0;
-		
-		loadGirlfriendListing(FlxG.save.data.hornyGF);
 	}
 	
 	function loadGirlfriendListing(isHorny:Bool = false)
@@ -595,6 +589,7 @@ class CharacterSelectState extends MusicBeatState
 		UpdateGF();
 	}
 	
+	var iconOffseet:Float = 15;
 	var shitOffset:Array<Float> = [-130, -60];
 	
 	public function UpdateBF()

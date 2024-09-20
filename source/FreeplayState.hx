@@ -81,7 +81,7 @@ class FreeplayState extends MusicBeatState
 			case 'dave':
 				addWeek(['Tutorial'], 0, ['gf'], ['Easy'], [100]);
 				addWeek(['House', 'Insanity', 'Polygonized'], 1,
-					['dave', 'dave', 'dave-angey'],
+					['dave', 'dave-annoyed', 'dave-angey'],
 					['Normal', 'Normal', 'Hard'],
 					[230, 160, 180]
 				);
