@@ -8,8 +8,8 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 class DispenserBurstState extends MusicBeatState
 {
-	public var bluDispenserBitch:FlxSprite;
-	public var redDispenserBitch:FlxSprite;
+	public var bluDispenserBitch:DispenserBitch;
+	public var redDispenserBitch:DispenserBitch;
 	
 	var bitchColor:String = 'blu';
 	var bitchSize:Float = 1;
@@ -27,60 +27,60 @@ class DispenserBurstState extends MusicBeatState
 	var buttonRedBlu:Button;
 	var buttonBluRed:Button;
 	
-	var bitchFps:Int = 40;
-	
-	public var buttonNumber:Float = 0;
-		
 	override function create()
 	{	
 		FlxG.sound.playMusic(Paths.music('burstByKO3', 'shared'), 1, true);
 
 		Conductor.changeBPM(150);
 		
-		bluDispenserBitch = new FlxSprite();
-		bluDispenserBitch.frames = Paths.getSparrowAtlas('hornyshit/dispenser/none/size' + bitchSize + '_blu', 'shared');
-		bluDispenserBitch.animation.addByIndices('danceLeft', "size" + bitchSize + '_blu idle', [28, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12], "", bitchFps, false);
-		bluDispenserBitch.animation.addByIndices('danceRight', "size" + bitchSize + '_blu idle', [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", bitchFps, false);
-		bluDispenserBitch.screenCenter();
-		bluDispenserBitch.scale.set(0.85, 0.85);
-		bluDispenserBitch.antialiasing = FlxG.save.data.antiAliasing;
+		bluDispenserBitch = new DispenserBitch(bitchSize, 'blu', 'none');
 		add(bluDispenserBitch);
 		
-		redDispenserBitch = new FlxSprite();
-		redDispenserBitch.frames = Paths.getSparrowAtlas('hornyshit/dispenser/none/size' + bitchSize + '_red', 'shared');
-		redDispenserBitch.animation.addByIndices('danceLeft', "size" + bitchSize + '_red idle', [28, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12], "", bitchFps, false);
-		redDispenserBitch.animation.addByIndices('danceRight', "size" + bitchSize + '_red idle', [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", bitchFps, false);
-		redDispenserBitch.screenCenter();
-		redDispenserBitch.scale.set(0.85, 0.85);
-		redDispenserBitch.antialiasing = FlxG.save.data.antiAliasing;
+		redDispenserBitch = new DispenserBitch(bitchSize, 'red', 'none');
 		add(redDispenserBitch);
+		
 		redDispenserBitch.visible = false;	
-		
-		bluDispenserBitch.animation.play('danceLeft', true);
-		redDispenserBitch.animation.play('danceLeft', true);
-		
+			
 		buttonBlu = new Button(bluDispenserBitch.width * 1.34, 10, 'blue_button', function()
 		{
 			changeBitchColor('blu');
 		});
 		add(buttonBlu);
 		
-		buttonRed = new Button(buttonBlu.x, buttonBlu.height + buttonBlu.y + 20, 'red_button', function(){changeBitchColor('red');});
+		buttonRed = new Button(buttonBlu.x, buttonBlu.height + buttonBlu.y + 20, 'red_button', function()
+		{
+			changeBitchColor('red');
+		});
 		add(buttonRed);
 		
-		buttonBluRed = new Button(buttonBlu.x + buttonBlu.width + 10, buttonBlu.y, 'blue-red_typeButton', function(){changeBitchType('blu-red');});
+		buttonBluRed = new Button(buttonBlu.x + buttonBlu.width + 10, buttonBlu.y, 'blue-red_typeButton', function()
+		{
+			changeBitchType('blu-red');
+		});
 		add(buttonBluRed);
 		
-		buttonRedBlu = new Button(buttonBluRed.x, buttonBluRed.y + buttonBluRed.height + 20, 'red-blue_typeButton', function(){changeBitchType('red-blu');});
+		buttonRedBlu = new Button(buttonBluRed.x, buttonBluRed.y + buttonBluRed.height + 20, 'red-blue_typeButton', function()
+		{
+			changeBitchType('red-blu');
+		});
 		add(buttonRedBlu);
 		
-		button1 = new Button(196, 10, '1_button', function(){changeBitchSize(1);});
+		button1 = new Button(196, 10, '1_button', function()
+		{
+			changeBitchSize(1);
+		});
 		add(button1);
 		
-		button2 = new Button(button1.x, button1.height + button1.y + 20, '2_button', function(){changeBitchSize(2);});
+		button2 = new Button(button1.x, button1.height + button1.y + 20, '2_button', function()
+		{
+			changeBitchSize(2);
+		});
 		add(button2);
 		
-		button3 = new Button(button2.x, button2.height + button2.y + 20, '3_button', function(){changeBitchSize(3);});
+		button3 = new Button(button2.x, button2.height + button2.y + 20, '3_button', function()
+		{
+			changeBitchSize(3);
+		});
 		add(button3);
 
 		super.create();
@@ -167,18 +167,32 @@ class DispenserBurstState extends MusicBeatState
 			redfolder = 'none';
 		}
 		
-		bluDispenserBitch.frames = Paths.getSparrowAtlas('hornyshit/dispenser/' + blufolder + '/size' + bitchSize + '_blu', 'shared');
-		bluDispenserBitch.animation.addByIndices('danceLeft', "size" + bitchSize + '_blu idle', [28, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12], "", bitchFps, false);
-		bluDispenserBitch.animation.addByIndices('danceRight', "size" + bitchSize + '_blu idle', [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", bitchFps, false);
-		
-		redDispenserBitch.frames = Paths.getSparrowAtlas('hornyshit/dispenser/' + redfolder + '/size' + bitchSize + '_red', 'shared');
-		redDispenserBitch.animation.addByIndices('danceLeft', "size" + bitchSize + '_red idle', [28, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12], "", bitchFps, false);
-		redDispenserBitch.animation.addByIndices('danceRight', "size" + bitchSize + '_red idle', [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", bitchFps, false);
-		
 		danced = false;
 		
-		bluDispenserBitch.animation.play('danceLeft', true);
-		redDispenserBitch.animation.play('danceLeft', true);
+		bluDispenserBitch.reloadBitch(bitchSize, 'blu', blufolder);
+		redDispenserBitch.reloadBitch(bitchSize, 'red', redfolder);
+	}
+}
+
+class DispenserBitch extends FlxSprite
+{
+	public function new (size:Float, type:String, folder:String)
+	{
+		super();
+		reloadBitch(size, type, folder);
+		screenCenter();
+		scale.set(0.85, 0.85);
+		antialiasing = FlxG.save.data.antiAliasing;
+		
+		animation.play('danceLeft', true);
+	}
+	
+	public function reloadBitch(size:Float, type:String, folder:String)
+	{
+		frames = Paths.getSparrowAtlas('hornyshit/dispenser/' + folder + '/size' + size + '_' + type, 'shared');
+		animation.addByIndices('danceLeft', "size" + size + '_' + type + ' idle', [28, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12], "", 40, false);
+		animation.addByIndices('danceRight', "size" + size + '_' + type + ' idle', [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", 40, false);
+		animation.play('danceLeft', true);
 	}
 }
 

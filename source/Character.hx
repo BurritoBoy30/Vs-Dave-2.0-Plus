@@ -22,6 +22,7 @@ class Character extends FlxSprite
 	public var charOffset:Array<Float> = [0,0];
 	public var animationsArray:Array<String> = [];
 	public var camOffsets:Array<Float> = [0,0];
+	public var isFlipped:Bool = false;
 	
 	var startedAnim:String = '';
 	var startedVarAnims:Array<String> = [];
@@ -270,6 +271,7 @@ class Character extends FlxSprite
 						
 					case 'flipX':
 						flipX = charInfo[1] == 'true';
+						isFlipped = charInfo[1] == 'true';
 						
 				}
 			}

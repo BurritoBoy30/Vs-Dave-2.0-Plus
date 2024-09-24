@@ -6,7 +6,7 @@ anti-aliasing: true
 flipX: false
 prefix, 0, 0, happy, happy, true, 24
 prefix, -17, 0, what, bruh, true, 24
-prefix, 0, 0, scared, waiting, true, 24
+prefix, -13, 0, scared, waiting, true, 24
 prefix, 0, 0, idle, idle, false, 24
 prefix, 54, -12, singDOWN, down, false, 24
 prefix, 13, -4, singRIGHT, right, false, 24

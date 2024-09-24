@@ -130,12 +130,13 @@ class AnimationDebug extends MusicBeatState
 	}
 	
 	var curCharDropDown:FlxUIDropDownMenu;
+	var check_flip_x:FlxUICheckBox;
 	function addStuffUI():Void
 	{
 		var tab_stuff_song = new FlxUI(null, UI_box);
 		tab_stuff_song.name = "Stuff";
 		
-		var check_flip_x = new FlxUICheckBox(10, 40, null, null, "", 0);
+		check_flip_x = new FlxUICheckBox(10, 40, null, null, "", 0);
 		check_flip_x.checked = false;
 		check_flip_x.callback = function()
 		{
@@ -152,6 +153,7 @@ class AnimationDebug extends MusicBeatState
 		var loadChar:FlxButton = new FlxButton(150, 10, "Reload", function()
 		{
 			loadChar(daAnim);
+			check_flip_x.checked = char.isFlipped;
 			camFollow.setPosition(char.getMidpoint().x, char.getMidpoint().y);
 			genBoyOffsets();
 			reloadCharacterDropDown();
@@ -353,7 +355,6 @@ class AnimationDebug extends MusicBeatState
 		curCharDropDown.selectedLabel = daAnim;
 		curAnim = 0;
 	}
-	
 	
 	function addOffsetToChar(layer:Int, offset:Float)
 	{		

@@ -304,7 +304,7 @@ class TitleState extends MusicBeatState
 				case 6:
 					createCoolText(['Dave Engine']);
 				case 7:
-					addMoreText('Now Plus');
+					addMoreText('On Steroids');
 				// credTextShit.text += '\nNewgrounds';
 				case 8:
 					deleteCoolText();
@@ -331,11 +331,9 @@ class TitleState extends MusicBeatState
 					addMoreText('& Bambi');
 				// credTextShit.text += '\nNight';
 				case 14:
-					addMoreText('2.0+'); // credTextShit.text += '\nFunkin';
+					addMoreText('Plus'); // credTextShit.text += '\nFunkin';
 				case 15:
 					deleteCoolText();
-
-				case 16:
 					skipIntro();
 			}
 		}
