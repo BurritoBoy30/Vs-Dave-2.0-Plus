@@ -69,6 +69,7 @@ class FreeplayState extends MusicBeatState
 		
 		add(CurrentSongIcon);
 		add(NameAlpha);
+		
 		Highscore.load();
 
 		super.create();
@@ -90,12 +91,12 @@ class FreeplayState extends MusicBeatState
 					['Hard', 'Hard', 'Normal'],
 					[188, 105, 113]
 				);
-				addWeek(['Splitathon'], 3,['the-duo'], ['Hard'], [230]);
+				addWeek(['Splitathon'], 3, ['the-duo'], ['Hard'], [230]);
 			
 			case 'golden':
-				addWeek(['Disruption'], 6,['bambi-piss-3d'], ['Extreme'], [330]);
-				addWeek(['Disability'], 6,['dave-split-3d'], ['Hard'], [182]);
-				addWeek(['OG'], 7,['dave-alpha'], ['Extreme'], [110]);
+				addWeek(['Disruption'], 6, ['bambi-piss-3d'], ['Extreme'], [330]);
+				addWeek(['Disability'], 6, ['dave-split-3d'], ['Hard'], [182]);
+				addWeek(['OG'], 7, ['dave-alpha'], ['Extreme'], [110]);
 			case 'joke':
 				addWeek(['Supernovae'], 4, ['bambi-joke'], ['Stupid'], [160]);
 				addWeek(['Glitch'], 4, ['bambi-joke'], ['Stupid'], [110]);

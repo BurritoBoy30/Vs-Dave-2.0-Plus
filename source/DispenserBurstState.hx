@@ -40,7 +40,7 @@ class DispenserBurstState extends MusicBeatState
 		add(redDispenserBitch);
 		
 		redDispenserBitch.visible = false;	
-			
+		
 		buttonBlu = new Button(bluDispenserBitch.width * 1.34, 10, 'blue_button', function()
 		{
 			changeBitchColor('blu');

@@ -5,6 +5,8 @@ bf-with-cyan
 chris
 chris-christmas
 bf-pixel
+bf-pixel-dead
 gf-player
 rapper-gf
+rapper-gf-dead
 oruta

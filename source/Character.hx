@@ -23,6 +23,7 @@ class Character extends FlxSprite
 	public var animationsArray:Array<String> = [];
 	public var camOffsets:Array<Float> = [0,0];
 	public var isFlipped:Bool = false;
+	public var charHealthColors:Array<Int> = [0, 0, 0];
 	
 	var startedAnim:String = '';
 	var startedVarAnims:Array<String> = [];
@@ -60,15 +61,18 @@ class Character extends FlxSprite
 		trace('get char: ' + curCharacter);
 		
 		loadCharInfo(curCharacter);
+		
+		trace('loaded');
 	
 		dance();
 
 		if (isPlayer == 'bf')
 		{
 			var bfList:Array<String> = CoolUtil.coolTextFile(Paths.txt('boyfriendList'));
-
+			var gfList:Array<String> = CoolUtil.coolTextFile(Paths.txt('girlfriendList'));
+			
 			// Doesn't flip for BF, since his are already in the right place???
-			if (!(bfList.contains(curCharacter)))
+			if (!(bfList.contains(curCharacter) || gfList.contains(curCharacter)))
 			{
 				flipX = !flipX;
 				
@@ -265,6 +269,10 @@ class Character extends FlxSprite
 							setGraphicSize(Std.int(width * shitSize));
 							updateHitbox();
 						}
+					
+					case 'healthcolor':
+						var healthInfo:Array<String> = charInfo[1].split(', ');
+						charHealthColors = [Std.parseInt(healthInfo[0]), Std.parseInt(healthInfo[1]), Std.parseInt(healthInfo[2])];
 						
 					case 'anti-aliasing':
 						antialiasing = charInfo[1] == 'true';

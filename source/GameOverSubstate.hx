@@ -25,7 +25,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		switch (char)
 		{
 			case 'bf-pixel':
-				stageSuffix = '-pixel';
+			//	stageSuffix = '-pixel';
 				daBf = 'bf-pixel-dead';
 			case 'rapper-gf':
 				daBf = 'rapper-gf-dead';

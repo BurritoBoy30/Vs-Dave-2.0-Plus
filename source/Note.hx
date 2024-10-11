@@ -89,30 +89,6 @@ class Note extends FlxSprite
 		else if (PlayState.boyfriend.curCharacter == 'bf-pixel' && musthit)
 		{
 			this.noteStyle = 'pixel';
-			loadGraphic(Paths.image('notes/NOTE_assets_pixel'), true, 17, 17);
-
-			animation.add('greenScroll', [6]);
-			animation.add('redScroll', [7]);
-			animation.add('blueScroll', [5]);
-			animation.add('purpleScroll', [4]);
-
-			if (isSustainNote)
-			{
-				loadGraphic(Paths.image('notes/NOTE_assetsENDS'), true, 7, 6);
-
-				animation.add('purpleholdend', [4]);
-				animation.add('greenholdend', [6]);
-				animation.add('redholdend', [7]);
-				animation.add('blueholdend', [5]);
-
-				animation.add('purplehold', [0]);
-				animation.add('greenhold', [2]);
-				animation.add('redhold', [3]);
-				animation.add('bluehold', [1]);
-			}
-
-			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
-			updateHitbox();
 		}
 		
 		switch (noteStyle)
@@ -137,7 +113,32 @@ class Note extends FlxSprite
 				LocalScrollSpeed = 1.08;
 			
 				x += 20;
-				
+			
+			case 'pixel':
+				loadGraphic(Paths.image('notes/NOTE_assets_pixel'), true, 17, 17);
+
+				animation.add('greenScroll', [6]);
+				animation.add('redScroll', [7]);
+				animation.add('blueScroll', [5]);
+				animation.add('purpleScroll', [4]);
+
+				if (isSustainNote)
+				{
+					loadGraphic(Paths.image('notes/NOTE_assetsENDS'), true, 7, 6);
+
+					animation.add('purpleholdend', [4]);
+					animation.add('greenholdend', [6]);
+					animation.add('redholdend', [7]);
+					animation.add('blueholdend', [5]);
+
+					animation.add('purplehold', [0]);
+					animation.add('greenhold', [2]);
+					animation.add('redhold', [3]);
+					animation.add('bluehold', [1]);
+				}
+
+				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+				updateHitbox();
 			default:
 				frames = Paths.getSparrowAtlas('notes/' + notePath);
 
@@ -256,9 +257,9 @@ class Note extends FlxSprite
 			updateHitbox();
 
 			x -= width / 2;
-
+			
 			if (this.noteStyle == 'pixel')
-				x += 60;
+				x += 30;
 
 			if (prevNote.isSustainNote)
 			{
@@ -274,7 +275,7 @@ class Note extends FlxSprite
 						prevNote.animation.play('redhold');
 				}
 
-				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * (PlayState.SONG.speed * LocalScrollSpeed);
+				prevNote.scale.y *= Conductor.stepCrochet / 100 * (this.noteStyle == 'pixel' ? 1.25 : 1.5) * (PlayState.SONG.speed * LocalScrollSpeed);
 				prevNote.updateHitbox();
 				// prevNote.setGraphicSize();
 			}

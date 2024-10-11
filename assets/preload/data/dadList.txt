@@ -4,7 +4,6 @@ dave-angey
 dave-splitathon
 dave-alpha
 dave-split-3d
-bambi
 bambi-new
 bambi-splitathon
 bambi-angey

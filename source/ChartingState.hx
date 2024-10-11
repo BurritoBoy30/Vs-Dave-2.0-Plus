@@ -87,6 +87,11 @@ class ChartingState extends MusicBeatState
 	var noteTypes:Array<String> = ['normal', 'phone', 'phone-alt', 'Alt Animation'];
 	var curNoteType:String;
 	
+	public var p1:Character;
+	public var p2:Character;
+	
+	var halfScreen:FlxSprite;
+	
 	override function create()
 	{
 		curSection = lastSection;
@@ -107,6 +112,9 @@ class ChartingState extends MusicBeatState
 			};
 		}
 		
+		p1 = new Character(0,0, _song.player1, 'dad');
+		p2 = new Character(0,0, _song.player2, 'dad');
+		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(MainMenuState.randomizeBG());
 		bg.scrollFactor.set();
 		bg.color = 0xFF222222;
@@ -114,14 +122,16 @@ class ChartingState extends MusicBeatState
 
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);
 		add(gridBG);
+		
+		halfScreen = new FlxSprite(FlxG.width / 2, 0).makeGraphic(Std.int(FlxG.width / 2), Std.int(FlxG.height), FlxColor.BLACK);
+		halfScreen.alpha = 0;
+		halfScreen.scrollFactor.set();
+		add(halfScreen);
 
 		leftIcon = new HealthIcon(_song.player1);
 		rightIcon = new HealthIcon(_song.player2);
 		leftIcon.scrollFactor.set(1, 1);
 		rightIcon.scrollFactor.set(1, 1);
-
-		leftIcon.scale.set(leftIcon.realSize / 2, leftIcon.realSize / 2);
-		rightIcon.scale.set(rightIcon.realSize / 2, rightIcon.realSize / 2);
 
 		add(leftIcon);
 		add(rightIcon);
@@ -259,12 +269,14 @@ class ChartingState extends MusicBeatState
 		var player1DropDown = new FlxUIDropDownMenu(10, 200, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			_song.player1 = characters[Std.parseInt(character)];
+			updateHeads();
 		});
 		player1DropDown.selectedLabel = _song.player1;
 
 		var player2DropDown = new FlxUIDropDownMenu(140, player1DropDown.y, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			_song.player2 = characters[Std.parseInt(character)];
+			updateHeads();
 		});
 
 		player2DropDown.selectedLabel = _song.player2;
@@ -523,10 +535,10 @@ class ChartingState extends MusicBeatState
 		}
 		return daPos;
 	}
-	
+		
 	override function update(elapsed:Float)
 	{
-		updateHeads();
+		//updateHeads();
 		
 		curStep = recalculateSteps();
 		
@@ -666,8 +678,11 @@ class ChartingState extends MusicBeatState
 				FlxG.sound.music.pause();
 				vocals.pause();
 
-				FlxG.sound.music.time -= (FlxG.mouse.wheel * Conductor.stepCrochet * 0.4);
-				vocals.time = FlxG.sound.music.time;
+				if (!FlxG.mouse.overlaps(halfScreen))
+				{
+					FlxG.sound.music.time -= (FlxG.mouse.wheel * Conductor.stepCrochet * 0.4);
+					vocals.time = FlxG.sound.music.time;
+				}
 			}
 
 			var holdingShift:Float = 1;
@@ -841,24 +856,40 @@ class ChartingState extends MusicBeatState
 		check_altAnim.checked = sec.altAnim;
 		check_changeBPM.checked = sec.changeBPM;
 		stepperSectionBPM.value = sec.bpm;
-
-		//updateHeads();
+		
+		updateHeads();
 	}
 
 	function updateHeads():Void
 	{
 		var sec = _song.notes[curSection];
 		
+		p1 = new Character(0,0, _song.player1, 'dad');
+		p2 = new Character(0,0, _song.player2, 'dad');
+		
 		if (sec.mustHitSection)
 		{
-			leftIcon.createIcon(_song.player1);
-			rightIcon.createIcon(_song.player2);
+			leftIcon.createIcon(p1.curCharacter);
+			rightIcon.createIcon(p2.curCharacter);
 		}
 		else
 		{
-			leftIcon.createIcon(_song.player2);
-			rightIcon.createIcon(_song.player1);
+			leftIcon.createIcon(p2.curCharacter);
+			rightIcon.createIcon(p1.curCharacter);
 		}
+		
+		if (leftIcon.whosthisfucker == 'ohungi')
+			leftIcon.setPosition(-80, -130);
+		else
+			leftIcon.setPosition(0, -100);
+		
+		if (rightIcon.whosthisfucker == 'ohungi')
+			rightIcon.setPosition((gridBG.width / 2) - 80, -130);
+		else
+			rightIcon.setPosition(gridBG.width / 2, -100);
+			
+		leftIcon.scale.set(leftIcon.realSize / 2.3, leftIcon.realSize / 2.3);
+		rightIcon.scale.set(rightIcon.realSize / 2.3, rightIcon.realSize / 2.3);
 	}
 
 	function updateNoteUI():Void

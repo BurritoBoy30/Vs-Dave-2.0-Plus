@@ -38,13 +38,16 @@ class GameOverTailsDoll extends MusicBeatSubstate
 		FlxG.cameras.add(tailsCamera);
 		tailsCamera.zoom = 0.95;
 		
-		bg = new FlxSprite(-400, -300).loadGraphic(Paths.image('tailsDolldeath/bg_lightsout', 'shared'));
-		bg.antialiasing = FlxG.save.data.antiAliasing;
+		bg = new FlxSprite(0, -110).loadGraphic(Paths.image('tailsDolldeath/bg_lightsout', 'shared'));
+		bg.screenCenter(X);
+		bg.scale.set(0.7, 0.7);
 		bg.scrollFactor.set();
+		bg.antialiasing = FlxG.save.data.antiAliasing;
 		add(bg);
 		
 		tailsDoll = new FlxSprite(0, -250);
-		swapTails();
+		tailsDoll.frames = Paths.getSparrowAtlas('tailsDolldeath/tails_doll_lightsout', 'shared');
+		tailsDoll.animation.addByPrefix('wating', 'tails_doll nolight', 24, false);
 		tailsDoll.antialiasing = FlxG.save.data.antiAliasing;	
 		tailsDoll.scrollFactor.set();
 		tailsDoll.animation.play('wating');
@@ -81,8 +84,12 @@ class GameOverTailsDoll extends MusicBeatSubstate
 			new FlxTimer().start(3, function(tmr:FlxTimer)
 			{
 				bg.loadGraphic(Paths.image('tailsDolldeath/bg', 'shared'));
-				swapTails(false);
+				
+				tailsDoll.frames = Paths.getSparrowAtlas('tailsDolldeath/tails_doll', 'shared');
+				tailsDoll.animation.addByPrefix('scare', 'tails_doll scare', 24, false);
+				tailsDoll.animation.addByIndices('staring', 'tails_doll scare', [0, 1], "", 24, true);
 				tailsDoll.animation.play('staring');
+				
 				FlxG.sound.play(Paths.sound('spotlightOn', 'shared'));
 
 				new FlxTimer().start(4, function(tmr:FlxTimer)
@@ -102,21 +109,6 @@ class GameOverTailsDoll extends MusicBeatSubstate
 		pauseMusic.destroy();
 
 		super.destroy();
-	}
-	
-	function swapTails(lightsOut:Bool = true)
-	{
-		if (lightsOut)
-		{
-			tailsDoll.frames = Paths.getSparrowAtlas('tailsDolldeath/tails_doll_lightsout', 'shared');
-			tailsDoll.animation.addByPrefix('wating', 'tails_doll nolight', 24, false);
-		}
-		else
-		{
-			tailsDoll.frames = Paths.getSparrowAtlas('tailsDolldeath/tails_doll', 'shared');
-			tailsDoll.animation.addByPrefix('scare', 'tails_doll scare', 24, false);
-			tailsDoll.animation.addByIndices('staring', 'tails_doll scare', [0, 1], "", 24, true);
-		}
 	}
 
 	override function update(elapsed:Float)
@@ -147,7 +139,7 @@ class GameOverTailsDoll extends MusicBeatSubstate
 			
 			if (tailsDoll.animation.curAnim.curFrame == 3)
 			{
-				FlxG.sound.play(Paths.sound('tailsScream', 'shared'), 0.7);
+				FlxG.sound.play(Paths.sound('tailsScream', 'shared'));
 			}
 			
 			if (tailsDoll.animation.curAnim.finished)

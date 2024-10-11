@@ -63,11 +63,9 @@ class AnimationDebug extends MusicBeatState
 		camHUD.bgColor.alpha = 0;
 		
 		FlxG.cameras.reset(camGame);
-		FlxG.cameras.add(camHUD);
-		FlxG.cameras.add(camTransition);
-		
-		FlxCamera.defaultCameras = [camGame];
-		
+		FlxG.cameras.add(camHUD, false);
+		FlxG.cameras.add(camTransition, false);
+	
 		camGame.zoom = 1;
 		
 		Transition.nextCamera = camTransition;

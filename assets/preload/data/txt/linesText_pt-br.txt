@@ -68,10 +68,13 @@ cyan==Cyan
 cyan-chrismas==Cyan (Natal)
 kaity==Kaity
 kaity-christmas==Kaity (Natal)
-gf-hot==Hot Girlfriend
-gf-hot-funny==Hot Girlfriend (Sex Mod)
-gf-hot-christmas==Hot Girlfriend (Natal)
-gf-hot-standing==Hot Girlfriend (Em Pé)
+gf-hot==Girlfriend Gostosa
+gf-hot-funny==Girlfriend Gostosa (Sex Mod)
+gf-hot-christmas==Girlfriend Gostosa (Natal)
+gf-hot-standing==Girlfriend Gostosa (Em Pé)
+gefe==GeFe
+gefe-busty==GeFe Peituda
+gefe-twerk==GeFe Rebolando
 gf-massive==Girlfriend Massiva
 three-gfs==Trio Girlfriend
 gf-trepidation==Girlfriend Trepidation
@@ -86,3 +89,11 @@ unfairness_cred==Ghost Tapping está desligado! SE FODEU!
 mealie_cred==Música original feita por Alexander Cooper 19!
 kabunga_cred==CARALHO EU MURCHEI
 
+// Console //
+console_start==Iniciando BurritoWorks VSD-SMS...
+console_info==BurritoWorks(R)  VSD-SMS:break:(C) Copyright BurritoWorks Corp 2008-2024.:break::break:Pressione ENTER para dar input ao seu comando.:break:Digite "help" para listar todos os comandos disponíveis.:break:(Nota do Dev:Por favor digite devagar, o console não registra inputs quando digita muito rápido):break::break::break:/
+console_invalid==Invalid command
+console_shutdown==Shutting down...
+console_exenotfound==Executable not found
+console_dispenser==Running dispeser.exe...
+console_blockcommand==This command is not avalible

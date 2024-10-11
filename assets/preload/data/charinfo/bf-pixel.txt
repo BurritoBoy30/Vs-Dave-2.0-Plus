@@ -1,6 +1,6 @@
 file: bfPixel
 offsets: 200, 150
-camoffsets: -170, -130 
+camoffsets: -200, -170 
 scale: 6
 anti-aliasing: false
 flipX: false

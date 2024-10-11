@@ -39,7 +39,7 @@ class CharacterSelectState extends MusicBeatState
 	public var iconGF:HealthIcon;
 	
 	private var camHUD:FlxCamera;
-	private var camGame:FlxCamera;
+	public var camGame:FlxCamera;
 	private var camTransition:FlxCamera;
 	
 	var selectedCharacter:Bool = false;
@@ -97,10 +97,8 @@ class CharacterSelectState extends MusicBeatState
 		camHUD.bgColor.alpha = 0;
 		
 		FlxG.cameras.reset(camGame);
-		FlxG.cameras.add(camHUD);
-		FlxG.cameras.add(camTransition);
-		
-		FlxCamera.defaultCameras = [camGame];
+		FlxG.cameras.add(camHUD, false);
+		FlxG.cameras.add(camTransition, false);
 		
 		Transition.nextCamera = camTransition;
 		
@@ -464,6 +462,7 @@ class CharacterSelectState extends MusicBeatState
 		{
 			girlfriendData = [
 				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing']),
+				new SelectableChar(['gefe', 'gefe-busty']),
 				new SelectableChar(['gf-massive']),
 				new SelectableChar(['three-gfs']),
 				new SelectableChar(['gf-trepidation']),
@@ -598,7 +597,6 @@ class CharacterSelectState extends MusicBeatState
 		if (boyfriendChar != null) {
 			remove(boyfriendChar);
 			iconBF.x -= (boyfriendText.textField.textWidth / 2) + iconOffseet;
-		
 		}
 		boyfriendText.text = boyfriendData[curBF].displayNames[curFormBF];
 		iconBF.x += (boyfriendText.textField.textWidth / 2) + iconOffseet;
@@ -647,9 +645,8 @@ class CharacterSelectState extends MusicBeatState
 	public function endIt(e:FlxTimer = null)
 	{
 		trace("ENDING");
-		PlayState.boyfriendOverride = "none";
 		PlayState.girlfriendOverride = "none";
-		PlayState.boyfriendOverride = boyfriendData[curBF].names[curFormBF];
+		PlayState.SONG.player1 = boyfriendData[curBF].names[curFormBF];
 		PlayState.girlfriendOverride = isTails ? 'tails-doll' : girlfriendData[curGF].names[curFormGF];
 		LoadingState.loadAndSwitchState(new PlayState());
 	}

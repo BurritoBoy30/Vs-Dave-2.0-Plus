@@ -38,7 +38,7 @@ class ConsoleState extends MusicBeatState
 
 		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
-			mainText.text = "\n" + "\n" + "\n" +"          " + ReturnLanguage.console('startup');
+			mainText.text = "\n" + "\n" + "\n" +"          " + ReturnLanguage.getLine('console_start');
 
 			new FlxTimer().start(4, function(tmr:FlxTimer)
 			{
@@ -74,7 +74,7 @@ class ConsoleState extends MusicBeatState
 				else if (inputText == 'exit')
 				{
 					startingUp = true;
-					addNewLine(ReturnLanguage.console('shutdown'), false); 
+					addNewLine(ReturnLanguage.getLine('console_shutdown'), false); 
 					new FlxTimer().start(1, function(tmr:FlxTimer)
 					{
 						FlxG.sound.playMusic(Paths.music('freakyMenu'));
@@ -83,7 +83,7 @@ class ConsoleState extends MusicBeatState
 				}
 				else
 				{
-					addNewLine(ReturnLanguage.console('invalid')); 
+					addNewLine(ReturnLanguage.getLine('console_invalid')); 
 				}
 				reset();
 			}
@@ -164,7 +164,7 @@ class ConsoleState extends MusicBeatState
 	
 	function startText()
 	{
-		mainText.text = ReturnLanguage.console('startinfo');
+		mainText.text = ReturnLanguage.getLine('console_info');
 	}
 
 	function addNewLine(newTxt:String, stillTyping:Bool = true)
@@ -198,19 +198,19 @@ class ConsoleState extends MusicBeatState
 			case 'dispenser':
 				if (!FlxG.save.data.hornyALL)
 				{
-					addNewLine(ReturnLanguage.console('notallowed'));
+					addNewLine(ReturnLanguage.getLine('console_blockcommand'));
 				}
 				else
 				{
 					startingUp = true;
-					addNewLine(ReturnLanguage.console('dispenser'), false);
+					addNewLine(ReturnLanguage.getLine('console_dispenser'), false);
 					new FlxTimer().start(1, function(tmr:FlxTimer)
 					{
 						FlxG.switchState(new DispenserBurstState());
 					});
 				}
 			default:
-				addNewLine(ReturnLanguage.console('exenotfound'));
+				addNewLine(ReturnLanguage.getLine('console_exenotfound'));
 		}
 	}
 }

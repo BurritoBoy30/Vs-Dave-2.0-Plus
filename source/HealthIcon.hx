@@ -75,6 +75,8 @@ class HealthIcon extends FlxSprite
 							realChar = 'psyka';
 						case 'cyan-christmas':
 							realChar = 'cyan';
+						case 'gefe-busty' | 'gefe-therk':
+							realChar = 'gefe';
 						case 'dave-splitathon':
 							realChar = 'dave-annoyed';
 						case 'bambi' | 'bambi-splitathon':

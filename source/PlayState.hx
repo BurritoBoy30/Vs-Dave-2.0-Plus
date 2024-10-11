@@ -192,10 +192,8 @@ class PlayState extends MusicBeatState
 		camOther.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
-		FlxG.cameras.add(camHUD);
-		FlxG.cameras.add(camOther);
-
-		FlxCamera.defaultCameras = [camGame];
+		FlxG.cameras.add(camHUD, false);
+		FlxG.cameras.add(camOther, false);
 		
 		Transition.nextCamera = camOther;
 
@@ -278,7 +276,7 @@ class PlayState extends MusicBeatState
 		dad.x += dad.charOffset[0];
 		dad.y += dad.charOffset[1];
 		
-		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x + 150, dad.getGraphicMidpoint().y - 150);
+		var camPos:FlxPoint = new FlxPoint((dad.getMidpoint().x + 150) + dad.camOffsets[0], (dad.getMidpoint().y - 100) + dad.camOffsets[1]);
 		
 		if (Character.tutorialGFs.contains(dad.curCharacter))
 		{
@@ -291,18 +289,12 @@ class PlayState extends MusicBeatState
 		}
 		
 		var boyfriendVersion:String = '';
-		if (boyfriendOverride == 'none' || boyfriendOverride == 'bf')
-		{
-			boyfriendVersion = SONG.player1;
-		}
-		else
-		{
-			boyfriendVersion = boyfriendOverride;
-		}
+		boyfriendVersion = SONG.player1;
 		
 		boyfriend = new Boyfriend(770, 450, boyfriendVersion);
 		boyfriend.x += boyfriend.charOffset[0];
-		boyfriend.y += boyfriend.charOffset[1];		
+		boyfriend.y += boyfriend.charOffset[1];	
+		
 		if (SONG.song.toLowerCase() == 'tutorial')
 			gf.visible = false;
 		else
@@ -322,6 +314,7 @@ class PlayState extends MusicBeatState
 				gf.setPosition(756 + gf.charOffset[0], 200 + gf.charOffset[1]);
 			case 'ohungi stage':
 				dad.setPosition(350 + dad.charOffset[0], 100 + dad.charOffset[1]);
+				gf.setPosition(700 + gf.charOffset[0], 130 + gf.charOffset[1]);
 				boyfriend.setPosition(1200 + boyfriend.charOffset[0], 450 + boyfriend.charOffset[1]);
 		}
 		
@@ -453,7 +446,7 @@ class PlayState extends MusicBeatState
 		}
 
 		// Add Kade Engine watermark
-		kadeEngineWatermark = new FlxText(4, textYPos, 0, SONG.song + " - DE+ v" + MainMenuState.gameVer, 16);
+		kadeEngineWatermark = new FlxText(-4, -2, FlxG.width, "DE+ v" + MainMenuState.gameVer, 16);
 		kadeEngineWatermark.setFormat(Paths.font("comic.ttf"), 18, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		kadeEngineWatermark.borderSize = 1.25;
@@ -1620,12 +1613,12 @@ class PlayState extends MusicBeatState
 		if (healthBar.percent > 80)
 		{
 			iconP2.changeState('losing');
-			ohungiOffset = 35;
+			ohungiOffset = 40;
 		}
 		else
 		{
 			iconP2.changeState('normal');
-			ohungiOffset = 50;
+			ohungiOffset = 20;
 		}
 
 		if (startingSong)
@@ -2074,15 +2067,17 @@ class PlayState extends MusicBeatState
 
 		rating.loadGraphic(Paths.image('UI/' + pixelShit + daRating));
 		rating.screenCenter();
-		rating.x = coolText.x - 40;
-		rating.y -= 60;
+		rating.x = coolText.x + (daStyle == 'pixel' ? 0 : -40);
+		rating.y -= (60 + (daStyle == 'pixel' ? 60 : 0));
 		rating.acceleration.y = 550;
 		rating.velocity.y -= FlxG.random.int(140, 175);
 		rating.velocity.x -= FlxG.random.int(0, 10);
 
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image('UI/' + pixelShit + 'combo'));
 		comboSpr.screenCenter();
-		comboSpr.x = coolText.x;
+		comboSpr.x = coolText.x + (daStyle == 'pixel' ? 40 : 0);
+		if (daStyle == 'pixel')
+			comboSpr.y -=  40;
 		comboSpr.acceleration.y = 600;
 		comboSpr.velocity.y -= 150;
 
@@ -2123,8 +2118,8 @@ class PlayState extends MusicBeatState
 		{
 			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image('UI/' + pixelShit + 'num' + Std.int(i)));
 			numScore.screenCenter();
-			numScore.x = coolText.x + (43 * daLoop) - 90;
-			numScore.y += 80;
+			numScore.x = coolText.x + ((43 + (daStyle == 'pixel' ? 10 : 0)) * daLoop) - 90;
+			numScore.y += (80 + (daStyle == 'pixel' ? -60 : 0));
 
 			if (daStyle != 'pixel')
 			{
@@ -2323,7 +2318,7 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
-			health -= 0.04;
+			health -= 0.08;
 			if (combo > 5 && gf.animOffsets.exists('sad'))
 			{
 				gf.playAnim('sad');
