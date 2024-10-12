@@ -4,6 +4,8 @@ camoffsets: -75, 110
 scale: 1
 anti-aliasing: true
 flipX: false
+icon: tails-doll
+barcolor: 255, 123, 0
 prefix, 0, 0, idle, Doll idle dance, false, 24
 prefix, 7, 101, singUP, Doll Sing note UP, false, 24
 prefix, 17, 44, singDOWN, Doll Sing Note DOWN, false, 24

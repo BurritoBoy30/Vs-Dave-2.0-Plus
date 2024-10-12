@@ -276,7 +276,7 @@ class PlayState extends MusicBeatState
 		dad.x += dad.charOffset[0];
 		dad.y += dad.charOffset[1];
 		
-		var camPos:FlxPoint = new FlxPoint((dad.getMidpoint().x + 150) + dad.camOffsets[0], (dad.getMidpoint().y - 100) + dad.camOffsets[1]);
+		var camPos:FlxPoint = new FlxPoint((dad.getGraphicMidpoint().x + 150) + dad.camOffsets[0], (dad.getGraphicMidpoint().y - 100) + dad.camOffsets[1]);
 		
 		if (Character.tutorialGFs.contains(dad.curCharacter))
 		{
@@ -286,6 +286,12 @@ class PlayState extends MusicBeatState
 			{
 				camPos.x += 600;
 			}
+		}
+		
+		switch (dad.curCharacter)
+		{
+			case 'ohungi':
+				camPos.x += 200;
 		}
 		
 		var boyfriendVersion:String = '';
@@ -313,9 +319,9 @@ class PlayState extends MusicBeatState
 				boyfriend.setPosition(1332 + boyfriend.charOffset[0], 513 + boyfriend.charOffset[1]);
 				gf.setPosition(756 + gf.charOffset[0], 200 + gf.charOffset[1]);
 			case 'ohungi stage':
-				dad.setPosition(350 + dad.charOffset[0], 100 + dad.charOffset[1]);
-				gf.setPosition(700 + gf.charOffset[0], 130 + gf.charOffset[1]);
-				boyfriend.setPosition(1200 + boyfriend.charOffset[0], 450 + boyfriend.charOffset[1]);
+				dad.x -= 50;
+				gf.x += 400;
+				boyfriend.x += 430;
 		}
 		
 		add(gf);
@@ -414,11 +420,12 @@ class PlayState extends MusicBeatState
 		add(healthBarANIM);
 		add(healthBarBG);
 		
-		iconP1 = new HealthIcon((boyfriendOverride == "none" || boyfriendOverride == "bf") ? SONG.player1 : boyfriendOverride, true);
+		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		add(iconP1);
 
-		iconP2 = new HealthIcon(SONG.song.toLowerCase() == 'tutorial' ? inCaseTutorial : SONG.player2);
+		iconP2 = new HealthIcon(dad.healthIcon);
 		add(iconP2);
+		reloadHealthBarColors();
 		
 		var credits:String;
 		switch (SONG.song.toLowerCase())
@@ -763,7 +770,7 @@ class PlayState extends MusicBeatState
 				
 				createShader(bg, 0.1, 5, 2);
 				
-				var frontground:BackgroundImg = new BackgroundImg(-750, 200, 'stages/ohungi/ohungi ground', 1);
+				var frontground:BackgroundImg = new BackgroundImg(-730, 220, 'stages/ohungi/ohungi ground', 1);
 				add(frontground);
 				
 			default:
@@ -790,7 +797,13 @@ class PlayState extends MusicBeatState
 		bg.shader = testshader.shader;
 		curbg = bg;
 	}
-
+	
+	public function reloadHealthBarColors() {
+		healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
+			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
+		healthBar.updateBar();
+	}
+	
 	function schoolIntro(?dialogueBox:DialogueBox, isStart:Bool = true):Void
 	{
 		inCutscene = true;
@@ -1481,7 +1494,7 @@ class PlayState extends MusicBeatState
 		if (FlxG.keys.justPressed.NINE)
 		{
 			if (iconP1.animation.curAnim.name == 'bf-old')
-				iconP1.createIcon(SONG.player1);
+				iconP1.createIcon(boyfriend.healthIcon);
 			else
 				iconP1.createIcon('bf-old');
 		}
@@ -2857,7 +2870,8 @@ class PlayState extends MusicBeatState
 		if (darkStages.contains(curStage))
 			dad.color = 0xFF878787;
 		add(dad);
-		iconP2.createIcon(char);
+		iconP2.createIcon(dad.healthIcon);
+		reloadHealthBarColors();
 		boyfriend.stunned = false;
 	}
 	

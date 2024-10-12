@@ -4,6 +4,8 @@ camoffsets: 0, 0
 scale: 1
 anti-aliasing: true
 flipX: false
+icon: gf-player
+barcolor: 165, 0, 77
 prefix, -6, -1, idle, GF Idle dance, false, 24
 prefix, -60, 17, singUP, GF Up, false, 24
 prefix, 45, -36, singLEFT, GF Left, false, 24

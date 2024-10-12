@@ -605,7 +605,7 @@ class CharacterSelectState extends MusicBeatState
 		boyfriendChar.x += boyfriendChar.charOffset[0];
 		boyfriendChar.y += boyfriendChar.charOffset[1];
 		insert(members.indexOf(overlay), boyfriendChar);
-		iconBF.createIcon(boyfriendData[curBF].names[curFormBF]);
+		iconBF.createIcon(boyfriendChar.healthIcon);
 		noMorePresses = false;
 	}
 	
@@ -638,7 +638,7 @@ class CharacterSelectState extends MusicBeatState
 		girlfriendChar.x += girlfriendChar.charOffset[0];
 		girlfriendChar.y += girlfriendChar.charOffset[1];
 		insert(members.indexOf(boyfriendChar), girlfriendChar);
-		iconGF.createIcon(name);
+		iconGF.createIcon(girlfriendChar.healthIcon);
 		noMorePresses = false;
 	}
 		

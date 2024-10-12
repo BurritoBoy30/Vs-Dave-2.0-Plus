@@ -4,6 +4,8 @@ camoffsets: 0, 50
 scale: 1.02
 anti-aliasing: false
 flipX: false
+icon: dave-split-3d
+barcolor: 228, 158, 179
 prefix, 0, 0, idle, IDLE, false, 24
 prefix, 0, 0, singUP, UP, false, 24
 prefix, 0, 0, singRIGHT, RIGHT, false, 24

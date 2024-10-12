@@ -63,27 +63,7 @@ class HealthIcon extends FlxSprite
 				var realChar:String;
 				if (!FileSystem.exists(Paths.image('ui/icons/' + char, 'preload')))
 				{
-					switch (char)
-					{
-						case 'bf-christmas':
-							realChar = 'bf';
-						case 'chris-christmas':
-							realChar = 'chris';
-						case 'gf-christmas' | 'gf-standing' | 'gf-hot' | 'gf-hot-christmas' | 'gf-hot-funny' | 'gf-hot-standing':
-							realChar = 'gf';
-						case 'psyka-christmas' |  'psyka-standing':
-							realChar = 'psyka';
-						case 'cyan-christmas':
-							realChar = 'cyan';
-						case 'gefe-busty' | 'gefe-therk':
-							realChar = 'gefe';
-						case 'dave-splitathon':
-							realChar = 'dave-annoyed';
-						case 'bambi' | 'bambi-splitathon':
-							realChar = 'bambi-new';
-						default:
-							realChar = 'face';
-					}
+					realChar = 'face';
 				}
 				else
 				{

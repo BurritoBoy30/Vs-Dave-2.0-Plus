@@ -4,6 +4,8 @@ camoffsets: -450, 150
 scale: 0.93
 anti-aliasing: true
 flipX: false
+icon: gf-massive
+barcolor: 185, 32, 103
 prefix, 110, 256, cheer, cheer, false, 24
 prefix, 13, 16, singLEFT, left, false, 24
 prefix, 8, -15, singRIGHT, right, false, 24

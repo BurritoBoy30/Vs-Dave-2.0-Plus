@@ -23,7 +23,8 @@ class Character extends FlxSprite
 	public var animationsArray:Array<String> = [];
 	public var camOffsets:Array<Float> = [0,0];
 	public var isFlipped:Bool = false;
-	public var charHealthColors:Array<Int> = [0, 0, 0];
+	public var healthIcon:String = '';
+	public var healthColorArray:Array<Int> = [0, 0, 0];
 	
 	var startedAnim:String = '';
 	var startedVarAnims:Array<String> = [];
@@ -55,8 +56,6 @@ class Character extends FlxSprite
 		animOffsets = new Map<String, Array<Dynamic>>();
 		curCharacter = character;
 		this.isPlayer = isPlayer;
-
-		antialiasing = FlxG.save.data.antiAliasing;
 		
 		trace('get char: ' + curCharacter);
 		
@@ -241,7 +240,7 @@ class Character extends FlxSprite
 	{
 		var offsetStuffs:Array<String> = CoolUtil.coolTextFile(Paths.txt('charinfo/' + character, 'preload'));
 		
-		for (i in 0...5)
+		for (i in 0...7)
 		{
 			for (charText in offsetStuffs)
 			{
@@ -269,10 +268,13 @@ class Character extends FlxSprite
 							setGraphicSize(Std.int(width * shitSize));
 							updateHitbox();
 						}
+						
+					case 'icon':
+						healthIcon = charInfo[1];
 					
-					case 'healthcolor':
+					case 'barcolor':
 						var healthInfo:Array<String> = charInfo[1].split(', ');
-						charHealthColors = [Std.parseInt(healthInfo[0]), Std.parseInt(healthInfo[1]), Std.parseInt(healthInfo[2])];
+						healthColorArray = [Std.parseInt(healthInfo[0]), Std.parseInt(healthInfo[1]), Std.parseInt(healthInfo[2])];
 						
 					case 'anti-aliasing':
 						antialiasing = charInfo[1] == 'true';

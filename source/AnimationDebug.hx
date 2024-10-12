@@ -35,6 +35,8 @@ class AnimationDebug extends MusicBeatState
 	var isDad:Bool = true;
 	public var daAnim:String;
 	var camFollow:FlxObject;
+	var iconP2:HealthIcon;
+	var coloredBar:FlxSprite;
 	
 	var UI_box:FlxUITabMenu;
 	var characterList:Array<String> = [];
@@ -113,6 +115,18 @@ class AnimationDebug extends MusicBeatState
 		UI_box.scrollFactor.set();
 		add(UI_box);
 		
+		coloredBar = new FlxSprite(75, FlxG.height - 50).loadGraphic(Paths.image('colorBar', 'shared'));
+		coloredBar.antialiasing = FlxG.save.data.antiAliasing;
+		add(coloredBar);
+		coloredBar.cameras = [camHUD];
+		coloredBar.color = FlxColor.fromRGB(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2]);
+		
+		iconP2 = new HealthIcon(char.healthIcon);
+		iconP2.x = 25;
+		iconP2.y = FlxG.height - 125;
+		add(iconP2);
+		iconP2.cameras = [camHUD];
+
 		addStuffUI();
 		
 		camFollow = new FlxObject(0, 0, 2, 2);
@@ -153,6 +167,8 @@ class AnimationDebug extends MusicBeatState
 			loadChar(daAnim);
 			check_flip_x.checked = char.isFlipped;
 			camFollow.setPosition(char.getMidpoint().x, char.getMidpoint().y);
+			iconP2.createIcon(char.healthIcon);
+			coloredBar.color = FlxColor.fromRGB(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2]);
 			genBoyOffsets();
 			reloadCharacterDropDown();
 		});

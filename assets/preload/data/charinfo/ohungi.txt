@@ -1,9 +1,11 @@
 file: ohungi
-offsets: 0, 250
+offsets: 0, 230
 camoffsets: 0, 0
 scale: 1
 anti-aliasing: true
 flipX: false
+icon: ohungi
+barcolor: 96, 171, 36
 prefix, -70, 60, idle, idle, false, 24
 prefix, -72, 147, singUP, singUP, false, 24
 prefix, 118, 89, singLEFT, singLEFT, false, 24

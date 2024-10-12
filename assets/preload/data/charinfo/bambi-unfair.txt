@@ -4,6 +4,8 @@ camoffsets: -100, -50
 scale: 1.2
 anti-aliasing: false
 flipX: false
+icon: bambi-unfair
+barcolor: 239, 0, 0
 prefix, 0, 0, idle, idle, false, 24
 prefix, 140, 70, singUP, singUP, false, 24
 prefix, -180, -60, singRIGHT, singRIGHT, false, 24

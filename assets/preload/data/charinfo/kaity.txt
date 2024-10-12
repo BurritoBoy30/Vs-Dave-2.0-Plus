@@ -3,7 +3,9 @@ offsets: 0, 0
 camoffsets: 0, 0
 scale: 1
 anti-aliasing: true
-flipX: false	
+flipX: false
+icon: kaity
+barcolor: 49, 176, 209
 prefix, 0, 0, cheer, GF Cheer, false, 24
 prefix, 0, -19, singLEFT, GF left note, false, 24
 prefix, 0, -20, singRIGHT, GF Right Note, false, 24

@@ -4,6 +4,8 @@ camoffsets: 0, 0
 scale: 1
 anti-aliasing: true
 flipX: false
+icon: dave-annoyed
+barcolor: 15, 95, 255
 prefix, 0, 0, idle, idle, false, 24
 prefix, -14, 22, singUP, up, false, 24
 prefix, -29, 3, singRIGHT, right, false, 24

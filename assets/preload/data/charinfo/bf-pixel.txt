@@ -4,6 +4,8 @@ camoffsets: -200, -170
 scale: 6
 anti-aliasing: false
 flipX: false
+icon: bf-pixel
+barcolor: 123, 214, 246
 prefix, 0, 0, idle, BF IDLE, false, 24
 prefix, 0, 0, singUP, BF UP NOTE, false, 24
 prefix, 0, 0, singLEFT, BF LEFT NOTE, false, 24

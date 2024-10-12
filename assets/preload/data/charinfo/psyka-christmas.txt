@@ -4,6 +4,8 @@ camoffsets: 0, 0
 scale: 1
 anti-aliasing: true
 flipX: false
+icon: psyka
+barcolor: 192, 66, 236
 prefix, 0, 0, cheer, GF Cheer, false, 24
 prefix, 0, -19, singLEFT, GF left note, false, 24
 prefix, 0, -20, singRIGHT, GF Right Note, false, 24

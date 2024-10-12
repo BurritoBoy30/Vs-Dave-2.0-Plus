@@ -4,6 +4,8 @@ camoffsets: 0, 100
 scale: 1.02
 anti-aliasing: false
 flipX: false
+icon: dave-angey
+barcolor: 224, 99, 87
 prefix, 7, 0, idle, IDLE, false, 24
 prefix, -14, 16, singUP, UP, false, 24
 prefix, 13, 23, singRIGHT, RIGHT, false, 24

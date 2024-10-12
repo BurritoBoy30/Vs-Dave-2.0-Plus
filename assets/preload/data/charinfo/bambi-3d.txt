@@ -4,6 +4,8 @@ camoffsets: 0, 0
 scale: 0.98
 anti-aliasing: false
 flipX: false
+icon: bambi-3d
+barcolor: 13, 179, 27
 prefix, 0, 0, idle, DaveAngry idle dance, false, 24
 prefix, 0, 0, singUP, DaveAngry Sing Note UP, false, 24
 prefix, 0, 0, singRIGHT, DaveAngry Sing Note RIGHT, false, 24

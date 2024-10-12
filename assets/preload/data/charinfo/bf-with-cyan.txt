@@ -4,6 +4,8 @@ camoffsets: 0, 0
 scale: 1
 anti-aliasing: true
 flipX: false
+icon: bf-with-cyan
+barcolor: 49, 176, 209
 prefix, 0, 0, idle, BF idle dance, false, 24
 prefix, -45, 17, singUP, BF NOTE UP0, false, 24
 prefix, 8, -2, singLEFT, BF NOTE LEFT0, false, 24

@@ -26,7 +26,6 @@ class PauseSubState extends MusicBeatSubstate
 	var pauseMusic:FlxSound;
 	var bg:FlxBackdrop;
 	var botplayText:FlxText;
-	var gfBounce:FlxSprite;
 	
 	public static var transCamera:FlxCamera;
 
@@ -50,16 +49,6 @@ class PauseSubState extends MusicBeatSubstate
 		bg.antialiasing = FlxG.save.data.antiAliasing;
 		bg.scrollFactor.set();
 		add(bg);
-		
-		gfBounce = new FlxSprite(0, -45);
-		gfBounce.frames = Paths.getSparrowAtlas('hornyshit/gfbounce', 'shared');
-		gfBounce.animation.addByPrefix('idle', 'gfbounce idle', 25, true);
-		gfBounce.animation.play('idle');
-		gfBounce.alpha = 0;
-		gfBounce.visible = FlxG.save.data.hornyALL;
-		gfBounce.scrollFactor.set();
-		gfBounce.antialiasing = FlxG.save.data.antiAliasing;
-		add(gfBounce);
 
 		var levelInfo:FlxText = new FlxText(20, 15, 0, "", 32);
 		levelInfo.text += PlayState.SONG.song;
@@ -94,7 +83,6 @@ class PauseSubState extends MusicBeatSubstate
 
 		FlxTween.tween(backBg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
 		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
-		FlxTween.tween(gfBounce, {alpha: 1}, 0.2, {ease: FlxEase.quartInOut});
 		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
 
@@ -107,10 +95,6 @@ class PauseSubState extends MusicBeatSubstate
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			songText.menuStyle = 'pause';
-			if (FlxG.save.data.hornyALL)
-			{
-				songText.xAdd = FlxG.save.data.gameLanguage != 'pt-br' ? 300 : 250;
-			}
 			grpMenuShit.add(songText);
 		}
 

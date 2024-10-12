@@ -4,6 +4,8 @@ camoffsets: 0, 0
 scale: 1.2
 anti-aliasing: false
 flipX: false
+icon: exbungo
+barcolor: 40, 24, 18
 prefix, 0, 0, idle, idle, false, 24
 prefix, 0, 0, singUP, up, false, 24
 prefix, 0, 0, singLEFT, left, false, 24

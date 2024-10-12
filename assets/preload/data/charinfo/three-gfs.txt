@@ -3,7 +3,9 @@ offsets: -132, -70
 camoffsets: -100, 120
 scale: 1
 anti-aliasing: true
-flipX: false	
+flipX: false
+icon: three-gfs
+barcolor: 175, 0, 80	
 prefix, 2, -32, cheer, GF Cheer, false, 24
 prefix, 32, -35, singLEFT, GF left note, false, 24
 prefix, -47, -35, singRIGHT, GF Right Note, false, 24

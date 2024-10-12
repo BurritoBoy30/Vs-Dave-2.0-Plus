@@ -4,6 +4,8 @@ camoffsets: 0, 0
 scale: 1
 anti-aliasing: true
 flipX: false
+icon: bambi-angey
+barcolor: 37, 191, 55
 prefix, 0, 0, idle, a_bambi idle, true, 24
 prefix, 7, -25, singDOWN, a_bambi down, false, 24
 prefix, 15, 3, singRIGHT, a_bambi right, false, 24

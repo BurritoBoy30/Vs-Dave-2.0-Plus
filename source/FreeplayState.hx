@@ -87,7 +87,7 @@ class FreeplayState extends MusicBeatState
 					[230, 160, 180]
 				);
 				addWeek(['Blocked','Corn-Theft','Maze',], 2,
-					['bambi'],
+					['bambi-new'],
 					['Hard', 'Hard', 'Normal'],
 					[188, 105, 113]
 				);
@@ -115,7 +115,7 @@ class FreeplayState extends MusicBeatState
 			
 			case 'extra':
 				addWeek(['Bonus-Song'], 1, ['dave'], ['Normal'], [140]);
-				addWeek(['Mealie'], 2, ['bambi'], ['Hard'], [167]);
+				addWeek(['Mealie'], 2, ['bambi-new'], ['Hard'], [167]);
 				addWeek(['Computer'], 8, ['bombu'], ['Easy'], [130]);
 				addWeek(['Crimson-Corridor'], 8, ['bombai'], ['Normal'], [150]);
 				addWeek(['Disposition'], 9, ['hell-expunged'], ['Extreme'], [115]);

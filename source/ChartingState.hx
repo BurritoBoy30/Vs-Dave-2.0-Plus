@@ -869,13 +869,13 @@ class ChartingState extends MusicBeatState
 		
 		if (sec.mustHitSection)
 		{
-			leftIcon.createIcon(p1.curCharacter);
-			rightIcon.createIcon(p2.curCharacter);
+			leftIcon.createIcon(p1.healthIcon);
+			rightIcon.createIcon(p2.healthIcon);
 		}
 		else
 		{
-			leftIcon.createIcon(p2.curCharacter);
-			rightIcon.createIcon(p1.curCharacter);
+			leftIcon.createIcon(p2.healthIcon);
+			rightIcon.createIcon(p1.healthIcon);
 		}
 		
 		if (leftIcon.whosthisfucker == 'ohungi')
