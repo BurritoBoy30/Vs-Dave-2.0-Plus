@@ -62,8 +62,9 @@ class CharacterSelectState extends MusicBeatState
 	var overlay:FlxSprite;
 	
 	public static var noGfChar:Array<String> = ['bf-with-gf', 'bf-with-cyan', 'gf-player', 'rapper-gf', 'oruta'];
-	public static var singleBop:Array<String> = ['skyblue', 'tails-doll'];
-	public static var hornyGFs:Array<String> = ['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-massive', 'skyblue', 'tails-doll'];
+	public static var singleBop:Array<String> = ['skyblue', 'tails-doll', 'gefe-twerk'];
+	public static var hornyGFs:Array<String> = ['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-massive',
+		'three-gfs', 'gf-trepidation', 'skyblue', 'tails-doll', 'gefe', 'gefe-busty', 'gefe-twerk'];
 	
 	public var noMorePresses:Bool = false;
 	
@@ -399,7 +400,7 @@ class CharacterSelectState extends MusicBeatState
 				curFormBF = FlxG.save.data.savedBfFormData;
 				curGF = FlxG.save.data.savedGfData;
 				curFormGF = FlxG.save.data.savedGfFormData;
-								
+
 				UpdateBF();
 				UpdateGF();	
 				updateGfUI();
@@ -462,7 +463,7 @@ class CharacterSelectState extends MusicBeatState
 		{
 			girlfriendData = [
 				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing']),
-				new SelectableChar(['gefe', 'gefe-busty']),
+				new SelectableChar(['gefe', 'gefe-busty', 'gefe-twerk']),
 				new SelectableChar(['gf-massive']),
 				new SelectableChar(['three-gfs']),
 				new SelectableChar(['gf-trepidation']),

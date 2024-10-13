@@ -115,15 +115,15 @@ class AnimationDebug extends MusicBeatState
 		UI_box.scrollFactor.set();
 		add(UI_box);
 		
-		coloredBar = new FlxSprite(75, FlxG.height - 50).loadGraphic(Paths.image('colorBar', 'shared'));
+		coloredBar = new FlxSprite(60, FlxG.height - 70).loadGraphic(Paths.image('colorBar', 'shared'));
 		coloredBar.antialiasing = FlxG.save.data.antiAliasing;
 		add(coloredBar);
 		coloredBar.cameras = [camHUD];
 		coloredBar.color = FlxColor.fromRGB(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2]);
 		
 		iconP2 = new HealthIcon(char.healthIcon);
-		iconP2.x = 25;
-		iconP2.y = FlxG.height - 125;
+		iconP2.x = 10;
+		iconP2.y = FlxG.height - 145;
 		add(iconP2);
 		iconP2.cameras = [camHUD];
 

@@ -27,6 +27,7 @@ class HealthIcon extends FlxSprite
 		'bombai',
 		'hell-expunged'
 	];
+	
 	public var isPlayer:Bool;
 	
 	var char:String;
@@ -44,7 +45,7 @@ class HealthIcon extends FlxSprite
 	}
 	
 	// fuck this
-	// this kept me awake until 1:30 am because of this stupid "char" thing
+	// this kept me awake until 1:30am because of this stupid "char" thing
 	public function createIcon(char:String)
 	{
 		if (this.char != char)

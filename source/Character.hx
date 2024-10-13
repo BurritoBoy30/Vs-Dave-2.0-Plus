@@ -240,117 +240,108 @@ class Character extends FlxSprite
 	{
 		var offsetStuffs:Array<String> = CoolUtil.coolTextFile(Paths.txt('charinfo/' + character, 'preload'));
 		
-		for (i in 0...7)
+		for (charText in offsetStuffs)
 		{
-			for (charText in offsetStuffs)
+			var charInfo:Array<String> = charText.split(": ");
+			
+			switch (charInfo[0])
 			{
-				var charInfo:Array<String> = charText.split(": ");
-				
-				switch (charInfo[0])
-				{
-					case 'file':
-						frames = Paths.getSparrowAtlas('characters/' + charInfo[1], 'shared');
-						
-					case 'offsets':
-						var charoffsetInfo:Array<String> = charInfo[1].split(', ');
-						charOffset = [Std.parseFloat(charoffsetInfo[0]), Std.parseFloat(charoffsetInfo[1])];
-						
-					case 'camoffsets':
-						var camoffsetInfo:Array<String> = charInfo[1].split(', ');
-						camOffsets = [Std.parseFloat(camoffsetInfo[0]), Std.parseFloat(camoffsetInfo[1])];
-						
-					case 'scale':
-						var shitSize:Float = 1;
-						shitSize = Std.parseFloat(charInfo[1]);
-						
-						if (shitSize != 1)
-						{
-							setGraphicSize(Std.int(width * shitSize));
-							updateHitbox();
-						}
-						
-					case 'icon':
-						healthIcon = charInfo[1];
+				case 'file':
+					frames = Paths.getSparrowAtlas('characters/' + charInfo[1], 'shared');
 					
-					case 'barcolor':
-						var healthInfo:Array<String> = charInfo[1].split(', ');
-						healthColorArray = [Std.parseInt(healthInfo[0]), Std.parseInt(healthInfo[1]), Std.parseInt(healthInfo[2])];
-						
-					case 'anti-aliasing':
-						antialiasing = charInfo[1] == 'true';
-						
-					case 'flipX':
-						flipX = charInfo[1] == 'true';
-						isFlipped = charInfo[1] == 'true';
-						
-				}
-			}
-		}
-		
-		for (i in 6...offsetStuffs.length - 1)
-		{
-			for (offsetText in offsetStuffs)
-			{
-				var offsetInfo:Array<String> = offsetText.split(", ");
+				case 'offsets':
+					var charoffsetInfo:Array<String> = charInfo[1].split(', ');
+					charOffset = [Std.parseFloat(charoffsetInfo[0]), Std.parseFloat(charoffsetInfo[1])];
 					
-				if (offsetInfo[0] == 'prefix')
-				{
-					var loopedBool:Bool = false;
-					if (offsetInfo[5] == 'true')
-						loopedBool = true;
-						
-					animation.addByPrefix(offsetInfo[3], offsetInfo[4], Std.parseInt(offsetInfo[6]), loopedBool);
-					animOffsets[offsetInfo[3]] = [Std.parseFloat(offsetInfo[1]), Std.parseFloat(offsetInfo[2])];
-					animationsArray.push(offsetInfo[3]);
-				
-				}
-				else if (offsetInfo[0] == 'indices')
-				{
-					var indicesArray:Array<Int> = [];
-					var indiceData:Array<String> = offsetInfo[5].split(':');
-						
-					for (i in 0...indiceData.length)
+				case 'camoffsets':
+					var camoffsetInfo:Array<String> = charInfo[1].split(', ');
+					camOffsets = [Std.parseFloat(camoffsetInfo[0]), Std.parseFloat(camoffsetInfo[1])];
+					
+				case 'scale':
+					var shitSize:Float = 1;
+					shitSize = Std.parseFloat(charInfo[1]);
+					
+					if (shitSize != 1)
 					{
-						indicesArray.push(Std.parseInt(indiceData[i]));
+						setGraphicSize(Std.int(width * shitSize));
+						updateHitbox();
 					}
 					
-					var loopedBool:Bool = false;
-					if (offsetInfo[6] == 'true')
-						loopedBool = true;
-						
-					animation.addByIndices(offsetInfo[3], offsetInfo[4], indicesArray, "", Std.parseInt(offsetInfo[7]), loopedBool);
-					animOffsets[offsetInfo[3]] = [Std.parseFloat(offsetInfo[1]), Std.parseFloat(offsetInfo[2])];
-					animationsArray.push(offsetInfo[3]);
-				}
+				case 'icon':
+					healthIcon = charInfo[1];
+				
+				case 'barcolor':
+					var healthInfo:Array<String> = charInfo[1].split(', ');
+					healthColorArray = [Std.parseInt(healthInfo[0]), Std.parseInt(healthInfo[1]), Std.parseInt(healthInfo[2])];
+					
+				case 'anti-aliasing':
+					antialiasing = charInfo[1] == 'true';
+					
+				case 'flipX':
+					flipX = charInfo[1] == 'true';
+					isFlipped = charInfo[1] == 'true';
+					
 			}
 		}
-		
-		for (i in (offsetStuffs.length - 1)...offsetStuffs.length)
+	
+		for (offsetText in offsetStuffs)
 		{
-			for (animText in offsetStuffs)
-			{
-				var starterAnimInfo:Array<String> = animText.split(": ");
+			var offsetInfo:Array<String> = offsetText.split(", ");
 				
-				if (starterAnimInfo[0] == 'starterIdle')
+			if (offsetInfo[0] == 'prefix')
+			{
+				var loopedBool:Bool = false;
+				if (offsetInfo[5] == 'true')
+					loopedBool = true;
+					
+				animation.addByPrefix(offsetInfo[3], offsetInfo[4], Std.parseInt(offsetInfo[6]), loopedBool);
+				animOffsets[offsetInfo[3]] = [Std.parseFloat(offsetInfo[1]), Std.parseFloat(offsetInfo[2])];
+				animationsArray.push(offsetInfo[3]);
+			
+			}
+			else if (offsetInfo[0] == 'indices')
+			{
+				var indicesArray:Array<Int> = [];
+				var indiceData:Array<String> = offsetInfo[5].split(':');
+					
+				for (i in 0...indiceData.length)
 				{
-					danceType = 'idle';
-					var idleInfo:Array<String> = starterAnimInfo[1].split(", ");
-					startedAnim = idleInfo[0];
-					forceAnim = idleInfo[1] == 'true';
-					
-					playAnim(startedAnim, forceAnim);
+					indicesArray.push(Std.parseInt(indiceData[i]));
 				}
-				else if (starterAnimInfo[0] == 'starterDance')
-				{
-					danceType = 'dance';
-					var danceInfo:Array<String> = starterAnimInfo[1].split(", ");
-					startedVarAnims = [danceInfo[0], danceInfo[1]];
-					forceAnim = danceInfo[2] == 'true';
+				
+				var loopedBool:Bool = false;
+				if (offsetInfo[6] == 'true')
+					loopedBool = true;
 					
-					hasHair = danceInfo[3] != null && danceInfo[3] == 'hasHair';
-					
-					playAnim(startedVarAnims[0], forceAnim);
-				}
+				animation.addByIndices(offsetInfo[3], offsetInfo[4], indicesArray, "", Std.parseInt(offsetInfo[7]), loopedBool);
+				animOffsets[offsetInfo[3]] = [Std.parseFloat(offsetInfo[1]), Std.parseFloat(offsetInfo[2])];
+				animationsArray.push(offsetInfo[3]);
+			}
+		}
+	
+		for (animText in offsetStuffs)
+		{
+			var starterAnimInfo:Array<String> = animText.split(": ");
+			
+			if (starterAnimInfo[0] == 'starterIdle')
+			{
+				danceType = 'idle';
+				var idleInfo:Array<String> = starterAnimInfo[1].split(", ");
+				startedAnim = idleInfo[0];
+				forceAnim = idleInfo[1] == 'true';
+				
+				playAnim(startedAnim, forceAnim);
+			}
+			else if (starterAnimInfo[0] == 'starterDance')
+			{
+				danceType = 'dance';
+				var danceInfo:Array<String> = starterAnimInfo[1].split(", ");
+				startedVarAnims = [danceInfo[0], danceInfo[1]];
+				forceAnim = danceInfo[2] == 'true';
+				
+				hasHair = danceInfo[3] != null && danceInfo[3] == 'hasHair';
+				
+				playAnim(startedVarAnims[0], forceAnim);
 			}
 		}
 	}
