@@ -1,0 +1,14 @@
+file: Recurser
+offsets: -800, 0
+camoffsets: 0, 0
+scale: 1
+anti-aliasing: true
+flipX: false
+icon: recurser
+barcolor: 44, 44, 44
+prefix, 0, 0, idle, recursedIdle, false, 24
+prefix, 0, 0, singUP, recursedUp, false, 24
+prefix, 0, 0, singLEFT, recursedLeft, false, 24
+prefix, 0, 0, singRIGHT, recursedRight, false, 24
+prefix, 0, 0, singDOWN, recursedDown, false, 24
+starterIdle: idle, false

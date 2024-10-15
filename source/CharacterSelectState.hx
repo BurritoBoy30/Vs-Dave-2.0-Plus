@@ -49,6 +49,7 @@ class CharacterSelectState extends MusicBeatState
 	var saveBox:UIButton;
 	var loadBox:UIButton;
 	var tailsBox:UIButton;
+	var settingsIcon:UIButton;
 	
 	var hornyGfBG:FlxSprite;
 	var hornyGfBOX:FlxUICheckBox;
@@ -62,7 +63,6 @@ class CharacterSelectState extends MusicBeatState
 	var overlay:FlxSprite;
 	
 	public static var noGfChar:Array<String> = ['bf-with-gf', 'bf-with-cyan', 'gf-player', 'rapper-gf', 'oruta'];
-	public static var singleBop:Array<String> = ['skyblue', 'tails-doll', 'gefe-twerk'];
 	public static var hornyGFs:Array<String> = ['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-massive',
 		'three-gfs', 'gf-trepidation', 'skyblue', 'tails-doll', 'gefe', 'gefe-busty', 'gefe-twerk'];
 	
@@ -83,9 +83,6 @@ class CharacterSelectState extends MusicBeatState
 			new SelectableChar(['gf-player']),
 			new SelectableChar(['rapper-gf'])
 		];
-		
-		if (FlxG.save.data.hornyGF && FlxG.save.data.hornyALL)
-			boyfriendData.push(new SelectableChar(['oruta']));
 			
 		loadGirlfriendListing(FlxG.save.data.hornyGF && FlxG.save.data.hornyALL);
 		
@@ -161,6 +158,10 @@ class CharacterSelectState extends MusicBeatState
 		add(hornyGfBG);
 		hornyGfBG.cameras = [camHUD];
 		
+		settingsIcon = new UIButton(FlxG.width - (hornyGfBG.width * 1.38), hornyGfBG.y, [80, 80], 'charselect/settings_icon', openSettings);
+		add(settingsIcon);
+		settingsIcon.cameras = [camHUD];
+		
 		hornyGfBOX = new FlxUICheckBox(hornyGfBG.x + (hornyGfBG.width / 1.5), hornyGfBG.y, Paths.image('charselect/hornygf_box'), Paths.image('charselect/hornygf_boxCheck'), "", 100);
 		hornyGfBOX.callback = function()
 		{
@@ -206,8 +207,26 @@ class CharacterSelectState extends MusicBeatState
 		overlay.scrollFactor.set();
 		add(overlay);
 		
+		if (FlxG.save.data.canAutoLoad)
+		{
+			curBF = FlxG.save.data.savedBfData;	
+			curFormBF = FlxG.save.data.savedBfFormData;
+			curGF = FlxG.save.data.savedGfData;
+			curFormGF = FlxG.save.data.savedGfFormData;
+		}
+		else
+		{
+			curBF = 0;	
+			curFormBF = 0;
+			curGF = 0;
+			curFormGF = 0;
+		}
+
 		UpdateBF();
 		UpdateGF();
+		
+		if (FlxG.save.data.canAutoLoad)
+			updateGfUI();
 		
 		super.create();
 		
@@ -220,7 +239,7 @@ class CharacterSelectState extends MusicBeatState
 		
 		super.update(elapsed);
 		
-		tailsBox.visible = FlxG.save.data.hornyGF && FlxG.save.data.hornyALL && !noGfChar.contains(boyfriendChar.curCharacter);
+		tailsBox.visible = FlxG.save.data.canTailsDoll && FlxG.save.data.hornyGF && FlxG.save.data.hornyALL && !noGfChar.contains(boyfriendChar.curCharacter);
 		girlfriendChar.visible = !noGfChar.contains(boyfriendChar.curCharacter);
 		
 		if (!selectedCharacter)
@@ -331,7 +350,7 @@ class CharacterSelectState extends MusicBeatState
 					if (!noGfChar.contains(boyfriendChar.curCharacter))
 					{
 						var cheerAnimation:Bool = girlfriendChar.animation.getByName("cheer") != null; 
-						girlfriendChar.playAnim(singleBop.contains(girlfriendChar.curCharacter) ? 'singUP' : cheerAnimation ? 'cheer' : (girlfriendChar.curCharacter == 'gf-trepidation') ? 'danceLeft1' : 'danceLeft', true);
+						girlfriendChar.playAnim(girlfriendChar.danceType == 'idle' ? 'singUP' : cheerAnimation ? 'cheer' : (girlfriendChar.curCharacter == 'gf-trepidation') ? 'danceLeft1' : 'danceLeft', true);
 					}
 					
 					FlxG.sound.music.stop();
@@ -339,8 +358,21 @@ class CharacterSelectState extends MusicBeatState
 					FlxG.mouse.visible = false;
 					new FlxTimer().start(1.9, endIt);
 				}
+				
+				if (!FlxG.save.data.canTailsDoll && isTails)
+				{
+					isTails = false;
+		
+					UpdateGF(false);	
+					updateGfUI();
+				}
 			}
 		}
+	}
+	
+	override function openSubState(SubState:FlxSubState)
+	{
+		super.openSubState(SubState);
 	}
 	
 	function gfString()
@@ -421,6 +453,12 @@ class CharacterSelectState extends MusicBeatState
 		}
 	}
 	
+	function openSettings()
+	{
+		isPressed(settingsIcon);
+		openSubState(new CharacterSelectSettings(camHUD));
+	}
+	
 	override function beatHit()
 	{
 		super.beatHit();
@@ -431,7 +469,7 @@ class CharacterSelectState extends MusicBeatState
 				boyfriendChar.dance();
 		}
 		
-		if (girlfriendChar != null && curBeat % (singleBop.contains(girlfriendChar.curCharacter) ? 2 : 1) == 0)
+		if (girlfriendChar != null && curBeat % (girlfriendChar.danceType == 'idle' ? 2 : 1) == 0)
 			girlfriendChar.dance();
 	}
 	
@@ -469,6 +507,8 @@ class CharacterSelectState extends MusicBeatState
 				new SelectableChar(['gf-trepidation']),
 				new SelectableChar(['skyblue'])
 			];
+			
+			boyfriendData.push(new SelectableChar(['oruta']));
 		}
 		else
 		{
@@ -478,6 +518,8 @@ class CharacterSelectState extends MusicBeatState
 				new SelectableChar(['cyan', 'cyan-christmas']),
 				new SelectableChar(['kaity', 'kaity-christmas'])
 			];
+			
+			boyfriendData.remove(new SelectableChar(['oruta']));
 		}
 	}
 	

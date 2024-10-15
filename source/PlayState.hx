@@ -167,6 +167,35 @@ class PlayState extends MusicBeatState
 	var place:BackgroundImg;
 	var darkStages:Array<String> = ['bambiFarmNight', 'disabled', 'unfairness', 'rsod'];
 	
+	//recursed
+	var darkSky:BackgroundImg;
+	var darkSky2:BackgroundImg;
+	var darkSkyStartPos:Float = 1280;
+	var resetPos:Float = -2560;
+	
+	// stuff for recursed cutscene
+	var recurserStandOff:Character;
+	var boyfriendStandOff:Character;
+	var darkBg:FlxSprite;
+	var recurserSideImg:FlxSprite;
+	var boyfriendSideImg:FlxSprite;
+	var recursedCutsceneEnded:Bool = false;
+	var camRecurser:FlxCamera;
+	
+	//freeplay ui
+	private var grpSongs:FlxTypedGroup<Alphabet>;
+	private var iconArray:Array<HealthIcon> = [];
+	public var mainSongs:Array<String> = ['House', 'Insanity', 'Polygonized', 'Bonus Song', 'Blocked', 'Corn-Theft', 'Maze', 'Mealie'];
+	public var mainIcons:Array<String> = ['dave', 'dave-annoyed', 'dave-angey', 'bambi-new', 'bambi-angey'];
+	var zoeyBop:FlxSprite;
+	var scoreText:FlxText;
+	var diffText:FlxText;
+	var scoreBG:FlxSprite;
+	var lerpScore:Int = 0;
+	var curSelected:Int = 2;
+	var startingFreeplayUI:Bool = false;
+	var endingFreeplayUI:Bool = false;
+	
 	public var isDownScroll:Bool = false;
 	override public function create()
 	{
@@ -193,6 +222,14 @@ class PlayState extends MusicBeatState
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD, false);
+		
+		if (SONG.song.toLowerCase() == 'recursed')
+		{
+			camRecurser = new FlxCamera();
+			camRecurser.bgColor.alpha = 0;
+			FlxG.cameras.add(camRecurser, false);
+		}
+		
 		FlxG.cameras.add(camOther, false);
 		
 		Transition.nextCamera = camOther;
@@ -294,10 +331,7 @@ class PlayState extends MusicBeatState
 				camPos.x += 200;
 		}
 		
-		var boyfriendVersion:String = '';
-		boyfriendVersion = SONG.player1;
-		
-		boyfriend = new Boyfriend(770, 450, boyfriendVersion);
+		boyfriend = new Boyfriend(770, 450, SONG.player1);
 		boyfriend.x += boyfriend.charOffset[0];
 		boyfriend.y += boyfriend.charOffset[1];	
 		
@@ -499,6 +533,43 @@ class PlayState extends MusicBeatState
 		timeTxt.cameras = [camHUD];
 		timeLabelTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+		
+		if (SONG.song.toLowerCase() == 'recursed')
+		{
+			darkBg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+			darkBg.alpha = 0;
+			darkBg.screenCenter();
+			add(darkBg);
+			
+			recurserSideImg = new FlxSprite(0, 0).loadGraphic(Paths.image('recursed_recurserside', 'shared'));
+			recurserSideImg.antialiasing = FlxG.save.data.antiAliasing;
+			add(recurserSideImg);
+			
+			recurserStandOff = new Character(-260, 35, 'recurser', 'dad');
+			add(recurserStandOff);
+			
+			boyfriendSideImg = new FlxSprite(FlxG.width / 2, 0).loadGraphic(Paths.image('recursed_bfside', 'shared'));
+			boyfriendSideImg.antialiasing = FlxG.save.data.antiAliasing;
+			add(boyfriendSideImg);
+			
+			boyfriendStandOff = new Character(770, 350, boyfriend.curCharacter, 'bf');
+			boyfriendStandOff.x += boyfriendStandOff.charOffset[0];
+			boyfriendStandOff.y += boyfriendStandOff.charOffset[1];
+			boyfriendStandOff.scale.set(boyfriendStandOff.shitSize * 1.1, boyfriendStandOff.shitSize * 1.1);
+			add(boyfriendStandOff);
+			
+			recurserSideImg.x = -(FlxG.width / 2);
+			recurserStandOff.x = -260 - (FlxG.width / 2);
+			
+			boyfriendSideImg.x = FlxG.width;
+			boyfriendStandOff.x = (770 + boyfriendStandOff.charOffset[0]) + (FlxG.width / 2);
+			
+			darkBg.cameras = [camRecurser];
+			recurserSideImg.cameras = [camRecurser];
+			recurserStandOff.cameras = [camRecurser];
+			boyfriendSideImg.cameras = [camRecurser];
+			boyfriendStandOff.cameras = [camRecurser];
+		}
 		
 		switch (SONG.song.toLowerCase())
 		{
@@ -772,6 +843,23 @@ class PlayState extends MusicBeatState
 				
 				var frontground:BackgroundImg = new BackgroundImg(-730, 220, 'stages/ohungi/ohungi ground', 1);
 				add(frontground);
+				
+			case 'recursed':
+				defaultCamZoom = 0.35;
+				curStage = 'freeplay';
+				
+				darkSky = new BackgroundImg(darkSkyStartPos, 0, 'stages/recursed/darkSky', 1);
+				darkSky.scale.set((1 / defaultCamZoom) * 2, 1 / defaultCamZoom);
+				darkSky.updateHitbox();
+				darkSky.y = (FlxG.height - darkSky.height) / 2;
+				add(darkSky);
+				
+				darkSky2 = new BackgroundImg(darkSky.x - darkSky.width, 0, 'stages/recursed/darkSky', 1);
+				darkSky2.scale.set((1 / defaultCamZoom) * 2, 1 / defaultCamZoom);
+				darkSky2.updateHitbox();
+				darkSky2.x = darkSky.x - darkSky.width;
+				darkSky2.y = (FlxG.height - darkSky2.height) / 2;
+				add(darkSky2);
 				
 			default:
 				defaultCamZoom = 0.9;
@@ -1330,6 +1418,18 @@ class PlayState extends MusicBeatState
 			place.y -= (Math.sin(elapsedtime) * 0.4);
 		}
 		
+		if (curStage == 'freeplay')
+		{
+			var scrollSpeed = 150;
+	
+			darkSky.x += 40 * scrollSpeed * elapsed;
+			if (darkSky.x >= (darkSkyStartPos * 4) - 1280)
+			{
+				darkSky.x = resetPos;
+			}
+			darkSky2.x = darkSky.x - darkSky.width;
+		}
+		
 		if (['dave-angey', 'bambi-3d', 'bambi-unfair', 'dave-split-3d', 'bambi-piss-3d', 'exbungo', 'hell-expunged'].contains(dad.curCharacter))
 		{
 			dad.y += (Math.sin(elapsedtime) * 0.4);
@@ -1345,6 +1445,18 @@ class PlayState extends MusicBeatState
 		{
 			dad.x += (Math.cos(elapsedtime) * 1.25);
 			dad.y += (Math.sin(elapsedtime) * 1.25);
+		}
+		
+		var toy = -100 + -Math.sin((curStep / 9.5) * 2) * 30 * 5;
+		var tox = -330 -Math.cos((curStep / 9.5)) * 100;
+
+		if (dad.curCharacter == 'recurser')
+		{
+			toy = 100 + -Math.sin((elapsedtime) * 2) * 300;
+			tox = -500 - Math.cos((elapsedtime)) * 200;
+
+			dad.x += (tox - dad.x);
+			dad.y += (toy - dad.y);
 		}
 		
 		var krunkThing = 60;
@@ -1467,7 +1579,7 @@ class PlayState extends MusicBeatState
 					});
 			}
 		}
-		
+
 		if (botPlayOn && FlxG.keys.justPressed.NINE)
 			camHUD.visible = !camHUD.visible;
 			
@@ -1528,6 +1640,53 @@ class PlayState extends MusicBeatState
 		{
 			scoreTxt.text = ReturnLanguage.getLine('score') + songScore;
 		}
+		
+		if (SONG.song.toLowerCase() == 'recursed')
+		{
+			if (startingFreeplayUI)
+				camRecurser.shake(0.003, 0.1);
+	
+			if (diffText != null)
+			{
+				if (CharacterSelectState.noGfChar.contains(boyfriend.curCharacter))
+					diffText.text = "RECURSED" + " - (" + boyfriend.curCharacter.toUpperCase() + ")";
+				else
+					diffText.text = "RECURSED" + " - (" + boyfriend.curCharacter.toUpperCase() + " - " + gf.curCharacter.toUpperCase() + ")";
+			}
+			
+			lerpScore = Math.floor(FlxMath.lerp(lerpScore, songScore, 0.4));
+			
+			if (Math.abs(lerpScore - songScore) <= 10)
+				lerpScore = songScore;
+			
+			if (songScore < 1)
+				lerpScore = 0;
+				
+			if (scoreText != null)
+				scoreText.text = ReturnLanguage.getLine('personalbest') + lerpScore;
+
+			if (scoreBG != null)
+			{
+				if (scoreText.textField.textWidth < diffText.textField.textWidth)
+					scoreBG.scale.x = diffText.textField.textWidth + 12;
+				else
+					scoreBG.scale.x = scoreText.textField.textWidth + 12;
+				
+				scoreBG.x = FlxG.width - (scoreBG.scale.x / 2);
+			}
+			
+			if (endingFreeplayUI)
+			{	
+				scoreBG.angle += 10;
+				scoreText.angle += 10;
+				diffText.angle += 10;
+				
+				scoreBG.y += 8;
+				scoreText.y += 5;
+				diffText.y += 7;
+			}
+		}
+		
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
@@ -2748,6 +2907,126 @@ class PlayState extends MusicBeatState
 						FlxG.camera.flash(FlxColor.WHITE, 0.25);
 						changeDad('bambi-angey');
 				}
+			case 'recursed':
+				switch (curStep)
+				{
+					case 320:
+						FlxTween.tween(darkBg, {alpha: 1}, 3, {ease: FlxEase.cubeInOut});
+						FlxTween.tween(recurserSideImg, {x: 0}, 0.2, {ease: FlxEase.cubeInOut});
+						FlxTween.tween(recurserStandOff, {x: -260}, 0.2, {ease: FlxEase.cubeInOut});
+					case 334:
+						FlxTween.tween(boyfriendSideImg, {x: FlxG.width / 2}, 0.2, {ease: FlxEase.cubeInOut});
+						FlxTween.tween(boyfriendStandOff, {x: 770 + boyfriendStandOff.charOffset[0]}, 0.2, {ease: FlxEase.cubeInOut});
+					case 346:
+						FlxTween.tween(recurserSideImg, {x: -(FlxG.width / 2)}, 0.2, {ease: FlxEase.cubeInOut});
+						FlxTween.tween(recurserStandOff, {x: -260 - (FlxG.width / 2)}, 0.2, {ease: FlxEase.cubeInOut});
+						FlxTween.tween(boyfriendSideImg, {x: FlxG.width}, 0.2, {ease: FlxEase.cubeInOut});
+						FlxTween.tween(boyfriendStandOff, {x: (770 + boyfriendStandOff.charOffset[0]) + (FlxG.width / 2)}, 0.2, {ease: FlxEase.cubeInOut});
+						recursedCutsceneEnded = true;
+					case 352:
+						recurserSideImg.destroy();
+						recurserStandOff.destroy();
+						boyfriendSideImg.destroy();
+						boyfriendStandOff.destroy();
+						darkBg.alpha = 0;
+						camRecurser.flash(FlxColor.WHITE, 0.4);
+					case 1248:
+						camRecurser.flash(FlxColor.WHITE, 0.4);
+						startFreeplayUI();
+					case 1632:
+						camRecurser.flash(FlxColor.WHITE, 0.4);
+						endFreeplayUI();
+				}
+		}
+	}
+	
+	function startFreeplayUI()
+	{
+		if (SONG.song.toLowerCase() == 'recursed')
+		{
+			zoeyBop = new FlxSprite(700, 100);
+			zoeyBop.frames = Paths.getSparrowAtlas('hornyshit/zoey_recursed', 'shared');
+			zoeyBop.animation.addByPrefix('jiggle', 'jiggle', 10, true);
+			zoeyBop.animation.play('jiggle');
+			zoeyBop.setGraphicSize(Std.int(zoeyBop.width * 1.5));
+			zoeyBop.alpha = 0.3;
+			zoeyBop.visible = FlxG.save.data.hornyALL;
+			add(zoeyBop);
+			
+			grpSongs = new FlxTypedGroup<Alphabet>();
+			add(grpSongs);
+			grpSongs.cameras = [camRecurser];
+
+			for (i in 0...7)
+			{
+				var songText:Alphabet = new Alphabet(0, (70 * i) + 30, mainSongs[FlxG.random.int(0, mainSongs.length - 1)], true, false);
+				songText.isMenuItem = true;
+				songText.targetY = i;
+				songText.alpha = 0.3;
+				grpSongs.add(songText);
+
+				var icon:HealthIcon = new HealthIcon(mainIcons[FlxG.random.int(0, mainIcons.length - 1)]);
+				icon.alpha = 0.3;
+				icon.sprTracker = songText;
+				
+				iconArray.push(icon);
+				add(icon);
+
+				icon.cameras = [camRecurser];
+			}
+		
+			scoreText = new FlxText(-5, -5, FlxG.width, "", 32);
+			scoreText.setFormat(Paths.font("comic.ttf"), 32, FlxColor.WHITE, RIGHT);
+			scoreText.antialiasing = FlxG.save.data.antiAliasing;
+
+			scoreBG = new FlxSprite(0, 0).makeGraphic(1, 66, 0xFF000000);
+			scoreBG.alpha = 0.6;
+			add(scoreBG);
+
+			diffText = new FlxText(scoreText.x, scoreText.y + 40, FlxG.width, "", 24);
+			diffText.setFormat(Paths.font("comic.ttf"), 18, FlxColor.WHITE, RIGHT);
+			diffText.antialiasing = FlxG.save.data.antiAliasing;
+			add(diffText);
+
+			add(scoreText);
+			
+			zoeyBop.cameras = [camRecurser];
+			scoreBG.cameras = [camRecurser];
+			diffText.cameras = [camRecurser];
+			scoreText.cameras = [camRecurser];
+			
+			changeSelection();
+			
+			startingFreeplayUI = true;
+		}
+	}
+	
+	function changeSelection(change:Int = 0)
+	{
+		curSelected += change;
+
+		var bullShit:Int = 0;
+
+		for (item in grpSongs.members)
+		{
+			item.targetY = bullShit - curSelected;
+			bullShit++;
+		}
+	}
+	
+	function endFreeplayUI()
+	{
+		if (SONG.song.toLowerCase() == 'recursed')
+		{
+			startingFreeplayUI = false;
+			endingFreeplayUI = true;
+			
+			zoeyBop.alpha = 0;
+			
+			for (i in grpSongs) { remove(i); }
+			for (i in iconArray) { remove(i); }
+			grpSongs.members = [];
+			iconArray = [];
 		}
 	}
 	
@@ -2798,7 +3077,7 @@ class PlayState extends MusicBeatState
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
 		
-		if (CharacterSelectState.singleBop.contains(gf.curCharacter))
+		if (gf.danceType == 'idle')
 		{
 			gfBeatSnap = 2;
 		}
@@ -2807,7 +3086,7 @@ class PlayState extends MusicBeatState
 			gfBeatSnap = gfSpeed;
 		}
 
-		if (curBeat % (gfBeatSnap + ((curSong == 'disruption' || curSong == 'unfairness') && !CharacterSelectState.singleBop.contains(gf.curCharacter) ? 1 : 0)) == 0)
+		if (curBeat % (gfBeatSnap + ((curSong == 'disruption' || curSong == 'unfairness') && gf.danceType == 'dance' ? 1 : 0)) == 0)
 		{
 			if (FlxG.save.data.gfCanSing && gfString())
 			{
@@ -2849,6 +3128,48 @@ class PlayState extends MusicBeatState
 			{
 				dad.playAnim('cheer', true);
 				boyfriend.playAnim('hey', true);
+			}
+		}
+		
+		if (SONG.song.toLowerCase() == 'recursed')
+		{
+			if (!recursedCutsceneEnded)
+			{
+				if (boyfriendStandOff != null)
+				{
+					if (curBeat % 2 == 0)
+					{
+						boyfriendStandOff.dance();
+					}
+				}
+				
+				if (recurserStandOff != null)
+				{
+					if (curBeat % 2 == 0)
+					{
+						recurserStandOff.dance();
+					}
+				}
+			}
+			
+			if (startingFreeplayUI)
+			{
+				var songText:Alphabet = new Alphabet(0, (70 * grpSongs.length) + 30, mainSongs[FlxG.random.int(0, mainSongs.length - 1)], true, false);
+				songText.isMenuItem = true;
+				songText.targetY = grpSongs.length;
+				songText.alpha = 0.3;
+				grpSongs.add(songText);
+
+				var icon:HealthIcon = new HealthIcon(mainIcons[FlxG.random.int(0, mainIcons.length - 1)]);
+				icon.alpha = 0.3;
+				icon.sprTracker = songText;
+
+				// using a FlxGroup is too much fuss!
+				iconArray.push(icon);
+				add(icon);
+				icon.cameras = [camRecurser];
+				
+				changeSelection(1);
 			}
 		}
 		

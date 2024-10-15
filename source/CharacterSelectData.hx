@@ -20,5 +20,12 @@ class CharacterSelectData
 			
 		if (FlxG.save.data.hornyGF == null)
 			FlxG.save.data.hornyGF = false;
+			
+		if (FlxG.save.data.canTailsDoll == null)
+			FlxG.save.data.canTailsDoll = false;
+		
+		if (FlxG.save.data.canAutoLoad == null)
+			FlxG.save.data.canAutoLoad = false;
+		
 	}
 }

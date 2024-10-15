@@ -19,17 +19,18 @@ class Character extends FlxSprite
 	public var furiosityScale:Float = 1.02;
 	public var canDance:Bool = true;
 
-	public var charOffset:Array<Float> = [0,0];
+	public var charOffset:Array<Float> = [0, 0];
 	public var animationsArray:Array<String> = [];
-	public var camOffsets:Array<Float> = [0,0];
+	public var camOffsets:Array<Float> = [0, 0];
+	public var shitSize:Float = 1;
 	public var isFlipped:Bool = false;
 	public var healthIcon:String = '';
 	public var healthColorArray:Array<Int> = [0, 0, 0];
+	public var danceType:String = '';
 	
 	var startedAnim:String = '';
 	var startedVarAnims:Array<String> = [];
 	var forceAnim:Bool = true;
-	var danceType:String = 'idle';
 	var hasHair:Bool = false;
 	
 	public static var tutorialGFs:Array<String> = [
@@ -258,7 +259,6 @@ class Character extends FlxSprite
 					camOffsets = [Std.parseFloat(camoffsetInfo[0]), Std.parseFloat(camoffsetInfo[1])];
 					
 				case 'scale':
-					var shitSize:Float = 1;
 					shitSize = Std.parseFloat(charInfo[1]);
 					
 					if (shitSize != 1)

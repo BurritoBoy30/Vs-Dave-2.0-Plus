@@ -11,7 +11,7 @@ class BackgroundImg extends FlxSprite
 	public function new(x:Float, y:Float, path:String = 'blank', scroll:Float = 1, antiAliasing:Bool = true, active:Bool = false, imageSize:Float = 1)
 	{
 		super(x, y);
-		reloadImage(path, scroll, antiAliasing, active,imageSize);
+		reloadImage(path, scroll, antiAliasing, active, imageSize);
 	}
 	
 	public function reloadImage(path:String = 'blank', scroll:Float = 1, antiAliasing:Bool = true, active:Bool = false, imageSize:Float = 1)

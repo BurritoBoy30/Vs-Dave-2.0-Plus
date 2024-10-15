@@ -120,6 +120,7 @@ class FreeplayState extends MusicBeatState
 				addWeek(['Crimson-Corridor'], 8, ['bombai'], ['Normal'], [150]);
 				addWeek(['Disposition'], 9, ['hell-expunged'], ['Extreme'], [115]);
 				addWeek(['Decimal'], 10, ['ohungi'], ['Hard'], [140]);
+				addWeek(['Recursed'], 10, ['recurser'], ['Hard'], [150]);
 		}
 	}
 	
@@ -156,16 +157,18 @@ class FreeplayState extends MusicBeatState
 			// songText.screenCenter(X);
 		}
 
-		scoreText = new FlxText(-5, 5, FlxG.width, "", 32);
-		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
+		scoreText = new FlxText(-5, -5, FlxG.width, "", 32);
+		scoreText.setFormat(Paths.font("comic.ttf"), 32, FlxColor.WHITE, RIGHT);
+		scoreText.antialiasing = FlxG.save.data.antiAliasing;
 		scoreText.alpha = 0;
 
 		scoreBG = new FlxSprite(0, 0).makeGraphic(1, 66, 0xFF000000);
 		scoreBG.alpha = 0;
 		add(scoreBG);
 
-		diffText = new FlxText(scoreText.x, scoreText.y + 36, FlxG.width, "", 24);
-		diffText.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, RIGHT);
+		diffText = new FlxText(scoreText.x, scoreText.y + 40, FlxG.width, "", 24);
+		diffText.setFormat(Paths.font("comic.ttf"), 18, FlxColor.WHITE, RIGHT);
+		diffText.antialiasing = FlxG.save.data.antiAliasing;
 		diffText.alpha = 0;
 		add(diffText);
 
@@ -460,22 +463,16 @@ class FreeplayState extends MusicBeatState
 	}
 	
 	function updateScore()
-	{
-		var theBF:String;
-		var theGF:String;
-		theBF = curBfChar.toLowerCase();
-		theGF = curGfChar.toLowerCase();
-		
-		if (CharacterSelectState.noGfChar.contains(theBF))
-			diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toLowerCase()) + " - (" + curBfChar.toUpperCase() + ")";
+	{	
+		if (CharacterSelectState.noGfChar.contains(curBfChar.toLowerCase()))
+			diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase()) + " - (" + curBfChar.toUpperCase() + ")";
 		else
 		{
-			if (!FlxG.save.data.hornyALL && CharacterSelectState.hornyGFs.contains(theGF))
-				diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toLowerCase()) + " - (" + curBfChar.toUpperCase() + " - " + 'GF' + ")";
+			if (!FlxG.save.data.hornyALL && CharacterSelectState.hornyGFs.contains(curGfChar.toLowerCase()))
+				diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase()) + " - (" + curBfChar.toUpperCase() + " - " + 'GF' + ")";
 			else
-				diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toLowerCase()) + " - (" + curBfChar.toUpperCase() + " - " + curGfChar.toUpperCase() + ")";
+				diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase()) + " - (" + curBfChar.toUpperCase() + " - " + curGfChar.toUpperCase() + ")";
 		}
-		
 	}
 }
 
