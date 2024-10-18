@@ -38,7 +38,7 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(randomizeBG());
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image(randomizeBG(), 'preload'));
 		bg.antialiasing = FlxG.save.data.antiAliasing;
 		bg.color = 0xFFFDE871;
 		bg.scrollFactor.set();
@@ -183,7 +183,7 @@ class MainMenuState extends MusicBeatState
 		var bgs:Array<String> = ['mamakotomi', 'mantis', 'morie', 'Olyantwo', 'SUSSUS AMOGUS' , 'SwagnotrllyTheMod', 'T5mpler'];
 		var chance:Int = FlxG.random.int(0, bgs.length - 1);
 		
-		return Paths.image('backgrounds/' + bgs[chance]);
+		return 'backgrounds/' + bgs[chance];
 	}
 
 	function changeItem(huh:Int = 0)

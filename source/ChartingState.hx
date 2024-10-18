@@ -115,7 +115,7 @@ class ChartingState extends MusicBeatState
 		p1 = new Character(0,0, _song.player1, 'dad');
 		p2 = new Character(0,0, _song.player2, 'dad');
 		
-		var bg:FlxSprite = new FlxSprite().loadGraphic(MainMenuState.randomizeBG());
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
 		bg.scrollFactor.set();
 		bg.color = 0xFF222222;
 		add(bg);

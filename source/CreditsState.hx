@@ -48,7 +48,7 @@ class CreditsState extends MusicBeatState
 	
 	override function create()
 	{	
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(MainMenuState.randomizeBG());
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
 		menuBG.screenCenter();
 		menuBG.color = 0xFF00CECE;
 		menuBG.antialiasing = FlxG.save.data.antiAliasing;

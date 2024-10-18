@@ -53,7 +53,7 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{		
-		var bg:FlxSprite = new FlxSprite().loadGraphic(MainMenuState.randomizeBG());
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
 		bg.antialiasing = FlxG.save.data.antiAliasing;
 		bg.color = 0xFF9271FD;
 		add(bg);

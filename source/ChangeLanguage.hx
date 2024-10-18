@@ -19,7 +19,7 @@ class ChangeLanguage extends MusicBeatState
 	
 	override function create()
 	{
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(MainMenuState.randomizeBG());
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();

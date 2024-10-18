@@ -13,6 +13,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxSubState;
 import flixel.addons.display.FlxGridOverlay;
+import flixel.addons.display.FlxBackdrop;
 import flixel.addons.effects.FlxTrail;
 import flixel.addons.effects.FlxTrailArea;
 import flixel.addons.effects.chainable.FlxEffectSprite;
@@ -168,10 +169,21 @@ class PlayState extends MusicBeatState
 	var darkStages:Array<String> = ['bambiFarmNight', 'disabled', 'unfairness', 'rsod'];
 	
 	//recursed
-	var darkSky:BackgroundImg;
-	var darkSky2:BackgroundImg;
-	var darkSkyStartPos:Float = 1280;
-	var resetPos:Float = -2560;
+	var startPanic:Bool = false;
+	var panicSelectedInt:Int = 0;
+	var charScroll:FlxTypedGroup<FlxSprite>;
+	var panicSectionChars:Array<String> = ['daveScroll', 'bambiScroll', 'tristanScroll'];
+	var songLetters:Array<Dynamic> = [
+		[],
+		[],
+		[]
+	];
+	var daveSongsLetters:FlxTypedGroup<Alphabet>;
+	var bambiSongsLetters:FlxTypedGroup<Alphabet>;
+	var tristanSongsLetters:FlxTypedGroup<Alphabet>;
+	var daveLettersMovement:Array<Dynamic> = [];
+	var bambiLettersMovement:Array<Dynamic> = [];
+	var tristanLettersMovement:Array<Dynamic> = [];
 	
 	// stuff for recursed cutscene
 	var recurserStandOff:Character;
@@ -199,6 +211,36 @@ class PlayState extends MusicBeatState
 	public var isDownScroll:Bool = false;
 	override public function create()
 	{
+		switch (SONG.song.toLowerCase())
+		{
+			case 'recursed':
+				var daveLetters:Array<String> = ['h','o','u','s','e','i','n','a','t','y','p','l','g','z','d','b'];
+				for (i in 0...9)
+				{
+					for (i in 0...daveLetters.length)
+					{
+						songLetters[0].push(daveLetters[i]);
+					}
+				}
+				
+				var bambiLetters:Array<String> = ['b','l','o','c','k','e','d','r','n','t','h','f','t','m','a','z','i','n','g','y'];
+				for (i in 0...7)
+				{
+					for (i in 0...bambiLetters.length)
+					{
+						songLetters[1].push(bambiLetters[i]);
+					}
+				}
+				
+				var tristanLetters:Array<String> = ['g','r','e','t','i','n','s','a','d','v','u'];
+				for (i in 0...15)
+				{
+					for (i in 0...tristanLetters.length)
+					{
+						songLetters[2].push(tristanLetters[i]);
+					}
+				}
+		}
 		theFunne = FlxG.save.data.newInput;
 		
 		if (FlxG.sound.music != null)
@@ -845,21 +887,95 @@ class PlayState extends MusicBeatState
 				add(frontground);
 				
 			case 'recursed':
-				defaultCamZoom = 0.35;
+				defaultCamZoom = 0.4;
 				curStage = 'freeplay';
 				
-				darkSky = new BackgroundImg(darkSkyStartPos, 0, 'stages/recursed/darkSky', 1);
-				darkSky.scale.set((1 / defaultCamZoom) * 2, 1 / defaultCamZoom);
-				darkSky.updateHitbox();
-				darkSky.y = (FlxG.height - darkSky.height) / 2;
+				var darkSky:FlxSprite = new FlxSprite();
+				darkSky.frames = Paths.getSparrowAtlas('stages/recursed/darkSky', 'shared');
+				darkSky.animation.addByPrefix('scroll', 'scroll', 60, true);
+				darkSky.animation.play('scroll');
+				darkSky.antialiasing = FlxG.save.data.antiAliasing;
+				darkSky.scale.set(2, 2);
+				darkSky.screenCenter();
 				add(darkSky);
 				
-				darkSky2 = new BackgroundImg(darkSky.x - darkSky.width, 0, 'stages/recursed/darkSky', 1);
-				darkSky2.scale.set((1 / defaultCamZoom) * 2, 1 / defaultCamZoom);
-				darkSky2.updateHitbox();
-				darkSky2.x = darkSky.x - darkSky.width;
-				darkSky2.y = (FlxG.height - darkSky2.height) / 2;
-				add(darkSky2);
+				var letterX:Float = -1700;
+				var letterY:Float = -700;
+				
+				var letterOffset:Array<Int> = [420, 220];
+				
+				daveSongsLetters = new FlxTypedGroup<Alphabet>();
+				add(daveSongsLetters);
+				
+				for (i in 0...songLetters[0].length)
+				{
+					var songText:Alphabet = new Alphabet(letterX, letterY, songLetters[0][i], true, false);
+					songText.x += FlxG.random.int(0, letterOffset[0]) * 10;
+					songText.y += FlxG.random.int(0, letterOffset[1]) * 10;
+					songText.isMenuItem = false;
+					daveSongsLetters.add(songText);
+					
+					setUpLetterMovement('dave');
+				}
+				
+				bambiSongsLetters = new FlxTypedGroup<Alphabet>();
+				add(bambiSongsLetters);
+				
+				for (i in 0...songLetters[1].length)
+				{
+					var songText:Alphabet = new Alphabet(letterX, letterY, songLetters[1][i], true, false);
+					songText.x += FlxG.random.int(0, letterOffset[0]) * 10;
+					songText.y += FlxG.random.int(0, letterOffset[1]) * 10;
+					songText.isMenuItem = false;
+					bambiSongsLetters.add(songText);
+					
+					setUpLetterMovement('bambi');
+				}	
+				
+				tristanSongsLetters = new FlxTypedGroup<Alphabet>();
+				add(tristanSongsLetters);
+				
+				for (i in 0...songLetters[2].length)
+				{
+					var songText:Alphabet = new Alphabet(letterX, letterY, songLetters[2][i], true, false);
+					songText.x += FlxG.random.int(0, letterOffset[0]) * 10;
+					songText.y += FlxG.random.int(0, letterOffset[1]) * 10;
+					songText.isMenuItem = false;
+					tristanSongsLetters.add(songText);
+					
+					setUpLetterMovement('tristan');
+				}
+				
+				for (item in bambiSongsLetters.members)
+				{
+					item.visible = false;
+				}	
+				for (item in tristanSongsLetters.members)
+				{
+					item.visible = false;
+				}
+				
+				charScroll = new FlxTypedGroup<FlxSprite>();
+				add(charScroll);
+				
+				for (i in 0...panicSectionChars.length)
+				{
+					var charBackdrop:FlxSprite = new FlxSprite();
+					charBackdrop.frames = Paths.getSparrowAtlas('stages/recursed/' + panicSectionChars[i], 'shared');
+					charBackdrop.animation.addByPrefix('scroll', 'scroll', 15, true);
+					charBackdrop.animation.play('scroll');
+					charBackdrop.antialiasing = FlxG.save.data.antiAliasing;
+					charBackdrop.scale.set(2, 2);
+					charBackdrop.color = 0xFF878787;
+					charBackdrop.screenCenter();
+					charBackdrop.scrollFactor.set();
+					charBackdrop.alpha = 0;
+					charScroll.add(charBackdrop);
+				}
+				
+				charScroll.members[0].visible = true;
+				charScroll.members[1].visible = false;
+				charScroll.members[2].visible = false;
 				
 			default:
 				defaultCamZoom = 0.9;
@@ -1420,14 +1536,26 @@ class PlayState extends MusicBeatState
 		
 		if (curStage == 'freeplay')
 		{
-			var scrollSpeed = 150;
-	
-			darkSky.x += 40 * scrollSpeed * elapsed;
-			if (darkSky.x >= (darkSkyStartPos * 4) - 1280)
+			var lerpVal = 0.95;
+			if (startPanic)
+				lerpVal = 0.8;
+			for (item in charScroll.members)
 			{
-				darkSky.x = resetPos;
+				item.alpha = FlxMath.lerp(0, item.alpha, lerpVal);
 			}
-			darkSky2.x = darkSky.x - darkSky.width;
+			
+			for (item in daveSongsLetters.members)
+			{
+				item.alpha = FlxMath.lerp(0, item.alpha, lerpVal);
+			}
+			for (item in bambiSongsLetters.members)
+			{
+				item.alpha = FlxMath.lerp(0, item.alpha, lerpVal);
+			}	
+			for (item in tristanSongsLetters.members)
+			{
+				item.alpha = FlxMath.lerp(0, item.alpha, lerpVal);
+			}
 		}
 		
 		if (['dave-angey', 'bambi-3d', 'bambi-unfair', 'dave-split-3d', 'bambi-piss-3d', 'exbungo', 'hell-expunged'].contains(dad.curCharacter))
@@ -1453,7 +1581,7 @@ class PlayState extends MusicBeatState
 		if (dad.curCharacter == 'recurser')
 		{
 			toy = 100 + -Math.sin((elapsedtime) * 2) * 300;
-			tox = -500 - Math.cos((elapsedtime)) * 200;
+			tox = -700 - Math.cos((elapsedtime)) * 200;
 
 			dad.x += (tox - dad.x);
 			dad.y += (toy - dad.y);
@@ -1645,7 +1773,31 @@ class PlayState extends MusicBeatState
 		{
 			if (startingFreeplayUI)
 				camRecurser.shake(0.003, 0.1);
-	
+				
+			for (i in 0...daveSongsLetters.length)
+			{ 
+				daveSongsLetters.members[i].angle += daveLettersMovement[i][0];
+					
+				daveSongsLetters.members[i].x += (Math.cos(elapsedtime) * (0.55 + daveLettersMovement[i][1]));
+				daveSongsLetters.members[i].y += (Math.sin(elapsedtime) * (0.55 + daveLettersMovement[i][1]));
+			}
+			
+			for (i in 0...bambiSongsLetters.length)
+			{ 
+				bambiSongsLetters.members[i].angle += bambiLettersMovement[i][0];
+				
+				bambiSongsLetters.members[i].x += (Math.cos(elapsedtime) * (0.55 + bambiLettersMovement[i][1]));
+				bambiSongsLetters.members[i].y += (Math.sin(elapsedtime) * (0.55 + bambiLettersMovement[i][1]));
+			}
+			
+			for (i in 0...tristanSongsLetters.length)
+			{ 
+				tristanSongsLetters.members[i].angle += tristanLettersMovement[i][0];
+					
+				tristanSongsLetters.members[i].x += (Math.cos(elapsedtime) * (0.55 + tristanLettersMovement[i][1]));
+				tristanSongsLetters.members[i].y += (Math.sin(elapsedtime) * (0.55 + tristanLettersMovement[i][1]));
+			}
+				
 			if (diffText != null)
 			{
 				if (CharacterSelectState.noGfChar.contains(boyfriend.curCharacter))
@@ -1677,9 +1829,9 @@ class PlayState extends MusicBeatState
 			
 			if (endingFreeplayUI)
 			{	
-				scoreBG.angle += 10;
-				scoreText.angle += 10;
-				diffText.angle += 10;
+				scoreBG.angle += 5;
+				scoreText.angle += 0.2;
+				diffText.angle += 0.2;
 				
 				scoreBG.y += 8;
 				scoreText.y += 5;
@@ -1756,8 +1908,8 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 		
-		iconP1.centerOffsets();
-		iconP2.centerOffsets();
+		iconP1.scale.set(FlxMath.lerp(iconP1.realSize, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)), FlxMath.lerp(iconP1.realSize, iconP1.scale.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)));
+		iconP2.scale.set(FlxMath.lerp(iconP2.realSize, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)), FlxMath.lerp(iconP2.realSize, iconP1.scale.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -2924,17 +3076,55 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(boyfriendStandOff, {x: (770 + boyfriendStandOff.charOffset[0]) + (FlxG.width / 2)}, 0.2, {ease: FlxEase.cubeInOut});
 						recursedCutsceneEnded = true;
 					case 352:
+						defaultCamZoom = 0.4;
 						recurserSideImg.destroy();
 						recurserStandOff.destroy();
 						boyfriendSideImg.destroy();
 						boyfriendStandOff.destroy();
 						darkBg.alpha = 0;
-						camRecurser.flash(FlxColor.WHITE, 0.4);
+						camRecurser.flash();
+					case 864:
+						FlxG.camera.flash();
+						charScroll.members[0].visible = false;
+						charScroll.members[1].visible = true;
+						charScroll.members[2].visible = false;
+						for (item in daveSongsLetters.members)
+						{
+							item.visible = false;
+						}
+						for (item in bambiSongsLetters.members)
+						{
+							item.visible = true;
+						}	
+						for (item in tristanSongsLetters.members)
+						{
+							item.visible = false;
+						}
+							
 					case 1248:
-						camRecurser.flash(FlxColor.WHITE, 0.4);
+						defaultCamZoom = 0.6;
+						camRecurser.flash();
 						startFreeplayUI();
+						startPanic = true;
 					case 1632:
-						camRecurser.flash(FlxColor.WHITE, 0.4);
+						startPanic = false;
+						defaultCamZoom = 0.4;
+						camRecurser.flash();
+						charScroll.members[0].visible = false;
+						charScroll.members[1].visible = false;
+						charScroll.members[2].visible = true;
+						for (item in daveSongsLetters.members)
+						{
+							item.visible = false;
+						}
+						for (item in bambiSongsLetters.members)
+						{
+							item.visible = false;
+						}	
+						for (item in tristanSongsLetters.members)
+						{
+							item.visible = true;
+						}
 						endFreeplayUI();
 				}
 		}
@@ -3030,6 +3220,25 @@ class PlayState extends MusicBeatState
 		}
 	}
 	
+	function setUpLetterMovement(whoschar:String)
+	{
+		var angleThing:Float;
+		var floatyThing:Float;
+		
+		angleThing = FlxG.random.float(0.1, 0.25);
+		floatyThing = FlxG.random.float(0.25, 1);
+		
+		switch (whoschar)
+		{
+			case 'dave':
+				daveLettersMovement.push([angleThing, floatyThing]);
+			case 'bambi':
+				bambiLettersMovement.push([angleThing, floatyThing]);
+			case 'tristan':
+				tristanLettersMovement.push([angleThing, floatyThing]);
+		}
+	}
+	
 	var gfBeatSnap:Int = 1;
 
 	override function beatHit()
@@ -3070,9 +3279,6 @@ class PlayState extends MusicBeatState
 		
 		iconP1.scale.set(iconP1.realSize + 0.2, iconP1.realSize + 0.2);
 		iconP2.scale.set(iconP2.realSize + 0.2, iconP2.realSize + 0.2);
-
-		FlxTween.tween(iconP1.scale, {x: iconP1.realSize, y: iconP1.realSize}, Conductor.crochet / 1200 * gfSpeed, {ease: FlxEase.quadOut});
-		FlxTween.tween(iconP2.scale, {x: iconP2.realSize, y: iconP2.realSize}, Conductor.crochet / 1200 * gfSpeed, {ease: FlxEase.quadOut});
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -3135,20 +3341,61 @@ class PlayState extends MusicBeatState
 		{
 			if (!recursedCutsceneEnded)
 			{
-				if (boyfriendStandOff != null)
+				if (curBeat % 2 == 0)
 				{
-					if (curBeat % 2 == 0)
-					{
+					if (boyfriendStandOff != null)
 						boyfriendStandOff.dance();
-					}
+				
+					if (recurserStandOff != null)
+						recurserStandOff.dance();
+				}
+			}
+			
+			if (curBeat % (startPanic ? 1 : 4) == 0)
+			{
+				for (item in daveSongsLetters.members)
+				{
+					item.alpha = 0.8;
 				}
 				
-				if (recurserStandOff != null)
+				for (item in bambiSongsLetters.members)
 				{
-					if (curBeat % 2 == 0)
-					{
-						recurserStandOff.dance();
-					}
+					item.alpha = 0.8;
+				}
+				
+				for (item in tristanSongsLetters.members)
+				{
+					item.alpha = 0.8;
+				}
+				
+				for (item in charScroll.members)
+				{
+					item.alpha = 0.6;
+				}
+			}
+			
+			if (startPanic)
+			{
+				panicSelectedInt++;
+				
+				if (panicSelectedInt >= panicSectionChars.length)
+					panicSelectedInt = 0;
+				
+				charScroll.members[0].visible = panicSelectedInt == 0;
+				charScroll.members[1].visible = panicSelectedInt == 1;
+				charScroll.members[2].visible = panicSelectedInt == 2;
+				
+				for (item in daveSongsLetters.members)
+				{
+					item.visible = panicSelectedInt == 0;
+				}
+				for (item in bambiSongsLetters.members)
+				{
+					item.visible = panicSelectedInt == 1;
+				}	
+				for (item in tristanSongsLetters.members)
+				{
+					item.visible = panicSelectedInt == 2;
 				}
 			}
 			
