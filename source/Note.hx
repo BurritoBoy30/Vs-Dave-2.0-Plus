@@ -86,6 +86,15 @@ class Note extends FlxSprite
 			this.noteStyle = '3d';
 			notePath = 'NOTE_assets_3D';
 		}
+		else if ((PlayState.dad.curCharacter == 'recurser' && !musthit) || (PlayState.boyfriend.curCharacter == 'recurser' && musthit))
+		{
+			this.noteStyle = 'recursed';
+			notePath = 'NOTE_recursed';
+		}
+		else if (PlayState.SONG.song.toLowerCase() == 'recursed' && ((this.strumTime / 50) % 20 > 12 && !isSustainNote))
+		{
+			this.noteStyle = 'text';
+		}
 		else if (PlayState.boyfriend.curCharacter == 'bf-pixel' && musthit)
 		{
 			this.noteStyle = 'pixel';
@@ -139,6 +148,31 @@ class Note extends FlxSprite
 
 				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 				updateHitbox();
+				
+			case 'text':
+				frames = Paths.getSparrowAtlas('ui/alphabet');
+
+				var noteColors = ['purple', 'blue', 'green', 'red'];
+	
+				var boldLetters:Array<String> = new Array<String>();
+	
+				for (frameName in frames.frames)
+				{
+					if (frameName.name.contains('bold'))
+					{
+						boldLetters.push(frameName.name);
+					}
+				}
+				var randomFrame = boldLetters[new FlxRandom().int(0, boldLetters.length - 1)];
+				var prefix = randomFrame.substr(0, randomFrame.length - 4);
+				for (note in noteColors)
+				{
+					animation.addByPrefix('${note}Scroll', prefix, 24);
+				}
+				setGraphicSize(Std.int(width * 1.25));
+				updateHitbox();
+				antialiasing = true;
+				x -= (width - 78);
 			default:
 				frames = Paths.getSparrowAtlas('notes/' + notePath);
 

@@ -211,7 +211,7 @@ class FreeplayState extends MusicBeatState
 	
 	public function addSong(songName:String, weekNum:Int, songCharacter:String, diffculty:String, bpm:Int)
 	{
-		songs.push(new SongMetadata(songName, weekNum, songCharacter, diffculty, bpm));
+		songs.push(new SongMetadata(songName, weekNum, songCharacter, ReturnLanguage.getLine(diffculty.toLowerCase()), bpm));
 	}
 	
 	public function UpdatePackSelection(change:Int)

@@ -173,18 +173,15 @@ class PlayState extends MusicBeatState
 	var panicSelectedInt:Int = 0;
 	var charScroll:FlxTypedGroup<FlxSprite>;
 	var panicSectionChars:Array<String> = ['daveScroll', 'bambiScroll', 'tristanScroll'];
-	var songLetters:Array<Dynamic> = [
-		[],
-		[],
-		[]
-	];
+	var songLetters:Array<Dynamic> = [[],[],[]];
 	var daveSongsLetters:FlxTypedGroup<Alphabet>;
 	var bambiSongsLetters:FlxTypedGroup<Alphabet>;
 	var tristanSongsLetters:FlxTypedGroup<Alphabet>;
+	var songsLetters:Array<FlxTypedGroup<Alphabet>>;
 	var daveLettersMovement:Array<Dynamic> = [];
 	var bambiLettersMovement:Array<Dynamic> = [];
 	var tristanLettersMovement:Array<Dynamic> = [];
-	
+		
 	// stuff for recursed cutscene
 	var recurserStandOff:Character;
 	var boyfriendStandOff:Character;
@@ -214,30 +211,31 @@ class PlayState extends MusicBeatState
 		switch (SONG.song.toLowerCase())
 		{
 			case 'recursed':
-				var daveLetters:Array<String> = ['h','o','u','s','e','i','n','a','t','y','p','l','g','z','d','b'];
+				var letters:Array<Dynamic> = [
+					['h','o','u','s','e','i','n','a','t','y','p','l','g','z','d','b'],
+					['b','l','o','c','k','e','d','r','n','t','h','f','t','m','a','z','i','n','g','y'],
+					['g','r','e','t','i','n','s','a','d','v','u']
+				];
+				
 				for (i in 0...9)
 				{
-					for (i in 0...daveLetters.length)
+					for (i in 0...letters[0].length)
 					{
-						songLetters[0].push(daveLetters[i]);
+						songLetters[0].push(letters[0][i]);
 					}
 				}
-				
-				var bambiLetters:Array<String> = ['b','l','o','c','k','e','d','r','n','t','h','f','t','m','a','z','i','n','g','y'];
 				for (i in 0...7)
 				{
-					for (i in 0...bambiLetters.length)
+					for (i in 0...letters[1].length)
 					{
-						songLetters[1].push(bambiLetters[i]);
+						songLetters[1].push(letters[1][i]);	
 					}
 				}
-				
-				var tristanLetters:Array<String> = ['g','r','e','t','i','n','s','a','d','v','u'];
 				for (i in 0...15)
 				{
-					for (i in 0...tristanLetters.length)
+					for (i in 0...letters[2].length)
 					{
-						songLetters[2].push(tristanLetters[i]);
+						songLetters[2].push(letters[2][i]);
 					}
 				}
 		}
@@ -945,15 +943,7 @@ class PlayState extends MusicBeatState
 					
 					setUpLetterMovement('tristan');
 				}
-				
-				for (item in bambiSongsLetters.members)
-				{
-					item.visible = false;
-				}	
-				for (item in tristanSongsLetters.members)
-				{
-					item.visible = false;
-				}
+				songsLetters = [daveSongsLetters, bambiSongsLetters, tristanSongsLetters];
 				
 				charScroll = new FlxTypedGroup<FlxSprite>();
 				add(charScroll);
@@ -973,9 +963,7 @@ class PlayState extends MusicBeatState
 					charScroll.add(charBackdrop);
 				}
 				
-				charScroll.members[0].visible = true;
-				charScroll.members[1].visible = false;
-				charScroll.members[2].visible = false;
+				hideLetters(0);
 				
 			default:
 				defaultCamZoom = 0.9;
@@ -1539,22 +1527,18 @@ class PlayState extends MusicBeatState
 			var lerpVal = 0.95;
 			if (startPanic)
 				lerpVal = 0.8;
+				
 			for (item in charScroll.members)
 			{
 				item.alpha = FlxMath.lerp(0, item.alpha, lerpVal);
 			}
 			
-			for (item in daveSongsLetters.members)
-			{
-				item.alpha = FlxMath.lerp(0, item.alpha, lerpVal);
-			}
-			for (item in bambiSongsLetters.members)
-			{
-				item.alpha = FlxMath.lerp(0, item.alpha, lerpVal);
-			}	
-			for (item in tristanSongsLetters.members)
-			{
-				item.alpha = FlxMath.lerp(0, item.alpha, lerpVal);
+			for (i in songsLetters)
+			{ 
+				for (item in i.members)
+				{
+					item.alpha = FlxMath.lerp(0, item.alpha, (lerpVal - 0.05));
+				}
 			}
 		}
 		
@@ -1778,24 +1762,24 @@ class PlayState extends MusicBeatState
 			{ 
 				daveSongsLetters.members[i].angle += daveLettersMovement[i][0];
 					
-				daveSongsLetters.members[i].x += (Math.cos(elapsedtime) * (0.55 + daveLettersMovement[i][1]));
-				daveSongsLetters.members[i].y += (Math.sin(elapsedtime) * (0.55 + daveLettersMovement[i][1]));
+				daveSongsLetters.members[i].x += (Math.cos(elapsedtime * (1 + daveLettersMovement[i][1])) * (0.55 + daveLettersMovement[i][1]));
+				daveSongsLetters.members[i].y += (Math.sin(elapsedtime * (1 + daveLettersMovement[i][1])) * (0.55 + daveLettersMovement[i][1]));
 			}
 			
 			for (i in 0...bambiSongsLetters.length)
 			{ 
 				bambiSongsLetters.members[i].angle += bambiLettersMovement[i][0];
 				
-				bambiSongsLetters.members[i].x += (Math.cos(elapsedtime) * (0.55 + bambiLettersMovement[i][1]));
-				bambiSongsLetters.members[i].y += (Math.sin(elapsedtime) * (0.55 + bambiLettersMovement[i][1]));
+				bambiSongsLetters.members[i].x += (Math.cos(elapsedtime * (1 + bambiLettersMovement[i][1])) * (0.55 + bambiLettersMovement[i][1]));
+				bambiSongsLetters.members[i].y += (Math.sin(elapsedtime * (1 + bambiLettersMovement[i][1])) * (0.55 + bambiLettersMovement[i][1]));
 			}
 			
 			for (i in 0...tristanSongsLetters.length)
 			{ 
 				tristanSongsLetters.members[i].angle += tristanLettersMovement[i][0];
 					
-				tristanSongsLetters.members[i].x += (Math.cos(elapsedtime) * (0.55 + tristanLettersMovement[i][1]));
-				tristanSongsLetters.members[i].y += (Math.sin(elapsedtime) * (0.55 + tristanLettersMovement[i][1]));
+				tristanSongsLetters.members[i].x += (Math.cos(elapsedtime * (1 + tristanLettersMovement[i][1])) * (0.55 + tristanLettersMovement[i][1]));
+				tristanSongsLetters.members[i].y += (Math.sin(elapsedtime * (1 + tristanLettersMovement[i][1])) * (0.55 + tristanLettersMovement[i][1]));
 			}
 				
 			if (diffText != null)
@@ -3085,22 +3069,8 @@ class PlayState extends MusicBeatState
 						camRecurser.flash();
 					case 864:
 						FlxG.camera.flash();
-						charScroll.members[0].visible = false;
-						charScroll.members[1].visible = true;
-						charScroll.members[2].visible = false;
-						for (item in daveSongsLetters.members)
-						{
-							item.visible = false;
-						}
-						for (item in bambiSongsLetters.members)
-						{
-							item.visible = true;
-						}	
-						for (item in tristanSongsLetters.members)
-						{
-							item.visible = false;
-						}
-							
+						hideLetters(1);
+
 					case 1248:
 						defaultCamZoom = 0.6;
 						camRecurser.flash();
@@ -3110,21 +3080,7 @@ class PlayState extends MusicBeatState
 						startPanic = false;
 						defaultCamZoom = 0.4;
 						camRecurser.flash();
-						charScroll.members[0].visible = false;
-						charScroll.members[1].visible = false;
-						charScroll.members[2].visible = true;
-						for (item in daveSongsLetters.members)
-						{
-							item.visible = false;
-						}
-						for (item in bambiSongsLetters.members)
-						{
-							item.visible = false;
-						}	
-						for (item in tristanSongsLetters.members)
-						{
-							item.visible = true;
-						}
+						hideLetters(2);
 						endFreeplayUI();
 				}
 		}
@@ -3381,22 +3337,7 @@ class PlayState extends MusicBeatState
 				if (panicSelectedInt >= panicSectionChars.length)
 					panicSelectedInt = 0;
 				
-				charScroll.members[0].visible = panicSelectedInt == 0;
-				charScroll.members[1].visible = panicSelectedInt == 1;
-				charScroll.members[2].visible = panicSelectedInt == 2;
-				
-				for (item in daveSongsLetters.members)
-				{
-					item.visible = panicSelectedInt == 0;
-				}
-				for (item in bambiSongsLetters.members)
-				{
-					item.visible = panicSelectedInt == 1;
-				}	
-				for (item in tristanSongsLetters.members)
-				{
-					item.visible = panicSelectedInt == 2;
-				}
+				hideLetters(panicSelectedInt);
 			}
 			
 			if (startingFreeplayUI)
@@ -3421,6 +3362,26 @@ class PlayState extends MusicBeatState
 		}
 		
 		gf.trepTransi(SONG.bpm);
+	}
+	
+	function hideLetters(hideInt:Int)
+	{
+		charScroll.members[0].visible = hideInt == 0;
+		charScroll.members[1].visible = hideInt == 1;
+		charScroll.members[2].visible = hideInt == 2;	
+	
+		for (i in songsLetters)
+		{ 
+			for (item in i.members)
+			{
+				if (i == daveSongsLetters)
+					item.visible = hideInt == 0;
+				else if (i == bambiSongsLetters)
+					item.visible = hideInt == 1;
+				else if (i == tristanSongsLetters)
+					item.visible = hideInt == 2;
+			}
+		}
 	}
 	
 	function gfString()
