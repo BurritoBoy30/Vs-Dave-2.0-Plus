@@ -44,6 +44,7 @@ changelang==Change Language
 antialiasing==Anti Aliasing
 cammove==Movimento da Câmera
 gfsings==Girlfriend Canta
+combonum==Pop Up do Combo
 
 // Character Names //
 bf==Boyfriend
@@ -91,9 +92,9 @@ kabunga_cred==CARALHO EU MURCHEI
 
 // Console //
 console_start==Iniciando BurritoWorks VSD-SMS...
-console_info==BurritoWorks(R)  VSD-SMS:break:(C) Copyright BurritoWorks Corp 2008-2024.:break::break:Pressione ENTER para dar input ao seu comando.:break:Digite "help" para listar todos os comandos disponíveis.:break:(Nota do Dev:Por favor digite devagar, o console não registra inputs quando digita muito rápido):break::break::break:/
-console_invalid==Invalid command
-console_shutdown==Shutting down...
-console_exenotfound==Executable not found
-console_dispenser==Running dispeser.exe...
-console_blockcommand==This command is not avalible
+console_info==BurritoWorks(R)  VSD-SMS:break:(C) Copyright BurritoWorks Corp 2008-2024.:break::break:Pressione ENTER para dar input ao seu comando.:break:Digite "help" para listar todos os comandos disponíveis.:break:(Nota do Dev: Por favor digite devagar, o console não registra inputs quando digita muito rápido):break::break::break:/
+console_invalid==Comando Inválido
+console_shutdown==Desligando...
+console_exenotfound==Executável não encontrado
+console_dispenser==Iniciando dispenser.exe...
+console_blockcommand==Esse comando não está disponível

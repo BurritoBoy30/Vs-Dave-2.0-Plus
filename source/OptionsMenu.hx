@@ -27,6 +27,7 @@ class OptionsMenu extends MusicBeatState
 		new Option('antialiasing', FlxG.save.data.antiAliasing),
 		new Option('cammove', FlxG.save.data.noteCamera),
 		new Option('gfsings', FlxG.save.data.gfCanSing),
+		new Option('combonum')
 	];
 	
 	private var grpControls:FlxTypedGroup<Alphabet>;
@@ -42,14 +43,14 @@ class OptionsMenu extends MusicBeatState
 		menuBG.antialiasing = FlxG.save.data.antiAliasing;
 		add(menuBG);
 		
-		var hornyBitches:FlxSprite = new FlxSprite(0, 0);
-		hornyBitches.frames = Paths.getSparrowAtlas('hornyshit/option girl', 'shared');
-		hornyBitches.animation.addByPrefix('idle', "option girl idle", 30);
-		hornyBitches.screenCenter(X);
-		hornyBitches.color = 0xFFea71fd;
-		hornyBitches.animation.play('idle');
-		hornyBitches.antialiasing = FlxG.save.data.antiAliasing;
-		if (FlxG.save.data.hornyALL) add(hornyBitches);
+		var hornyBitch:FlxSprite = new FlxSprite(0, 0);
+		hornyBitch.frames = Paths.getSparrowAtlas('hornyshit/option girl', 'shared');
+		hornyBitch.animation.addByPrefix('idle', "option girl idle", 30);
+		hornyBitch.screenCenter(X);
+		hornyBitch.color = 0xFFea71fd;
+		hornyBitch.animation.play('idle');
+		hornyBitch.antialiasing = FlxG.save.data.antiAliasing;
+		if (FlxG.save.data.hornyALL) add(hornyBitch);
 		
 		grpControls = new FlxTypedGroup<Alphabet>();
 		add(grpControls);
@@ -70,6 +71,7 @@ class OptionsMenu extends MusicBeatState
 		
 		checkArray[4].visible = false;
 		checkArray[7].visible = false;
+		checkArray[11].visible = false;
 		
 		super.create();
 		
@@ -124,6 +126,9 @@ class OptionsMenu extends MusicBeatState
 				case 10:
 					FlxG.save.data.gfCanSing = !FlxG.save.data.gfCanSing;
 					checkArray[curSelected].switchButton(FlxG.save.data.gfCanSing);
+					
+				case 11:
+					FlxG.switchState(new ComboNumbersState());
 					
 			}
 		}

@@ -1,14 +1,14 @@
-file: Dave_Furiosity
-offsets: 0, 0
+file: Dave_3D
+offsets: -50, -100
 camoffsets: 0, 100
-scale: 1.02
+scale: 0.8
 anti-aliasing: false
 flipX: false
 icon: dave-angey
 barcolor: 224, 99, 87
-prefix, 7, 0, idle, IDLE, false, 24
-prefix, -14, 16, singUP, UP, false, 24
-prefix, 13, 23, singRIGHT, RIGHT, false, 24
-prefix, 49, -9, singDOWN, DOWN, false, 24
-prefix, 0, -10, singLEFT, LEFT, false, 24
+prefix, 0, 0, idle, Idle, false, 24
+prefix, 5, 18, singUP, up, false, 24
+prefix, -20, 5, singRIGHT, right, false, 24
+prefix, 13, 6, singDOWN, down, false, 24
+prefix, 18, 9, singLEFT, left, false, 24
 starterIdle: idle, false

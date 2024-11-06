@@ -44,6 +44,7 @@ changelang==Change Language
 antialiasing==Anti Aliasing
 cammove==Camera Movement
 gfsings==Girlfriend Sings
+combonum==Combo Pop Up
 
 // Character Names //
 bf==Boyfriend
@@ -92,11 +93,11 @@ kabunga_cred=OH MY GOD I JUST DEFLATED
 // Console //
 console_start==Starting BurritoWorks VSD-SMS...
 console_info==BurritoWorks(R)  VSD-SMS:break:(C) Copyright BurritoWorks Corp 2008-2024.:break::break:Press ENTER to input your text as a command.:break:Type "help" to list all the possible commands.:break:(Dev Note: Please type slowly, the console can't register inputs when typing too fast):break::break::break:/
-console_invalid==Comando Inválido
-console_shutdown==Desligando...
-console_exenotfound==Executável não encontrado
-console_dispenser==Iniciando dispenser.exe...
-console_blockcommand==Esse comando não está disponível
+console_invalid==Invalid command
+console_shutdown==Shutting down...
+console_exenotfound==Executable not found
+console_dispenser==Running dispeser.exe...
+console_blockcommand==This command is not avalible
 
 
 

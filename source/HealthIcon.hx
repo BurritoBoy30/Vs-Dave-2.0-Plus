@@ -57,7 +57,7 @@ class HealthIcon extends FlxSprite
 				animation.addByPrefix('losing', "LOSE", 24, true);
 				animation.play('normal');
 				whosthisfucker = 'ohungi';
-				realSize = 0.75;
+				realSize = 0.8;
 			}
 			else
 			{

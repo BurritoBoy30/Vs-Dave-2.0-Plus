@@ -46,16 +46,16 @@ class CharacterSelectState extends MusicBeatState
 	
 	var changeInfoImg:FlxSprite;
 	
-	var saveBox:UIButton;
-	var loadBox:UIButton;
-	var tailsBox:UIButton;
-	var settingsIcon:UIButton;
+	var saveBox:Button;
+	var loadBox:Button;
+	var tailsBox:Button;
+	var settingsIcon:Button;
 	
 	var hornyGfBG:FlxSprite;
 	var hornyGfBOX:FlxUICheckBox;
 	
-	var saveOffset:Array<Float>;
-	var loadOffset:Array<Float>;
+	var saveOffset:Array<Dynamic>;
+	var loadOffset:Array<Dynamic>;
 	
 	var buttonPressed:Bool = false;
 	var noTextPop:Bool = false;
@@ -158,7 +158,7 @@ class CharacterSelectState extends MusicBeatState
 		add(hornyGfBG);
 		hornyGfBG.cameras = [camHUD];
 		
-		settingsIcon = new UIButton(FlxG.width - (hornyGfBG.width * 1.38), hornyGfBG.y, [80, 80], 'charselect/settings_icon', openSettings);
+		settingsIcon = new Button(FlxG.width - (hornyGfBG.width * 1.38), hornyGfBG.y, [[-24, 5], [-16, 14]], 'charselect/settings_icon', openSettings);
 		add(settingsIcon);
 		settingsIcon.cameras = [camHUD];
 		
@@ -177,16 +177,28 @@ class CharacterSelectState extends MusicBeatState
 		
 		if (!FlxG.save.data.hornyALL)
 		{
-			saveOffset = [110, 82];
-			loadOffset = [110, 100];
+			saveOffset = [
+				[10, 110], 
+				[-10, 0]
+			];
+			loadOffset = [
+				[10, 110],
+				[4, 14]
+			];
 		}
 		else
 		{
-			saveOffset = [110, 52];
-			loadOffset = [110, 67];
+			saveOffset = [
+				[10, 110], 
+				[-48, -38]
+			];
+			loadOffset = [
+				[10, 110], 
+				[-34, -20]
+			];
 		}
 		
-		loadBox = new UIButton(hornyGfBG.x, 0, loadOffset, 'charselect/' + FlxG.save.data.gameLanguage + '/loadchar_box', load);
+		loadBox = new Button(hornyGfBG.x, 0, loadOffset, 'charselect/' + FlxG.save.data.gameLanguage + '/loadchar_box', load);
 		if (!FlxG.save.data.hornyALL)
 			loadBox.y = FlxG.height - loadBox.height - 5;
 		else
@@ -194,12 +206,15 @@ class CharacterSelectState extends MusicBeatState
 		add(loadBox);
 		loadBox.cameras = [camHUD];
 		
-		saveBox = new UIButton(loadBox.x, 0, saveOffset, 'charselect/' + FlxG.save.data.gameLanguage + '/savechar_box', save);
+		saveBox = new Button(loadBox.x, 0, saveOffset, 'charselect/' + FlxG.save.data.gameLanguage + '/savechar_box', save);
 		saveBox.y = loadBox.y - loadBox.height - 5;
 		add(saveBox);
 		saveBox.cameras = [camHUD];
 		
-		tailsBox = new UIButton(saveBox.x, saveBox.y - saveBox.height - 5, [110, 41], 'charselect/tailsdoll_box', loadTailsDoll);
+		tailsBox = new Button(saveBox.x, saveBox.y - saveBox.height - 5, [
+			[10, 110], 
+			[-62, -48]
+		], 'charselect/tailsdoll_box', loadTailsDoll);
 		add(tailsBox);
 		tailsBox.cameras = [camHUD];
 		
@@ -706,50 +721,6 @@ class SelectableChar
 		for (i in 0...namesData.length)
 		{
 			displayNames.push(ReturnLanguage.getLine(namesData[i]));
-		}
-	}
-}
-
-class UIButton extends FlxSprite
-{
-	var buttonAxis:Array<Float>;
-	var callback:Void -> Void;
-
-	public function new (x:Float, y:Float, notButtonAxis:Array<Float>, buttonImg:String, callBack:Void -> Void)
-	{
-		super(x,y);
-		
-		loadGraphic(Paths.image(buttonImg, 'shared'));
-		antialiasing = FlxG.save.data.antiAliasing;
-		
-		buttonAxis = notButtonAxis;
-		
-		callback = callBack;
-	}
-	
-	function mouseOverButton(buttonX:Float, buttonY:Float)
-	{
-		return (FlxG.mouse.x > x + buttonX && FlxG.mouse.x < x + width + (buttonX * 1.9))
-			&& (FlxG.mouse.y > y + buttonY && FlxG.mouse.y < y + height + (buttonY * 1.2) + 3);
-	}
-	
-	override function update(elapsed:Float)
-	{		
-		super.update(elapsed);
-		
-		if (mouseOverButton(buttonAxis[0], buttonAxis[1]))
-		{
-			color = 0xFF878787;
-			
-			if (FlxG.mouse.justPressed)
-			{
-				if (callback != null)
-					callback();
-			}
-		}
-		else
-		{
-			color = FlxColor.WHITE;
 		}
 	}
 }

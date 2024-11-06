@@ -39,45 +39,50 @@ class DispenserBurstState extends MusicBeatState
 		redDispenserBitch = new DispenserBitch(bitchSize, 'red', 'none');
 		add(redDispenserBitch);
 		
-		redDispenserBitch.visible = false;	
+		redDispenserBitch.visible = false;
 		
-		buttonBlu = new Button(bluDispenserBitch.width * 1.34, 10, 'blue_button', function()
+		var correctAxis:Array<Dynamic> = [
+			[-100, -100],
+			[-100, -100]
+		];
+		
+		buttonBlu = new Button(bluDispenserBitch.width * 1.34, 10, correctAxis, 'hornyshit/dispenser/blue_button', function()
 		{
 			changeBitchColor('blu');
 		});
 		add(buttonBlu);
 		
-		buttonRed = new Button(buttonBlu.x, buttonBlu.height + buttonBlu.y + 20, 'red_button', function()
+		buttonRed = new Button(buttonBlu.x, buttonBlu.height + buttonBlu.y + 20, correctAxis, 'hornyshit/dispenser/red_button', function()
 		{
 			changeBitchColor('red');
 		});
 		add(buttonRed);
 		
-		buttonBluRed = new Button(buttonBlu.x + buttonBlu.width + 10, buttonBlu.y, 'blue-red_typeButton', function()
+		buttonBluRed = new Button(buttonBlu.x + buttonBlu.width + 10, buttonBlu.y, correctAxis, 'hornyshit/dispenser/blue-red_typeButton', function()
 		{
 			changeBitchType('blu-red');
 		});
 		add(buttonBluRed);
 		
-		buttonRedBlu = new Button(buttonBluRed.x, buttonBluRed.y + buttonBluRed.height + 20, 'red-blue_typeButton', function()
+		buttonRedBlu = new Button(buttonBluRed.x, buttonBluRed.y + buttonBluRed.height + 20, correctAxis, 'hornyshit/dispenser/red-blue_typeButton', function()
 		{
 			changeBitchType('red-blu');
 		});
 		add(buttonRedBlu);
 		
-		button1 = new Button(196, 10, '1_button', function()
+		button1 = new Button(196, 10, correctAxis, 'hornyshit/dispenser/1_button', function()
 		{
 			changeBitchSize(1);
 		});
 		add(button1);
 		
-		button2 = new Button(button1.x, button1.height + button1.y + 20, '2_button', function()
+		button2 = new Button(button1.x, button1.height + button1.y + 20, correctAxis, 'hornyshit/dispenser/2_button', function()
 		{
 			changeBitchSize(2);
 		});
 		add(button2);
 		
-		button3 = new Button(button2.x, button2.height + button2.y + 20, '3_button', function()
+		button3 = new Button(button2.x, button2.height + button2.y + 20, correctAxis, 'hornyshit/dispenser/3_button', function()
 		{
 			changeBitchSize(3);
 		});
@@ -193,40 +198,5 @@ class DispenserBitch extends FlxSprite
 		animation.addByIndices('danceLeft', "size" + size + '_' + type + ' idle', [28, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12], "", 40, false);
 		animation.addByIndices('danceRight', "size" + size + '_' + type + ' idle', [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", 40, false);
 		animation.play('danceLeft', true);
-	}
-}
-
-class Button extends FlxSprite
-{
-	var callback:Void -> Void;
-	
-	public function new (x:Float, y:Float, buttonImg:String, callBack:Void -> Void)
-	{
-		super(x,y);
-	
-		loadGraphic(Paths.image('hornyshit/dispenser/' + buttonImg, 'shared'));
-		antialiasing = FlxG.save.data.antiAliasing;
-		
-		callback = callBack;
-	}
-	
-	override function update(elapsed:Float)
-	{		
-		super.update(elapsed);
-		
-		if (FlxG.mouse.overlaps(this)) 
-		{
-			color = 0xFF878787;
-			
-			if (FlxG.mouse.justPressed)
-			{
-				if (callback != null)
-					callback();
-			}
-		}
-		else
-		{
-			color = FlxColor.WHITE;
-		}
 	}
 }
