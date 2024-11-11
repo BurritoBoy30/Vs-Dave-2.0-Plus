@@ -89,8 +89,6 @@ class PlayState extends MusicBeatState
 	private var unspawnNotes:Array<Note> = [];
 
 	private var strumLine:FlxSprite;
-	private var curSection:Int = 0;
-
 	private var camFollow:FlxObject;
 
 	private static var prevCamFollow:FlxObject;
@@ -2314,44 +2312,23 @@ class PlayState extends MusicBeatState
 
 		rating.loadGraphic(Paths.image('UI/' + pixelShit + daRating));
 		rating.screenCenter();
-		rating.x = (FlxG.width * 0.55) - 40;
-		rating.y -= 60;
+		rating.x = (FlxG.width * 0.55) - 40 + FlxG.save.data.comboRatingLocation[0];
+		rating.y += -60 + FlxG.save.data.comboRatingLocation[1];
 		rating.acceleration.y = 550;
 		rating.velocity.y -= FlxG.random.int(140, 175);
 		rating.velocity.x -= FlxG.random.int(0, 10);
-		rating.alpha = 0.6;
 
-		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image('UI/' + pixelShit + 'combo'));
-		comboSpr.screenCenter();
-		comboSpr.x = FlxG.width * 0.55;
-		comboSpr.acceleration.y = 600;
-		comboSpr.velocity.y -= 150;
-
-		comboSpr.velocity.x += FlxG.random.int(1, 10);
-		comboSpr.alpha = 0.6;
 		add(rating);
 		rating.cameras = [camHUD];
-		
-		if (combo >= 10)
-		{
-			add(comboSpr);
-			comboSpr.cameras = [camHUD];
-		}
 
 		if (daStyle != 'pixel')
 		{
 			rating.setGraphicSize(Std.int(rating.width * 0.7));
 			rating.antialiasing = FlxG.save.data.antiAliasing;
-			comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
-			comboSpr.antialiasing = FlxG.save.data.antiAliasing;
 		}
 		else
-		{
 			rating.setGraphicSize(Std.int(rating.width * daPixelZoom * 0.7));
-			comboSpr.setGraphicSize(Std.int(comboSpr.width * daPixelZoom * 0.7));
-		}
 
-		comboSpr.updateHitbox();
 		rating.updateHitbox();
 
 		var seperatedScore:Array<Int> = [];
@@ -2369,8 +2346,8 @@ class PlayState extends MusicBeatState
 		{
 			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image('UI/' + pixelShit + 'num' + Std.int(i)));
 			numScore.screenCenter();
-			numScore.x = (FlxG.width * 0.55) + (43 * daLoop) - 90;
-			numScore.y += 80;
+			numScore.x = (FlxG.width * 0.55) + (43 * daLoop) - 90 + FlxG.save.data.comboNumbersLocation[0];
+			numScore.y += 80 + FlxG.save.data.comboNumbersLocation[1];
 
 			if (daStyle != 'pixel')
 			{
@@ -2379,10 +2356,9 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
-				numScore.setGraphicSize(Std.int(numScore.width * daPixelZoom));
+				numScore.setGraphicSize(Std.int(numScore.width * daPixelZoom * 0.8));
 			}
 			numScore.updateHitbox();
-			numScore.alpha = 0.6;
 
 			numScore.acceleration.y = FlxG.random.int(200, 300);
 			numScore.velocity.y -= FlxG.random.int(140, 160);
@@ -2406,19 +2382,12 @@ class PlayState extends MusicBeatState
 		 */
 
 		FlxTween.tween(rating, {alpha: 0}, 0.2, {
-			startDelay: Conductor.crochet * 0.001
-		});
-
-		FlxTween.tween(comboSpr, {alpha: 0}, 0.2, {
 			onComplete: function(tween:FlxTween)
 			{
-				comboSpr.destroy();
 				rating.destroy();
 			},
 			startDelay: Conductor.crochet * 0.001
 		});
-
-		curSection += 1;
 	}
 
 	public function NearlyEquals(value1:Float, value2:Float, unimportantDifference:Float = 10):Bool

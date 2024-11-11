@@ -128,7 +128,7 @@ class OptionsMenu extends MusicBeatState
 					checkArray[curSelected].switchButton(FlxG.save.data.gfCanSing);
 					
 				case 11:
-					FlxG.switchState(new ComboNumbersState());
+					LoadingState.loadAndSwitchState(new ComboNumbersState());
 					
 			}
 		}

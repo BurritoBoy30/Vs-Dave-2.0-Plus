@@ -78,5 +78,11 @@ class SaveDataHandler
 			
 		if (FlxG.save.data.gfCanSing == null)
 			FlxG.save.data.gfCanSing = false;
+			
+		if (FlxG.save.data.comboRatingLocation == null)
+			FlxG.save.data.comboRatingLocation = [0, 0];
+			
+		if (FlxG.save.data.comboNumbersLocation == null)
+			FlxG.save.data.comboNumbersLocation = [0, 0];
     }
 }

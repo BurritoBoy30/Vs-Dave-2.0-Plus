@@ -13,8 +13,6 @@ import flixel.tweens.FlxTween;
 import flixel.addons.ui.FlxUICheckBox;
 import flixel.addons.transition.Transition;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.group.FlxSpriteGroup;
-import flixel.group.FlxGroup.FlxTypedGroup;
 
 // all code here is all made by me
 // t5mpler pls dont kill me
