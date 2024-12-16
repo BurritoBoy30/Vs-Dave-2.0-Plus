@@ -343,6 +343,7 @@ class ChartingState extends MusicBeatState
 				_song.notes[curSection].sectionNotes[i] = note;
 				updateGrid();
 			}
+			updateHeads();
 		});
 
 		check_mustHitSection = new FlxUICheckBox(10, 30, null, null, "Must hit section", 100);

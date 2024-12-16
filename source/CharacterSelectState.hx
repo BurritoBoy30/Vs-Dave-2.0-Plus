@@ -55,7 +55,6 @@ class CharacterSelectState extends MusicBeatState
 	var saveOffset:Array<Dynamic>;
 	var loadOffset:Array<Dynamic>;
 	
-	var buttonPressed:Bool = false;
 	var noTextPop:Bool = false;
 	
 	var overlay:FlxSprite;
@@ -334,7 +333,8 @@ class CharacterSelectState extends MusicBeatState
 				}
 				
 				if (controls.BACK)
-				{	
+				{
+					FlxG.mouse.visible = false;
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 					FlxG.switchState(new FreeplayState());
 				}
@@ -405,7 +405,6 @@ class CharacterSelectState extends MusicBeatState
 	
 	function save()
 	{
-		isPressed(saveBox);
 		if (!noTextPop)
 		{
 			if (isTails)
@@ -428,7 +427,6 @@ class CharacterSelectState extends MusicBeatState
 	
 	function load()
 	{
-		isPressed(loadBox);
 		if (!noTextPop)
 		{
 			if (isTails)
@@ -458,7 +456,6 @@ class CharacterSelectState extends MusicBeatState
 	{
 		if (tailsBox.visible)
 		{
-			isPressed(tailsBox);
 			isTails = !isTails;
 		
 			UpdateGF(isTails);	
@@ -468,7 +465,6 @@ class CharacterSelectState extends MusicBeatState
 	
 	function openSettings()
 	{
-		isPressed(settingsIcon);
 		openSubState(new CharacterSelectSettings(camHUD));
 	}
 	
@@ -548,16 +544,6 @@ class CharacterSelectState extends MusicBeatState
 			changeInfoImg.loadGraphic(Paths.image('charselect/' + FlxG.save.data.gameLanguage + '/changeInfo'));
 			changeInfoImg.y = FlxG.height - changeInfoImg.height;
 		}
-	}
-	
-	function isPressed(target:FlxSprite)
-	{
-		buttonPressed = true;
-		target.scale.set(0.9, 0.9);
-		FlxTween.tween(target, {'scale.x': 1, 'scale.y': 1}, 0.1, {onComplete: function(twn:FlxTween)
-		{
-			buttonPressed = false;
-		}});
 	}
 	
 	function popUpText(string:String)

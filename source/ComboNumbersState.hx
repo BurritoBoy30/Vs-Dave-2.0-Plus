@@ -66,12 +66,7 @@ class ComboNumbersState extends MusicBeatState
 		boyfriend = new Boyfriend(670, 350, 'bf');
 		add(boyfriend);
 		
-		settingText = new FlxText(10, 10, 0, '');
-		settingText.setFormat(Paths.font("comic.ttf"), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		settingText.borderSize = 3;
-		settingText.antialiasing = FlxG.save.data.antiAliasing;
-		add(settingText);
-		settingText.cameras = [camHUD];
+		createScore();
 		
 		pointer = new FlxSprite(0, 10).loadGraphic(Paths.image('UI/settings/pointer'));
 		pointer.x = FlxG.width - 325;
@@ -87,7 +82,7 @@ class ComboNumbersState extends MusicBeatState
 		ratingButton.x = FlxG.width - (ratingButton.width + 10);
 		add(ratingButton);
 		ratingButton.cameras = [camHUD];
-				
+
 		var numbersButton:Button = new Button(0, ratingButton.y + ratingButton.height + 10, [[-5, 54], [-177, -160]], 'UI/settings/numbers_button', function()
 		{
 			currentChanging = 'numbers';
@@ -97,7 +92,12 @@ class ComboNumbersState extends MusicBeatState
 		add(numbersButton);
 		numbersButton.cameras = [camHUD];
 		
-		createScore();
+		settingText = new FlxText(10, 10, 0, '');
+		settingText.setFormat(Paths.font("comic.ttf"), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		settingText.borderSize = 3;
+		settingText.antialiasing = FlxG.save.data.antiAliasing;
+		add(settingText);
+		settingText.cameras = [camHUD];
 
 		super.create();
 		
@@ -124,16 +124,16 @@ class ComboNumbersState extends MusicBeatState
 		
 		super.update(elapsed);
 		
-		if (FlxG.keys.pressed.LEFT)
+		if (FlxG.keys.pressed.LEFT && quickFix(0, 'X'))
 			offsetterX = -2;
-		else if (FlxG.keys.pressed.RIGHT)
+		else if (FlxG.keys.pressed.RIGHT && quickFix(1, 'X'))
 			offsetterX = 2;
 		else
 			offsetterX = 0;
 			
-		if (FlxG.keys.pressed.UP)
+		if (FlxG.keys.pressed.UP && quickFix(0, 'Y'))
 			offsetterY = -2;
-		else if (FlxG.keys.pressed.DOWN)
+		else if (FlxG.keys.pressed.DOWN && quickFix(1, 'Y'))
 			offsetterY = 2;
 		else
 			offsetterY = 0;
@@ -141,7 +141,7 @@ class ComboNumbersState extends MusicBeatState
 		switch (currentChanging)
 		{
 			case 'rating':
-				FlxG.save.data.comboRatingLocation[0] += offsetterX;
+				FlxG.save.data.comboRatingLocation[0] += offsetterX;	
 				FlxG.save.data.comboRatingLocation[1] += offsetterY;
 			case 'numbers':
 				FlxG.save.data.comboNumbersLocation[0] += offsetterX;
@@ -158,6 +158,36 @@ class ComboNumbersState extends MusicBeatState
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			FlxG.switchState(new OptionsMenu());
 		}
+	}
+	
+	function quickFix(whichArray:Int, whichAxis:String)
+	{
+		var locationArray:Array<Bool> = [];
+		switch(whichAxis)
+		{
+			case 'X':
+				switch(currentChanging)
+				{
+					case 'rating':
+						locationArray[0] = rating.x > -70;
+						locationArray[1] = rating.x < (FlxG.width - 310);
+					case 'numbers':
+						locationArray[0] = comboNums.x > 0;
+						locationArray[1] = comboNums.x < (FlxG.width - 135);
+				}
+			case 'Y':
+				switch(currentChanging)
+				{
+					case 'rating':
+						locationArray[0] = rating.y > -25;
+						locationArray[1] = rating.y < (FlxG.height - 120);
+					case 'numbers':
+						locationArray[0] = comboNums.y > 0;
+						locationArray[1] = comboNums.y < (FlxG.height - 60);
+				}
+		}
+		
+		return locationArray[whichArray];
 	}
 	
 	function createScore()

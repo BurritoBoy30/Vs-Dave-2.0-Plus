@@ -121,6 +121,7 @@ class FreeplayState extends MusicBeatState
 				addWeek(['Disposition'], 9, ['hell-expunged'], ['Extreme'], [115]);
 				addWeek(['Decimal'], 10, ['ohungi'], ['Hard'], [140]);
 				addWeek(['Recursed'], 10, ['recurser'], ['Hard'], [150]);
+				addWeek(['Boing'], 10, ['girlf'], ['Hard'], [150]);
 		}
 	}
 	

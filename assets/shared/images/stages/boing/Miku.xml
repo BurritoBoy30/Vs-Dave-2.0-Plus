@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Miku.png">
+	<!-- Created with Adobe Animate version 22.0.2.168 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Miku-Idle0000" x="911" y="0" width="456" height="351" frameX="0" frameY="-37" frameWidth="462" frameHeight="388"/>
+	<SubTexture name="Miku-Idle0001" x="911" y="0" width="456" height="351" frameX="0" frameY="-37" frameWidth="462" frameHeight="388"/>
+	<SubTexture name="Miku-Idle0002" x="911" y="0" width="456" height="351" frameX="0" frameY="-37" frameWidth="462" frameHeight="388"/>
+	<SubTexture name="Miku-Idle0003" x="454" y="0" width="457" height="355" frameX="-1" frameY="-32" frameWidth="462" frameHeight="388"/>
+	<SubTexture name="Miku-Idle0004" x="454" y="0" width="457" height="355" frameX="-1" frameY="-32" frameWidth="462" frameHeight="388"/>
+	<SubTexture name="Miku-Idle0005" x="453" y="388" width="459" height="357" frameX="-3" frameY="-31" frameWidth="462" frameHeight="388"/>
+	<SubTexture name="Miku-Idle0006" x="453" y="388" width="459" height="357" frameX="-3" frameY="-31" frameWidth="462" frameHeight="388"/>
+	<SubTexture name="Miku-Idle0007" x="453" y="388" width="459" height="357" frameX="-3" frameY="-31" frameWidth="462" frameHeight="388"/>
+	<SubTexture name="Miku-Idle0008" x="453" y="388" width="459" height="357" frameX="-3" frameY="-31" frameWidth="462" frameHeight="388"/>
+	<SubTexture name="Miku-Idle0009" x="0" y="388" width="453" height="379" frameX="-5" frameY="-6" frameWidth="462" frameHeight="388"/>
+	<SubTexture name="Miku-Idle0010" x="0" y="388" width="453" height="379" frameX="-5" frameY="-6" frameWidth="462" frameHeight="388"/>
+	<SubTexture name="Miku-Idle0011" x="0" y="388" width="453" height="379" frameX="-5" frameY="-6" frameWidth="462" frameHeight="388"/>
+	<SubTexture name="Miku-Idle0012" x="0" y="0" width="454" height="388" frameX="-5" frameY="0" frameWidth="462" frameHeight="388"/>
+	<SubTexture name="Miku-Idle0013" x="0" y="0" width="454" height="388" frameX="-5" frameY="0" frameWidth="462" frameHeight="388"/>
+</TextureAtlas>

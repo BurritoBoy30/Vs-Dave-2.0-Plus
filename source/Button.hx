@@ -3,11 +3,13 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
+import flixel.tweens.FlxTween;
 
 class Button extends FlxSprite
 {
 	var buttonAxis:Array<Dynamic>;
 	var callback:Void -> Void;
+	var buttonPressed:Bool = false;
 
 	public function new (x:Float, y:Float, notButtonAxis:Array<Dynamic>, buttonImg:String, callBack:Void -> Void)
 	{
@@ -35,15 +37,25 @@ class Button extends FlxSprite
 		{
 			color = 0xFF878787;
 			
-			if (FlxG.mouse.justPressed)
+			if (FlxG.mouse.justPressed && !buttonPressed)
 			{
+				isPressed(this);
+				
 				if (callback != null)
 					callback();
 			}
 		}
 		else
-		{
 			color = FlxColor.WHITE;
-		}
+	}
+	
+	function isPressed(target:FlxSprite)
+	{
+		buttonPressed = true;
+		target.scale.set(0.9, 0.9);
+		FlxTween.tween(target, {'scale.x': 1, 'scale.y': 1}, 0.1, {onComplete: function(twn:FlxTween)
+		{
+			buttonPressed = false;
+		}});
 	}
 }

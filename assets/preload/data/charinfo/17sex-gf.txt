@@ -1,0 +1,14 @@
+file: 17sexgf
+offsets: 0, -50
+camoffsets: 50, 75
+scale: 1
+anti-aliasing: true
+flipX: false
+icon: girlf
+barcolor: 133, 36, 36
+prefix, 0, 0, idle, Idle, false, 24
+prefix, 50, 60, singUP, Up, false, 24
+prefix, 20, -11, singRIGHT, Right, false, 24
+prefix, -60, 10, singDOWN, down, false, 24
+prefix, 7, -7, singLEFT, Left, false, 24
+starterIdle: idle, true
