@@ -189,6 +189,11 @@ class FreeplayState extends MusicBeatState
 		
 		if (curBeat % 2 == 0 && iconBoopin)
 			FlxTween.tween(FlxG.camera, {zoom:1.05}, Conductor.crochet / 1300, {ease: FlxEase.quadOut, type: BACKWARD});
+			
+		if (iconBoopin)
+		{
+			FlxTween.tween(iconArray[curSelected].scale, {x: iconArray[curSelected].realSize + 0.2, y: iconArray[curSelected].realSize + 0.2}, Conductor.crochet / 1300, {ease: FlxEase.quadOut, type: BACKWARD});
+		}
 	}
 	
 	public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>, diffculty:Array<String>, bpm:Array<Int>)
@@ -434,7 +439,7 @@ class FreeplayState extends MusicBeatState
 		curGfChar = Highscore.getGfChar(songs[curSelected].songName);
 		updateScore();
 		Conductor.changeBPM(songs[curSelected].bpm);
-				
+
 		#if PRELOAD_ALL
 		FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
 		#end
@@ -444,6 +449,7 @@ class FreeplayState extends MusicBeatState
 		for (i in 0...iconArray.length)
 		{
 			iconArray[i].alpha = 0.6;
+			iconArray[i].scale.set(iconArray[i].realSize,iconArray[i].realSize);
 		}
 
 		iconArray[curSelected].alpha = 1;
@@ -465,7 +471,7 @@ class FreeplayState extends MusicBeatState
 	
 	function updateScore()
 	{	
-		if (CharacterSelectState.noGfChar.contains(curBfChar.toLowerCase()))
+		if (CharacterSelectState.noGfChar.contains(curBfChar.toLowerCase()) || songs[curSelected].songName.toLowerCase() == 'boing')
 			diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase()) + " - (" + curBfChar.toUpperCase() + ")";
 		else
 		{

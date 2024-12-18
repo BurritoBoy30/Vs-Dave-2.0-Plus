@@ -61,6 +61,7 @@ class OptionsMenu extends MusicBeatState
 			controlLabel.isMenuItem = true;
 			controlLabel.targetY = i;
 			controlLabel.yAdd = 50;
+			controlLabel.menuStyle = 'options';
 			grpControls.add(controlLabel);
 			
 			var controlCheckBox:CheckBox = new CheckBox(controlsStrings[i].selectors);

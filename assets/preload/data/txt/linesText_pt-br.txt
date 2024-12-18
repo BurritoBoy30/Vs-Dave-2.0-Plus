@@ -40,7 +40,7 @@ naughtiness==Safadeza
 changekeys==Trocar Binds
 fullscreen==Tela Cheia
 eyesores==Efeitos Vibrantes
-changelang==Change Language
+changelang==Mudar Idioma
 antialiasing==Anti Aliasing
 cammove==Movimento da Câmera
 gfsings==Girlfriend Canta

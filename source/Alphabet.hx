@@ -246,6 +246,12 @@ class Alphabet extends FlxSpriteGroup
 					screenCenter(X);
 					x += xAdd;
 					y = FlxMath.lerp(y, (scaledY * 140) + (FlxG.height * 0.44) + yAdd, 0.16);
+				case 'options':
+					var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
+					
+					x = FlxMath.lerp(x, (targetY * 0) + 40 + xAdd, 0.16);
+					y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.40) + yAdd, 0.16);
+
 				default:		
 					var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
 

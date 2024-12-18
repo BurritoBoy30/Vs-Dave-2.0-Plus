@@ -36,7 +36,7 @@ class CheckBox extends FlxSprite
 	override function update(elapsed:Float)
 	{
 		if (textTracker != null)
-			setPosition(textTracker.x + textTracker.width + 15, textTracker.y - 40);
+			setPosition(FlxG.width - (this.width + 40), textTracker.y - 40);
 
 		super.update(elapsed);
 	}
