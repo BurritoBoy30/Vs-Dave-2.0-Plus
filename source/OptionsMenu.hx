@@ -39,7 +39,6 @@ class OptionsMenu extends MusicBeatState
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
-		menuBG.color = 0xFFea71fd;
 		menuBG.antialiasing = FlxG.save.data.antiAliasing;
 		add(menuBG);
 		
@@ -47,10 +46,15 @@ class OptionsMenu extends MusicBeatState
 		hornyBitch.frames = Paths.getSparrowAtlas('hornyshit/option girl', 'shared');
 		hornyBitch.animation.addByPrefix('idle', "option girl idle", 30);
 		hornyBitch.screenCenter(X);
-		hornyBitch.color = 0xFFea71fd;
 		hornyBitch.animation.play('idle');
 		hornyBitch.antialiasing = FlxG.save.data.antiAliasing;
 		if (FlxG.save.data.hornyALL) add(hornyBitch);
+		
+		var colors:Array<Int> = [0xFFea71fd, 0xFF71FCD5, 0xFFF97070, 0xFFF7DE6F, 0xFF6EF46E];
+		var selectedColor:Int = colors[FlxG.random.int(0, 4)];
+		
+		menuBG.color = selectedColor;
+		hornyBitch.color = selectedColor;
 		
 		grpControls = new FlxTypedGroup<Alphabet>();
 		add(grpControls);

@@ -1,7 +1,13 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+import sys.thread.Thread;
+#end
 import flixel.FlxG;
 import flixel.FlxState;
+import lime.app.Application;
+import openfl.Assets;
 
 class StartState extends MusicBeatState
 {
@@ -10,6 +16,13 @@ class StartState extends MusicBeatState
 		PlayerSettings.init();
 		FlxG.save.bind('funkin', 'ninjamuffin99');
 		SaveDataHandler.initSave();
+		
+		#if desktop
+		DiscordClient.initialize();
+		Application.current.onExit.add (function (exitCode) {
+			DiscordClient.shutdown();
+		});
+		#end
 
 		Highscore.load();
 		

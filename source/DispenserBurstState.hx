@@ -1,5 +1,8 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+#end
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
@@ -28,7 +31,12 @@ class DispenserBurstState extends MusicBeatState
 	var buttonBluRed:Button;
 	
 	override function create()
-	{	
+	{
+		#if desktop
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("Fucking the Dispenser Bitch", null);
+		#end
+		
 		FlxG.sound.playMusic(Paths.music('burstByKO3', 'shared'), 1, true);
 
 		Conductor.changeBPM(150);

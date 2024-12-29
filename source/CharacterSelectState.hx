@@ -1,5 +1,9 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+#end
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
@@ -238,6 +242,10 @@ class CharacterSelectState extends MusicBeatState
 		UpdateGF();
 		updateGfUI();
 		
+		#if desktop
+		DiscordClient.changePresence("In the Character Selection", boyfriendData[curBF].names[curFormBF] + ((!noGfChar.contains(boyfriendChar.curCharacter) && PlayState.SONG.song.toLowerCase() != 'boing') ? " - " + girlfriendData[curGF].names[curFormGF] : ""));
+		#end
+		
 		super.create();
 		
 		Transition.nextCamera = camTransition;
@@ -410,7 +418,7 @@ class CharacterSelectState extends MusicBeatState
 				popUpText('Tails Doll is On!');
 				FlxG.sound.play(Paths.sound('missnote1'));
 			}
-			else if (!isTails)
+			else
 			{
 				popUpText('Saved!');
 				FlxG.sound.play(Paths.sound('confirmMenu'));
@@ -432,7 +440,7 @@ class CharacterSelectState extends MusicBeatState
 				popUpText('Tails Doll is On!');
 				FlxG.sound.play(Paths.sound('missnote1'));
 			}
-			else if (!isTails)
+			else
 			{
 				popUpText('Loaded!');
 				FlxG.sound.play(Paths.sound('confirmMenu'));
@@ -647,6 +655,10 @@ class CharacterSelectState extends MusicBeatState
 		insert(members.indexOf(overlay), boyfriendChar);
 		iconBF.createIcon(boyfriendChar.healthIcon);
 		noMorePresses = false;
+		
+		#if desktop
+		DiscordClient.changePresence("In the Character Selection", boyfriendData[curBF].names[curFormBF] + ((!noGfChar.contains(boyfriendChar.curCharacter) && PlayState.SONG.song.toLowerCase() != 'boing') ? " - " + girlfriendData[curGF].names[curFormGF] : ""));
+		#end
 	}
 	
 	public function UpdateGF(isTails:Bool = false)
@@ -680,6 +692,10 @@ class CharacterSelectState extends MusicBeatState
 		insert(members.indexOf(boyfriendChar), girlfriendChar);
 		iconGF.createIcon(girlfriendChar.healthIcon);
 		noMorePresses = false;
+		
+		#if desktop
+		DiscordClient.changePresence("In the Character Selection", boyfriendData[curBF].names[curFormBF] + ((!noGfChar.contains(boyfriendChar.curCharacter) && PlayState.SONG.song.toLowerCase() != 'boing') ? " - " + girlfriendData[curGF].names[curFormGF] : ""));
+		#end
 	}
 		
 	public function endIt(e:FlxTimer = null)

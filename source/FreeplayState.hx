@@ -1,5 +1,8 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+#end
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -52,7 +55,12 @@ class FreeplayState extends MusicBeatState
 	var iconBoopin:Bool = false;
 
 	override function create()
-	{		
+	{
+		#if desktop
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("In Freeplay Menu", null);
+		#end
+		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
 		bg.antialiasing = FlxG.save.data.antiAliasing;
 		bg.color = 0xFF9271FD;
@@ -121,7 +129,8 @@ class FreeplayState extends MusicBeatState
 				addWeek(['Disposition'], 9, ['hell-expunged'], ['Extreme'], [115]);
 				addWeek(['Decimal'], 10, ['ohungi'], ['Hard'], [140]);
 				addWeek(['Recursed'], 10, ['recurser'], ['Hard'], [150]);
-				addWeek(['Boing'], 10, ['girlf'], ['Hard'], [150]);
+				if (FlxG.save.data.hornyALL)
+					addWeek(['Boing'], 10, ['girlf'], ['Hard'], [150]);
 		}
 	}
 	
