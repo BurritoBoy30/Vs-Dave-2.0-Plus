@@ -20,13 +20,12 @@ class DispenserBurstState extends MusicBeatState
 	var bitchType:String = "none";
 	// none, red-blu, blu-red
 	
+	// this might be unnecessary i think???
 	var buttonRed:Button;
 	var buttonBlu:Button;
-	
 	var button1:Button;
 	var button2:Button;
 	var button3:Button;
-	
 	var buttonRedBlu:Button;
 	var buttonBluRed:Button;
 	
@@ -49,10 +48,7 @@ class DispenserBurstState extends MusicBeatState
 		
 		redDispenserBitch.visible = false;
 		
-		var correctAxis:Array<Dynamic> = [
-			[-100, -100],
-			[-100, -100]
-		];
+		var correctAxis:Array<Dynamic> = Button.loadOffset('correction');
 		
 		buttonBlu = new Button(bluDispenserBitch.width * 1.34, 10, correctAxis, 'hornyshit/dispenser/blue_button', function()
 		{

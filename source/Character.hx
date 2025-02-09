@@ -33,26 +33,13 @@ class Character extends FlxSprite
 	var forceAnim:Bool = true;
 	var hasHair:Bool = false;
 	
-	public static var tutorialGFs:Array<String> = [
-		'gf',
-		'gf-christmas',
-		'cyan',
-		'cyan-christmas',
-		'psyka',
-		'psyka-christmas',
-		'gf-massive',
-		'gf-hot',
-		'gf-hot-christmas',
-		'gf-hot-funny',
-		'tails-doll',
-		'skyblue',
-		'three-gfs',
-		'kaity'
-	];
+	public static var tutorialGFs:Array<String> = [];
 		
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:String = 'bf')
 	{
 		super(x, y);
+		
+		tutorialGFs = CoolUtil.coolTextFile(Paths.txt('tutorialgfs'));
 
 		animOffsets = new Map<String, Array<Dynamic>>();
 		curCharacter = character;

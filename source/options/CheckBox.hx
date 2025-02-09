@@ -1,4 +1,4 @@
-package;
+package options;
 
 import flixel.FlxG;
 import flixel.math.FlxMath;
@@ -7,14 +7,11 @@ import flixel.text.FlxText;
 
 class CheckBox extends FlxSprite
 {
-	var theSwitch:Bool = false;
 	public var textTracker:FlxSprite;
 	
 	public function new(theSwitchData:Bool)
 	{
-		super();
-		theSwitch = theSwitchData;
-		
+		super();		
 		loadGraphic(Paths.image('checkbox', 'shared'), true, 150, 150);
 		
 		animation.add('pressed', [1], 0, false, false);

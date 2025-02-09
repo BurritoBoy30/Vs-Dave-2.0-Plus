@@ -9,6 +9,10 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
+import options.*;
+#if desktop
+import Discord.DiscordClient;
+#end
 
 class OptionsMenu extends MusicBeatState
 {
@@ -34,7 +38,12 @@ class OptionsMenu extends MusicBeatState
 	private var checkArray:Array<CheckBox> = [];
 	
 	override function create()
-	{		
+	{
+		#if desktop
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("In the Option Menu", null);
+		#end
+		
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
@@ -158,7 +167,7 @@ class OptionsMenu extends MusicBeatState
 		
 		for (i in 0...checkArray.length)
 		{
-			checkArray[i].alpha = 0.6;
+			checkArray[i].alpha = 0.4;
 		}
 
 		checkArray[curSelected].alpha = 1;
@@ -168,7 +177,7 @@ class OptionsMenu extends MusicBeatState
 			fuckerItem.targetY = bullShit - curSelected;
 			bullShit++;
 
-			fuckerItem.alpha = 0.6;
+			fuckerItem.alpha = 0.4;
 			// item.setGraphicSize(Std.int(item.width * 0.8));
 
 			if (fuckerItem.targetY == 0)

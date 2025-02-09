@@ -53,6 +53,7 @@ class ChangeKeysState extends MusicBeatState
 		
 		minorTxt = new FlxText(0, 30, FlxG.width, "", 16);
 		minorTxt.setFormat(Paths.font("comic.ttf"), 50, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		minorTxt.antialiasing = FlxG.save.data.antiAliasing;
 		add(minorTxt);
 		
 		keysText = new FlxTypedGroup<FlxText>();
@@ -76,6 +77,7 @@ class ChangeKeysState extends MusicBeatState
 			theKeys.setFormat(Paths.font("comic.ttf"), 100, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			theKeys.x += 680;
 			theKeys.ID = i;
+			theKeys.antialiasing = FlxG.save.data.antiAliasing;
 			keysText.add(theKeys);
 		}
 		
@@ -134,7 +136,8 @@ class ChangeKeysState extends MusicBeatState
 	
 	function changeSelection(eek:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		if (curSelected != 0 || curSelected != ((arrowKeys.length + 1) - 1))
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		
 		curSelected += eek;
 		

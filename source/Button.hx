@@ -58,4 +58,33 @@ class Button extends FlxSprite
 			buttonPressed = false;
 		}});
 	}
+	
+	public static function loadOffset(file:String)
+	{
+		var xOffsets:Array<Float> = [0, 0];
+		var yOffsets:Array<Float> = [0, 0];
+		var	buttonsoffsets:Array<Dynamic> = [[0, 0], [0, 0]];
+		
+		var offsetStuffs:Array<String> = CoolUtil.coolTextFile(Paths.txt('buttons/' + file, 'preload'));
+		
+		for (charText in offsetStuffs)
+		{
+			var charInfo:Array<String> = charText.split(": ");
+			
+			switch (charInfo[0])
+			{
+				case 'x':
+					var XoffsetInfo:Array<String> = charInfo[1].split(', ');
+					xOffsets = [Std.parseFloat(XoffsetInfo[0]), Std.parseFloat(XoffsetInfo[1])];
+					
+				case 'y':
+					var YoffsetInfo:Array<String> = charInfo[1].split(', ');
+					yOffsets = [Std.parseFloat(YoffsetInfo[0]), Std.parseFloat(YoffsetInfo[1])];
+			}
+		}
+		
+		buttonsoffsets = [xOffsets, yOffsets];
+		
+		return buttonsoffsets;
+	}
 }

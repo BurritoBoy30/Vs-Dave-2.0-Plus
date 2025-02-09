@@ -178,25 +178,13 @@ class CharacterSelectState extends MusicBeatState
 		
 		if (!FlxG.save.data.hornyALL)
 		{
-			saveOffset = [
-				[10, 110], 
-				[-10, 0]
-			];
-			loadOffset = [
-				[10, 110],
-				[4, 14]
-			];
+			saveOffset = Button.loadOffset('savebox_horny');
+			loadOffset = Button.loadOffset('loadbox_horny');
 		}
 		else
 		{
-			saveOffset = [
-				[10, 110], 
-				[-48, -38]
-			];
-			loadOffset = [
-				[10, 110], 
-				[-34, -20]
-			];
+			saveOffset = Button.loadOffset('savebox');
+			loadOffset = Button.loadOffset('loadbox');
 		}
 		
 		loadBox = new Button(hornyGfBG.x, 0, loadOffset, 'charselect/' + FlxG.save.data.gameLanguage + '/loadchar_box', load);
@@ -212,10 +200,7 @@ class CharacterSelectState extends MusicBeatState
 		add(saveBox);
 		saveBox.cameras = [camHUD];
 		
-		tailsBox = new Button(saveBox.x, saveBox.y - saveBox.height - 5, [
-			[10, 110], 
-			[-62, -48]
-		], 'charselect/tailsdoll_box', loadTailsDoll);
+		tailsBox = new Button(saveBox.x, saveBox.y - saveBox.height - 5, Button.loadOffset('tailsbox'), 'charselect/tailsdoll_box', loadTailsDoll);
 		add(tailsBox);
 		tailsBox.cameras = [camHUD];
 		

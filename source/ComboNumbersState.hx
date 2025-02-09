@@ -74,7 +74,7 @@ class ComboNumbersState extends MusicBeatState
 		add(pointer);
 		pointer.cameras = [camHUD];
 		
-		var ratingButton:Button = new Button(0, 10, [[-5, 54], [-189, -180]], 'UI/settings/rating_button', function()
+		var ratingButton:Button = new Button(0, 10, Button.loadOffset('rating'), 'UI/settings/rating_button', function()
 		{
 			currentChanging = 'rating';
 			pointer.y = 10;
@@ -83,7 +83,7 @@ class ComboNumbersState extends MusicBeatState
 		add(ratingButton);
 		ratingButton.cameras = [camHUD];
 
-		var numbersButton:Button = new Button(0, ratingButton.y + ratingButton.height + 10, [[-5, 54], [-177, -160]], 'UI/settings/numbers_button', function()
+		var numbersButton:Button = new Button(0, ratingButton.y + ratingButton.height + 10, Button.loadOffset('numbers'), 'UI/settings/numbers_button', function()
 		{
 			currentChanging = 'numbers';
 			pointer.y = ratingButton.y + ratingButton.height + 10;

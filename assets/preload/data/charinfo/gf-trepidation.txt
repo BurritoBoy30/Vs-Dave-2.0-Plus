@@ -1,7 +1,7 @@
 file: girlfriends/tpgf
 offsets: -400, -250
 camoffsets: 0, 0
-scale: 1
+scale: 0.75
 anti-aliasing: true
 flipX: false
 icon: gf-trepidation
