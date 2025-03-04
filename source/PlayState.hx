@@ -219,6 +219,16 @@ class PlayState extends MusicBeatState
 	var MyBeloved:BackgroundImg;
 	var MisViejas:BackgroundImg;
 	
+	//rules
+	var backBG:BackgroundImg;
+	var folds:BackgroundImg;
+	var ground:BackgroundImg;
+	var matrix1:BackgroundImg;
+	var matrix2:BackgroundImg;
+	var white:BackgroundImg;
+	var backpage:BackgroundImg;
+	public var staticTrans:FlxSprite;
+	
 	var banbiWindowNames:Array<String> = ['when you realize you have school this monday', 'industrial society and its future', 'my ears burn', 'i got that weed card', 'my ass itch', 'bruh', 'alright instagram its shoutout time'];
 	
 	public var isDownScroll:Bool = false;
@@ -429,6 +439,10 @@ class PlayState extends MusicBeatState
 			case 'boing':
 				dad.x -= 150;
 				boyfriend.x += 100;
+			case 'pc':
+				dad.setPosition(400 + dad.charOffset[0], 300 + dad.charOffset[1]);
+				boyfriend.setPosition(1480 + boyfriend.charOffset[0], 650 + boyfriend.charOffset[1]);
+				gf.setPosition(800 + gf.charOffset[0], 330 + gf.charOffset[1]);
 		}
 		
 		add(gf);
@@ -436,8 +450,22 @@ class PlayState extends MusicBeatState
 		if (SONG.song.toLowerCase() == 'insanity')
 		{
 			dadmirror = new Character(dad.x - 100, dad.y - 200, "dave-angey", 'dad');
-			dadmirror.visible = false;
 			add(dadmirror);
+			dadmirror.visible = false;
+		}
+		//movi 2 spritesheet is too big, for the sake of optimization, im using the dadmirror code for the second part
+		else if (SONG.song.toLowerCase() == 'rules')
+		{
+			white = new BackgroundImg(-765, 82, 'stages/page/white');
+			add(white);
+			white.visible = false;
+			
+			dadmirror = new Character(dad.x, dad.y + 68, "movi2", 'dad');
+			add(dadmirror);
+			
+			backpage = new BackgroundImg(-1010, -43, 'stages/page/back-rule');
+			add(backpage);
+			backpage.visible = false;			
 		}
 		add(boyfriend);
 		
@@ -574,6 +602,19 @@ class PlayState extends MusicBeatState
 		timeTxt.cameras = [camHUD];
 		timeLabelTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+		
+		if (SONG.song.toLowerCase() == 'rules')
+		{
+			staticTrans = new FlxSprite();
+			staticTrans.frames = Paths.getSparrowAtlas('static-HUD');
+			staticTrans.animation.addByPrefix('idle', 'static-HUD', 24, true);
+			staticTrans.antialiasing = FlxG.save.data.antiAliasing;
+			staticTrans.animation.play('idle');
+			staticTrans.screenCenter();
+			staticTrans.scale.set(2.7, 2.7);
+			add(staticTrans);
+			staticTrans.cameras = [camHUD];
+		}
 		
 		if (SONG.song.toLowerCase() == 'recursed')
 		{
@@ -713,7 +754,7 @@ class PlayState extends MusicBeatState
 				
 				curStage = isNight ? 'daveHouseNight' : 'daveHouse';
 				
-				var bg:BackgroundImg = new BackgroundImg(-600, -300, 'stages/sky' + (isNight ? "_night" : ""), 0.7);
+				var bg:BackgroundImg = new BackgroundImg(-600, -300, 'stages/sky' + (isNight ? "_night" : ""), 0.7, 0.7);
 				add(bg);
 
 				var stageHills:BackgroundImg = new BackgroundImg(-834, -159, 'stages/house/' + (isNight ? 'night/' : '') + 'hills');
@@ -730,7 +771,7 @@ class PlayState extends MusicBeatState
 				
 				if (curTrack == 'insanity')
 				{
-					var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/singleimages/redsky', 0.9, false, true);
+					var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/singleimages/redsky', 0.9, 0.9, false, true);
 					bg.visible = false;
 					add(bg);
 
@@ -747,16 +788,16 @@ class PlayState extends MusicBeatState
 
 				var skyType:String = isNight ? 'sky_night' : 'sky';
 
-				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/' + skyType, 0.6);
+				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/' + skyType, 0.6, 0.6);
 				add(bg);
 
-				var flatgrass:BackgroundImg = new BackgroundImg(350, 75, 'stages/farm/gm_flatgrass', 0.65, 0.34);
+				var flatgrass:BackgroundImg = new BackgroundImg(350, 75, 'stages/farm/gm_flatgrass', 0.65, 0.65, 0.34);
 				add(flatgrass);
 				
-				var hills:BackgroundImg = new BackgroundImg(-173, 100, 'stages/farm/orangey hills', 0.65);
+				var hills:BackgroundImg = new BackgroundImg(-173, 100, 'stages/farm/orangey hills', 0.65, 0.65);
 				add(hills);
 				
-				var farmHouse:BackgroundImg = new BackgroundImg(100, 125, 'stages/farm/funfarmhouse', 0.7, 0.9);
+				var farmHouse:BackgroundImg = new BackgroundImg(100, 125, 'stages/farm/funfarmhouse', 0.7, 0.7, 0.9);
 				add(farmHouse);
 
 				var grassLand:BackgroundImg = new BackgroundImg(-600, 500, 'stages/farm/grass lands');
@@ -812,7 +853,7 @@ class PlayState extends MusicBeatState
 						bgString = 'stages/singleimages/redsky';
 						curStage = 'redVoid';
 				}
-				var bg:BackgroundImg = new BackgroundImg(-600, -200, bgString, 0.9, false, true);
+				var bg:BackgroundImg = new BackgroundImg(-600, -200, bgString, 0.9, 0.9, false, true);
 				add(bg);
 				
 				createShader(bg, 0.1, 5, 2);
@@ -830,7 +871,7 @@ class PlayState extends MusicBeatState
 						curStage = 'disabled';
 				}
 				
-				var bg:BackgroundImg = new BackgroundImg(-800, -300, bgString, 0.95, false, true);
+				var bg:BackgroundImg = new BackgroundImg(-800, -300, bgString, 0.95, 0.95, false, true);
 				add(bg);
 				
 				createShader(bg, 0.1, 5, 2);
@@ -838,7 +879,7 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.8;			
 				curStage = 'alphaHouse';
 
-				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/singleimages/daveoldbg', 0.9, 0.9);
+				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/singleimages/daveoldbg', 0.9, 0.9, 0.9);
 				add(bg);
 				
 			case 'algebra':
@@ -882,7 +923,7 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.7;
 				curStage = 'rsod';
 				
-				var bg:BackgroundImg = new BackgroundImg(0, 0, 'stages/singleimages/3dFucked2', 1, false, true, 2.5);
+				var bg:BackgroundImg = new BackgroundImg(0, 0, 'stages/singleimages/3dFucked2', 1, 1, false, true, 2.5);
 				bg.screenCenter();
 				bg.x -= 350;
 				add(bg);
@@ -897,12 +938,12 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.8;
 				curStage = 'ohungi stage';
 				
-				var bg:BackgroundImg = new BackgroundImg(-800, -400, 'stages/ohungi/ohungi skybox', 0.9, true, true);
+				var bg:BackgroundImg = new BackgroundImg(-800, -400, 'stages/ohungi/ohungi skybox', 0.9, 0.9, true, true);
 				add(bg);
 				
 				createShader(bg, 0.1, 5, 2);
 				
-				var frontground:BackgroundImg = new BackgroundImg(-1100, 220, 'stages/ohungi/ohungi ground', 1);
+				var frontground:BackgroundImg = new BackgroundImg(-1100, 220, 'stages/ohungi/ohungi ground', 1, 1);
 				add(frontground);
 				
 			case 'recursed':
@@ -964,7 +1005,7 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.7;
 				curStage = 'boing';
 				
-				var bg:BackgroundImg = new BackgroundImg(-600, -300, 'stages/boing/white', 1, 3);
+				var bg:BackgroundImg = new BackgroundImg(-600, -300, 'stages/boing/white', 1, 1, 3);
 				add(bg);
 				
 				MyBeloved = new BackgroundImg(400, 450, 'stages/boing/Miku', [
@@ -978,18 +1019,49 @@ class PlayState extends MusicBeatState
 				]);
 				MisViejas.animation.play('Twogirls_Idle', true);
 				add(MisViejas);
+				
+			case 'rules':
+				defaultCamZoom = 0.6;
+				curStage = 'pc';
+				
+				folds = new BackgroundImg(-400, -190, 'stages/normal/folds', 0.5, 0.7, 2);
+				add(folds);
+				
+				ground = new BackgroundImg(-215, -210, 'stages/normal/ground', 1, 1, 2);
+				
+				matrix1 = new BackgroundImg(0, -210, 'stages/normal/matrix1', [
+					['prefix', 'idle', 'matrix', 30, true]
+				], 1, 1, 4);
+				matrix1.x = (ground.x - matrix1.width) + 2;
+				matrix1.animation.play('idle', true);
+				add(matrix1);
+	
+				matrix2 = new BackgroundImg(0, -210, 'stages/normal/matrix2', [
+					['prefix', 'idle', 'matrix', 30, true]
+				], 1, 1, 4);
+				matrix2.x = (ground.x + ground.width) - 1;
+				matrix2.animation.play('idle', true);
+				add(matrix2);
+				
+				backBG = new BackgroundImg(-215, -190, 'stages/normal/back', [
+					['prefix', 'idle', 'back', 30, false]
+				], 1, 1, 2);
+				backBG.animation.play('idle', true);
+				add(backBG);
+				
+				add(ground);
 			
 			default:
 				defaultCamZoom = 0.9;
 				curStage = 'stage';
 				
-				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/default/stageback', 0.9);
+				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/default/stageback', 0.9, 0.9);
 				add(bg);
 
-				var stageFront:BackgroundImg = new BackgroundImg(-650, 600, 'stages/default/stagefront', 0.9, 1.1);
+				var stageFront:BackgroundImg = new BackgroundImg(-650, 600, 'stages/default/stagefront', 0.9, 0.9, 1.1);
 				add(stageFront);
 
-				var stageCurtains:BackgroundImg = new BackgroundImg(-500, -300, 'stages/default/stagecurtains', 1.3, 0.9);
+				var stageCurtains:BackgroundImg = new BackgroundImg(-500, -300, 'stages/default/stagecurtains', 1.3, 1.3, 0.9);
 				add(stageCurtains);
 		}
 	}
@@ -1092,7 +1164,7 @@ class PlayState extends MusicBeatState
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 		{
 			dad.dance();
-			if (curSong == 'insanity') dadmirror.dance();
+			if (curSong == 'insanity' || curSong == 'rules') dadmirror.dance();
 			gf.dance();
 			boyfriend.dance();
 
@@ -2918,6 +2990,12 @@ class PlayState extends MusicBeatState
 		}
 		dad.holdTimer = 0;
 		
+		if (curSong == 'insanity' || curSong == 'rules')
+		{
+			dadmirror.playAnim(animToPlay + altAnim, true);
+			dadmirror.holdTimer = 0;
+		}
+		
 		switch (curSong)
 		{
 			case "cheating":
@@ -2929,12 +3007,6 @@ class PlayState extends MusicBeatState
 		}
 		
 		cameraMoveOnNote(daNote.noteData, 'dad');
-		
-		if (curSong == 'insanity')
-		{
-			dadmirror.playAnim(animToPlay + altAnim, true);
-			dadmirror.holdTimer = 0;
-		}
 		
 		dadStrums.forEach(function(spr:StrumNote)
 		{
@@ -3176,6 +3248,31 @@ class PlayState extends MusicBeatState
 						hideLetters(2);
 						endFreeplayUI();
 				}
+			case 'rules':
+				switch(curStep)
+				{
+					case 1:
+						staticTrans.visible = false;
+						dadmirror.visible = false;
+					case 775:
+						staticTrans.visible = true;
+						dad.visible = false;
+						dadmirror.visible = true;
+						gf.visible = false;
+						
+						backBG.visible = false;
+						folds.visible = false;
+						ground.visible = false;
+						matrix1.visible = false;
+						matrix2.visible = false;
+						
+						white.visible = true;
+						backpage.visible = true;
+						
+						defaultCamZoom = 0.5;
+					case 784:
+						staticTrans.visible = false;
+				}
 		}
 		
 		if (SONG.song.toLowerCase() == 'recursed')
@@ -3400,7 +3497,7 @@ class PlayState extends MusicBeatState
 		if (!dad.animation.curAnim.name.startsWith("sing") && curBeat % (dad.curCharacter == 'bambi-piss-3d' ? 4 : dad.danceType == 'dance' ? 1 : boingBeatFix(2)) == 0)
 		{
 			dad.dance();
-			if (curSong == 'insanity') dadmirror.dance();
+			if (curSong == 'insanity' || curSong == 'rules') dadmirror.dance();
 		}
 
 		if (curBeat % 8 == 7)
@@ -3468,6 +3565,9 @@ class PlayState extends MusicBeatState
 					MisViejas.animation.play('Twogirls_Idle', true);
 					MyBeloved.animation.play('Miku-Idle', true);
 				}
+			case 'pc':
+				if (curBeat % 2 == 0)
+					backBG.animation.play('idle', true);
 		}
 		
 		gf.trepTransi(SONG.bpm);
@@ -3581,10 +3681,6 @@ class PlayState extends MusicBeatState
 	
 	public function preloadChar(graphic:String) //preload characters
 	{
-		if (boyfriend != null)
-		{
-			boyfriend.stunned = true;
-		}
 		var newthing:Character = new Character(9000,-9000, graphic);
 		add(newthing);
 		remove(newthing);

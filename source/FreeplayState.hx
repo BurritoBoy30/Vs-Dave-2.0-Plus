@@ -130,7 +130,10 @@ class FreeplayState extends MusicBeatState
 				addWeek(['Decimal'], 10, ['ohungi'], ['Hard'], [140]);
 				addWeek(['Recursed'], 10, ['recurser'], ['Hard'], [150]);
 				if (FlxG.save.data.hornyALL)
+				{
 					addWeek(['Boing'], 10, ['girlf'], ['Hard'], [150]);
+					addWeek(['Rules'], 10, ['movi'], ['Hard'], [140]);
+				}
 		}
 	}
 	

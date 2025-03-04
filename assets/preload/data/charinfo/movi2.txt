@@ -1,0 +1,14 @@
+file: movi2
+offsets: 0, 0
+camoffsets: 200, 0
+scale: 1
+anti-aliasing: true
+flipX: false
+icon: movi
+barcolor: 203, 204, 204
+prefix, 0, 0, idle, idle, false, 24
+prefix, 0, 23, singUP, up, false, 24
+prefix, 0, -55, singRIGHT, right, false, 24
+prefix, -1, -39, singDOWN, down, false, 24
+prefix, 0, 25, singLEFT, left, false, 24
+starterIdle: idle, true

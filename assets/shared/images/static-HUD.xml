@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="static.png">
+	<!-- Created with Adobe Animate version 22.0.3.179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="static-HUD0000" x="0" y="0" width="480" height="270"/>
+	<SubTexture name="static-HUD0001" x="0" y="0" width="480" height="270"/>
+	<SubTexture name="static-HUD0002" x="480" y="0" width="480" height="270"/>
+	<SubTexture name="static-HUD0003" x="480" y="0" width="480" height="270"/>
+	<SubTexture name="static-HUD0004" x="960" y="0" width="480" height="270"/>
+	<SubTexture name="static-HUD0005" x="960" y="0" width="480" height="270"/>
+	<SubTexture name="static-HUD0006" x="1440" y="0" width="480" height="270"/>
+	<SubTexture name="static-HUD0007" x="1440" y="0" width="480" height="270"/>
+	<SubTexture name="static-HUD0008" x="0" y="270" width="480" height="270"/>
+	<SubTexture name="static-HUD0009" x="0" y="270" width="480" height="270"/>
+	<SubTexture name="static-HUD0010" x="480" y="270" width="480" height="270"/>
+	<SubTexture name="static-HUD0011" x="480" y="270" width="480" height="270"/>
+	<SubTexture name="static-HUD0012" x="960" y="270" width="480" height="270"/>
+	<SubTexture name="static-HUD0013" x="960" y="270" width="480" height="270"/>
+	<SubTexture name="static-HUD0014" x="1440" y="270" width="480" height="270"/>
+	<SubTexture name="static-HUD0015" x="1440" y="270" width="480" height="270"/>
+	<SubTexture name="static-HUD0016" x="0" y="540" width="480" height="270"/>
+	<SubTexture name="static-HUD0017" x="0" y="540" width="480" height="270"/>
+</TextureAtlas>

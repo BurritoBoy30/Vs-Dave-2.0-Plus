@@ -7,13 +7,13 @@ using StringTools;
 
 class BackgroundImg extends FlxSprite
 {	
-	public function new(x:Float, y:Float, path:String = 'blank', animations:Array<Dynamic> = null, folder:String = 'shared', scroll:Float = 1, antiAliasing:Bool = true, active:Bool = false, imageSize:Float = 1)
+	public function new(x:Float, y:Float, path:String = 'blank', animations:Array<Dynamic> = null, folder:String = 'shared', scrollX:Float = 1, scrollY:Float = 1, antiAliasing:Bool = true, active:Bool = false, imageSize:Float = 1)
 	{
 		super(x, y);
-		reloadImage(path, animations, folder, scroll, antiAliasing, active, imageSize);
+		reloadImage(path, animations, folder, scrollX, scrollY, antiAliasing, active, imageSize);
 	}
 	
-	public function reloadImage(path:String = 'blank', animations:Array<Dynamic> = null, folder:String = 'shared', scroll:Float = 1, antiAliasing:Bool = true, active:Bool = false, imageSize:Float = 1)
+	public function reloadImage(path:String = 'blank', animations:Array<Dynamic> = null, folder:String = 'shared', scrollX:Float = 1, scrollY:Float = 1, antiAliasing:Bool = true, active:Bool = false, imageSize:Float = 1)
 	{
 		if (animations != null)
 		{
@@ -38,7 +38,7 @@ class BackgroundImg extends FlxSprite
 		else
 			antialiasing = false;
 			
-		scrollFactor.set(scroll, scroll);
+		scrollFactor.set(scrollX, scrollY);
 		if (animations != null)
 		{
 			this.active = true;
