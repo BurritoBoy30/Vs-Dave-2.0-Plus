@@ -89,6 +89,7 @@ class PlayState extends MusicBeatState
 	public static var gf:Girlfriend;
 	public static var boyfriend:Boyfriend;
 	private var dadmirror:Character;
+	private var gfmirror:Girlfriend;
 	
 	private var splitathonCharacterExpression:Character;
 	
@@ -228,6 +229,7 @@ class PlayState extends MusicBeatState
 	var white:BackgroundImg;
 	var backpage:BackgroundImg;
 	public var staticTrans:FlxSprite;
+	var enterRule34:Bool = false;
 	
 	var banbiWindowNames:Array<String> = ['when you realize you have school this monday', 'industrial society and its future', 'my ears burn', 'i got that weed card', 'my ass itch', 'bruh', 'alright instagram its shoutout time'];
 	
@@ -456,16 +458,23 @@ class PlayState extends MusicBeatState
 		//movi 2 spritesheet is too big, for the sake of optimization, im using the dadmirror code for the second part
 		else if (SONG.song.toLowerCase() == 'rules')
 		{
-			white = new BackgroundImg(-765, 82, 'stages/page/white');
+			var moveitall:Array<Float> = [-425, -100];
+			
+			white = new BackgroundImg(-765 + moveitall[0], 82 + moveitall[1], 'stages/page/white');
 			add(white);
 			white.visible = false;
 			
-			dadmirror = new Character(dad.x, dad.y + 68, "movi2", 'dad');
+			dadmirror = new Character(dad.x + moveitall[0], dad.y + 70 + moveitall[1], "movi2", 'dad');
 			add(dadmirror);
 			
-			backpage = new BackgroundImg(-1010, -43, 'stages/page/back-rule');
+			backpage = new BackgroundImg(-1010 + moveitall[0], -43 + moveitall[1], 'stages/page/back-rule');
 			add(backpage);
-			backpage.visible = false;			
+			backpage.visible = false;
+
+			gfmirror = new Girlfriend(1200 + gf.charOffset[0], 350 + gf.charOffset[1], gfVersion);
+			gfmirror.x += gfmirror.charOffset[0];
+			gfmirror.y += gfmirror.charOffset[1];
+			add(gfmirror);
 		}
 		add(boyfriend);
 		
@@ -2318,7 +2327,10 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
-			camFollow.setPosition((boyfriend.getMidpoint().x - 100) + boyfriend.camOffsets[0], (boyfriend.getMidpoint().y - 100) + boyfriend.camOffsets[1]);
+			if (SONG.song.toLowerCase() == 'rules' && enterRule34)
+				camFollow.setPosition((boyfriend.getMidpoint().x - 350) + boyfriend.camOffsets[0], (boyfriend.getMidpoint().y - 100) + boyfriend.camOffsets[1]);
+			else
+				camFollow.setPosition((boyfriend.getMidpoint().x - 100) + boyfriend.camOffsets[0], (boyfriend.getMidpoint().y - 100) + boyfriend.camOffsets[1]);
 			
 			dadNoteCamOffset[0] = 0;
 			dadNoteCamOffset[1] = 0;
@@ -2347,10 +2359,12 @@ class PlayState extends MusicBeatState
 			if (darkStages.contains(curStage))
 			{
 				gf.color = 0xFF878787;
+				if (SONG.song.toLowerCase() == 'rules') gfmirror.color = 0xFF878787;
 			}
 			else
 			{
 				gf.color = FlxColor.WHITE;
+				if (SONG.song.toLowerCase() == 'rules') gfmirror.color = FlxColor.WHITE;
 			}
 		}
 	}
@@ -2717,6 +2731,7 @@ class PlayState extends MusicBeatState
 				&& gf.animation.curAnim.name.startsWith('sing') && !gf.animation.curAnim.name.endsWith('miss'))
 			{
 				gf.dance();
+				if (SONG.song.toLowerCase() == 'rules') gfmirror.dance();
 				gfIdleColor();
 			}
 		}
@@ -2742,6 +2757,7 @@ class PlayState extends MusicBeatState
 			if (combo > 5 && gf.animOffsets.exists('sad') && !(ifGfCanSingThenHerStuffCanFunction()))
 			{
 				gf.playAnim('sad');
+				if (SONG.song.toLowerCase() == 'rules') gfmirror.playAnim('sad');
 			}
 			combo = 0;
 			misses++;
@@ -2797,8 +2813,10 @@ class PlayState extends MusicBeatState
 				else
 				{
 					gf.color = 0xFF000084;
+					if (SONG.song.toLowerCase() == 'rules') gfmirror.color = 0xFF000084;
 				}
 				gf.playAnim(gfAnimToPlay, true);
+				if (SONG.song.toLowerCase() == 'rules') gfmirror.playAnim(gfAnimToPlay, true);
 			}
 
 			updateAccuracy();
@@ -2917,6 +2935,13 @@ class PlayState extends MusicBeatState
 			{
 				gf.playAnim('sing' + animList[Math.round(Math.abs(note.noteData))], true);
 				gf.holdTimer = 0;
+				
+				if (SONG.song.toLowerCase() == 'rules')
+				{
+					gfmirror.playAnim('sing' + animList[Math.round(Math.abs(note.noteData))], true);
+					gfmirror.holdTimer = 0;
+				}
+				
 				gfIdleColor();
 			}
 			
@@ -3254,11 +3279,11 @@ class PlayState extends MusicBeatState
 					case 1:
 						staticTrans.visible = false;
 						dadmirror.visible = false;
+						gfmirror.visible = false;
 					case 775:
 						staticTrans.visible = true;
 						dad.visible = false;
 						dadmirror.visible = true;
-						gf.visible = false;
 						
 						backBG.visible = false;
 						folds.visible = false;
@@ -3266,10 +3291,13 @@ class PlayState extends MusicBeatState
 						matrix1.visible = false;
 						matrix2.visible = false;
 						
+						// funny page
 						white.visible = true;
 						backpage.visible = true;
+						enterRule34 = true;
 						
-						defaultCamZoom = 0.5;
+						gfmirror.visible = true;
+						boyfriend.setPosition(1300 + boyfriend.charOffset[0], 650 + boyfriend.charOffset[1]);
 					case 784:
 						staticTrans.visible = false;
 				}
@@ -3473,12 +3501,14 @@ class PlayState extends MusicBeatState
 				if (!gf.animation.curAnim.name.startsWith("sing") && gf.canDance)
 				{
 					gf.dance();
+					if (SONG.song.toLowerCase() == 'rules') gfmirror.dance();
 					gfIdleColor();
 				}
 			}
 			else if (!shakeCam && gf.animation.getByName("scared") != null || (shakeCam || !shakeCam) && gf.animation.getByName("scared") == null)
 			{
 				gf.dance();
+				if (SONG.song.toLowerCase() == 'rules') gfmirror.dance();
 				gfIdleColor();
 			}
 		}
