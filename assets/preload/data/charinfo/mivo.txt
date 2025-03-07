@@ -1,0 +1,14 @@
+file: movi_fat
+offsets: 0, 0
+camoffsets: -290, -110
+scale: 1
+anti-aliasing: true
+flipX: false
+icon: mivo
+barcolor: 203, 204, 204
+prefix, 337, 198, idle, idle, false, 24
+prefix, 393, 195, singUP, up, false, 24
+prefix, 381, 182, singRIGHT, right, false, 24
+prefix, 331, 144, singDOWN, down, false, 24
+prefix, 330, 156, singLEFT, left, false, 24
+starterIdle: idle, true

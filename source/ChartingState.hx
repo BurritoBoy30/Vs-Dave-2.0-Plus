@@ -429,12 +429,14 @@ class ChartingState extends MusicBeatState
 				_song.notes[curSection].sectionNotes[i] = note;
 				updateGrid();
 			}
-			
-			updateHeads();
 		});
 		check_mustHitSection = new FlxUICheckBox(10, 30, null, null, "Camera Points to P1?", 100);
 		check_mustHitSection.name = 'check_mustHit';
 		check_mustHitSection.checked = true;
+		check_mustHitSection.callback = function()
+		{
+			updateHeads();
+		}
 		// _song.needsVoices = check_mustHit.checked;
 
 		check_altAnim = new FlxUICheckBox(10, 400, null, null, "Alternate Animation", 100);
@@ -1155,13 +1157,11 @@ class ChartingState extends MusicBeatState
 	}
 
 	function updateHeads():Void
-	{
-		var sec = _song.notes[curSection];
-		
+	{		
 		p1 = new Character(0,0, _song.player1, 'dad');
 		p2 = new Character(0,0, _song.player2, 'dad');
 		
-		if (sec.mustHitSection)
+		if (check_mustHitSection.checked)
 		{
 			leftIcon.createIcon(p1.healthIcon);
 			rightIcon.createIcon(p2.healthIcon);

@@ -471,7 +471,7 @@ class PlayState extends MusicBeatState
 			add(backpage);
 			backpage.visible = false;
 
-			gfmirror = new Girlfriend(1200 + gf.charOffset[0], 350 + gf.charOffset[1], gfVersion);
+			gfmirror = new Girlfriend(1275, 350, gfVersion);
 			gfmirror.x += gfmirror.charOffset[0];
 			gfmirror.y += gfmirror.charOffset[1];
 			add(gfmirror);
@@ -961,7 +961,7 @@ class PlayState extends MusicBeatState
 				
 				var darkSky:BackgroundImg = new BackgroundImg(0, 0, 'stages/recursed/darkSky', [
 					['prefix', 'scroll', 'scroll', 60, true]
-				], 1, 2);
+				], 1, 1, 2);
 				darkSky.animation.play('scroll');
 				darkSky.screenCenter();
 				add(darkSky);
@@ -998,7 +998,7 @@ class PlayState extends MusicBeatState
 				{	
 					var charBackdrop:BackgroundImg = new BackgroundImg(0, 0, 'stages/recursed/' + panicSectionChars[i], [
 						['prefix', 'scroll', 'scroll', 20, true]
-					], 1, 2);
+					], 1, 1, 2);
 					charBackdrop.animation.play('scroll');
 				
 					charBackdrop.color = 0xFF878787;
@@ -1029,7 +1029,7 @@ class PlayState extends MusicBeatState
 				MisViejas.animation.play('Twogirls_Idle', true);
 				add(MisViejas);
 				
-			case 'rules':
+			case 'rules' | 'malware-madness':
 				defaultCamZoom = 0.6;
 				curStage = 'pc';
 				

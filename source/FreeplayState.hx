@@ -83,57 +83,16 @@ class FreeplayState extends MusicBeatState
 		super.create();
 	}
 	
-	public function LoadProperPack()
+	// replaced with reading txt files, easier for modifications
+	public function LoadProperPack(textFile:String)
 	{
-		switch (AllPossibleSongs[CurrentPack].toLowerCase())
+		var fuckingfreeplay:Array<String> = CoolUtil.coolTextFile(Paths.txt('freeplaySonglist/' + textFile));
+		
+		for (songList in fuckingfreeplay)
 		{
-			case 'dave':
-				addWeek(['Tutorial'], 0, ['gf'], ['Easy'], [100]);
-				addWeek(['House', 'Insanity', 'Polygonized'], 1,
-					['dave', 'dave-annoyed', 'dave-angey'],
-					['Normal', 'Normal', 'Hard'],
-					[230, 160, 180]
-				);
-				addWeek(['Blocked','Corn-Theft','Maze',], 2,
-					['bambi-new'],
-					['Hard', 'Hard', 'Normal'],
-					[188, 105, 113]
-				);
-				addWeek(['Splitathon'], 3, ['the-duo'], ['Hard'], [230]);
+			var songInfo:Array<String> = songList.split(",");
 			
-			case 'golden':
-				addWeek(['Disruption'], 6, ['bambi-piss-3d'], ['Extreme'], [330]);
-				addWeek(['Disability'], 6, ['dave-split-3d'], ['Hard'], [182]);
-				addWeek(['OG'], 7, ['dave-alpha'], ['Extreme'], [110]);
-			case 'joke':
-				addWeek(['Supernovae'], 4, ['bambi-joke'], ['Stupid'], [160]);
-				addWeek(['Glitch'], 4, ['bambi-joke'], ['Stupid'], [110]);
-				if (FlxG.save.data.cheatingFound)
-				{
-					addWeek(['Cheating'], 5, ['bambi-3d'], ['Stupid'], [125]);
-				}
-				if (FlxG.save.data.unfairnessFound)
-				{
-					addWeek(['Unfairness'], 5, ['bambi-unfair'], ['Stupid'], [150]);
-				}
-				if (FlxG.save.data.kabungaFound)
-				{
-					addWeek(['Kabunga'], 5, ['exbungo'], ['Hard'], [174]);
-				}
-			
-			case 'extra':
-				addWeek(['Bonus-Song'], 1, ['dave'], ['Normal'], [140]);
-				addWeek(['Mealie'], 2, ['bambi-new'], ['Hard'], [167]);
-				addWeek(['Computer'], 8, ['bombu'], ['Easy'], [130]);
-				addWeek(['Crimson-Corridor'], 8, ['bombai'], ['Normal'], [150]);
-				addWeek(['Disposition'], 9, ['hell-expunged'], ['Extreme'], [115]);
-				addWeek(['Decimal'], 10, ['ohungi'], ['Hard'], [140]);
-				addWeek(['Recursed'], 10, ['recurser'], ['Hard'], [150]);
-				if (FlxG.save.data.hornyALL)
-				{
-					addWeek(['Boing'], 10, ['girlf'], ['Hard'], [150]);
-					addWeek(['Rules'], 10, ['movi'], ['Hard'], [140]);
-				}
+			addWeek([songInfo[0]], Std.parseInt(songInfo[1]), [songInfo[2]], [songInfo[3]], [Std.parseInt(songInfo[4])]);
 		}
 	}
 	
@@ -281,7 +240,7 @@ class FreeplayState extends MusicBeatState
 				{
 					canInteract = false;
 					loadingPack = true;
-					LoadProperPack();
+					LoadProperPack(AllPossibleSongs[CurrentPack].toLowerCase());
 					
 					FlxTween.tween(CurrentSongIcon, {alpha: 0}, 0.2);
 					FlxTween.tween(NameAlpha, {alpha: 0}, 0.2);
