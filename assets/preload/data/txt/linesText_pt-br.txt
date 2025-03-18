@@ -4,6 +4,7 @@ score==Pontuação::space:
 misses==Falhas::space:
 accuracy==Precisão::space:
 songcredit==Música por:space:
+rating==Performance::space:
 
 // Story Mode //
 story mode==Modo História
@@ -23,7 +24,8 @@ dave==Dave
 golden==Dourado
 joke==Piada
 extra==Extras
-console==Abrir Console
+naughty==Safadeza
+console==Console
 
 // Pause Menu UI //
 resume==Resumir

@@ -5,6 +5,3 @@ Crimson-Corridor,8,bombai,Normal,150
 Disposition,9,hell-expunged,Extreme,115
 Decimal,10,ohungi,Hard,140
 Recursed,10,recurser,Hard,150
-Boing,10,girlf,Hard,150
-Rules,10,movi,Normal,140
-Malware-Madness,10,mivo,Normal,180

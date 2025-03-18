@@ -4,6 +4,7 @@ score==Score::space:
 misses==Misses::space:
 accuracy==Accuracy::space:
 songcredit==Song by:space:
+rating==Rating::space:
 
 // Story Mode //
 story mode==Story Mode
@@ -23,7 +24,8 @@ dave==Dave
 golden==Golden
 joke==Joke
 extra==Extras
-console==Open Console
+naughty==Naughty
+console==Console
 
 // Pause Menu UI //
 resume==Resume

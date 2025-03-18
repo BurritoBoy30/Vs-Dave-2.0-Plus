@@ -43,7 +43,7 @@ class FreeplayState extends MusicBeatState
 	
 	private var CurrentSongIcon:FlxSprite;
 
-	private var AllPossibleSongs:Array<String> = ["Dave","Golden","Joke","Extra","Console"];
+	public var AllPossibleSongs:Array<String> = [];
 
 	private var CurrentPack:Int = 0;
 
@@ -61,6 +61,15 @@ class FreeplayState extends MusicBeatState
 		DiscordClient.changePresence("In Freeplay Menu", null);
 		#end
 		
+		if (FlxG.save.data.hornyALL)
+		{
+			AllPossibleSongs = ["Dave","Golden","Joke","Extra","Naughty","Console"];
+		}
+		else
+		{
+			AllPossibleSongs = ["Dave","Golden","Joke","Extra","Console"];
+		}
+		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
 		bg.antialiasing = FlxG.save.data.antiAliasing;
 		bg.color = 0xFF9271FD;
@@ -68,15 +77,40 @@ class FreeplayState extends MusicBeatState
 		
 		CurrentSongIcon = new FlxSprite().loadGraphic(Paths.image('packs/week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
 		CurrentSongIcon.screenCenter();
+		CurrentSongIcon.y -= 20;
 		CurrentSongIcon.antialiasing = FlxG.save.data.antiAliasing;
 
-		NameAlpha = new FlxText(0, (FlxG.height / 2) - 282, FlxG.width, ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase()));
+		NameAlpha = new FlxText(0, (FlxG.height / 2) - 300, FlxG.width, ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase()));
 		NameAlpha.setFormat(Paths.font("comic.ttf"), 90, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		NameAlpha.borderSize = 3;
 		NameAlpha.antialiasing = FlxG.save.data.antiAliasing;
 		
 		add(CurrentSongIcon);
 		add(NameAlpha);
+		
+		var selectingBG:FlxSprite = new FlxSprite(0, FlxG.height - 90).makeGraphic(FlxG.width, 90, 0xFF000000);
+		selectingBG.screenCenter(X);
+		selectingBG.alpha = 0.6;
+		add(selectingBG);
+		
+		var offsetNumber:Float = 0;
+		if (!FlxG.save.data.hornyALL)
+			offsetNumber = 0;
+		
+		for (i in 0...AllPossibleSongs.length)
+		{
+			var option:FlxSprite = new FlxSprite((210 * i) + 15, FlxG.height - 85).loadGraphic(Paths.image('freeplay_ui/option'));
+			option.antialiasing = FlxG.save.data.antiAliasing;
+			add(option);
+		}
+
+		for (i in 0...AllPossibleSongs.length)
+		{
+			var selectingTxt:FlxText = new FlxText((210 * i) - 525, FlxG.height - 80, FlxG.width, ReturnLanguage.getLine(AllPossibleSongs[i].toLowerCase()));
+			selectingTxt.setFormat(Paths.font("comic.ttf"), 40, FlxColor.WHITE, CENTER);
+			selectingTxt.antialiasing = FlxG.save.data.antiAliasing;
+			add(selectingTxt);
+		}
 		
 		Highscore.load();
 

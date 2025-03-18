@@ -2866,7 +2866,7 @@ class PlayState extends MusicBeatState
 		else
 			comboRating = "";
 		
-		return "Rating: " + letterRating + (comboRating == "" ? "" : " (" + comboRating + ")");
+		return ReturnLanguage.getLine('rating') + letterRating + (comboRating == "" ? "" : " (" + comboRating + ")");
 	}
 	
 	function cameraMoveOnNote(note:Int, character:String)

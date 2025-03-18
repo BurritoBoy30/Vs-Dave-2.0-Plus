@@ -108,7 +108,7 @@ class ChartingState extends MusicBeatState
 	{
 		curSection = lastSection;
 
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(MainMenuState.randomizeBG());
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
 		bg.scrollFactor.set();
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
