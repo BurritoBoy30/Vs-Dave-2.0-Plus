@@ -261,7 +261,10 @@ class Character extends FlxSprite
 					healthColorArray = [Std.parseInt(healthInfo[0]), Std.parseInt(healthInfo[1]), Std.parseInt(healthInfo[2])];
 					
 				case 'anti-aliasing':
-					antialiasing = charInfo[1] == 'true';
+					if (charInfo[1] == 'true')
+						antialiasing = FlxG.save.data.antiAliasing;
+					else
+						antialiasing = false;
 					
 				case 'flipX':
 					flipX = charInfo[1] == 'true';
