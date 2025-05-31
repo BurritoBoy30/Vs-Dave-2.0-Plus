@@ -229,6 +229,7 @@ class PlayState extends MusicBeatState
 	
 	// video
 	public static var video:FlxVideoSprite;
+	public static var gfvideotype:String = '';
 	
 	//rules
 	var backBG:BackgroundImg;
@@ -736,7 +737,12 @@ class PlayState extends MusicBeatState
 		switch (SONG.song.toLowerCase())
 		{
 			case 'fnfgf':
-				loadVideo('fnfgf');
+				if (gfvideotype == 'alt')
+					loadVideo('fnfgfnew');
+				else
+					loadVideo('fnfgf');
+					
+				gfvideotype = '';
 			case 'unstoppable':
 				loadVideo('unstoppable');
 				//brute force the changes cuz im lazy
@@ -3376,7 +3382,7 @@ class PlayState extends MusicBeatState
 					case 672:
 						iconP2.createIcon('water');
 						forceHealthBarColors([179,255,253], [90,90,90]);
-					case 800:
+					case 802:
 						iconP2.createIcon('fire');
 						forceHealthBarColors([255,255,255], [90,90,90]);
 					case 1056:

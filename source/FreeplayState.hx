@@ -53,6 +53,10 @@ class FreeplayState extends MusicBeatState
 
 	var zoeyBop:FlxSprite;
 	var iconBoopin:Bool = false;
+	
+	var lilText:FlxText;
+	var modes:Array<String> = ["Normal", "Alt"];
+	var selectedmode:Int = 0;
 
 	override function create()
 	{
@@ -153,6 +157,14 @@ class FreeplayState extends MusicBeatState
 		diffText.antialiasing = FlxG.save.data.antiAliasing;
 		diffText.alpha = 0;
 		add(diffText);
+		
+		lilText = new FlxText(scoreText.x, scoreText.y + 80, FlxG.width, "", 24);
+		lilText.setFormat(Paths.font("comic.ttf"), 24, FlxColor.WHITE, RIGHT);
+		lilText.antialiasing = FlxG.save.data.antiAliasing;
+		lilText.visible = false;
+		lilText.alpha = 0;
+		add(lilText);
+		changefnfgfmode(0);
 
 		add(scoreText);
 		
@@ -160,6 +172,7 @@ class FreeplayState extends MusicBeatState
 		FlxTween.tween(scoreText, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(diffText, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(zoeyBop, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
+		FlxTween.tween(lilText, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
 
 		changeSelection();
 	}
@@ -301,6 +314,20 @@ class FreeplayState extends MusicBeatState
 				changeSelection(1);
 			}
 			
+			lilText.visible = songs[curSelected].songName.toLowerCase() == 'fnfgf';
+			
+			if (songs[curSelected].songName.toLowerCase() == 'fnfgf')
+			{
+				if (controls.LEFT_P && canInteract)
+				{
+					changefnfgfmode(-1);
+				}
+				if (controls.RIGHT_P && canInteract)
+				{
+					changefnfgfmode(1);
+				}
+			}
+			
 			iconBoopin = true;
 			
 			if (scoreBG != null)
@@ -355,6 +382,14 @@ class FreeplayState extends MusicBeatState
 					}});
 				}
 				
+				if (lilText != null)
+				{
+					FlxTween.tween(lilText, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
+					{
+						lilText = null;
+					}});
+				}
+				
 				if (zoeyBop != null)
 				{
 					FlxTween.tween(zoeyBop, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
@@ -399,6 +434,9 @@ class FreeplayState extends MusicBeatState
 				switch (songs[curSelected].songName.toLowerCase())
 				{
 					case 'fnfgf' | 'unstoppable':
+						if (songs[curSelected].songName.toLowerCase() == 'fnfgf')
+							PlayState.gfvideotype = modes[selectedmode].toLowerCase();
+							
 						LoadingState.loadAndSwitchState(new PlayState());
 					default:
 						LoadingState.loadAndSwitchState(new CharacterSelectState());
@@ -468,6 +506,20 @@ class FreeplayState extends MusicBeatState
 				item.alpha = 1;
 			}
 		}
+	}
+	
+	public function changefnfgfmode(change:Int)
+	{
+		selectedmode += change;
+		if (selectedmode == -1)
+		{
+			selectedmode = modes.length - 1;
+		}
+		if (selectedmode == modes.length)
+		{
+			selectedmode = 0;
+		}
+		lilText.text = "< " + modes[selectedmode] + " >";
 	}
 	
 	function updateScore()
