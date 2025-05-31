@@ -78,9 +78,9 @@ class FreeplayState extends MusicBeatState
 		CurrentSongIcon = new FlxSprite().loadGraphic(Paths.image('packs/week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
 		CurrentSongIcon.screenCenter();
 		CurrentSongIcon.x -= 300;
-		CurrentSongIcon.antialiasing = FlxG.save.data.antiAliasing;
+		changePackAntiAliasing();
 
-		NameAlpha = new FlxText(600, (FlxG.height / 2) - 300, FlxG.width, ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase()));
+		NameAlpha = new FlxText(675, (FlxG.height / 2) - 300, FlxG.width, ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase()));
 		NameAlpha.setFormat(Paths.font("comic.ttf"), 90, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		NameAlpha.borderSize = 3;
 		NameAlpha.antialiasing = FlxG.save.data.antiAliasing;
@@ -214,6 +214,19 @@ class FreeplayState extends MusicBeatState
 		}
 		NameAlpha.text = ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase());
 		CurrentSongIcon.loadGraphic(Paths.image('packs/week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
+		changePackAntiAliasing();
+	}
+	
+	function changePackAntiAliasing()
+	{
+		if (AllPossibleSongs[CurrentPack].toLowerCase() == 'naughty')
+		{
+			CurrentSongIcon.antialiasing = false;
+		}
+		else
+		{
+			CurrentSongIcon.antialiasing = CurrentSongIcon.antialiasing = FlxG.save.data.antiAliasing;
+		}
 	}
 
 	override function update(elapsed:Float)
@@ -382,7 +395,14 @@ class FreeplayState extends MusicBeatState
 
 				PlayState.storyWeek = songs[curSelected].week;
 				trace('CUR WEEK' + PlayState.storyWeek);
-				LoadingState.loadAndSwitchState(new CharacterSelectState());
+				
+				switch (songs[curSelected].songName.toLowerCase())
+				{
+					case 'fnfgf' | 'unstoppable':
+						LoadingState.loadAndSwitchState(new PlayState());
+					default:
+						LoadingState.loadAndSwitchState(new CharacterSelectState());
+				}
 			}
 		}
 		
@@ -451,15 +471,21 @@ class FreeplayState extends MusicBeatState
 	}
 	
 	function updateScore()
-	{	
-		if (CharacterSelectState.noGfChar.contains(curBfChar.toLowerCase()) || songs[curSelected].songName.toLowerCase() == 'boing')
-			diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase()) + " - (" + curBfChar.toUpperCase() + ")";
-		else
+	{
+		switch (songs[curSelected].songName.toLowerCase())
 		{
-			if (!FlxG.save.data.hornyALL && CharacterSelectState.hornyGFs.contains(curGfChar.toLowerCase()))
-				diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase()) + " - (" + curBfChar.toUpperCase() + " - " + 'GF' + ")";
-			else
-				diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase()) + " - (" + curBfChar.toUpperCase() + " - " + curGfChar.toUpperCase() + ")";
+			case 'fnfgf' | 'unstoppable':
+				diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase());
+			default:
+				if (CharacterSelectState.noGfChar.contains(curBfChar.toLowerCase()) || songs[curSelected].songName.toLowerCase() == 'boing')
+					diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase()) + " - (" + curBfChar.toUpperCase() + ")";
+				else
+				{
+					if (!FlxG.save.data.hornyALL && CharacterSelectState.hornyGFs.contains(curGfChar.toLowerCase()))
+						diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase()) + " - (" + curBfChar.toUpperCase() + " - " + 'GF' + ")";
+					else
+						diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase()) + " - (" + curBfChar.toUpperCase() + " - " + curGfChar.toUpperCase() + ")";
+				}
 		}
 	}
 }

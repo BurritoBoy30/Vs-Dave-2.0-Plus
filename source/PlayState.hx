@@ -46,6 +46,13 @@ import openfl.filters.ShaderFilter;
 import Shaders.PulseEffect;
 import Shaders.GlitchEffect;
 
+import hxcodec.flixel.FlxVideo;
+import hxcodec.flixel.FlxVideoSprite;
+
+#if sys
+import sys.FileSystem;
+#end
+
 #if windows
 import sys.io.File;
 import sys.io.Process;
@@ -173,7 +180,7 @@ class PlayState extends MusicBeatState
 	
 	public static var boyfriendOverride:String = "none";
 	public static var girlfriendOverride:String = "none";
-		
+
 	var bfNoteCamOffset:Array<Float> = new Array<Float>();
 	public static var dadNoteCamOffset:Array<Float> = new Array<Float>();
 	
@@ -192,7 +199,7 @@ class PlayState extends MusicBeatState
 	var tristanSongsLetters:FlxTypedGroup<Alphabet>;
 	var mainSongsLetters:Array<FlxTypedGroup<Alphabet>> = [];
 	var lettersMovement:Array<Dynamic> = [[],[],[]];
-		
+
 	// stuff for recursed cutscene
 	var recurserStandOff:Character;
 	var boyfriendStandOff:Character;
@@ -219,6 +226,9 @@ class PlayState extends MusicBeatState
 	// boing
 	var MyBeloved:BackgroundImg;
 	var MisViejas:BackgroundImg;
+	
+	// video
+	public static var video:FlxVideoSprite;
 	
 	//rules
 	var backBG:BackgroundImg;
@@ -447,6 +457,14 @@ class PlayState extends MusicBeatState
 				gf.setPosition(800 + gf.charOffset[0], 330 + gf.charOffset[1]);
 		}
 		
+		//they dont show up on video stages to improve performance
+		switch (SONG.song.toLowerCase())
+		{
+			case 'fnfgf' | 'unstoppable':
+				gf.visible = false;
+				dad.visible = false;
+				boyfriend.visible = false;
+		}
 		add(gf);
 		add(dad);
 		if (SONG.song.toLowerCase() == 'insanity')
@@ -485,7 +503,7 @@ class PlayState extends MusicBeatState
 		doof.finishThing = startCountdown;
 
 		Conductor.songPosition = -5000;
-
+		
 		strumLine = new FlxSprite(0, 50).makeGraphic(FlxG.width, 10);
 		strumLine.scrollFactor.set();
 
@@ -714,6 +732,19 @@ class PlayState extends MusicBeatState
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
 		updateTime = true;
+		
+		switch (SONG.song.toLowerCase())
+		{
+			case 'fnfgf':
+				loadVideo('fnfgf');
+			case 'unstoppable':
+				loadVideo('unstoppable');
+				//brute force the changes cuz im lazy
+				iconP1.createIcon('test');
+				iconP2.createIcon('fire');
+				forceHealthBarColors([255,255,255], [90,90,90]);
+				
+		}
 
 		if (isStoryMode)
 		{
@@ -744,6 +775,17 @@ class PlayState extends MusicBeatState
 		super.create();
 		
 		Transition.nextCamera = camOther;
+	}
+	
+	function loadVideo(file:String)
+	{
+		video = new FlxVideoSprite(0, 0);
+		video.scrollFactor.set();
+		video.cameras = [camHUD];
+		video.play('assets/videos/' + file + '.mp4');
+		video.antialiasing = FlxG.save.data.antiAliasing;
+		video.pause();
+		insert(members.indexOf(timeTxt), video);
 	}
 	
 	function isTails()
@@ -1059,6 +1101,12 @@ class PlayState extends MusicBeatState
 				add(backBG);
 				
 				add(ground);
+				
+			case 'fnfgf' | 'unstoppable':
+				defaultCamZoom = 1;
+				curStage = 'none';
+				
+				//generate nothing
 			
 			default:
 				defaultCamZoom = 0.9;
@@ -1088,6 +1136,12 @@ class PlayState extends MusicBeatState
 	public function reloadHealthBarColors() {
 		healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
 			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
+		healthBar.updateBar();
+	}
+	
+	public function forceHealthBarColors(dadcolors:Array<Int>, bfcolors:Array<Int>) {
+		healthBar.createFilledBar(FlxColor.fromRGB(dadcolors[0], dadcolors[1], dadcolors[2]),
+			FlxColor.fromRGB(bfcolors[0], bfcolors[1], bfcolors[2]));
 		healthBar.updateBar();
 	}
 	
@@ -1355,6 +1409,11 @@ class PlayState extends MusicBeatState
 		{
 			case 'supernovae' | 'glitch':
 				Application.current.window.title = banbiWindowNames[FlxG.random.int(0, banbiWindowNames.length - 1)];
+		}
+		
+		if (video != null)
+		{
+			video.resume();
 		}
 
 		#if desktop
@@ -1940,6 +1999,11 @@ class PlayState extends MusicBeatState
 			persistentUpdate = false;
 			persistentDraw = true;
 			paused = true;
+			
+			if (video != null)
+			{
+				video.pause();
+			}
 
 			// 1 / 1000 chance for Gitaroo Man easter egg
 			if (FlxG.random.bool(0.1))
@@ -2392,6 +2456,11 @@ class PlayState extends MusicBeatState
 		{
 			case 'supernovae' | 'glitch' | 'master':
 				Application.current.window.title = Main.windowTitle;
+		}
+		
+		if (video != null)
+		{
+			video.destroy();
 		}
 
 		if (isStoryMode)
@@ -3300,6 +3369,19 @@ class PlayState extends MusicBeatState
 						boyfriend.setPosition(1300 + boyfriend.charOffset[0], 650 + boyfriend.charOffset[1]);
 					case 784:
 						staticTrans.visible = false;
+				}
+			case 'unstoppable':
+				switch(curStep)
+				{
+					case 672:
+						iconP2.createIcon('water');
+						forceHealthBarColors([179,255,253], [90,90,90]);
+					case 800:
+						iconP2.createIcon('fire');
+						forceHealthBarColors([255,255,255], [90,90,90]);
+					case 1056:
+						iconP2.createIcon('fire-and-water');
+						forceHealthBarColors([255,255,255], [90,90,90]);
 				}
 		}
 		

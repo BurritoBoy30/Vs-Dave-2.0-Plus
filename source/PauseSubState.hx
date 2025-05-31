@@ -136,13 +136,28 @@ class PauseSubState extends MusicBeatSubstate
 			switch (daSelected)
 			{
 				case "resume":
+					if (PlayState.video != null)
+					{
+						PlayState.video.resume();
+					}
+
 					close();
 				case "restart":
+					if (PlayState.video != null)
+					{
+						PlayState.video.destroy();
+					}
+				
 					Transition.nextCamera = transCamera;
 					FlxG.resetState();
 				case 'botplay':
 					PlayState.botPlayOn = !PlayState.botPlayOn;
 				case "exit":
+					if (PlayState.video != null)
+					{
+						PlayState.video.destroy();
+					}
+					
 					Transition.nextCamera = transCamera;
 					PlayState.botPlayOn = false;
 					
