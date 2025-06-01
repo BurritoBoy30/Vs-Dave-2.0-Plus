@@ -157,6 +157,7 @@ class PlayState extends MusicBeatState
 	var songScore:Int = 0;
 	var scoreTxt:FlxText;
 	var botPlayState:FlxText;
+	var pressNineTxt:FlxText;
 	
 	public var noteTweens:Array<FlxTween> = [];
 	
@@ -230,6 +231,8 @@ class PlayState extends MusicBeatState
 	// video
 	public static var video:FlxVideoSprite;
 	public static var gfvideotype:String = '';
+	public var camVideo:FlxCamera;
+	public var songsWithVideos:Array<String> = ['fnfgf', 'unstoppable', 'mekatsune'];
 	
 	//rules
 	var backBG:BackgroundImg;
@@ -294,12 +297,21 @@ class PlayState extends MusicBeatState
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
+		
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
 		camOther = new FlxCamera();
 		camOther.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
+		
+		if (songsWithVideos.contains(SONG.song.toLowerCase()))
+		{			
+			camVideo = new FlxCamera();
+			camVideo.bgColor.alpha = 0;
+			FlxG.cameras.add(camVideo, false);
+		}
+		
 		FlxG.cameras.add(camHUD, false);
 		
 		if (SONG.song.toLowerCase() == 'recursed')
@@ -459,12 +471,11 @@ class PlayState extends MusicBeatState
 		}
 		
 		//they dont show up on video stages to improve performance
-		switch (SONG.song.toLowerCase())
+		if (songsWithVideos.contains(SONG.song.toLowerCase()))
 		{
-			case 'fnfgf' | 'unstoppable':
-				gf.visible = false;
-				dad.visible = false;
-				boyfriend.visible = false;
+			gf.visible = false;
+			dad.visible = false;
+			boyfriend.visible = false;
 		}
 		add(gf);
 		add(dad);
@@ -605,6 +616,14 @@ class PlayState extends MusicBeatState
 		scoreTxt.antialiasing = FlxG.save.data.antiAliasing;
 		add(scoreTxt);
 		
+		pressNineTxt = new FlxText(0, scoreTxt.y - 16, FlxG.width, "Press 9 to hide the HUD", 20);
+		pressNineTxt.setFormat(Paths.font("comic.ttf"), 14, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		pressNineTxt.scrollFactor.set();
+		pressNineTxt.borderSize = 1.2;
+		pressNineTxt.antialiasing = FlxG.save.data.antiAliasing;
+		pressNineTxt.visible = false;
+		add(pressNineTxt);
+		
 		botPlayState = new FlxText(-45, (isDownScroll ? FlxG.height - 85 : 65), FlxG.width, "Botplay", 20);
 		botPlayState.setFormat(Paths.font("comic.ttf"), 40, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botPlayState.scrollFactor.set();
@@ -626,6 +645,7 @@ class PlayState extends MusicBeatState
 			iconGF.cameras = [camHUD];
 		}
 		scoreTxt.cameras = [camHUD];
+		pressNineTxt.cameras = [camHUD];
 		botPlayState.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		timeLabelTxt.cameras = [camHUD];
@@ -749,7 +769,6 @@ class PlayState extends MusicBeatState
 				iconP1.createIcon('test');
 				iconP2.createIcon('fire');
 				forceHealthBarColors([255,255,255], [90,90,90]);
-				
 		}
 
 		if (isStoryMode)
@@ -787,11 +806,11 @@ class PlayState extends MusicBeatState
 	{
 		video = new FlxVideoSprite(0, 0);
 		video.scrollFactor.set();
-		video.cameras = [camHUD];
+		video.cameras = [camVideo];
 		video.play('assets/videos/' + file + '.mp4');
 		video.antialiasing = FlxG.save.data.antiAliasing;
 		video.pause();
-		insert(members.indexOf(timeTxt), video);
+		add(timeTxt);
 	}
 	
 	function isTails()
@@ -1885,6 +1904,7 @@ class PlayState extends MusicBeatState
 			camHUD.visible = !camHUD.visible;
 			
 		botPlayState.visible = botPlayOn;
+		pressNineTxt.visible = botPlayOn;
 		
 		FlxG.camera.setFilters([new ShaderFilter(screenshader.shader)]); // this is very stupid but doesn't effect memory all that much so
 		if (shakeCam && eyesoreson)
@@ -1903,14 +1923,6 @@ class PlayState extends MusicBeatState
 			screenshader.shader.uampmul.value[0] -= (elapsed / 2);
 		}
 		screenshader.Enabled = shakeCam && eyesoreson;
-		
-		if (FlxG.keys.justPressed.NINE)
-		{
-			if (iconP1.animation.curAnim.name == 'bf-old')
-				iconP1.createIcon(boyfriend.healthIcon);
-			else
-				iconP1.createIcon('bf-old');
-		}
 		
 		dadStrums.forEach(function(spr:StrumNote)
 		{

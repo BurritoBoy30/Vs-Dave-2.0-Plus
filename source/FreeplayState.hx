@@ -159,7 +159,7 @@ class FreeplayState extends MusicBeatState
 		add(diffText);
 		
 		lilText = new FlxText(scoreText.x, scoreText.y + 80, FlxG.width, "", 24);
-		lilText.setFormat(Paths.font("comic.ttf"), 24, FlxColor.WHITE, RIGHT);
+		lilText.setFormat(Paths.font("comic.ttf"), 26, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		lilText.antialiasing = FlxG.save.data.antiAliasing;
 		lilText.visible = false;
 		lilText.alpha = 0;
