@@ -769,6 +769,11 @@ class PlayState extends MusicBeatState
 				iconP1.createIcon('test');
 				iconP2.createIcon('fire');
 				forceHealthBarColors([255,255,255], [90,90,90]);
+			case 'mekatsune':
+				loadVideo('mekatsune');
+				iconP1.createIcon('red');
+				iconP2.createIcon('toriel');
+				forceHealthBarColors([255,255,255], [244,67,54]);
 		}
 
 		if (isStoryMode)
@@ -810,7 +815,7 @@ class PlayState extends MusicBeatState
 		video.play('assets/videos/' + file + '.mp4');
 		video.antialiasing = FlxG.save.data.antiAliasing;
 		video.pause();
-		add(timeTxt);
+		add(video);
 	}
 	
 	function isTails()
@@ -820,331 +825,335 @@ class PlayState extends MusicBeatState
 	
 	function generateStage(curTrack:String)
 	{
-		switch (curTrack)
+		if (songsWithVideos.contains(curTrack))
 		{
-			case 'house' | 'insanity' | 'bonus-song' | 'supernovae' | 'glitch':
-				defaultCamZoom = 0.8;
+			defaultCamZoom = 1;
+			curStage = 'video';
 				
-				var isNight:Bool;
-				isNight = curTrack == 'bonus-song';
-				
-				curStage = isNight ? 'daveHouseNight' : 'daveHouse';
-				
-				var bg:BackgroundImg = new BackgroundImg(-600, -300, 'stages/sky' + (isNight ? "_night" : ""), 0.7, 0.7);
-				add(bg);
-
-				var stageHills:BackgroundImg = new BackgroundImg(-834, -159, 'stages/house/' + (isNight ? 'night/' : '') + 'hills');
-				add(stageHills);
-				
-				var grassbg:BackgroundImg = new BackgroundImg(-1205, 580, 'stages/house/' + (isNight ? 'night/' : '') + 'grass bg');
-				add(grassbg);
-				
-				var gate:BackgroundImg = new BackgroundImg(-755, 250, 'stages/house/' + (isNight ? 'night/' : '') + 'gate');
-				add(gate);
-				
-				var stageFront:BackgroundImg = new BackgroundImg(-832, 505, 'stages/house/' + (isNight ? 'night/' : '') + 'grass');
-				add(stageFront);
-				
-				if (curTrack == 'insanity')
-				{
-					var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/singleimages/redsky', 0.9, 0.9, false, true);
-					bg.visible = false;
+			//generate nothing
+		}
+		else
+		{
+			switch (curTrack)
+			{
+				case 'house' | 'insanity' | 'bonus-song' | 'supernovae' | 'glitch':
+					defaultCamZoom = 0.8;
+					
+					var isNight:Bool;
+					isNight = curTrack == 'bonus-song';
+					
+					curStage = isNight ? 'daveHouseNight' : 'daveHouse';
+					
+					var bg:BackgroundImg = new BackgroundImg(-600, -300, 'stages/sky' + (isNight ? "_night" : ""), 0.7, 0.7);
 					add(bg);
 
-					createShader(bg, 0.1, 5, 2);
-				}
-				
-			case 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'mealie':
-				defaultCamZoom = 0.8;
-				
-				var isNight:Bool;
-				isNight = curTrack == 'splitathon' || curTrack == 'mealie';
-				
-				curStage = isNight ? 'bambiFarmNight' : 'bambiFarm';
-
-				var skyType:String = isNight ? 'sky_night' : 'sky';
-
-				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/' + skyType, 0.6, 0.6);
-				add(bg);
-
-				var flatgrass:BackgroundImg = new BackgroundImg(350, 75, 'stages/farm/gm_flatgrass', 0.65, 0.65, 0.34);
-				add(flatgrass);
-				
-				var hills:BackgroundImg = new BackgroundImg(-173, 100, 'stages/farm/orangey hills', 0.65, 0.65);
-				add(hills);
-				
-				var farmHouse:BackgroundImg = new BackgroundImg(100, 125, 'stages/farm/funfarmhouse', 0.7, 0.7, 0.9);
-				add(farmHouse);
-
-				var grassLand:BackgroundImg = new BackgroundImg(-600, 500, 'stages/farm/grass lands');
-				add(grassLand);
-
-				var cornFence:BackgroundImg = new BackgroundImg(-400, 200, 'stages/farm/cornFence');
-				add(cornFence);
-				
-				var cornFence2:BackgroundImg = new BackgroundImg(1100, 200, 'stages/farm/cornFence2');
-				add(cornFence2);
-
-				var bagType = FlxG.random.int(0, 1000) == 0 ? 'popeye' : 'cornbag';
-				var cornBag:BackgroundImg = new BackgroundImg(1200, 550, 'stages/farm/' + bagType);
-				add(cornBag);
-				
-				var sign:BackgroundImg = new BackgroundImg(0, 350, 'stages/farm/sign');
-				add(sign);
-
-				if (isNight)
-				{
-					flatgrass.color = 0xFF878787;
-					hills.color = 0xFF878787;
-					farmHouse.color = 0xFF878787;
-					grassLand.color = 0xFF878787;
-					cornFence.color = 0xFF878787;
-					cornFence2.color = 0xFF878787;
-					cornBag.color = 0xFF878787;
-					sign.color = 0xFF878787;
-				}
-				add(bg);
-				add(flatgrass);
-				add(hills);
-				add(farmHouse);
-				add(grassLand);
-				add(cornFence);
-				add(cornFence2);
-				add(cornBag);
-				add(sign);
-				
-			case 'polygonized' | 'cheating' | 'unfairness':
-				defaultCamZoom = 0.8;
-				
-				var bgString:String = '';
-				switch (curTrack)
-				{
-					case 'cheating':
-						bgString = 'stages/singleimages/cheater';
-						curStage = 'greenVoid';
-					case 'unfairness':
-						bgString = 'stages/singleimages/scarybg';
-						curStage = 'unfairness';
-					default:
-						bgString = 'stages/singleimages/redsky';
-						curStage = 'redVoid';
-				}
-				var bg:BackgroundImg = new BackgroundImg(-600, -200, bgString, 0.9, 0.9, false, true);
-				add(bg);
-				
-				createShader(bg, 0.1, 5, 2);
-			case 'disability' | 'disruption':
-				defaultCamZoom = 0.8;
-				
-				var bgString:String = '';
-				switch (curTrack)
-				{
-					case 'disruption':
-						bgString = 'stages/singleimages/disruptor';
-						curStage = 'disrupt';
-					default:
-						bgString = 'stages/singleimages/disabled';
-						curStage = 'disabled';
-				}
-				
-				var bg:BackgroundImg = new BackgroundImg(-800, -300, bgString, 0.95, 0.95, false, true);
-				add(bg);
-				
-				createShader(bg, 0.1, 5, 2);
-			case 'og':
-				defaultCamZoom = 0.8;			
-				curStage = 'alphaHouse';
-
-				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/singleimages/daveoldbg', 0.9, 0.9, 0.9);
-				add(bg);
-				
-			case 'algebra':
-				curStage = 'algebra';
-				defaultCamZoom = 0.85;
-				swagSpeed = 1.6;
-				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('stages/singleimages/algebraBg'));
-				bg.setGraphicSize(Std.int(bg.width * 1.35), Std.int(bg.height * 1.35));
-				bg.updateHitbox();
-				//this is temp until good positioning gets done
-				bg.screenCenter(); // no its not
-				add(bg);
-				
-			case 'kabunga':
-				defaultCamZoom = 0.7;
-				curStage = 'exbungo-land';
-				
-				var bg:BackgroundImg = new BackgroundImg(-320, -160, 'stages/exbongo/Exbongo', false, true, 1.5);
-				add(bg);
-				
-				var circle:BackgroundImg = new BackgroundImg(-30, 550, 'stages/exbongo/Circle', false);
-				add(circle);
-
-				place = new BackgroundImg(860, -15, 'stages/exbongo/Place', false);
-				add(place);
-				
-				createShader(bg, 0.1, 5, 2);
-				
-			case 'computer':
-				defaultCamZoom = 0.75;
-				curStage = 'laptop';
-				
-				var bg:BackgroundImg = new BackgroundImg(0, 0, 'stages/singleimages/laptop', false, true, 1.2);
-				bg.screenCenter();
-				bg.x -= 400;
-				add(bg);
-				
-				createShader(bg, 0.1, 5, 2);
-				
-			case 'crimson-corridor':
-				defaultCamZoom = 0.7;
-				curStage = 'rsod';
-				
-				var bg:BackgroundImg = new BackgroundImg(0, 0, 'stages/singleimages/3dFucked2', 1, 1, false, true, 2.5);
-				bg.screenCenter();
-				bg.x -= 350;
-				add(bg);
-				
-				createShader(bg, 0.1, 5, 2);
-				
-			case 'disposition':
-				defaultCamZoom = 0.65;
-				curStage = 'hell';
-				
-			case 'decimal':
-				defaultCamZoom = 0.8;
-				curStage = 'ohungi stage';
-				
-				var bg:BackgroundImg = new BackgroundImg(-800, -400, 'stages/ohungi/ohungi skybox', 0.9, 0.9, true, true);
-				add(bg);
-				
-				createShader(bg, 0.1, 5, 2);
-				
-				var frontground:BackgroundImg = new BackgroundImg(-1100, 220, 'stages/ohungi/ohungi ground', 1, 1);
-				add(frontground);
-				
-			case 'recursed':
-				defaultCamZoom = 0.4;
-				curStage = 'freeplay';
-				
-				var darkSky:BackgroundImg = new BackgroundImg(0, 0, 'stages/recursed/darkSky', [
-					['prefix', 'scroll', 'scroll', 60, true]
-				], 1, 1, 2);
-				darkSky.animation.play('scroll');
-				darkSky.screenCenter();
-				add(darkSky);
-				
-				daveSongsLetters = new FlxTypedGroup<Alphabet>();
-				add(daveSongsLetters);
-
-				bambiSongsLetters = new FlxTypedGroup<Alphabet>();
-				add(bambiSongsLetters);
-				
-				tristanSongsLetters = new FlxTypedGroup<Alphabet>();
-				add(tristanSongsLetters);
-				
-				mainSongsLetters = [daveSongsLetters, bambiSongsLetters, tristanSongsLetters];
-				
-				for (i in 0...mainSongsLetters.length)
-				{
-					for (i2 in 0...songLetters[i].length)
+					var stageHills:BackgroundImg = new BackgroundImg(-834, -159, 'stages/house/' + (isNight ? 'night/' : '') + 'hills');
+					add(stageHills);
+					
+					var grassbg:BackgroundImg = new BackgroundImg(-1205, 580, 'stages/house/' + (isNight ? 'night/' : '') + 'grass bg');
+					add(grassbg);
+					
+					var gate:BackgroundImg = new BackgroundImg(-755, 250, 'stages/house/' + (isNight ? 'night/' : '') + 'gate');
+					add(gate);
+					
+					var stageFront:BackgroundImg = new BackgroundImg(-832, 505, 'stages/house/' + (isNight ? 'night/' : '') + 'grass');
+					add(stageFront);
+					
+					if (curTrack == 'insanity')
 					{
-						var songText:Alphabet = new Alphabet(-1700, -700, songLetters[i][i2], true, false);
-						songText.x += FlxG.random.int(0, 420) * 10;
-						songText.y += FlxG.random.int(0, 220) * 10;
-						songText.isMenuItem = false;
-						mainSongsLetters[i].add(songText);
-						
-						setUpLetterMovement(i);
+						var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/singleimages/redsky', 0.9, 0.9, false, true);
+						bg.visible = false;
+						add(bg);
+
+						createShader(bg, 0.1, 5, 2);
 					}
-				}
-				
-				charScroll = new FlxTypedGroup<BackgroundImg>();
-				add(charScroll);
-				
-				for (i in 0...panicSectionChars.length)
-				{	
-					var charBackdrop:BackgroundImg = new BackgroundImg(0, 0, 'stages/recursed/' + panicSectionChars[i], [
-						['prefix', 'scroll', 'scroll', 20, true]
+					
+				case 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'mealie':
+					defaultCamZoom = 0.8;
+					
+					var isNight:Bool;
+					isNight = curTrack == 'splitathon' || curTrack == 'mealie';
+					
+					curStage = isNight ? 'bambiFarmNight' : 'bambiFarm';
+
+					var skyType:String = isNight ? 'sky_night' : 'sky';
+
+					var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/' + skyType, 0.6, 0.6);
+					add(bg);
+
+					var flatgrass:BackgroundImg = new BackgroundImg(350, 75, 'stages/farm/gm_flatgrass', 0.65, 0.65, 0.34);
+					add(flatgrass);
+					
+					var hills:BackgroundImg = new BackgroundImg(-173, 100, 'stages/farm/orangey hills', 0.65, 0.65);
+					add(hills);
+					
+					var farmHouse:BackgroundImg = new BackgroundImg(100, 125, 'stages/farm/funfarmhouse', 0.7, 0.7, 0.9);
+					add(farmHouse);
+
+					var grassLand:BackgroundImg = new BackgroundImg(-600, 500, 'stages/farm/grass lands');
+					add(grassLand);
+
+					var cornFence:BackgroundImg = new BackgroundImg(-400, 200, 'stages/farm/cornFence');
+					add(cornFence);
+					
+					var cornFence2:BackgroundImg = new BackgroundImg(1100, 200, 'stages/farm/cornFence2');
+					add(cornFence2);
+
+					var bagType = FlxG.random.int(0, 1000) == 0 ? 'popeye' : 'cornbag';
+					var cornBag:BackgroundImg = new BackgroundImg(1200, 550, 'stages/farm/' + bagType);
+					add(cornBag);
+					
+					var sign:BackgroundImg = new BackgroundImg(0, 350, 'stages/farm/sign');
+					add(sign);
+
+					if (isNight)
+					{
+						flatgrass.color = 0xFF878787;
+						hills.color = 0xFF878787;
+						farmHouse.color = 0xFF878787;
+						grassLand.color = 0xFF878787;
+						cornFence.color = 0xFF878787;
+						cornFence2.color = 0xFF878787;
+						cornBag.color = 0xFF878787;
+						sign.color = 0xFF878787;
+					}
+					add(bg);
+					add(flatgrass);
+					add(hills);
+					add(farmHouse);
+					add(grassLand);
+					add(cornFence);
+					add(cornFence2);
+					add(cornBag);
+					add(sign);
+					
+				case 'polygonized' | 'cheating' | 'unfairness':
+					defaultCamZoom = 0.8;
+					
+					var bgString:String = '';
+					switch (curTrack)
+					{
+						case 'cheating':
+							bgString = 'stages/singleimages/cheater';
+							curStage = 'greenVoid';
+						case 'unfairness':
+							bgString = 'stages/singleimages/scarybg';
+							curStage = 'unfairness';
+						default:
+							bgString = 'stages/singleimages/redsky';
+							curStage = 'redVoid';
+					}
+					var bg:BackgroundImg = new BackgroundImg(-600, -200, bgString, 0.9, 0.9, false, true);
+					add(bg);
+					
+					createShader(bg, 0.1, 5, 2);
+				case 'disability' | 'disruption':
+					defaultCamZoom = 0.8;
+					
+					var bgString:String = '';
+					switch (curTrack)
+					{
+						case 'disruption':
+							bgString = 'stages/singleimages/disruptor';
+							curStage = 'disrupt';
+						default:
+							bgString = 'stages/singleimages/disabled';
+							curStage = 'disabled';
+					}
+					
+					var bg:BackgroundImg = new BackgroundImg(-800, -300, bgString, 0.95, 0.95, false, true);
+					add(bg);
+					
+					createShader(bg, 0.1, 5, 2);
+				case 'og':
+					defaultCamZoom = 0.8;			
+					curStage = 'alphaHouse';
+
+					var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/singleimages/daveoldbg', 0.9, 0.9, 0.9);
+					add(bg);
+					
+				case 'algebra':
+					curStage = 'algebra';
+					defaultCamZoom = 0.85;
+					swagSpeed = 1.6;
+					var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('stages/singleimages/algebraBg'));
+					bg.setGraphicSize(Std.int(bg.width * 1.35), Std.int(bg.height * 1.35));
+					bg.updateHitbox();
+					//this is temp until good positioning gets done
+					bg.screenCenter(); // no its not
+					add(bg);
+					
+				case 'kabunga':
+					defaultCamZoom = 0.7;
+					curStage = 'exbungo-land';
+					
+					var bg:BackgroundImg = new BackgroundImg(-320, -160, 'stages/exbongo/Exbongo', false, true, 1.5);
+					add(bg);
+					
+					var circle:BackgroundImg = new BackgroundImg(-30, 550, 'stages/exbongo/Circle', false);
+					add(circle);
+
+					place = new BackgroundImg(860, -15, 'stages/exbongo/Place', false);
+					add(place);
+					
+					createShader(bg, 0.1, 5, 2);
+					
+				case 'computer':
+					defaultCamZoom = 0.75;
+					curStage = 'laptop';
+					
+					var bg:BackgroundImg = new BackgroundImg(0, 0, 'stages/singleimages/laptop', false, true, 1.2);
+					bg.screenCenter();
+					bg.x -= 400;
+					add(bg);
+					
+					createShader(bg, 0.1, 5, 2);
+					
+				case 'crimson-corridor':
+					defaultCamZoom = 0.7;
+					curStage = 'rsod';
+					
+					var bg:BackgroundImg = new BackgroundImg(0, 0, 'stages/singleimages/3dFucked2', 1, 1, false, true, 2.5);
+					bg.screenCenter();
+					bg.x -= 350;
+					add(bg);
+					
+					createShader(bg, 0.1, 5, 2);
+					
+				case 'disposition':
+					defaultCamZoom = 0.65;
+					curStage = 'hell';
+					
+				case 'decimal':
+					defaultCamZoom = 0.8;
+					curStage = 'ohungi stage';
+					
+					var bg:BackgroundImg = new BackgroundImg(-800, -400, 'stages/ohungi/ohungi skybox', 0.9, 0.9, true, true);
+					add(bg);
+					
+					createShader(bg, 0.1, 5, 2);
+					
+					var frontground:BackgroundImg = new BackgroundImg(-1100, 220, 'stages/ohungi/ohungi ground', 1, 1);
+					add(frontground);
+					
+				case 'recursed':
+					defaultCamZoom = 0.4;
+					curStage = 'freeplay';
+					
+					var darkSky:BackgroundImg = new BackgroundImg(0, 0, 'stages/recursed/darkSky', [
+						['prefix', 'scroll', 'scroll', 60, true]
 					], 1, 1, 2);
-					charBackdrop.animation.play('scroll');
-				
-					charBackdrop.color = 0xFF878787;
-					charBackdrop.screenCenter();
-					charBackdrop.scrollFactor.set();
-					charBackdrop.alpha = 0;
-					charScroll.add(charBackdrop);
-				}
-				
-				hideLetters(0);
-				
-			case 'boing':
-				defaultCamZoom = 0.7;
-				curStage = 'boing';
-				
-				var bg:BackgroundImg = new BackgroundImg(-600, -300, 'stages/boing/white', 1, 1, 3);
-				add(bg);
-				
-				MyBeloved = new BackgroundImg(400, 450, 'stages/boing/Miku', [
-					['prefix', 'Miku-Idle', 'Miku-Idle', 24, false]
-				]);
-				MyBeloved.animation.play('Miku-Idle', true);
-				add(MyBeloved);
-				
-				MisViejas = new BackgroundImg(1000, -100, 'stages/boing/Elements', [
-					['prefix', 'Twogirls_Idle', 'Twogirls_Idle', 24, false]
-				]);
-				MisViejas.animation.play('Twogirls_Idle', true);
-				add(MisViejas);
-				
-			case 'rules' | 'malware-madness':
-				defaultCamZoom = 0.6;
-				curStage = 'pc';
-				
-				folds = new BackgroundImg(-400, -190, 'stages/normal/folds', 0.5, 0.7, 2);
-				add(folds);
-				
-				ground = new BackgroundImg(-215, -210, 'stages/normal/ground', 1, 1, 2);
-				
-				matrix1 = new BackgroundImg(0, -210, 'stages/normal/matrix1', [
-					['prefix', 'idle', 'matrix', 30, true]
-				], 1, 1, 4);
-				matrix1.x = (ground.x - matrix1.width) + 2;
-				matrix1.animation.play('idle', true);
-				add(matrix1);
-	
-				matrix2 = new BackgroundImg(0, -210, 'stages/normal/matrix2', [
-					['prefix', 'idle', 'matrix', 30, true]
-				], 1, 1, 4);
-				matrix2.x = (ground.x + ground.width) - 1;
-				matrix2.animation.play('idle', true);
-				add(matrix2);
-				
-				backBG = new BackgroundImg(-215, -190, 'stages/normal/back', [
-					['prefix', 'idle', 'back', 30, false]
-				], 1, 1, 2);
-				backBG.animation.play('idle', true);
-				add(backBG);
-				
-				add(ground);
-				
-			case 'fnfgf' | 'unstoppable':
-				defaultCamZoom = 1;
-				curStage = 'none';
-				
-				//generate nothing
-			
-			default:
-				defaultCamZoom = 0.9;
-				curStage = 'stage';
-				
-				var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/default/stageback', 0.9, 0.9);
-				add(bg);
+					darkSky.animation.play('scroll');
+					darkSky.screenCenter();
+					add(darkSky);
+					
+					daveSongsLetters = new FlxTypedGroup<Alphabet>();
+					add(daveSongsLetters);
 
-				var stageFront:BackgroundImg = new BackgroundImg(-650, 600, 'stages/default/stagefront', 0.9, 0.9, 1.1);
-				add(stageFront);
+					bambiSongsLetters = new FlxTypedGroup<Alphabet>();
+					add(bambiSongsLetters);
+					
+					tristanSongsLetters = new FlxTypedGroup<Alphabet>();
+					add(tristanSongsLetters);
+					
+					mainSongsLetters = [daveSongsLetters, bambiSongsLetters, tristanSongsLetters];
+					
+					for (i in 0...mainSongsLetters.length)
+					{
+						for (i2 in 0...songLetters[i].length)
+						{
+							var songText:Alphabet = new Alphabet(-1700, -700, songLetters[i][i2], true, false);
+							songText.x += FlxG.random.int(0, 420) * 10;
+							songText.y += FlxG.random.int(0, 220) * 10;
+							songText.isMenuItem = false;
+							mainSongsLetters[i].add(songText);
+							
+							setUpLetterMovement(i);
+						}
+					}
+					
+					charScroll = new FlxTypedGroup<BackgroundImg>();
+					add(charScroll);
+					
+					for (i in 0...panicSectionChars.length)
+					{	
+						var charBackdrop:BackgroundImg = new BackgroundImg(0, 0, 'stages/recursed/' + panicSectionChars[i], [
+							['prefix', 'scroll', 'scroll', 20, true]
+						], 1, 1, 2);
+						charBackdrop.animation.play('scroll');
+					
+						charBackdrop.color = 0xFF878787;
+						charBackdrop.screenCenter();
+						charBackdrop.scrollFactor.set();
+						charBackdrop.alpha = 0;
+						charScroll.add(charBackdrop);
+					}
+					
+					hideLetters(0);
+					
+				case 'boing':
+					defaultCamZoom = 0.7;
+					curStage = 'boing';
+					
+					var bg:BackgroundImg = new BackgroundImg(-600, -300, 'stages/boing/white', 1, 1, 3);
+					add(bg);
+					
+					MyBeloved = new BackgroundImg(400, 450, 'stages/boing/Miku', [
+						['prefix', 'Miku-Idle', 'Miku-Idle', 24, false]
+					]);
+					MyBeloved.animation.play('Miku-Idle', true);
+					add(MyBeloved);
+					
+					MisViejas = new BackgroundImg(1000, -100, 'stages/boing/Elements', [
+						['prefix', 'Twogirls_Idle', 'Twogirls_Idle', 24, false]
+					]);
+					MisViejas.animation.play('Twogirls_Idle', true);
+					add(MisViejas);
+					
+				case 'rules' | 'malware-madness':
+					defaultCamZoom = 0.6;
+					curStage = 'pc';
+					
+					folds = new BackgroundImg(-400, -190, 'stages/normal/folds', 0.5, 0.7, 2);
+					add(folds);
+					
+					ground = new BackgroundImg(-215, -210, 'stages/normal/ground', 1, 1, 2);
+					
+					matrix1 = new BackgroundImg(0, -210, 'stages/normal/matrix1', [
+						['prefix', 'idle', 'matrix', 30, true]
+					], 1, 1, 4);
+					matrix1.x = (ground.x - matrix1.width) + 2;
+					matrix1.animation.play('idle', true);
+					add(matrix1);
 
-				var stageCurtains:BackgroundImg = new BackgroundImg(-500, -300, 'stages/default/stagecurtains', 1.3, 1.3, 0.9);
-				add(stageCurtains);
+					matrix2 = new BackgroundImg(0, -210, 'stages/normal/matrix2', [
+						['prefix', 'idle', 'matrix', 30, true]
+					], 1, 1, 4);
+					matrix2.x = (ground.x + ground.width) - 1;
+					matrix2.animation.play('idle', true);
+					add(matrix2);
+					
+					backBG = new BackgroundImg(-215, -190, 'stages/normal/back', [
+						['prefix', 'idle', 'back', 30, false]
+					], 1, 1, 2);
+					backBG.animation.play('idle', true);
+					add(backBG);
+					
+					add(ground);
+					
+				default:
+					defaultCamZoom = 0.9;
+					curStage = 'stage';
+					
+					var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/default/stageback', 0.9, 0.9);
+					add(bg);
+
+					var stageFront:BackgroundImg = new BackgroundImg(-650, 600, 'stages/default/stagefront', 0.9, 0.9, 1.1);
+					add(stageFront);
+
+					var stageCurtains:BackgroundImg = new BackgroundImg(-500, -300, 'stages/default/stagecurtains', 1.3, 1.3, 0.9);
+					add(stageCurtains);
+			}
 		}
 	}
 	
