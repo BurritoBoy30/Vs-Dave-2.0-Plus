@@ -82,13 +82,13 @@ class Character extends FlxSprite
 	var startTransiton:Bool = false;
 	var didItOnce:Bool = false;
 	
-	public function trepTransi(chance:Float)
+	public function trepTransi()
 	{
 		if (curCharacter == 'gf-trepidation')
 		{
 			if (!didItOnce)
 			{
-				if (FlxG.random.bool(chance * 0.01))
+				if (FlxG.random.bool(0.01))
 				{
 					startTransiton = true;
 					canDance = false;

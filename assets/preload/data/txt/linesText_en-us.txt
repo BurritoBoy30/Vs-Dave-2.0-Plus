@@ -5,6 +5,7 @@ misses==Misses::space:
 accuracy==Accuracy::space:
 songcredit==Song by:space:
 rating==Rating::space:
+botplayingame==Botplay enabled, Press 9 to hide the HUD
 
 // Story Mode //
 story mode==Story Mode

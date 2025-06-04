@@ -11,7 +11,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.graphics.frames.FlxAtlasFrames;
 
 class GameOverTailsDoll extends MusicBeatSubstate

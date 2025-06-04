@@ -5,6 +5,7 @@ misses==Falhas::space:
 accuracy==Precisão::space:
 songcredit==Música por:space:
 rating==Performance::space:
+botplayingame==Botplay ligado, Aperte 9 para esconder a HUD
 
 // Story Mode //
 story mode==Modo História

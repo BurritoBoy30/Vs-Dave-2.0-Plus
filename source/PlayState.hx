@@ -28,7 +28,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -73,6 +73,8 @@ class PlayState extends MusicBeatState
 	public static var bads:Int = 0;
 	public static var goods:Int = 0;
 	public static var sicks:Int = 0;
+	
+	public static var note_x:Float = 42;
 
 	public var stupidx:Float = 0;
 	public var stupidy:Float = 0; // stupid velocities for cutscene
@@ -156,7 +158,6 @@ class PlayState extends MusicBeatState
 	var talking:Bool = true;
 	var songScore:Int = 0;
 	var scoreTxt:FlxText;
-	var botPlayState:FlxText;
 	var pressNineTxt:FlxText;
 	
 	public var noteTweens:Array<FlxTween> = [];
@@ -522,7 +523,7 @@ class PlayState extends MusicBeatState
 		if (isDownScroll)
 			strumLine.y = FlxG.height - 165;
 		
-		timeTxt = new FlxText(FlxG.width / 2.28, 65, FlxG.width, "", 32);
+		timeTxt = new FlxText(0, strumLine.y + 30, FlxG.width, "", 32);
 		timeTxt.setFormat(Paths.font("comic.ttf"), 45, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.antialiasing = FlxG.save.data.antiAliasing;
@@ -531,7 +532,7 @@ class PlayState extends MusicBeatState
 		if(isDownScroll) timeTxt.y = FlxG.height - 105;
 		add(timeTxt);
 		
-		timeLabelTxt = new FlxText(timeTxt.x, timeTxt.y - 25, FlxG.width, ReturnLanguage.getLine('time'), 32);
+		timeLabelTxt = new FlxText(0, timeTxt.y - 25, FlxG.width, ReturnLanguage.getLine('time'), 32);
 		timeLabelTxt.setFormat(Paths.font("comic.ttf"), 25, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeLabelTxt.scrollFactor.set();
 		timeLabelTxt.antialiasing = FlxG.save.data.antiAliasing;
@@ -616,22 +617,13 @@ class PlayState extends MusicBeatState
 		scoreTxt.antialiasing = FlxG.save.data.antiAliasing;
 		add(scoreTxt);
 		
-		pressNineTxt = new FlxText(0, scoreTxt.y - 16, FlxG.width, "Press 9 to hide the HUD", 20);
+		pressNineTxt = new FlxText(0, scoreTxt.y - 16, FlxG.width, ReturnLanguage.getLine('botplayingame'), 20);
 		pressNineTxt.setFormat(Paths.font("comic.ttf"), 14, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		pressNineTxt.scrollFactor.set();
 		pressNineTxt.borderSize = 1.2;
 		pressNineTxt.antialiasing = FlxG.save.data.antiAliasing;
 		pressNineTxt.visible = false;
 		add(pressNineTxt);
-		
-		botPlayState = new FlxText(-45, (isDownScroll ? FlxG.height - 85 : 65), FlxG.width, "Botplay", 20);
-		botPlayState.setFormat(Paths.font("comic.ttf"), 40, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		botPlayState.scrollFactor.set();
-		botPlayState.borderSize = 2;
-		botPlayState.borderQuality = 2;
-		botPlayState.antialiasing = FlxG.save.data.antiAliasing;
-		botPlayState.visible = false;
-		add(botPlayState); 
 
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
@@ -646,7 +638,6 @@ class PlayState extends MusicBeatState
 		}
 		scoreTxt.cameras = [camHUD];
 		pressNineTxt.cameras = [camHUD];
-		botPlayState.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		timeLabelTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
@@ -738,7 +729,7 @@ class PlayState extends MusicBeatState
 			lazychartshader.waveFrequency = 5;
 			lazychartshader.waveSpeed = 1;
 
-			camHUD.setFilters([new ShaderFilter(lazychartshader.shader)]);
+			camHUD.filters = [new ShaderFilter(lazychartshader.shader)];
 		}
 		
 		if(SONG.song.toLowerCase() == "unfairness")
@@ -1580,7 +1571,7 @@ class PlayState extends MusicBeatState
 				noteSkin = 'pixel';
 			}
 			
-			var babyArrow:StrumNote = new StrumNote(0, strumLine.y, i, noteSkin, player == 1);
+			var babyArrow:StrumNote = new StrumNote(note_x, strumLine.y, i, noteSkin, player == 1);
 
 			if (!isStoryMode && fadeIn)
 			{
@@ -1912,10 +1903,9 @@ class PlayState extends MusicBeatState
 		if (botPlayOn && FlxG.keys.justPressed.NINE)
 			camHUD.visible = !camHUD.visible;
 			
-		botPlayState.visible = botPlayOn;
 		pressNineTxt.visible = botPlayOn;
 		
-		FlxG.camera.setFilters([new ShaderFilter(screenshader.shader)]); // this is very stupid but doesn't effect memory all that much so
+		FlxG.camera.filters = [new ShaderFilter(screenshader.shader)]; // this is very stupid but doesn't effect memory all that much so
 		if (shakeCam && eyesoreson)
 		{
 			// var shad = cast(FlxG.camera.screen.shader,Shaders.PulseShader);
@@ -3709,7 +3699,7 @@ class PlayState extends MusicBeatState
 					backBG.animation.play('idle', true);
 		}
 		
-		gf.trepTransi(SONG.bpm);
+		gf.trepTransi();
 	}
 	
 	function hideLetters(hideInt:Int)

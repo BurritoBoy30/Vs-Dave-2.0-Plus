@@ -32,6 +32,7 @@ class ReturnLanguage
 		{
 			returnedString = returnedString.replace(':break:', '\n');
 			returnedString = returnedString.replace(':space:', ' ');
+			returnedString = returnedString.replace(':comma:', ', ');
 			return returnedString;
 		}
 	}
