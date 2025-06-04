@@ -523,7 +523,7 @@ class PlayState extends MusicBeatState
 		if (isDownScroll)
 			strumLine.y = FlxG.height - 165;
 		
-		timeTxt = new FlxText(0, strumLine.y + 30, FlxG.width, "", 32);
+		timeTxt = new FlxText(0, strumLine.y + 15, FlxG.width, "", 32);
 		timeTxt.setFormat(Paths.font("comic.ttf"), 45, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.antialiasing = FlxG.save.data.antiAliasing;
@@ -755,16 +755,9 @@ class PlayState extends MusicBeatState
 					
 				gfvideotype = '';
 			case 'unstoppable':
-				loadVideo('unstoppable');
-				//brute force the changes cuz im lazy
-				iconP1.createIcon('test');
-				iconP2.createIcon('fire');
-				forceHealthBarColors([255,255,255], [90,90,90]);
+				videoAndHUDchange('unstoppable', 'test', 'fire', [255,255,255], [90,90,90]);
 			case 'mekatsune':
-				loadVideo('mekatsune');
-				iconP1.createIcon('red');
-				iconP2.createIcon('toriel');
-				forceHealthBarColors([255,255,255], [244,67,54]);
+				videoAndHUDchange('mekatsune', 'red', 'toriel', [255,255,255], [244,67,54]);
 		}
 
 		if (isStoryMode)
@@ -807,6 +800,14 @@ class PlayState extends MusicBeatState
 		video.antialiasing = FlxG.save.data.antiAliasing;
 		video.pause();
 		add(video);
+	}
+	
+	function videoAndHUDchange(video:String, iconp1:String, iconp2:String, dadcolors:Array<Int>, bfcolors:Array<Int>)
+	{
+		loadVideo(video);
+		iconP1.createIcon(iconp1);
+		iconP2.createIcon(iconp2);
+		forceHealthBarColors(dadcolors, bfcolors);
 	}
 	
 	function isTails()
