@@ -27,6 +27,12 @@ joke==Joke
 extra==Extras
 naughty==Naughty
 console==Console
+dave_desc==Choose between the main songs from Story Mode!
+golden_desc==Choose between some of the hits from the Golden Apple mod!
+joke_desc==Songs that aren't meant to be taken seriously!
+extra_desc==For those wanting more than the main songs!
+naughty_desc==For those feeling a bit spicy~
+console_desc==Open the console and discover it's secrets!
 
 // Pause Menu UI //
 resume==Resume

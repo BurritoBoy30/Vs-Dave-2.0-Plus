@@ -75,6 +75,7 @@ class PlayState extends MusicBeatState
 	public static var sicks:Int = 0;
 	
 	public static var note_x:Float = 42;
+	public static var note_x_middlescroll:Float = -278;
 
 	public var stupidx:Float = 0;
 	public var stupidy:Float = 0; // stupid velocities for cutscene
@@ -298,12 +299,6 @@ class PlayState extends MusicBeatState
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
-		
-		camHUD = new FlxCamera();
-		camHUD.bgColor.alpha = 0;
-		camOther = new FlxCamera();
-		camOther.bgColor.alpha = 0;
-
 		FlxG.cameras.reset(camGame);
 		
 		if (songsWithVideos.contains(SONG.song.toLowerCase()))
@@ -313,6 +308,8 @@ class PlayState extends MusicBeatState
 			FlxG.cameras.add(camVideo, false);
 		}
 		
+		camHUD = new FlxCamera();
+		camHUD.bgColor.alpha = 0;
 		FlxG.cameras.add(camHUD, false);
 		
 		if (SONG.song.toLowerCase() == 'recursed')
@@ -322,6 +319,8 @@ class PlayState extends MusicBeatState
 			FlxG.cameras.add(camRecurser, false);
 		}
 		
+		camOther = new FlxCamera();
+		camOther.bgColor.alpha = 0;
 		FlxG.cameras.add(camOther, false);
 		
 		Transition.nextCamera = camOther;
@@ -523,7 +522,9 @@ class PlayState extends MusicBeatState
 		if (isDownScroll)
 			strumLine.y = FlxG.height - 165;
 		
-		timeTxt = new FlxText(0, strumLine.y + 15, FlxG.width, "", 32);
+		var timeLocation:Float = FlxG.save.data.middlescroll ? 300 : 0;
+		
+		timeTxt = new FlxText(timeLocation, strumLine.y + 15, FlxG.width, "", 32);
 		timeTxt.setFormat(Paths.font("comic.ttf"), 45, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.antialiasing = FlxG.save.data.antiAliasing;
@@ -532,7 +533,7 @@ class PlayState extends MusicBeatState
 		if(isDownScroll) timeTxt.y = FlxG.height - 105;
 		add(timeTxt);
 		
-		timeLabelTxt = new FlxText(0, timeTxt.y - 25, FlxG.width, ReturnLanguage.getLine('time'), 32);
+		timeLabelTxt = new FlxText(timeLocation, timeTxt.y - 25, FlxG.width, ReturnLanguage.getLine('time'), 32);
 		timeLabelTxt.setFormat(Paths.font("comic.ttf"), 25, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeLabelTxt.scrollFactor.set();
 		timeLabelTxt.antialiasing = FlxG.save.data.antiAliasing;
@@ -755,9 +756,15 @@ class PlayState extends MusicBeatState
 					
 				gfvideotype = '';
 			case 'unstoppable':
-				videoAndHUDchange('unstoppable', 'test', 'fire', [255,255,255], [90,90,90]);
+				loadVideo('unstoppable');
+				iconP1.createIcon('test');
+				iconP2.createIcon('fire');
+				forceHealthBarColors([255,255,255], [90,90,90]);
 			case 'mekatsune':
-				videoAndHUDchange('mekatsune', 'red', 'toriel', [255,255,255], [244,67,54]);
+				loadVideo('mekatsune');
+				iconP1.createIcon('red');
+				iconP2.createIcon('toriel');
+				forceHealthBarColors([255,255,255], [244,67,54]);
 		}
 
 		if (isStoryMode)
@@ -791,7 +798,7 @@ class PlayState extends MusicBeatState
 		Transition.nextCamera = camOther;
 	}
 	
-	function loadVideo(file:String)
+	public function loadVideo(file:String)
 	{
 		video = new FlxVideoSprite(0, 0);
 		video.scrollFactor.set();
@@ -800,14 +807,7 @@ class PlayState extends MusicBeatState
 		video.antialiasing = FlxG.save.data.antiAliasing;
 		video.pause();
 		add(video);
-	}
-	
-	function videoAndHUDchange(video:String, iconp1:String, iconp2:String, dadcolors:Array<Int>, bfcolors:Array<Int>)
-	{
-		loadVideo(video);
-		iconP1.createIcon(iconp1);
-		iconP2.createIcon(iconp2);
-		forceHealthBarColors(dadcolors, bfcolors);
+		trace('loaded video!');
 	}
 	
 	function isTails()
@@ -1242,6 +1242,10 @@ class PlayState extends MusicBeatState
 
 		generateStaticArrows(0);
 		generateStaticArrows(1);
+		
+		for (i in 0...dadStrums.length) {
+			if(FlxG.save.data.middlescroll) dadStrums.members[i].visible = false;
+		}
 
 		talking = false;
 		startedCountdown = true;
@@ -1436,12 +1440,7 @@ class PlayState extends MusicBeatState
 			case 'supernovae' | 'glitch':
 				Application.current.window.title = banbiWindowNames[FlxG.random.int(0, banbiWindowNames.length - 1)];
 		}
-		
-		if (video != null)
-		{
-			video.resume();
-		}
-
+	
 		#if desktop
 		var godhelpme:String = FlxStringUtil.formatTime(Math.floor(songLength / 1000), false);
 		DiscordClient.changePresence(detailsText + " - " + SONG.song + " (" + godhelpme + ")",
@@ -1452,6 +1451,12 @@ class PlayState extends MusicBeatState
 			+ " | Misses: "
 			+ misses);
 		#end
+		
+		if (video != null)
+		{
+			video.resume();
+		}
+
 	}
 
 	var debugNum:Int = 0;
@@ -1524,7 +1529,7 @@ class PlayState extends MusicBeatState
 					unspawnNotes.push(sustainNote);
 
 					sustainNote.mustPress = gottaHitNote;
-
+					
 					if (sustainNote.mustPress)
 					{
 						sustainNote.x += FlxG.width / 2; // general offset
@@ -1572,7 +1577,7 @@ class PlayState extends MusicBeatState
 				noteSkin = 'pixel';
 			}
 			
-			var babyArrow:StrumNote = new StrumNote(note_x, strumLine.y, i, noteSkin, player == 1);
+			var babyArrow:StrumNote = new StrumNote(FlxG.save.data.middlescroll ? note_x_middlescroll : note_x, strumLine.y, i, noteSkin, player == 1);
 
 			if (!isStoryMode && fadeIn)
 			{
@@ -1797,7 +1802,6 @@ class PlayState extends MusicBeatState
 						spr.x -= Math.sin(elapsedtime) * ((spr.ID % 2) == 0 ? 1 : -1);
 						spr.x += Math.sin(elapsedtime) * 1.5;
 					});
-					
 				case 'unfairness':// fuck you
 					playerStrums.forEach(function(spr:FlxSprite)
 					{
@@ -1848,7 +1852,6 @@ class PlayState extends MusicBeatState
 						spr.scale.x *= 1.5;
 						spr.scale.y *= 1.5;
 					});
-					
 					dadStrums.forEach(function(spr:StrumNote)
 					{
 						spr.x = arrowJunks[spr.ID][0] + (Math.sin(elapsedtime) * ((spr.ID % 2) == 0 ? 1 : -1)) * krunkThing;
@@ -2277,7 +2280,12 @@ class PlayState extends MusicBeatState
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{	
-				if (daNote.y > FlxG.height)
+				if(!daNote.mustPress && FlxG.save.data.middlescroll)
+				{
+					daNote.active = true;
+					daNote.visible = false;
+				}
+				else if (daNote.y > FlxG.height)
 				{
 					daNote.active = false;
 					daNote.visible = false;
@@ -3113,9 +3121,9 @@ class PlayState extends MusicBeatState
 			case "cheating":
 				health -= healthtolower;
 			case 'unfairness':
-				health -= (healthtolower / 6);
+				health -= (healthtolower / 5);
 			case 'disruption':
-				health -= healthtolower / 2.8;
+				health -= (healthtolower / 2.8);
 		}
 		
 		cameraMoveOnNote(daNote.noteData, 'dad');

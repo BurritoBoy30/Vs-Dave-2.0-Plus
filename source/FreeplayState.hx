@@ -48,6 +48,7 @@ class FreeplayState extends MusicBeatState
 	private var CurrentPack:Int = 0;
 
 	private var NameAlpha:FlxText;
+	private var PackDescription:FlxText;
 
 	var loadingPack:Bool = false;
 
@@ -89,8 +90,14 @@ class FreeplayState extends MusicBeatState
 		NameAlpha.borderSize = 3;
 		NameAlpha.antialiasing = FlxG.save.data.antiAliasing;
 		
+		PackDescription = new FlxText(675, NameAlpha.y + 150, (FlxG.width / 2.5), ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase() + "_desc"));
+		PackDescription.setFormat(Paths.font("comic.ttf"), 50, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		PackDescription.borderSize = 2;
+		PackDescription.antialiasing = FlxG.save.data.antiAliasing;
+		
 		add(CurrentSongIcon);
 		add(NameAlpha);
+		add(PackDescription);
 		
 		Highscore.load();
 
@@ -226,6 +233,7 @@ class FreeplayState extends MusicBeatState
 			CurrentPack = 0;
 		}
 		NameAlpha.text = ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase());
+		PackDescription.text = ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase() + "_desc");
 		CurrentSongIcon.loadGraphic(Paths.image('packs/week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
 		changePackAntiAliasing();
 	}
@@ -280,11 +288,13 @@ class FreeplayState extends MusicBeatState
 					
 					FlxTween.tween(CurrentSongIcon, {alpha: 0}, 0.2);
 					FlxTween.tween(NameAlpha, {alpha: 0}, 0.2);
+					FlxTween.tween(PackDescription, {alpha: 0}, 0.2);
 					
 					new FlxTimer().start(0.2, function(Dumbshit:FlxTimer)
 					{
 						CurrentSongIcon.visible = false;
 						NameAlpha.visible = false;
+						PackDescription.visible = false;
 						GoToActualFreeplay();
 						InMainFreeplayState = true;
 						loadingPack = false;
@@ -402,8 +412,10 @@ class FreeplayState extends MusicBeatState
 				{
 					CurrentSongIcon.visible = true;
 					NameAlpha.visible = true;
+					PackDescription.visible = true;
 					FlxTween.tween(CurrentSongIcon, {alpha: 1}, 0.2);
 					FlxTween.tween(NameAlpha, {alpha: 1}, 0.2);
+					FlxTween.tween(PackDescription, {alpha: 1}, 0.2);
 					
 					InMainFreeplayState = false;
 					loadingPack = false;

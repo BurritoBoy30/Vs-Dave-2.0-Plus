@@ -22,6 +22,7 @@ class OptionsMenu extends MusicBeatState
 	var controlsStrings:Array<Option> = [
 		new Option('ghosttapping', FlxG.save.data.newInput),
 		new Option('downscroll', FlxG.save.data.downscroll),
+		new Option('middlescroll', FlxG.save.data.middlescroll),
 		new Option('accdisplay', FlxG.save.data.accuracyDisplay),
 		new Option('naughtiness', FlxG.save.data.hornyALL),
 		new Option('changekeys'),
@@ -83,9 +84,9 @@ class OptionsMenu extends MusicBeatState
 			add(controlCheckBox);
 		}
 		
-		checkArray[4].visible = false;
-		checkArray[7].visible = false;
-		checkArray[11].visible = false;
+		checkArray[5].visible = false;
+		checkArray[8].visible = false;
+		checkArray[12].visible = false;
 		
 		super.create();
 		
@@ -115,33 +116,35 @@ class OptionsMenu extends MusicBeatState
 					FlxG.save.data.downscroll = !FlxG.save.data.downscroll;
 					checkArray[curSelected].switchButton(FlxG.save.data.downscroll);
 				case 2:
+					FlxG.save.data.middlescroll = !FlxG.save.data.middlescroll;
+					checkArray[curSelected].switchButton(FlxG.save.data.middlescroll);
+				case 3:
 					FlxG.save.data.accuracyDisplay = !FlxG.save.data.accuracyDisplay;
 					checkArray[curSelected].switchButton(FlxG.save.data.accuracyDisplay);
-				case 3:
+				case 4:
 					FlxG.save.data.hornyALL = !FlxG.save.data.hornyALL;
 					checkArray[curSelected].switchButton(FlxG.save.data.hornyALL);
-				case 4:
-					FlxG.switchState(new ChangeKeysState());
 				case 5:
+					FlxG.switchState(new ChangeKeysState());
+				case 6:
 					FlxG.save.data.fullScreen = !FlxG.save.data.fullScreen;
 					checkArray[curSelected].switchButton(FlxG.save.data.fullScreen);
 					FlxG.fullscreen = FlxG.save.data.fullScreen;
-				case 6:
+				case 7:
 					FlxG.save.data.eyesoreson = !FlxG.save.data.eyesoreson;
 					checkArray[curSelected].switchButton(FlxG.save.data.eyesoreson);
-				case 7:
-					FlxG.switchState(new ChangeLanguage());
 				case 8:
+					FlxG.switchState(new ChangeLanguage());
+				case 9:
 					FlxG.save.data.antiAliasing = !FlxG.save.data.antiAliasing;
 					checkArray[curSelected].switchButton(FlxG.save.data.antiAliasing);
-				case 9:
+				case 10:
 					FlxG.save.data.noteCamera = !FlxG.save.data.noteCamera;
 					checkArray[curSelected].switchButton(FlxG.save.data.noteCamera);
-				case 10:
+				case 11:
 					FlxG.save.data.gfCanSing = !FlxG.save.data.gfCanSing;
 					checkArray[curSelected].switchButton(FlxG.save.data.gfCanSing);
-					
-				case 11:
+				case 12:
 					LoadingState.loadAndSwitchState(new ComboNumbersState());
 					
 			}

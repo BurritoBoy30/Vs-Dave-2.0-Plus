@@ -27,6 +27,12 @@ joke==Piada
 extra==Extras
 naughty==Safadeza
 console==Console
+dave_desc==Escolha entre as músicas principais do Modo História!
+golden_desc==Escolha entre algumas das batidas do mod Golden Apple!
+joke_desc==Músicas que não devem ser levadas á sério!
+extra_desc==Para aqueles querendo mais que as músicas principais!
+naughty_desc==Para aqueles se sentindo meio sapecas~
+console_desc==Abra o console e descubra seus segredos!
 
 // Pause Menu UI //
 resume==Resumir

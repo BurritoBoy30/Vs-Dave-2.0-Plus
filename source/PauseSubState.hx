@@ -105,6 +105,11 @@ class PauseSubState extends MusicBeatSubstate
 
 	override function update(elapsed:Float)
 	{
+		if (PlayState.video != null)
+		{
+			PlayState.video.pause();
+		}
+		
 		var scrollSpeed:Float = 50;
 		bg.x -= scrollSpeed * elapsed;
 		bg.y -= scrollSpeed * elapsed;

@@ -69,7 +69,7 @@ class Note extends FlxSprite
 		
 		this.noteStyle = noteStyle;
 
-		x += PlayState.note_x + 50;
+		x += (FlxG.save.data.middlescroll ? PlayState.note_x_middlescroll : PlayState.note_x) + 50;
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 2000;
 		this.strumTime = strumTime + FlxG.save.data.offset;
@@ -179,6 +179,9 @@ class Note extends FlxSprite
 				animList();
 				antialiasing = FlxG.save.data.antiAliasing;
 		}
+		
+		if(!musthit && FlxG.save.data.middlescroll)
+			visible = false;
 
 		if (PlayState.SONG.song.toLowerCase() == "cheating")
 		{
@@ -267,8 +270,6 @@ class Note extends FlxSprite
 				LocalScrollSpeed = rng.float(1,3);
 			}
 		}
-
-		// trace(prevNote);
 
 		if (isSustainNote && prevNote != null)
 		{
