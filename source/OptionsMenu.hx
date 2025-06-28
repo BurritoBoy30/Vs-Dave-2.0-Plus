@@ -38,6 +38,8 @@ class OptionsMenu extends MusicBeatState
 	private var grpControls:FlxTypedGroup<Alphabet>;
 	private var checkArray:Array<CheckBox> = [];
 	
+	var currentSelectedOption:String = '';
+	
 	override function create()
 	{
 		#if desktop
@@ -96,6 +98,8 @@ class OptionsMenu extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+		
+		currentSelectedOption = controlsStrings[curSelected].returnOption;
 
 		if (controls.BACK)
 			FlxG.switchState(new MainMenuState());
@@ -107,47 +111,47 @@ class OptionsMenu extends MusicBeatState
 
 		if (controls.ACCEPT)
 		{
-			switch(curSelected)
+			switch(controlsStrings[curSelected].returnOption)
 			{
-				case 0:
+				case 'ghosttapping':
 					FlxG.save.data.newInput = !FlxG.save.data.newInput;
 					checkArray[curSelected].switchButton(FlxG.save.data.newInput);
-				case 1:
+				case 'downscroll':
 					FlxG.save.data.downscroll = !FlxG.save.data.downscroll;
 					checkArray[curSelected].switchButton(FlxG.save.data.downscroll);
-				case 2:
+				case 'middlescroll':
 					FlxG.save.data.middlescroll = !FlxG.save.data.middlescroll;
 					checkArray[curSelected].switchButton(FlxG.save.data.middlescroll);
-				case 3:
+				case 'accdisplay':
 					FlxG.save.data.accuracyDisplay = !FlxG.save.data.accuracyDisplay;
 					checkArray[curSelected].switchButton(FlxG.save.data.accuracyDisplay);
-				case 4:
+				case 'naughtiness':
 					FlxG.save.data.hornyALL = !FlxG.save.data.hornyALL;
 					checkArray[curSelected].switchButton(FlxG.save.data.hornyALL);
-				case 5:
+				case 'changekeys':
 					FlxG.switchState(new ChangeKeysState());
-				case 6:
+				case 'fullscreen':
 					FlxG.save.data.fullScreen = !FlxG.save.data.fullScreen;
 					checkArray[curSelected].switchButton(FlxG.save.data.fullScreen);
 					FlxG.fullscreen = FlxG.save.data.fullScreen;
-				case 7:
+				case 'eyesores':
 					FlxG.save.data.eyesoreson = !FlxG.save.data.eyesoreson;
 					checkArray[curSelected].switchButton(FlxG.save.data.eyesoreson);
-				case 8:
+				case 'changelang':
 					FlxG.switchState(new ChangeLanguage());
-				case 9:
+				case 'antialiasing':
 					FlxG.save.data.antiAliasing = !FlxG.save.data.antiAliasing;
 					checkArray[curSelected].switchButton(FlxG.save.data.antiAliasing);
-				case 10:
+				case 'cammove':
 					FlxG.save.data.noteCamera = !FlxG.save.data.noteCamera;
 					checkArray[curSelected].switchButton(FlxG.save.data.noteCamera);
-				case 11:
+				case 'gfsings':
 					FlxG.save.data.gfCanSing = !FlxG.save.data.gfCanSing;
 					checkArray[curSelected].switchButton(FlxG.save.data.gfCanSing);
-				case 12:
+				case 'combonum':
 					LoadingState.loadAndSwitchState(new ComboNumbersState());
-					
 			}
+			
 		}
 	}
 
@@ -197,11 +201,15 @@ class Option
 {
 	public var names:String;
 	public var selectors:Bool;
+	
+	public var returnOption:String;
 
 	public function new(namesData:String, ?selectorsData:Bool = false)
 	{
 		names = ReturnLanguage.getLine(namesData);
 		
 		selectors = selectorsData;
+		
+		returnOption = namesData;
 	}
 }

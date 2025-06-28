@@ -610,15 +610,13 @@ class PlayState extends MusicBeatState
 		reloadHealthBarColors();
 
 		scoreTxt = new FlxText(0, healthBarBG.y + 40, FlxG.width, "", 20);
-		if (!FlxG.save.data.accuracyDisplay)
-			scoreTxt.x = healthBarBG.x + healthBarBG.width / 2;
 		scoreTxt.setFormat(Paths.font("comic.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.antialiasing = FlxG.save.data.antiAliasing;
 		add(scoreTxt);
 		
-		pressNineTxt = new FlxText(0, scoreTxt.y - 16, FlxG.width, ReturnLanguage.getLine('botplayingame'), 20);
+		pressNineTxt = new FlxText(0, scoreTxt.y - 18, FlxG.width, ReturnLanguage.getLine('botplayingame'), 20);
 		pressNineTxt.setFormat(Paths.font("comic.ttf"), 14, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		pressNineTxt.scrollFactor.set();
 		pressNineTxt.borderSize = 1.2;

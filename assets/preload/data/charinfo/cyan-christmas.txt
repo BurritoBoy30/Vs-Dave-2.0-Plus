@@ -17,4 +17,4 @@ indices, 0, -9, danceRight, GF Dancing Beat, 15:16:17:18:19:20:21:22:23:24:25:26
 indices, 0, 4, hairBlow, GF Dancing Beat Hair blowing, 0:1:2:3, true, 24
 indices, 0, -10, hairFall, GF Dancing Beat Hair Landing, 0:1:2:3:4:5:6:7:8:9:10:11, false, 24
 prefix, -2, -40, scared, GF FEAR, true, 24
-starterIdle: idle, false
+starterDance: danceRight, danceLeft, true, hasHair

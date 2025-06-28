@@ -3,4 +3,4 @@ Rules,10,movi,Normal,140
 Malware-Madness,10,mivo,Normal,180
 fnfgf,10,gf,Hard,225
 Unstoppable,10,fire,Hard,190
-Mekatsune,10,toriel,Hard,180
+Mekatsune,10,toriel,Extreme,180
