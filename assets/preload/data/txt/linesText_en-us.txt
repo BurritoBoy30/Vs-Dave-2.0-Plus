@@ -88,6 +88,7 @@ gefe-twerk==Twerking GeFe
 gf-massive==Massive Girlfriend
 three-gfs==The Three Girlfriends
 gf-trepidation==Trepidation Girlfriend
+gf-trepidation-pixel==Girlfriend Trepidation (Pixel)
 skyblue==Skyblue
 tails-doll==Busty Tails Doll
 

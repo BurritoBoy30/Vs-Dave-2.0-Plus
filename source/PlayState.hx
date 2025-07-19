@@ -46,6 +46,7 @@ import openfl.filters.ShaderFilter;
 import Shaders.PulseEffect;
 import Shaders.GlitchEffect;
 
+// video thing
 import hxcodec.flixel.FlxVideo;
 import hxcodec.flixel.FlxVideoSprite;
 
@@ -815,12 +816,10 @@ class PlayState extends MusicBeatState
 	
 	function generateStage(curTrack:String)
 	{
-		if (songsWithVideos.contains(curTrack))
+		if (songsWithVideos.contains(curTrack)) //generate nothing
 		{
 			defaultCamZoom = 1;
 			curStage = 'video';
-				
-			//generate nothing
 		}
 		else
 		{
@@ -2619,11 +2618,17 @@ class PlayState extends MusicBeatState
 		{
 			pixelShit = 'pixelUI/';
 		}
-
+		
+		var pixelShitOffset:Array<Float> = [0, 0];
+		if (daStyle == 'pixel')
+		{
+			pixelShitOffset = [10, -45];
+		}
+			
 		rating.loadGraphic(Paths.image('UI/' + pixelShit + daRating));
 		rating.screenCenter();
-		rating.x = (FlxG.width * 0.55) - 40 + FlxG.save.data.comboRatingLocation[0];
-		rating.y += -60 + FlxG.save.data.comboRatingLocation[1];
+		rating.x = (FlxG.width * 0.55) - 40 + FlxG.save.data.comboRatingLocation[0] + pixelShitOffset[0];
+		rating.y += -60 + FlxG.save.data.comboRatingLocation[1] + pixelShitOffset[1];
 		rating.acceleration.y = 550;
 		rating.velocity.y -= FlxG.random.int(140, 175);
 		rating.velocity.x -= FlxG.random.int(0, 10);
@@ -2654,10 +2659,16 @@ class PlayState extends MusicBeatState
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
 		{
+			var pixelShitOffset:Float = 0;
+			if (daStyle == 'pixel')
+			{
+				pixelShitOffset = -45;
+			}
+
 			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image('UI/' + pixelShit + 'num' + Std.int(i)));
 			numScore.screenCenter();
 			numScore.x = (FlxG.width * 0.55) + (43 * daLoop) - 90 + FlxG.save.data.comboNumbersLocation[0];
-			numScore.y += 80 + FlxG.save.data.comboNumbersLocation[1];
+			numScore.y += 80 + FlxG.save.data.comboNumbersLocation[1] + pixelShitOffset;
 
 			if (daStyle != 'pixel')
 			{
@@ -3578,8 +3589,8 @@ class PlayState extends MusicBeatState
 		
 		if (curBeat % boingBeatFix(1) == 0)
 		{
-			iconP1.scale.set(iconP1.realSize + 0.2, iconP1.realSize + 0.2);
-			iconP2.scale.set(iconP2.realSize + 0.2, iconP2.realSize + 0.2);
+			iconP1.scale.set(iconP1.realSize + (health * 0.2), iconP1.realSize + (health * 0.2));
+			iconP2.scale.set(iconP2.realSize + (Math.abs((-health)) * 0.2), iconP2.realSize + (Math.abs(-health) * 0.2));
 
 			iconP1.updateHitbox();
 			iconP2.updateHitbox();
@@ -3611,11 +3622,14 @@ class PlayState extends MusicBeatState
 					gfIdleColor();
 				}
 			}
-			else if (!shakeCam && gf.animation.getByName("scared") != null || (shakeCam || !shakeCam) && gf.animation.getByName("scared") == null)
+			else
 			{
-				gf.dance();
-				if (SONG.song.toLowerCase() == 'rules') gfmirror.dance();
-				gfIdleColor();
+				if (!shakeCam && gf.animation.getByName("scared") != null || (shakeCam || !shakeCam) && gf.animation.getByName("scared") == null)
+				{
+					gf.dance();
+					if (SONG.song.toLowerCase() == 'rules') gfmirror.dance();
+					gfIdleColor();
+				}
 			}
 		}
 		

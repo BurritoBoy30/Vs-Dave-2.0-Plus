@@ -1,0 +1,11 @@
+file: girlfriends/trepidation_gf_sprite_by_Rember
+offsets: 185, 190
+camoffsets: 0, 0
+scale: 6
+anti-aliasing: false
+flipX: false
+icon: gf-pixel
+barcolor: 174, 32, 68
+prefix, 0, 0, danceLeft, left, false, 24 
+prefix, 0, 0, danceRight, right, false, 24
+starterDance: danceRight, danceLeft, true
