@@ -91,6 +91,7 @@ gf-trepidation==Trepidation Girlfriend
 gf-trepidation-pixel==Girlfriend Trepidation (Pixel)
 skyblue==Skyblue
 tails-doll==Busty Tails Doll
+aymara==Aymara
 
 // Song Credits //
 supernovae_cred==Original Song made by ArchWk!

@@ -516,7 +516,8 @@ class CharacterSelectState extends MusicBeatState
 				new SelectableChar(['gf', 'gf-christmas', 'gf-standing', 'gf-pixel']),
 				new SelectableChar(['psyka', 'psyka-christmas', 'psyka-standing']),
 				new SelectableChar(['cyan', 'cyan-christmas']),
-				new SelectableChar(['kaity', 'kaity-christmas'])
+				new SelectableChar(['kaity', 'kaity-christmas']),
+				new SelectableChar(['aymara'])
 			];
 			
 			boyfriendData.remove(new SelectableChar(['oruta']));

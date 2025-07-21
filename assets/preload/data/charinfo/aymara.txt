@@ -1,0 +1,18 @@
+file: girlfriends/Aymara
+offsets: -80, 40
+camoffsets: 0, 0
+scale: 1.1
+anti-aliasing: true
+flipX: false
+icon: aymara
+barcolor: 122, 138, 161
+prefix, 0, -9, cheer, a japi, false, 24
+prefix, 0, -9, singLEFT, a left, false, 24
+prefix, 0, -9, singRIGHT, a right, false, 24
+prefix, 0, -9, singUP, a up, false, 24
+prefix, 0, -9, singDOWN, a down, false, 24
+prefix, 0, -9, sad, a miss, false, 24
+prefix, 0, -9, danceLeft, a idle1, false, 24
+prefix, 0, -9, danceRight, a idle 2, false, 24
+prefix, 9, -9, scared, a scared, true, 24
+starterDance: danceRight, danceLeft, true

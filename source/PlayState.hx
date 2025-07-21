@@ -251,6 +251,9 @@ class PlayState extends MusicBeatState
 	var banbiWindowNames:Array<String> = ['when you realize you have school this monday', 'industrial society and its future', 'my ears burn', 'i got that weed card', 'my ass itch', 'bruh', 'alright instagram its shoutout time'];
 	
 	public var isDownScroll:Bool = false;
+	
+	var thing:FlxSprite = new FlxSprite(0, 250);
+	
 	override public function create()
 	{
 		switch (SONG.song.toLowerCase())
@@ -421,7 +424,7 @@ class PlayState extends MusicBeatState
 		dad.x += dad.charOffset[0];
 		dad.y += dad.charOffset[1];
 		
-		var camPos:FlxPoint = new FlxPoint((dad.getGraphicMidpoint().x + 150) + dad.camOffsets[0], (dad.getGraphicMidpoint().y - 100) + dad.camOffsets[1]);
+		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x + 250 + dad.camOffsets[0], dad.getGraphicMidpoint().y - 100 + dad.camOffsets[1]);
 		
 		if (Character.tutorialGFs.contains(dad.curCharacter))
 		{
@@ -468,7 +471,9 @@ class PlayState extends MusicBeatState
 			case 'pc':
 				dad.setPosition(400 + dad.charOffset[0], 300 + dad.charOffset[1]);
 				boyfriend.setPosition(1480 + boyfriend.charOffset[0], 650 + boyfriend.charOffset[1]);
-				gf.setPosition(800 + gf.charOffset[0], 330 + gf.charOffset[1]);
+				gf.setPosition(850 + gf.charOffset[0], 330 + gf.charOffset[1]);
+			case 'sasx':
+				gf.setPosition(400 + gf.charOffset[0], 110 + gf.charOffset[1]);
 		}
 		
 		//they dont show up on video stages to improve performance
@@ -710,8 +715,11 @@ class PlayState extends MusicBeatState
 			case 'recursed':
 				if (FlxG.save.data.hornyALL)
 				{
-					preloadAsset('hornyshit/zoey_recursed/');
+					preloadAsset('hornyshit/zoey_recursed');
 				}
+			case 'terminatexs':
+				preloadAsset('bonk');
+				
 		}
 		
 		if (isTails())
@@ -1129,6 +1137,13 @@ class PlayState extends MusicBeatState
 					add(backBG);
 					
 					add(ground);
+				
+				case 'terminatexs':
+					defaultCamZoom = 0.7;
+					curStage = 'sasx';
+					
+					var lol:BackgroundImg = new BackgroundImg(-600, -300, 'stages/singleimages/lol');
+					add(lol);
 					
 				default:
 					defaultCamZoom = 0.9;
@@ -3418,6 +3433,12 @@ class PlayState extends MusicBeatState
 						iconP2.createIcon('fire-and-water');
 						forceHealthBarColors([255,255,255], [90,90,90]);
 				}
+			case 'terminatexs':
+				switch (curStep)
+				{
+					case 2748:
+						JBotBonkAnimation();
+				}
 		}
 		
 		if (SONG.song.toLowerCase() == 'recursed')
@@ -3589,8 +3610,8 @@ class PlayState extends MusicBeatState
 		
 		if (curBeat % boingBeatFix(1) == 0)
 		{
-			iconP1.scale.set(iconP1.realSize + (health * 0.2), iconP1.realSize + (health * 0.2));
-			iconP2.scale.set(iconP2.realSize + (Math.abs((-health)) * 0.2), iconP2.realSize + (Math.abs(-health) * 0.2));
+			iconP1.scale.set(iconP1.realSize + 0.2, iconP1.realSize + 0.2);
+			iconP2.scale.set(iconP2.realSize + 0.2, iconP2.realSize + 0.2);
 
 			iconP1.updateHitbox();
 			iconP2.updateHitbox();
@@ -3793,6 +3814,24 @@ class PlayState extends MusicBeatState
 		splitathonCharacterExpression.canDance = false;
 		splitathonCharacterExpression.playAnim(expression, true);
 		boyfriend.stunned = false;
+	}
+	
+	public function JBotBonkAnimation()
+	{
+		if (SONG.song.toLowerCase() == 'terminatexs')
+		{
+			dad.canDance = false;
+			dad.visible = false;
+			
+			thing.x = dad.x;
+			thing.y = dad.y;
+			thing.frames = Paths.getSparrowAtlas('bonk');
+			thing.animation.addByPrefix('bonk', 'b bonk', 24, false);
+			thing.antialiasing = FlxG.save.data.antiAliasing;
+			thing.scale.set(1.8, 1.8);
+			thing.animation.play('bonk', false);
+			add(thing);
+		}
 	}
 	
 	public function throwThatBitchInThere(guyWhoComesIn:String = 'bambi', guyWhoFliesOut:String = 'dave')

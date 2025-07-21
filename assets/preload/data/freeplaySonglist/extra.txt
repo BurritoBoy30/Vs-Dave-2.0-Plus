@@ -5,3 +5,4 @@ Crimson-Corridor,8,bombai,Normal,150
 Disposition,9,hell-expunged,Extreme,115
 Decimal,10,ohungi,Hard,140
 Recursed,10,recurser,Hard,150
+Terminatexs,10,j-bot,Hard,200

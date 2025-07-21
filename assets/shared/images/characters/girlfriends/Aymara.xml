@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="aymara.png"><SubTexture name="a idle10000" x="0" y="0" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle10001" x="804" y="0" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle10002" x="1608" y="0" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle10003" x="2412" y="0" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle10004" x="3216" y="0" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle10005" x="4020" y="0" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle10006" x="0" y="604" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle10007" x="804" y="604" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle10008" x="1608" y="604" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle 20000" x="2412" y="604" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle 20001" x="3216" y="604" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle 20002" x="4020" y="604" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle 20003" x="0" y="1208" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle 20004" x="804" y="1208" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle 20005" x="1608" y="1208" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle 20006" x="2412" y="1208" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle 20007" x="3216" y="1208" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a idle 20008" x="4020" y="1208" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a left0000" x="0" y="1812" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a left0001" x="804" y="1812" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a left0002" x="1608" y="1812" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a left0003" x="2412" y="1812" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a up0000" x="3216" y="1812" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a up0001" x="4020" y="1812" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a up0002" x="0" y="2416" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a up0003" x="804" y="2416" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a down0000" x="1608" y="2416" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a down0001" x="2412" y="2416" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a down0002" x="3216" y="2416" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a down0003" x="4020" y="2416" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a right0000" x="0" y="3020" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a right0001" x="804" y="3020" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a right0002" x="1608" y="3020" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a right0003" x="2412" y="3020" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a japi0000" x="3216" y="3020" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a japi0001" x="4020" y="3020" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a japi0002" x="0" y="3624" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a japi0003" x="804" y="3624" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a scared0000" x="1608" y="3624" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a scared0001" x="2412" y="3624" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a scared0002" x="3216" y="3624" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a scared0003" x="4020" y="3624" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a scared0004" x="0" y="4228" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a scared0005" x="804" y="4228" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a miss0000" x="1608" y="4228" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a miss0001" x="2412" y="4228" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a miss0002" x="3216" y="4228" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+<SubTexture name="a miss0003" x="4020" y="4228" width="804" height="604" frameX="0" frameY="0" frameWidth="804" frameHeight="604" />
+</TextureAtlas>
