@@ -5,7 +5,7 @@ scale: 1.8
 anti-aliasing: true
 flipX: false
 icon: j-bot
-barcolor: 12, 181, 0
+barcolor: 188, 1, 2
 prefix, 0, 0, idle, b idle, false, 24
 prefix, 80, 19, singUP, b up, false, 24
 prefix, -30, -6, singRIGHT, b right, false, 24

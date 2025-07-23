@@ -20,7 +20,7 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['resume', 'restart', 'botplay', 'exit'];
+	var menuItems:Array<String> = ['resume', 'restart', 'botplay', 'change_character', 'exit'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -157,6 +157,9 @@ class PauseSubState extends MusicBeatSubstate
 					FlxG.resetState();
 				case 'botplay':
 					PlayState.botPlayOn = !PlayState.botPlayOn;
+				case 'change_character':
+					CharacterSelectState.accessViaPlaystate = true;
+					LoadingState.loadAndSwitchState(new CharacterSelectState());
 				case "exit":
 					if (PlayState.video != null)
 					{
@@ -165,6 +168,7 @@ class PauseSubState extends MusicBeatSubstate
 					
 					Transition.nextCamera = transCamera;
 					PlayState.botPlayOn = false;
+					CharacterSelectState.accessViaPlaystate = false;
 					
 					PlayState.boyfriendOverride = "none";
 					PlayState.girlfriendOverride = "none";

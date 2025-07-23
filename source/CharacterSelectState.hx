@@ -65,13 +65,15 @@ class CharacterSelectState extends MusicBeatState
 	
 	public static var noGfChar:Array<String> = ['bf-with-gf', 'bf-with-cyan', 'gf-player', 'rapper-gf', 'oruta'];
 	public static var hornyGFs:Array<String> = ['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-massive',
-		'three-gfs', 'gf-trepidation', 'gf-trepidation-pixel', 'skyblue', 'tails-doll', 'gefe', 'gefe-busty', 'gefe-twerk'];
+		'three-gfs', 'gf-trepidation', 'gf-trepidation-nsfw', 'gf-trepidation-pixel', 'skyblue', 'tails-doll', 'gefe', 'gefe-busty', 'gefe-twerk'];
 	
 	public var noMorePresses:Bool = false;
 	
 	var isTails:Bool = false;
 	public var buttonNumber:Float = 0;
 	public var previewMode:Bool = false;
+	
+	public static var accessViaPlaystate:Bool = false;
 	
 	override function create()
 	{
@@ -325,9 +327,16 @@ class CharacterSelectState extends MusicBeatState
 				
 				if (controls.BACK)
 				{
-					FlxG.mouse.visible = false;
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
-					FlxG.switchState(new FreeplayState());
+					if (accessViaPlaystate)
+					{
+						LoadingState.loadAndSwitchState(new PlayState());
+					}
+					else
+					{
+						FlxG.mouse.visible = false;
+						FlxG.sound.playMusic(Paths.music('freakyMenu'));
+						FlxG.switchState(new FreeplayState());
+					}
 				}
 					
 				if (FlxG.keys.justPressed.R)
@@ -504,7 +513,7 @@ class CharacterSelectState extends MusicBeatState
 				new SelectableChar(['gefe', 'gefe-busty', 'gefe-twerk']),
 				new SelectableChar(['gf-massive']),
 				new SelectableChar(['three-gfs']),
-				new SelectableChar(['gf-trepidation', 'gf-trepidation-pixel']),
+				new SelectableChar(['gf-trepidation', 'gf-trepidation-nsfw', 'gf-trepidation-pixel']),
 				new SelectableChar(['skyblue'])
 			];
 			
@@ -690,6 +699,9 @@ class CharacterSelectState extends MusicBeatState
 		PlayState.girlfriendOverride = "none";
 		PlayState.SONG.player1 = boyfriendData[curBF].names[curFormBF];
 		PlayState.girlfriendOverride = isTails ? 'tails-doll' : girlfriendData[curGF].names[curFormGF];
+		
+		if (accessViaPlaystate) accessViaPlaystate = false;
+		
 		LoadingState.loadAndSwitchState(new PlayState());
 	}
 }

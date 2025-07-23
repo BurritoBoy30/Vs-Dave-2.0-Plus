@@ -38,6 +38,7 @@ console_desc==Abra o console e descubra seus segredos!
 resume==Resumir
 restart==Reiniciar Música
 botplay==Botplay
+change_character==Trocar Personagem
 exit==Sair para o Menu
 botplayScreen==BOTPLAY
 
@@ -88,6 +89,7 @@ gefe-twerk==GeFe Rebolando
 gf-massive==Girlfriend Massiva
 three-gfs==Trio Girlfriend
 gf-trepidation==Girlfriend Trepidation
+gf-trepidation-nsfw==Girlfriend Trepidation (+18)
 gf-trepidation-pixel==Girlfriend Trepidation (Pixel)
 skyblue==Skyblue
 tails-doll==Tails Doll Peituda

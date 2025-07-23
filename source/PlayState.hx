@@ -161,6 +161,8 @@ class PlayState extends MusicBeatState
 	var songScore:Int = 0;
 	var scoreTxt:FlxText;
 	var pressNineTxt:FlxText;
+	var gfGetsFreakyTxt:FlxText;
+	var gfAnimationsAreAlt:Bool = false;
 	
 	public var noteTweens:Array<FlxTween> = [];
 	
@@ -248,44 +250,46 @@ class PlayState extends MusicBeatState
 	public var staticTrans:FlxSprite;
 	var enterRule34:Bool = false;
 	
+	// terminatexs
+	public var jBotBonk:FlxSprite;
+	public var boolthatstopsthegamefromcrashing:Bool = false;
+	
 	var banbiWindowNames:Array<String> = ['when you realize you have school this monday', 'industrial society and its future', 'my ears burn', 'i got that weed card', 'my ass itch', 'bruh', 'alright instagram its shoutout time'];
 	
+	// too lazy to remove this
 	public var isDownScroll:Bool = false;
-	
-	var thing:FlxSprite = new FlxSprite(0, 250);
 	
 	override public function create()
 	{
-		switch (SONG.song.toLowerCase())
+		if (SONG.song.toLowerCase() == 'recursed')
 		{
-			case 'recursed':
-				var letters:Array<Dynamic> = [
-					['h','o','u','s','e','i','n','a','t','y','p','l','g','z','d','b'],
-					['b','l','o','c','k','e','d','r','n','t','h','f','t','m','a','z','i','n','g','y'],
-					['g','r','e','t','i','n','s','a','d','v','u']
-				];
-				
-				for (i in 0...9)
+			var letters:Array<Dynamic> = [
+				['h','o','u','s','e','i','n','a','t','y','p','l','g','z','d','b'],
+				['b','l','o','c','k','e','d','r','n','t','h','f','t','m','a','z','i','n','g','y'],
+				['g','r','e','t','i','n','s','a','d','v','u']
+			];
+			
+			for (i in 0...9)
+			{
+				for (i in 0...letters[0].length)
 				{
-					for (i in 0...letters[0].length)
-					{
-						songLetters[0].push(letters[0][i]);
-					}
+					songLetters[0].push(letters[0][i]);
 				}
-				for (i in 0...7)
+			}
+			for (i in 0...7)
+			{
+				for (i in 0...letters[1].length)
 				{
-					for (i in 0...letters[1].length)
-					{
-						songLetters[1].push(letters[1][i]);	
-					}
+					songLetters[1].push(letters[1][i]);	
 				}
-				for (i in 0...15)
+			}
+			for (i in 0...15)
+			{
+				for (i in 0...letters[2].length)
 				{
-					for (i in 0...letters[2].length)
-					{
-						songLetters[2].push(letters[2][i]);
-					}
+					songLetters[2].push(letters[2][i]);
 				}
+			}
 		}
 		theFunne = FlxG.save.data.newInput;
 		
@@ -424,7 +428,7 @@ class PlayState extends MusicBeatState
 		dad.x += dad.charOffset[0];
 		dad.y += dad.charOffset[1];
 		
-		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x + 250 + dad.camOffsets[0], dad.getGraphicMidpoint().y - 100 + dad.camOffsets[1]);
+		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x + 150 + dad.camOffsets[0], dad.getGraphicMidpoint().y - 100 + dad.camOffsets[1]);
 		
 		if (Character.tutorialGFs.contains(dad.curCharacter))
 		{
@@ -439,6 +443,8 @@ class PlayState extends MusicBeatState
 		switch (dad.curCharacter)
 		{
 			case 'ohungi':
+				camPos.x += 200;
+			case 'j-bot':
 				camPos.x += 200;
 		}
 		
@@ -485,32 +491,42 @@ class PlayState extends MusicBeatState
 		}
 		add(gf);
 		add(dad);
-		if (SONG.song.toLowerCase() == 'insanity')
+		switch (SONG.song.toLowerCase())
 		{
-			dadmirror = new Character(dad.x - 100, dad.y - 200, "dave-angey", 'dad');
-			add(dadmirror);
-			dadmirror.visible = false;
-		}
-		//movi 2 spritesheet is too big, for the sake of optimization, im using the dadmirror code for the second part
-		else if (SONG.song.toLowerCase() == 'rules')
-		{
-			var moveitall:Array<Float> = [-425, -100];
-			
-			white = new BackgroundImg(-765 + moveitall[0], 82 + moveitall[1], 'stages/page/white');
-			add(white);
-			white.visible = false;
-			
-			dadmirror = new Character(dad.x + moveitall[0], dad.y + 70 + moveitall[1], "movi2", 'dad');
-			add(dadmirror);
-			
-			backpage = new BackgroundImg(-1010 + moveitall[0], -43 + moveitall[1], 'stages/page/back-rule');
-			add(backpage);
-			backpage.visible = false;
+			case 'insanity':
+				dadmirror = new Character(dad.x - 100, dad.y - 200, "dave-angey", 'dad');
+				add(dadmirror);
+				dadmirror.visible = false;
+				
+			case 'terminatexs':
+				jBotBonk = new FlxSprite(9999, 9999);
+				jBotBonk.frames = Paths.getSparrowAtlas('bonk');
+				jBotBonk.animation.addByPrefix('bonk', 'b bonk', 24, false);
+				jBotBonk.scale.set(1.8, 1.8);
+				jBotBonk.antialiasing = FlxG.save.data.antiAliasing;
+				add(jBotBonk);
+				
+				trace('event check');
+				
+			case 'rules':
+				//movi 2 spritesheet is too big, for the sake of optimization, im using the dadmirror code for the second part
+				var moveitall:Array<Float> = [-425, -100];
+				
+				white = new BackgroundImg(-765 + moveitall[0], 82 + moveitall[1], 'stages/page/white');
+				add(white);
+				white.visible = false;
+				
+				dadmirror = new Character(dad.x + moveitall[0], dad.y + 70 + moveitall[1], "movi2", 'dad');
+				add(dadmirror);
+				
+				backpage = new BackgroundImg(-1010 + moveitall[0], -43 + moveitall[1], 'stages/page/back-rule');
+				add(backpage);
+				backpage.visible = false;
 
-			gfmirror = new Girlfriend(1275, 350, gfVersion);
-			gfmirror.x += gfmirror.charOffset[0];
-			gfmirror.y += gfmirror.charOffset[1];
-			add(gfmirror);
+				gfmirror = new Girlfriend(1275, 350, gfVersion);
+				gfmirror.x += gfmirror.charOffset[0];
+				gfmirror.y += gfmirror.charOffset[1];
+				add(gfmirror);
 		}
 		add(boyfriend);
 		
@@ -629,7 +645,15 @@ class PlayState extends MusicBeatState
 		pressNineTxt.antialiasing = FlxG.save.data.antiAliasing;
 		pressNineTxt.visible = false;
 		add(pressNineTxt);
-
+		
+		gfGetsFreakyTxt = new FlxText(3, FlxG.height - 20, FlxG.width, "Press SHIFT to turn on Alt animations", 20);
+		gfGetsFreakyTxt.setFormat(Paths.font("comic.ttf"), 15, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		gfGetsFreakyTxt.scrollFactor.set();
+		gfGetsFreakyTxt.borderSize = 1.2;
+		gfGetsFreakyTxt.visible = (gf.curCharacter == 'gf-trepidation' || gf.curCharacter == 'gf-trepidation-nsfw');
+		gfGetsFreakyTxt.antialiasing = FlxG.save.data.antiAliasing;
+		add(gfGetsFreakyTxt);
+		
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
@@ -643,6 +667,7 @@ class PlayState extends MusicBeatState
 		}
 		scoreTxt.cameras = [camHUD];
 		pressNineTxt.cameras = [camHUD];
+		gfGetsFreakyTxt.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		timeLabelTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
@@ -717,9 +742,6 @@ class PlayState extends MusicBeatState
 				{
 					preloadAsset('hornyshit/zoey_recursed');
 				}
-			case 'terminatexs':
-				preloadAsset('bonk');
-				
 		}
 		
 		if (isTails())
@@ -1733,6 +1755,15 @@ class PlayState extends MusicBeatState
 	
 	var ohungiOffset:Float = 0;
 	
+	function goToChartEditor()
+	{
+		FlxG.switchState(new ChartingState());
+				
+		#if desktop
+		DiscordClient.changePresence("Chart Editor", null, null, true);
+		#end
+	}
+	
 	override public function update(elapsed:Float)
 	{
 		elapsedtime += elapsed;
@@ -1918,7 +1949,8 @@ class PlayState extends MusicBeatState
 
 		if (botPlayOn && FlxG.keys.justPressed.NINE)
 			camHUD.visible = !camHUD.visible;
-			
+		
+		gfGetsFreakyTxt.visible = !gfAnimationsAreAlt;
 		pressNineTxt.visible = botPlayOn;
 		
 		FlxG.camera.filters = [new ShaderFilter(screenshader.shader)]; // this is very stupid but doesn't effect memory all that much so
@@ -1973,8 +2005,7 @@ class PlayState extends MusicBeatState
 		{
 			if (startingFreeplayUI)
 				camRecurser.shake(0.003, 0.1);
-
-			
+	
 			for (i in 0...mainSongsLetters.length)
 			{
 				for (i2 in 0...mainSongsLetters[i].length)
@@ -2027,6 +2058,20 @@ class PlayState extends MusicBeatState
 			}
 		}
 		
+		if (SONG.song.toLowerCase() == 'terminatexs')
+		{
+			if (boolthatstopsthegamefromcrashing)
+			{
+				if (jBotBonk.animation.curAnim.name == 'bonk')
+				{
+					if (jBotBonk.animation.curAnim.curFrame == 18)
+					{
+						FlxG.sound.play(Paths.sound('bonkin', 'shared'));
+					}
+				}
+			}
+		}
+		
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
@@ -2073,34 +2118,43 @@ class PlayState extends MusicBeatState
 				Transition.nextCamera = null;
 			}
 			
-			if (curSong == 'supernovae' && !FlxG.save.data.cheatingFound)
+			switch (SONG.song.toLowerCase())
 			{
-				PlayState.SONG = Song.loadFromJson("cheating"); // you dun fucked up
-				FlxG.save.data.cheatingFound = true;
-				FlxG.switchState(new PlayState());
-				return;
-			}
-			if (curSong == 'cheating' && !FlxG.save.data.unfairnessFound)
-			{
-				PlayState.SONG = Song.loadFromJson("unfairness"); // you dun fucked up
-				FlxG.save.data.unfairnessFound = true;
-				FlxG.switchState(new PlayState());
-				return;
-			}
-			else if (curSong == 'glitch' && !FlxG.save.data.kabungaFound)
-			{
-				PlayState.SONG = Song.loadFromJson("kabunga"); // you dun fucked up
-				FlxG.save.data.kabungaFound = true;
-				FlxG.switchState(new PlayState());
-				return;
-			}
-			else
-			{
-				FlxG.switchState(new ChartingState());
-				
-				#if desktop
-				DiscordClient.changePresence("Chart Editor", null, null, true);
-				#end
+				case 'supernovae':
+					if (!FlxG.save.data.cheatingFound)
+					{
+						PlayState.SONG = Song.loadFromJson("cheating"); // you dun fucked up
+						FlxG.save.data.cheatingFound = true;
+						FlxG.switchState(new PlayState());
+						return;
+					}
+					else
+						goToChartEditor();
+						
+				case 'cheating':
+					if (!FlxG.save.data.unfairnessFound)
+					{
+						PlayState.SONG = Song.loadFromJson("unfairness"); // you dun fucked up
+						FlxG.save.data.unfairnessFound = true;
+						FlxG.switchState(new PlayState());
+						return;
+					}
+					else
+						goToChartEditor();
+						
+				case 'glitch':		
+					if (!FlxG.save.data.kabungaFound)
+					{
+						PlayState.SONG = Song.loadFromJson("kabunga"); // you dun fucked up
+						FlxG.save.data.kabungaFound = true;
+						FlxG.switchState(new PlayState());
+						return;
+					}
+					else
+						goToChartEditor();
+						
+				default:
+					goToChartEditor();
 			}
 		}	
 		
@@ -2113,6 +2167,14 @@ class PlayState extends MusicBeatState
 				FlxG.switchState(new AnimationDebug(gf.curCharacter));
 			if (FlxG.keys.justPressed.THREE)
 				FlxG.switchState(new AnimationDebug(boyfriend.curCharacter));
+		}
+		
+		if (FlxG.keys.justPressed.SHIFT)
+		{
+			if (gf.curCharacter == 'gf-trepidation' || gf.curCharacter == 'gf-trepidation-nsfw')
+				gf.trepTransi();
+				
+			gfAnimationsAreAlt = true;
 		}
 
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
@@ -2218,12 +2280,6 @@ class PlayState extends MusicBeatState
 		{
 			focusCam(!SONG.notes[Std.int(curStep / 16)].mustHitSection);
 		}
-
-		/*if (camZooming)
-		{
-			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
-			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95);
-		}*/
 		
 		if (camZooming)
 		{
@@ -2479,6 +2535,7 @@ class PlayState extends MusicBeatState
 		canPause = false;
 		updateTime = false;
 		AnimationDebug.cameViaSong = false;
+		if (CharacterSelectState.accessViaPlaystate) CharacterSelectState.accessViaPlaystate = false;
 		
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
@@ -3740,8 +3797,6 @@ class PlayState extends MusicBeatState
 				if (curBeat % 2 == 0)
 					backBG.animation.play('idle', true);
 		}
-		
-		gf.trepTransi();
 	}
 	
 	function hideLetters(hideInt:Int)
@@ -3819,18 +3874,15 @@ class PlayState extends MusicBeatState
 	public function JBotBonkAnimation()
 	{
 		if (SONG.song.toLowerCase() == 'terminatexs')
-		{
+		{	
 			dad.canDance = false;
 			dad.visible = false;
 			
-			thing.x = dad.x;
-			thing.y = dad.y;
-			thing.frames = Paths.getSparrowAtlas('bonk');
-			thing.animation.addByPrefix('bonk', 'b bonk', 24, false);
-			thing.antialiasing = FlxG.save.data.antiAliasing;
-			thing.scale.set(1.8, 1.8);
-			thing.animation.play('bonk', false);
-			add(thing);
+			jBotBonk.x = dad.x;
+			jBotBonk.y = dad.y;
+			boolthatstopsthegamefromcrashing = false;
+			jBotBonk.animation.play('bonk', false);
+			
 		}
 	}
 	

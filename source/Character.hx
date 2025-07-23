@@ -84,17 +84,14 @@ class Character extends FlxSprite
 	
 	public function trepTransi()
 	{
-		if (curCharacter == 'gf-trepidation')
+		if (curCharacter == 'gf-trepidation' || curCharacter == 'gf-trepidation-nsfw')
 		{
 			if (!didItOnce)
 			{
-				if (FlxG.random.bool(0.01))
-				{
-					startTransiton = true;
-					canDance = false;
-					playAnim('transition', true);
-					didItOnce = true;
-				}
+				startTransiton = true;
+				canDance = false;
+				playAnim('transition', true);
+				didItOnce = true;
 			}
 		}
 	}
@@ -134,7 +131,7 @@ class Character extends FlxSprite
 					playAnim('danceRight');
 		}
 		
-		if (curCharacter == 'gf-trepidation')
+		if (curCharacter == 'gf-trepidation' || curCharacter == 'gf-trepidation-nsfw')
 		{
 			if (startTransiton)
 			{
@@ -167,7 +164,7 @@ class Character extends FlxSprite
 				{
 					danced = !danced;
 					
-					if (curCharacter == 'gf-trepidation')
+					if (curCharacter == 'gf-trepidation' || curCharacter == 'gf-trepidation-nsfw')
 					{
 						if (trepTransition)
 						{

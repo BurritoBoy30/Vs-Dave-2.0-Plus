@@ -38,6 +38,7 @@ console_desc==Open the console and discover it's secrets!
 resume==Resume
 restart==Restart Song
 botplay==Botplay
+change_character==Change Character
 exit==Exit to Menu
 botplayScreen==BOTPLAY
 
@@ -88,6 +89,7 @@ gefe-twerk==Twerking GeFe
 gf-massive==Massive Girlfriend
 three-gfs==The Three Girlfriends
 gf-trepidation==Trepidation Girlfriend
+gf-trepidation-nsfw==Girlfriend Trepidation (+18)
 gf-trepidation-pixel==Girlfriend Trepidation (Pixel)
 skyblue==Skyblue
 tails-doll==Busty Tails Doll
