@@ -13,6 +13,7 @@ tristan
 tristan-golden
 bambi-3d
 exbungo
+recurser
 bombu
 bombai
 hell-expunged

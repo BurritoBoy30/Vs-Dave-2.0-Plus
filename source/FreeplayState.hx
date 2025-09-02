@@ -438,10 +438,6 @@ class FreeplayState extends MusicBeatState
 				trace(poop);
 
 				PlayState.SONG = Song.loadFromJson(songs[curSelected].songName.toLowerCase());
-				PlayState.isStoryMode = false;
-
-				PlayState.storyWeek = songs[curSelected].week;
-				trace('CUR WEEK' + PlayState.storyWeek);
 				
 				switch (songs[curSelected].songName.toLowerCase())
 				{

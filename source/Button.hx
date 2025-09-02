@@ -8,25 +8,28 @@ import flixel.tweens.FlxTween;
 class Button extends FlxSprite
 {
 	var buttonAxis:Array<Dynamic>;
-	var callback:Void -> Void;
+	public var callback:Void -> Void;
 	var buttonPressed:Bool = false;
+	var setPermition:Bool = true;
 
-	public function new (x:Float, y:Float, notButtonAxis:Array<Dynamic>, buttonImg:String, callBack:Void -> Void)
+	public function new (x:Float, y:Float, notButtonAxis:Array<Dynamic>, buttonImg:String, ?folder:String = 'shared', ?notSetPermition:Bool = true,?callBack:Void -> Void)
 	{
 		super(x,y);
 		
-		loadGraphic(Paths.image(buttonImg, 'shared'));
+		loadGraphic(Paths.image(buttonImg, folder));
 		antialiasing = FlxG.save.data.antiAliasing;
 		
 		buttonAxis = notButtonAxis;
+		setPermition = notSetPermition;
 		
 		callback = callBack;
 	}
 	
+	// i need to do this kind of checking otherwise it fucking glitches out on zooms
 	function mouseOverButton()
 	{
 		return (FlxG.mouse.x > (x + 100 + buttonAxis[0][0]) && FlxG.mouse.x < (x + width + 100 + buttonAxis[0][1]))
-			&& (FlxG.mouse.y > (y + 100 + buttonAxis[1][0]) && FlxG.mouse.y < (y + height + 100 + buttonAxis[1][1]));
+			&& (FlxG.mouse.y > (y + 100 + buttonAxis[1][0]) && FlxG.mouse.y < (y + height + 100 + buttonAxis[1][1])) && setPermition;
 	}
 	
 	override function update(elapsed:Float)

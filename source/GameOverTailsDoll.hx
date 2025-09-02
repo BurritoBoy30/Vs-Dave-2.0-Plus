@@ -123,11 +123,7 @@ class GameOverTailsDoll extends MusicBeatSubstate
 		if (controls.BACK && canEnd)
 		{
 			FlxG.sound.music.stop();
-
-			if (PlayState.isStoryMode)
-				FlxG.switchState(new StoryMenuState());
-			else
-				FlxG.switchState(new FreeplayState());
+			FlxG.switchState(new FreeplayState());
 		}
 
 		if (tailsDoll.animation.curAnim.name == 'scare')

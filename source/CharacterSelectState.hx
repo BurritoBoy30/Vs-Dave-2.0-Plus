@@ -66,7 +66,7 @@ class CharacterSelectState extends MusicBeatState
 	public static var noGfChar:Array<String> = ['bf-with-gf', 'bf-with-cyan', 'gf-player', 'rapper-gf', 'oruta'];
 	public static var hornyGFs:Array<String> = ['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-massive',
 		'three-gfs', 'gf-trepidation', 'gf-trepidation-nsfw', 'gf-trepidation-pixel', 'skyblue', 'tails-doll', 'gefe', 'gefe-busty', 'gefe-twerk'];
-	
+
 	public var noMorePresses:Bool = false;
 	
 	var isTails:Bool = false;

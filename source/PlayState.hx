@@ -43,6 +43,7 @@ import lime.utils.Assets;
 import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
+import openfl.filters.BlurFilter;
 import Shaders.PulseEffect;
 import Shaders.GlitchEffect;
 
@@ -66,10 +67,6 @@ class PlayState extends MusicBeatState
 {
 	public static var curStage:String = '';
 	public static var SONG:SwagSong;
-	public static var isStoryMode:Bool = false;
-	public static var storyWeek:Int = 0;
-	public static var storyPlaylist:Array<String> = [];
-	public static var weekSong:Int = 0;
 	public static var shits:Int = 0;
 	public static var bads:Int = 0;
 	public static var goods:Int = 0;
@@ -89,6 +86,7 @@ class PlayState extends MusicBeatState
 	public var curbg:FlxSprite;
 	public var screenshader:Shaders.PulseEffect = new PulseEffect();
 	public static var lazychartshader:Shaders.GlitchEffect = new GlitchEffect();
+	public var blurringscreen:BlurFilter = new BlurFilter();
 
 	public var elapsedtime:Float = 0;
 	
@@ -135,7 +133,6 @@ class PlayState extends MusicBeatState
 	private var healthBar:FlxBar;
 	var timeTxt:FlxText;
 	var timeLabelTxt:FlxText;
-	var songPercent:Float = 0;
 
 	private var generatedMusic:Bool = false;
 	private var startingSong:Bool = false;
@@ -176,7 +173,6 @@ class PlayState extends MusicBeatState
 	
 	#if desktop
 	// Discord RPC variables
-	var detailsText:String = "";
 	var detailsPausedText:String = "";
 	#end
 
@@ -205,6 +201,7 @@ class PlayState extends MusicBeatState
 	var tristanSongsLetters:FlxTypedGroup<Alphabet>;
 	var mainSongsLetters:Array<FlxTypedGroup<Alphabet>> = [];
 	var lettersMovement:Array<Dynamic> = [[],[],[]];
+	var starttoblur:Bool = false;
 
 	// stuff for recursed cutscene
 	var recurserStandOff:Character;
@@ -316,16 +313,16 @@ class PlayState extends MusicBeatState
 			FlxG.cameras.add(camVideo, false);
 		}
 		
-		camHUD = new FlxCamera();
-		camHUD.bgColor.alpha = 0;
-		FlxG.cameras.add(camHUD, false);
-		
 		if (SONG.song.toLowerCase() == 'recursed')
 		{
 			camRecurser = new FlxCamera();
 			camRecurser.bgColor.alpha = 0;
 			FlxG.cameras.add(camRecurser, false);
 		}
+		
+		camHUD = new FlxCamera();
+		camHUD.bgColor.alpha = 0;
+		FlxG.cameras.add(camHUD, false);
 		
 		camOther = new FlxCamera();
 		camOther.bgColor.alpha = 0;
@@ -343,19 +340,8 @@ class PlayState extends MusicBeatState
 		Conductor.changeBPM(SONG.bpm);
 		
 		#if desktop
-
-		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
-		if (isStoryMode)
-		{
-			detailsText = "Story Mode";
-		}
-		else
-		{
-			detailsText = "Freeplay";
-		}
-
 		// String for when the game is paused
-		detailsPausedText = "(Paused) " + detailsText;
+		detailsPausedText = "(Paused) ";
 		#end
 		
 		if (SONG.song.toLowerCase() == 'unfairness')
@@ -392,6 +378,10 @@ class PlayState extends MusicBeatState
 		screenshader.waveFrequency = 2;
 		screenshader.waveSpeed = 1;
 		screenshader.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000, 100000);
+		
+		blurringscreen.blurX = 0;
+		blurringscreen.blurY = 0;
+		blurringscreen.quality = FlxG.save.data.antiAliasing ? 1 : 2;
 		
 		var gfVersion:String = 'gf';
 		if (girlfriendOverride == 'none' || girlfriendOverride == 'gf')
@@ -434,10 +424,6 @@ class PlayState extends MusicBeatState
 		{
 			dad.x = 400 + dad.charOffset[0];
 			dad.y = 130 + dad.charOffset[1];
-			if (isStoryMode)
-			{
-				camPos.x += 600;
-			}
 		}
 		
 		switch (dad.curCharacter)
@@ -646,7 +632,7 @@ class PlayState extends MusicBeatState
 		pressNineTxt.visible = false;
 		add(pressNineTxt);
 		
-		gfGetsFreakyTxt = new FlxText(3, FlxG.height - 20, FlxG.width, "Press SHIFT to turn on Alt animations", 20);
+		gfGetsFreakyTxt = new FlxText(7, FlxG.height - 27, FlxG.width, "Press SHIFT to turn on Alt animations", 20);
 		gfGetsFreakyTxt.setFormat(Paths.font("comic.ttf"), 15, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		gfGetsFreakyTxt.scrollFactor.set();
 		gfGetsFreakyTxt.borderSize = 1.2;
@@ -796,24 +782,11 @@ class PlayState extends MusicBeatState
 				forceHealthBarColors([255,255,255], [244,67,54]);
 		}
 
-		if (isStoryMode)
-		{
-			switch (SONG.song.toLowerCase())
-			{
-				case 'house' | 'insanity' | 'polygonized' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'supernovae' | 'glitch':
-					schoolIntro(doof);
-				default:
-					startCountdown();
-			}
-		}
-		else
-		{
-			startCountdown();
-		}
+		startCountdown();
 		
 		#if desktop
 		// Updating Discord Rich Presence.
-		DiscordClient.changePresence(detailsText + " - " + SONG.song,
+		DiscordClient.changePresence(SONG.song,
 			"Acc: "
 			+ truncateFloat(accuracy, 2)
 			+ "% | Score: "
@@ -1476,8 +1449,14 @@ class PlayState extends MusicBeatState
 		}
 	
 		#if desktop
-		var godhelpme:String = FlxStringUtil.formatTime(Math.floor(songLength / 1000), false);
-		DiscordClient.changePresence(detailsText + " - " + SONG.song + " (" + godhelpme + ")",
+		var curTime:Float = Conductor.songPosition;
+		if(curTime < 0) curTime = 0;
+
+		var secondsTotal:Int = Math.floor((songLength - curTime) / 1000);
+		if(secondsTotal < 0) secondsTotal = 0;
+
+		var godhelpme:String = FlxStringUtil.formatTime(secondsTotal, false);
+		DiscordClient.changePresence(SONG.song + " (" + godhelpme + ")",
 			"Acc: "
 			+ truncateFloat(accuracy, 2)
 			+ "% | Score: "
@@ -1613,7 +1592,7 @@ class PlayState extends MusicBeatState
 			
 			var babyArrow:StrumNote = new StrumNote(FlxG.save.data.middlescroll ? note_x_middlescroll : note_x, strumLine.y, i, noteSkin, player == 1);
 
-			if (!isStoryMode && fadeIn)
+			if (fadeIn)
 			{
 				babyArrow.y -= 10;
 				babyArrow.alpha = 0;
@@ -1690,12 +1669,13 @@ class PlayState extends MusicBeatState
 
 			if (!startTimer.finished)
 				startTimer.active = true;
+				
 			paused = false;
 			
 			#if desktop
 			if (startTimer.finished)
 			{
-				DiscordClient.changePresence(detailsText + " - " + SONG.song,
+				DiscordClient.changePresence(SONG.song,
 					"Acc: "
 					+ truncateFloat(accuracy, 2)
 					+ "% | Score: "
@@ -1705,8 +1685,14 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
-				var godhelpme:String = FlxStringUtil.formatTime(Math.floor((songLength - Conductor.songPosition) / 1000), false);
-				DiscordClient.changePresence(detailsText + " - " + SONG.song + " (" + godhelpme + ")",
+				var curTime:Float = Conductor.songPosition;
+				if(curTime < 0) curTime = 0;
+
+				var secondsTotal:Int = Math.floor((songLength - curTime) / 1000);
+				if(secondsTotal < 0) secondsTotal = 0;
+
+				var godhelpme:String = FlxStringUtil.formatTime(secondsTotal, false);		
+				DiscordClient.changePresence(SONG.song + " (" + godhelpme + ")",
 					"Acc: "
 					+ truncateFloat(accuracy, 2)
 					+ "% | Score: "
@@ -1730,8 +1716,14 @@ class PlayState extends MusicBeatState
 		vocals.play();
 		
 		#if desktop
-		var godhelpme:String = FlxStringUtil.formatTime(Math.floor((songLength - Conductor.songPosition) / 1000), false);
-		DiscordClient.changePresence(detailsText + " - " + SONG.song + " (" + godhelpme + ")",
+		var curTime:Float = Conductor.songPosition;
+		if(curTime < 0) curTime = 0;
+
+		var secondsTotal:Int = Math.floor((songLength - curTime) / 1000);
+		if(secondsTotal < 0) secondsTotal = 0;
+
+		var godhelpme:String = FlxStringUtil.formatTime(secondsTotal, false);
+		DiscordClient.changePresence(SONG.song + " (" + godhelpme + ")",
 			"Acc: "
 			+ truncateFloat(accuracy, 2)
 			+ "% | Score: "
@@ -1950,7 +1942,7 @@ class PlayState extends MusicBeatState
 		if (botPlayOn && FlxG.keys.justPressed.NINE)
 			camHUD.visible = !camHUD.visible;
 		
-		gfGetsFreakyTxt.visible = !gfAnimationsAreAlt;
+		gfGetsFreakyTxt.visible = (gf.curCharacter == 'gf-trepidation' || gf.curCharacter == 'gf-trepidation-nsfw') && !gfAnimationsAreAlt;
 		pressNineTxt.visible = botPlayOn;
 		
 		FlxG.camera.filters = [new ShaderFilter(screenshader.shader)]; // this is very stupid but doesn't effect memory all that much so
@@ -1970,6 +1962,11 @@ class PlayState extends MusicBeatState
 			screenshader.shader.uampmul.value[0] -= (elapsed / 2);
 		}
 		screenshader.Enabled = shakeCam && eyesoreson;
+		
+		if (SONG.song.toLowerCase() == 'recursed')
+		{
+			camGame.filters = [blurringscreen];
+		}
 		
 		dadStrums.forEach(function(spr:StrumNote)
 		{
@@ -2048,9 +2045,9 @@ class PlayState extends MusicBeatState
 			
 			if (endingFreeplayUI)
 			{	
-				scoreBG.angle += 5;
-				scoreText.angle += 0.2;
-				diffText.angle += 0.2;
+				scoreBG.angle += 0.24;
+				scoreText.angle += 0.28;
+				diffText.angle += 0.21;
 				
 				scoreBG.y += 8;
 				scoreText.y += 5;
@@ -2100,8 +2097,14 @@ class PlayState extends MusicBeatState
 			}
 			
 			#if desktop
-			var godhelpme:String = FlxStringUtil.formatTime(Math.floor((songLength - Conductor.songPosition) / 1000), false);
-			DiscordClient.changePresence(detailsPausedText + " - " + SONG.song + " (" + godhelpme + ")",
+			var curTime:Float = Conductor.songPosition;
+			if(curTime < 0) curTime = 0;
+
+			var secondsTotal:Int = Math.floor((songLength - curTime) / 1000);
+			if(secondsTotal < 0) secondsTotal = 0;
+
+			var godhelpme:String = FlxStringUtil.formatTime(secondsTotal, false);
+			DiscordClient.changePresence(detailsPausedText + SONG.song + " (" + godhelpme + ")",
 				"Acc: "
 				+ truncateFloat(accuracy, 2)
 				+ "% | Score: "
@@ -2264,7 +2267,6 @@ class PlayState extends MusicBeatState
 				if(updateTime) {
 					var curTime:Float = Conductor.songPosition;
 					if(curTime < 0) curTime = 0;
-					songPercent = (curTime / songLength);
 
 					var secondsTotal:Int = Math.floor((songLength - curTime) / 1000);
 					if(secondsTotal < 0) secondsTotal = 0;
@@ -2323,7 +2325,7 @@ class PlayState extends MusicBeatState
 			
 			#if desktop
 			// Game Over doesn't get his own variable because it's only used here
-			DiscordClient.changePresence("Game Over - " + detailsText, SONG.song);
+			DiscordClient.changePresence("Game Over", SONG.song);
 			#end
 			// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 		}
@@ -2558,80 +2560,23 @@ class PlayState extends MusicBeatState
 			video.destroy();
 		}
 
-		if (isStoryMode)
-		{
-			campaignScore += songScore;
-
-			storyPlaylist.remove(storyPlaylist[0]);
-
-			if (storyPlaylist.length <= 0)
-			{
-				if(FlxTransitionableState.skipNextTransIn)
-				{
-					Transition.nextCamera = null;
-				}
-				
-				PlayState.boyfriendOverride = "none";
-				PlayState.girlfriendOverride = "none";
-				
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
-
-				transIn = FlxTransitionableState.defaultTransIn;
-				transOut = FlxTransitionableState.defaultTransOut;
+		if (botPlayOn)
+			botPlayOn = false;
 			
-				// if ()
-				StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
-
-				if (SONG.validScore)
-				{
-					if (!botPlayOn)
-						Highscore.saveWeekScore(storyWeek, campaignScore);
-				}
-
-				FlxG.save.data.weekUnlocked = StoryMenuState.weekUnlocked;
-				FlxG.save.flush();
-				
-				FlxG.switchState(new StoryMenuState());
-			}
-			else
-			{
-				trace('LOADING NEXT SONG');
-				trace(PlayState.storyPlaylist[0].toLowerCase());
-
-				FlxTransitionableState.skipNextTransIn = true;
-				FlxTransitionableState.skipNextTransOut = true;
-				prevCamFollow = camFollow;
-
-				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase());
-				FlxG.sound.music.stop();
-				
-				if (botPlayOn)
-					botPlayOn = false;
-
-				LoadingState.loadAndSwitchState(new PlayState());
-			}
-		}
-		else
-		{
-			if (botPlayOn)
-				botPlayOn = false;
-				
-			trace('WENT BACK TO FREEPLAY??');
-			
-			if (PlayState.boyfriendOverride != "none" || PlayState.boyfriendOverride != "bf")
-				PlayState.boyfriendOverride = "none";
-			
-			if (PlayState.girlfriendOverride != "none" || PlayState.girlfriendOverride != "gf")
-				PlayState.girlfriendOverride = "none";
-				
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
-			FlxG.switchState(new FreeplayState());
-			if(FlxTransitionableState.skipNextTransIn)
-			{
-				Transition.nextCamera = null;
-			}
-		}
+		trace('WENT BACK TO FREEPLAY??');
 		
+		if (PlayState.boyfriendOverride != "none" || PlayState.boyfriendOverride != "bf")
+			PlayState.boyfriendOverride = "none";
+		
+		if (PlayState.girlfriendOverride != "none" || PlayState.girlfriendOverride != "gf")
+			PlayState.girlfriendOverride = "none";
+			
+		FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		FlxG.switchState(new FreeplayState());
+		if(FlxTransitionableState.skipNextTransIn)
+		{
+			Transition.nextCamera = null;
+		}		
 	}
 
 	var endingSong:Bool = false;
@@ -3017,17 +2962,9 @@ class PlayState extends MusicBeatState
 		var letterRating:String;
 		var comboRating:String;
 		
-		if (acc > 99.99)					letterRating = "SS+";
-		else if (acc < 99.99 && acc > 95)	letterRating = "S+";
-		else if (acc < 95 && acc > 90)		letterRating = "S";
-		else if (acc < 90 && acc > 90)		letterRating = "S";
-		else if (acc < 90 && acc > 80)		letterRating = "A";
-		else if (acc < 80 && acc > 70)		letterRating = "B";
-		else if (acc < 70 && acc > 60)		letterRating = "C";
-		else if (acc < 60 && acc > 50)		letterRating = "D";
-		else if (acc < 50)					letterRating = "F";
-		else 								letterRating = "";
-			
+		var ratingArray:Array<String> = ["D", "C", "B", "A", "S", "S+"];
+		letterRating = Std.int(acc / 10) < 50 ? "F" : ratingArray[Std.int(acc / 10) - 5];
+		
 		if (misses < 1)
 		{
 			if (goods == 0 && bads == 0 && shits == 0)
@@ -3413,6 +3350,7 @@ class PlayState extends MusicBeatState
 				switch (curStep)
 				{
 					case 320:
+						FlxTween.tween(camHUD, {alpha: 0}, 0.5, {ease: FlxEase.cubeInOut});
 						FlxTween.tween(darkBg, {alpha: 1}, 3, {ease: FlxEase.cubeInOut});
 						FlxTween.tween(recurserSideImg, {x: 0}, 0.2, {ease: FlxEase.cubeInOut});
 						FlxTween.tween(recurserStandOff, {x: -260}, 0.2, {ease: FlxEase.cubeInOut});
@@ -3433,6 +3371,7 @@ class PlayState extends MusicBeatState
 						boyfriendStandOff.destroy();
 						darkBg.alpha = 0;
 						camRecurser.flash();
+						FlxTween.tween(camHUD, {alpha: 1}, 0.5, {ease: FlxEase.cubeInOut});
 					case 864:
 						FlxG.camera.flash();
 						hideLetters(1);
@@ -3448,6 +3387,12 @@ class PlayState extends MusicBeatState
 						camRecurser.flash();
 						hideLetters(2);
 						endFreeplayUI();
+					case 1760:
+						starttoblur = true;
+					case 1792:
+						darkBg.makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
+						FlxTween.tween(darkBg, {alpha: 1}, 15, {ease: FlxEase.cubeInOut});
+						
 				}
 			case 'rules':
 				switch(curStep)
@@ -3510,8 +3455,14 @@ class PlayState extends MusicBeatState
 		}
 		
 		#if desktop
-		var godhelpme:String = FlxStringUtil.formatTime(Math.floor((songLength - Conductor.songPosition) / 1000), false);
-		DiscordClient.changePresence(detailsText + " - " + SONG.song + " (" + godhelpme + ")",
+		var curTime:Float = Conductor.songPosition;
+		if(curTime < 0) curTime = 0;
+
+		var secondsTotal:Int = Math.floor((songLength - curTime) / 1000);
+		if(secondsTotal < 0) secondsTotal = 0;
+
+		var godhelpme:String = FlxStringUtil.formatTime(secondsTotal, false);
+		DiscordClient.changePresence(SONG.song + " (" + godhelpme + ")",
 			"Acc: "
 			+ truncateFloat(accuracy, 2)
 			+ "% | Score: "
@@ -3782,6 +3733,15 @@ class PlayState extends MusicBeatState
 				generateFreeplayText(grpSongs.length);
 				
 				changeSelection(1);
+			}
+			
+			if (starttoblur)
+			{
+				if (curBeat % 2 == 0)
+				{
+					blurringscreen.blurX += 0.75;
+					blurringscreen.blurY += 0.75;
+				}
 			}
 		}
 		
