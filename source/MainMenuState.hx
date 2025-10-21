@@ -56,7 +56,7 @@ class MainMenuState extends MusicBeatState
 		add(menuside);
 		// magenta.scrollFactor.set();
 		
-		var buttonposition:Array<Float> = [20, 20];
+		var buttonposition:Array<Float> = [30, 30];
 		playButton = new Button(buttonposition[0], buttonposition[1], Button.loadOffset('correction'), 'ui/mainmenu_buttons/' + FlxG.save.data.gameLanguage + '/mainmenu_play', 'preload', !selectedSomethin, function()
 		{
 			if (!selectedSomethin)

@@ -509,7 +509,7 @@ class CharacterSelectState extends MusicBeatState
 		if (isHorny)
 		{
 			girlfriendData = [
-				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing']),
+				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-pixel-hot']),
 				new SelectableChar(['gefe', 'gefe-busty', 'gefe-twerk']),
 				new SelectableChar(['gf-massive']),
 				new SelectableChar(['three-gfs']),

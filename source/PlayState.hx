@@ -2962,8 +2962,20 @@ class PlayState extends MusicBeatState
 		var letterRating:String;
 		var comboRating:String;
 		
-		var ratingArray:Array<String> = ["D", "C", "B", "A", "S", "S+"];
-		letterRating = Std.int(acc / 10) < 50 ? "F" : ratingArray[Std.int(acc / 10) - 5];
+		if (acc < 99 && acc > 90)
+			letterRating = "S";
+		else if (acc < 90 && acc > 80)
+			letterRating = "A";
+		else if	(acc < 80 && acc > 70)
+			letterRating = "B";
+		else if (acc < 70 && acc > 60)
+			letterRating = "C";
+		else if (acc < 60 && acc > 50)
+			letterRating = "D";
+		else if (acc < 40)
+			letterRating = "F";
+		else
+			letterRating = "S+";
 		
 		if (misses < 1)
 		{

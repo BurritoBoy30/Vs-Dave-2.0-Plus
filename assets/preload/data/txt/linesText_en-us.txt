@@ -72,6 +72,7 @@ gf==Girlfriend
 gf-christmas==Girlfriend (Christmas)
 gf-standing==Girlfriend (Standing)
 gf-pixel==Girlfriend (Pixel)
+gf-pixel-hot==Hot Girlfriend (Pixel)
 psyka==Psyka
 psyka-christmas==Psyka (Christmas)
 psyka-standing==Psyka (Standing)

@@ -147,7 +147,7 @@ class LoadingState extends MusicBeatState
 	}
 	
 	static function getNextState(target:FlxState, stopMusic = false):FlxState
-	
+	{
 		Paths.setCurrentLevel("week1"); // apparently this holds the loadAndSwitchState together, oh boy
 		#if NO_PRELOAD_ALL
 		var loaded = isSoundLoaded(getSongPath())
