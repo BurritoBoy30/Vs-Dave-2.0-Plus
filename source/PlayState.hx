@@ -148,6 +148,8 @@ class PlayState extends MusicBeatState
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
 	
+	var darkBg:FlxSprite;
+	
 	public static var eyesoreson = true;
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
@@ -206,7 +208,6 @@ class PlayState extends MusicBeatState
 	// stuff for recursed cutscene
 	var recurserStandOff:Character;
 	var boyfriendStandOff:Character;
-	var darkBg:FlxSprite;
 	var recurserSideImg:FlxSprite;
 	var boyfriendSideImg:FlxSprite;
 	var recursedCutsceneEnded:Bool = false;
@@ -250,6 +251,10 @@ class PlayState extends MusicBeatState
 	// terminatexs
 	public var jBotBonk:FlxSprite;
 	public var boolthatstopsthegamefromcrashing:Bool = false;
+	
+	// sunshine
+	var tails_fundo:BackgroundImg;
+	var cinematicBars:FlxSprite;
 	
 	var banbiWindowNames:Array<String> = ['when you realize you have school this monday', 'industrial society and its future', 'my ears burn', 'i got that weed card', 'my ass itch', 'bruh', 'alright instagram its shoutout time'];
 	
@@ -466,6 +471,8 @@ class PlayState extends MusicBeatState
 				gf.setPosition(850 + gf.charOffset[0], 330 + gf.charOffset[1]);
 			case 'sasx':
 				gf.setPosition(400 + gf.charOffset[0], 110 + gf.charOffset[1]);
+			case 'tails-bg':
+				dad.setPosition(-100, -100);
 		}
 		
 		//they dont show up on video stages to improve performance
@@ -475,6 +482,13 @@ class PlayState extends MusicBeatState
 			dad.visible = false;
 			boyfriend.visible = false;
 		}
+		
+		if (SONG.song.toLowerCase() == 'sunshine')
+		{
+			gf.visible = false;
+			boyfriend.visible = false;
+		}
+		
 		add(gf);
 		add(dad);
 		switch (SONG.song.toLowerCase())
@@ -513,6 +527,11 @@ class PlayState extends MusicBeatState
 				gfmirror.x += gfmirror.charOffset[0];
 				gfmirror.y += gfmirror.charOffset[1];
 				add(gfmirror);
+			
+			case 'sunshine':
+				dadmirror = new Character(-100, -100, "tails-doll-3d-2", 'dad');
+				add(dadmirror);
+				dadmirror.visible = false;
 		}
 		add(boyfriend);
 		
@@ -524,13 +543,13 @@ class PlayState extends MusicBeatState
 
 		Conductor.songPosition = -5000;
 		
-		strumLine = new FlxSprite(0, 50).makeGraphic(FlxG.width, 10);
+		strumLine = new FlxSprite(0, 30).makeGraphic(FlxG.width, 10);
 		strumLine.scrollFactor.set();
 
 		if (isDownScroll)
-			strumLine.y = FlxG.height - 165;
+			strumLine.y = FlxG.height - 185;
 		
-		var timeLocation:Float = FlxG.save.data.middlescroll ? 300 : 0;
+		var timeLocation:Float = (FlxG.save.data.middlescroll || SONG.song.toLowerCase() == 'sunshine') ? 300 : 0;
 		
 		timeTxt = new FlxText(timeLocation, strumLine.y + 15, FlxG.width, "", 32);
 		timeTxt.setFormat(Paths.font("comic.ttf"), 45, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -669,6 +688,21 @@ class PlayState extends MusicBeatState
 			staticTrans.scale.set(2.7, 2.7);
 			add(staticTrans);
 			staticTrans.cameras = [camHUD];
+		}
+		
+		if (SONG.song.toLowerCase() == 'sunshine')
+		{
+			cinematicBars = new FlxSprite(0,0).loadGraphic(Paths.image('BL'));
+			cinematicBars.visible = false;
+			insert(members.indexOf(timeTxt), cinematicBars);
+	
+			darkBg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+			darkBg.visible = false;
+			darkBg.screenCenter();
+			add(darkBg);
+			
+			cinematicBars.cameras = [camHUD];
+			darkBg.cameras = [camHUD];
 		}
 		
 		if (SONG.song.toLowerCase() == 'recursed')
@@ -1140,6 +1174,13 @@ class PlayState extends MusicBeatState
 					var lol:BackgroundImg = new BackgroundImg(-600, -300, 'stages/singleimages/lol');
 					add(lol);
 					
+				case 'sunshine':
+					defaultCamZoom = 1;
+					curStage = 'tails-bg';
+					
+					tails_fundo = new BackgroundImg(-1000, -620, 'stages/singleimages/BACKING', 1, 1, 1.1);
+					add(tails_fundo);
+					
 				default:
 					defaultCamZoom = 0.9;
 					curStage = 'stage';
@@ -1251,7 +1292,7 @@ class PlayState extends MusicBeatState
 		generateStaticArrows(1);
 		
 		for (i in 0...dadStrums.length) {
-			if(FlxG.save.data.middlescroll) dadStrums.members[i].visible = false;
+			if(FlxG.save.data.middlescroll || SONG.song.toLowerCase() == 'sunshine') dadStrums.members[i].visible = false;
 		}
 
 		talking = false;
@@ -1264,7 +1305,7 @@ class PlayState extends MusicBeatState
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 		{
 			dad.dance();
-			if (curSong == 'insanity' || curSong == 'rules') dadmirror.dance();
+			if (curSong == 'insanity' || curSong == 'rules' || curSong == 'sunshine') dadmirror.dance();
 			gf.dance();
 			boyfriend.dance();
 
@@ -1294,7 +1335,6 @@ class PlayState extends MusicBeatState
 			}
 
 			switch (swagCounter)
-
 			{
 				case 0:
 					FlxG.sound.play(Paths.sound('intro3'), 0.6);
@@ -1363,7 +1403,8 @@ class PlayState extends MusicBeatState
 		{
 			case 'tutorial':
 				creditString = 'KawaiSprite';
-			case 'house' | 'insanity' | 'polygonized' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'bonus-song' | 'cheating' | 'unfairness' | 'kabunga':
+			case 'house' | 'insanity' | 'polygonized' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'bonus-song' | 'cheating' |
+				'unfairness' | 'kabunga':
 				creditString = 'MoldyGH';
 			case 'mealie':
 				creditString = 'Alexander Copper 19';
@@ -1590,7 +1631,18 @@ class PlayState extends MusicBeatState
 				noteSkin = 'pixel';
 			}
 			
-			var babyArrow:StrumNote = new StrumNote(FlxG.save.data.middlescroll ? note_x_middlescroll : note_x, strumLine.y, i, noteSkin, player == 1);
+			var note_x_position:Float = 0;
+			
+			if (SONG.song.toLowerCase() == 'sunshine')
+			{
+				note_x_position = note_x_middlescroll;
+			}
+			else
+			{
+				note_x_position = FlxG.save.data.middlescroll ? note_x_middlescroll : note_x;
+			}
+			
+			var babyArrow:StrumNote = new StrumNote(note_x_position, strumLine.y, i, noteSkin, player == 1);
 
 			if (fadeIn)
 			{
@@ -2280,7 +2332,10 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic && SONG.notes[Std.int(curStep / 16)] != null)
 		{
-			focusCam(!SONG.notes[Std.int(curStep / 16)].mustHitSection);
+			if (SONG.song.toLowerCase() == 'sunshine')
+				focusCam(true);
+			else
+				focusCam(!SONG.notes[Std.int(curStep / 16)].mustHitSection);
 		}
 		
 		if (camZooming)
@@ -2350,7 +2405,7 @@ class PlayState extends MusicBeatState
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{	
-				if(!daNote.mustPress && FlxG.save.data.middlescroll)
+				if(!daNote.mustPress && (FlxG.save.data.middlescroll || SONG.song.toLowerCase() == 'sunshine'))
 				{
 					daNote.active = true;
 					daNote.visible = false;
@@ -3140,7 +3195,7 @@ class PlayState extends MusicBeatState
 		}
 		dad.holdTimer = 0;
 		
-		if (curSong == 'insanity' || curSong == 'rules')
+		if (curSong == 'insanity' || curSong == 'rules' || curSong == 'sunshine')
 		{
 			dadmirror.playAnim(animToPlay + altAnim, true);
 			dadmirror.holdTimer = 0;
@@ -3453,6 +3508,38 @@ class PlayState extends MusicBeatState
 					case 2748:
 						JBotBonkAnimation();
 				}
+			case 'sunshine':
+				switch (curStep)
+				{
+					case 588:
+						darkBg.visible = true;
+						cinematicBars.visible = true;
+						
+						healthBar.visible = false;
+						healthBarANIM.visible = false;
+						healthBarBG.visible = false;
+						iconP1.visible = false;
+						iconP2.visible = false;
+						scoreTxt.visible = false;
+					case 592:
+						darkBg.visible = false;
+						dad.visible = false;
+						dadmirror.visible = true;
+					case 860:
+						darkBg.visible = true;
+						cinematicBars.visible = false;
+					case 864:
+						darkBg.visible = false;
+						dad.visible = true;
+						dadmirror.visible = false;
+
+						healthBar.visible = true;
+						healthBarANIM.visible = true;
+						healthBarBG.visible = true;
+						iconP1.visible = true;
+						iconP2.visible = true;
+						scoreTxt.visible = true;
+				}
 		}
 		
 		if (SONG.song.toLowerCase() == 'recursed')
@@ -3688,7 +3775,7 @@ class PlayState extends MusicBeatState
 		if (!dad.animation.curAnim.name.startsWith("sing") && curBeat % (dad.curCharacter == 'bambi-piss-3d' ? 4 : dad.danceType == 'dance' ? 1 : boingBeatFix(2)) == 0)
 		{
 			dad.dance();
-			if (curSong == 'insanity' || curSong == 'rules') dadmirror.dance();
+			if (curSong == 'insanity' || curSong == 'rules' || curSong == 'sunshine') dadmirror.dance();
 		}
 
 		if (curBeat % 8 == 7)

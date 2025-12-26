@@ -11,6 +11,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import flixel.addons.display.FlxBackdrop;
 import lime.app.Application;
 
 using StringTools;
@@ -19,7 +20,8 @@ class MainMenuState extends MusicBeatState
 {
 	public static var gameVer:String = "1.3";
 
-	var magenta:FlxSprite;	
+	var magenta:FlxSprite;
+	var bar:FlxBackdrop;
 	
 	var playButton:Button;
 	var optionsButton:Button;
@@ -38,43 +40,44 @@ class MainMenuState extends MusicBeatState
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image(randomizeBG(), 'preload'));
 		bg.antialiasing = FlxG.save.data.antiAliasing;
-		bg.color = 0xFFFDE871;
-		bg.scrollFactor.set();
 		add(bg);
 
 		magenta = new FlxSprite().loadGraphic(bg.graphic);
 		magenta.visible = false;
 		magenta.antialiasing = FlxG.save.data.antiAliasing;
-		magenta.color = 0xFFfd719b;
-		magenta.scrollFactor.set();
 		add(magenta);
 		
-		var menuside:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/Menu_Side', 'preload'));
-		menuside.antialiasing = FlxG.save.data.antiAliasing;
-		menuside.alpha = 0.8;
-		menuside.scrollFactor.set();
-		add(menuside);
-		// magenta.scrollFactor.set();
+		bar = new FlxBackdrop(Paths.image('ui/checkeredBG', 'preload'), XY, 0, 0);
+		bar.antialiasing = FlxG.save.data.antiAliasing;
+		add(bar);
+		
+		var dummyfriend:FlxSprite = new FlxSprite().loadGraphic(Paths.image('hornyshit/dummyfriend', 'shared'));
+		dummyfriend.antialiasing = FlxG.save.data.antiAliasing;
+		add(dummyfriend);
+		
+		var overlay:FlxSprite = new FlxSprite().loadGraphic(Paths.image('backgroundOverlay', 'preload'));
+		overlay.antialiasing = FlxG.save.data.antiAliasing;
+		add(overlay);
 		
 		var buttonposition:Array<Float> = [30, 30];
-		playButton = new Button(buttonposition[0], buttonposition[1], Button.loadOffset('correction'), 'ui/mainmenu_buttons/' + FlxG.save.data.gameLanguage + '/mainmenu_play', 'preload', !selectedSomethin, function()
+		playButton = new Button(buttonposition[0], buttonposition[1], Button.loadOffset('correction'), 'ui/mainmenu_buttons/' + FlxG.save.data.gameLanguage + '/mainmenu_play', 'preload', function()
 		{
 			if (!selectedSomethin)
-				goToState('play', playButton);
+				goToState('play', playButton, 0xFF8484FF);
 		});
 		add(playButton);
 		
-		optionsButton = new Button(buttonposition[0] + 135, buttonposition[1] + playButton.height + 20, Button.loadOffset('correction'), 'ui/mainmenu_buttons/' + FlxG.save.data.gameLanguage + '/mainmenu_options', 'preload', !selectedSomethin, function()
+		optionsButton = new Button(buttonposition[0] + 145, buttonposition[1] + playButton.height + 30, Button.loadOffset('correction'), 'ui/mainmenu_buttons/' + FlxG.save.data.gameLanguage + '/mainmenu_options', 'preload', function()
 		{
 			if (!selectedSomethin)
-				goToState('options', optionsButton);
+				goToState('options', optionsButton, 0xFF878787);
 		});
 		add(optionsButton);
 		
-		creditsButton = new Button(buttonposition[0] + (135 * 2), buttonposition[1] + playButton.height + optionsButton.height + 40, Button.loadOffset('correction'), 'ui/mainmenu_buttons/' + FlxG.save.data.gameLanguage + '/mainmenu_credits', 'preload', !selectedSomethin, function()
+		creditsButton = new Button(buttonposition[0] + (145 * 2), buttonposition[1] + playButton.height + optionsButton.height + 60, Button.loadOffset('correction'), 'ui/mainmenu_buttons/' + FlxG.save.data.gameLanguage + '/mainmenu_credits', 'preload', function()
 		{
 			if (!selectedSomethin)
-				goToState('credits', creditsButton);
+				goToState('credits', creditsButton, 0xFFFF84F2);
 		});
 		add(creditsButton);
 
@@ -82,7 +85,6 @@ class MainMenuState extends MusicBeatState
 		versionShit.setFormat("Comic Sans MS Bold", 18, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionShit.borderSize = 1.5;
 		versionShit.antialiasing = FlxG.save.data.antiAliasing;
-		versionShit.scrollFactor.set();
 		add(versionShit);
 
 		super.create();
@@ -96,6 +98,13 @@ class MainMenuState extends MusicBeatState
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
+		
+		for(allbuttons in [playButton, optionsButton, creditsButton]) {
+			allbuttons.setPermition = !selectedSomethin;
+		}
+		
+		var scrollSpeed:Float = 100;
+		bar.x += scrollSpeed * elapsed;
 
 		if (!selectedSomethin)
 		{
@@ -113,11 +122,12 @@ class MainMenuState extends MusicBeatState
 		super.update(elapsed);
 	}
 	
-	function goToState(thestate:String, target:FlxSprite)
+	function goToState(thestate:String, target:FlxSprite, flashcolor:FlxColor)
 	{
 		selectedSomethin = true;
 		FlxG.sound.play(Paths.sound('confirmMenu'));
-
+		
+		magenta.color = flashcolor;
 		FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 
 		FlxFlicker.flicker(target, 1, 0.06, false, false, function(flick:FlxFlicker)

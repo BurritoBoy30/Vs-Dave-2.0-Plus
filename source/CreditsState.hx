@@ -12,8 +12,11 @@ import flixel.tweens.FlxTween;
 
 class CreditsState extends MusicBeatState
 {
+	var goToBuild:Button;
+	var goToDevs:Button;
+	
 	var buildArray:Array<CreditsTexts> = [
-		new CreditsTexts("Levery", "coded this whole thing"),
+		new CreditsTexts("Burrito", "coded this whole thing"),
 		new CreditsTexts("MsCyan", 'Cyan and Tails Doll sprites'),
 		new CreditsTexts("DeliriousPersona", "Psyka sprites"),
 		new CreditsTexts("RedstyPhoenix & VoidEyedPanda", "Playable GF sprites"),
@@ -37,14 +40,8 @@ class CreditsState extends MusicBeatState
 		new CreditsTexts("Zmac", "3D Backgrounds, Intro text help")
 	];
 	
-	var BuildButton:FlxSprite;
-	var DevsButton:FlxSprite;
-	
-	var grpButtons:FlxTypedGroup<FlxSprite>;
 	var grpCredits:FlxTypedGroup<CreditListing>;
-	
-	var currentState:String = 'selecting';
-	var transition:Bool = false;
+
 	
 	override function create()
 	{	
@@ -52,120 +49,86 @@ class CreditsState extends MusicBeatState
 		menuBG.screenCenter();
 		menuBG.color = 0xFF00CECE;
 		menuBG.antialiasing = FlxG.save.data.antiAliasing;
-		menuBG.scrollFactor.set();
 		add(menuBG);
 		
-		grpButtons = new FlxTypedGroup<FlxSprite>();
-		add(grpButtons);
+		var sidebar:FlxSprite = new FlxSprite().loadGraphic(Paths.image('creditbar', 'preload'));
+		sidebar.antialiasing = FlxG.save.data.antiAliasing;
+		add(sidebar);
 		
 		grpCredits = new FlxTypedGroup<CreditListing>();
 		add(grpCredits);
 		
-		BuildButton = new FlxSprite(0, 10).loadGraphic(Paths.image('creditbutton_build', 'preload'));
-		BuildButton.screenCenter(X);
-		BuildButton.antialiasing = FlxG.save.data.antiAliasing;
-		grpButtons.add(BuildButton);
+		goToBuild = new Button(5, 5, Button.loadOffset('correction'), 'creditbutton_build', 'preload', function()
+		{
+			camoffset = 0;
+			for (item in grpCredits.members)
+			{
+				item.destroy();
+			}
+			
+			generateCreditList(buildArray, 1300);
+		});
+		add(goToBuild);
 		
-		DevsButton = new FlxSprite(0, BuildButton.y + BuildButton.height +10).loadGraphic(Paths.image('creditbutton_devs', 'preload'));
-		DevsButton.screenCenter(X);
-		DevsButton.antialiasing = FlxG.save.data.antiAliasing;
-		grpButtons.add(DevsButton);
+		goToDevs = new Button(5, goToBuild.height + goToBuild.y + 10, Button.loadOffset('correction'), 'creditbutton_devs', 'preload', function()
+		{
+			camoffset = 0;
+			for (item in grpCredits.members)
+			{
+				item.destroy();
+			}
+			
+			generateCreditList(devsArray, 1050);
+		});
+		add(goToDevs);
+		
+		generateCreditList(buildArray, 1300);
 		
 		FlxG.mouse.visible = true;
 		
 		super.create();
 	}
 	
-	var camoffset:Float = 0;
-	var camoffsetLimit:Float = 0;
-
 	function generateCreditList(dullArray:Array<CreditsTexts>, limit:Float)
 	{
 		for (i in 0...dullArray.length)
 		{
-			var devSegment:CreditListing = new CreditListing(30, (200 * i), dullArray[i]);
+			var devSegment:CreditListing = new CreditListing(140, (200 * i), dullArray[i]);
 			grpCredits.add(devSegment);
 		}
 		
 		camoffsetLimit = -limit;
 	}
 	
+	var camoffset:Float = 0;
+	var camoffsetLimit:Float = 0;
+	
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 		
-		if (currentState == 'selecting')
+		if (FlxG.keys.pressed.UP)
 		{
-			if ((FlxG.mouse.overlaps(BuildButton) || FlxG.mouse.overlaps(DevsButton)) && FlxG.mouse.justPressed && !transition)
-			{
-				transition = true;
-				for (item in grpButtons.members)
-				{
-					FlxTween.tween(item, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
-					{
-						if (FlxG.mouse.overlaps(BuildButton))
-							generateCreditList(buildArray, 1300);
-						else if (FlxG.mouse.overlaps(DevsButton))
-							generateCreditList(devsArray, 950);
-							
-						for (item in grpCredits.members)
-						{
-							item.alpha = 0;
-							FlxTween.tween(item, {alpha: 1}, 0.2);
-						}
-						currentState = 'reading';
-						transition = false;
-					}});
-				}
-			}
-			
-			if (controls.BACK && !transition)
-			{
-				FlxG.mouse.visible = false;
-				FlxG.switchState(new MainMenuState());
-			}
+			if (camoffset != 0)
+				camoffset += 10;
 		}
-		else if (currentState == 'reading')
+		else if (FlxG.keys.pressed.DOWN)
 		{
-			if (FlxG.keys.pressed.UP && !transition)
-			{
-				if (camoffset != 0)
-					camoffset += 10;
-			}
-			else if (FlxG.keys.pressed.DOWN && !transition)
-			{
-				if (camoffset != camoffsetLimit)
-					camoffset -= 10;
-			}
-			else
-				camoffset += 0;
-				
-			for (item in grpCredits.members)
-			{
-				item.y = camoffset;
-			}
+			if (camoffset != camoffsetLimit)
+				camoffset -= 10;
+		}
+		else
+			camoffset += 0;
 			
-			if (controls.BACK && !transition)
-			{
-				transition = true;
-				for (item in grpCredits.members)
-				{
-					FlxTween.tween(item, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
-					{
-						for (item in grpButtons.members)
-						{
-							FlxTween.tween(item, {alpha: 1}, 0.2);
-						}
-						camoffset = 0;
-						for (item in grpCredits.members)
-						{
-							item.destroy();
-						}
-						currentState = 'selecting';
-						transition = false;
-					}});
-				}
-			}
+		for (item in grpCredits.members)
+		{
+			item.y = camoffset;
+		}
+			
+		if (controls.BACK)
+		{
+			FlxG.mouse.visible = false;
+			FlxG.switchState(new MainMenuState());
 		}
 	}
 }
@@ -192,14 +155,14 @@ class CreditListing extends FlxSpriteGroup
 		devIcon.antialiasing = FlxG.save.data.antiAliasing;
 		add(devIcon);
 		
-		var devname:FlxText = new FlxText(x + 185, y + 30, FlxG.width, getNames.devNames, 12);
-		devname.setFormat("Comic Sans MS Bold", 55, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		var devname:FlxText = new FlxText(x + 180, y + 25, FlxG.width, getNames.devNames, 12);
+		devname.setFormat("Comic Sans MS Bold", 50, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		devname.borderSize = 2;
 		devname.antialiasing = FlxG.save.data.antiAliasing;
 		add(devname);
 		
-		var devdesc:FlxText = new FlxText(x + 185, y + 100, FlxG.width, getNames.devDescs, 12);
-		devdesc.setFormat("Comic Sans MS Bold", 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		var devdesc:FlxText = new FlxText(x + 180, y + 95, FlxG.width, getNames.devDescs, 12);
+		devdesc.setFormat("Comic Sans MS Bold", 30, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		devname.borderSize = 2;
 		devdesc.antialiasing = FlxG.save.data.antiAliasing;
 		add(devdesc);

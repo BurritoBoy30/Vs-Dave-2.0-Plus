@@ -10,9 +10,9 @@ class Button extends FlxSprite
 	var buttonAxis:Array<Dynamic>;
 	public var callback:Void -> Void;
 	var buttonPressed:Bool = false;
-	var setPermition:Bool = true;
+	public var setPermition:Bool = true;
 
-	public function new (x:Float, y:Float, notButtonAxis:Array<Dynamic>, buttonImg:String, ?folder:String = 'shared', ?notSetPermition:Bool = true,?callBack:Void -> Void)
+	public function new (x:Float, y:Float, notButtonAxis:Array<Dynamic>, buttonImg:String, ?folder:String = 'shared',?callBack:Void -> Void)
 	{
 		super(x,y);
 		
@@ -20,23 +20,17 @@ class Button extends FlxSprite
 		antialiasing = FlxG.save.data.antiAliasing;
 		
 		buttonAxis = notButtonAxis;
-		setPermition = notSetPermition;
 		
 		callback = callBack;
-	}
-	
-	// i need to do this kind of checking otherwise it fucking glitches out on zooms
-	function mouseOverButton()
-	{
-		return (FlxG.mouse.x > (x + 100 + buttonAxis[0][0]) && FlxG.mouse.x < (x + width + 100 + buttonAxis[0][1]))
-			&& (FlxG.mouse.y > (y + 100 + buttonAxis[1][0]) && FlxG.mouse.y < (y + height + 100 + buttonAxis[1][1])) && setPermition;
 	}
 	
 	override function update(elapsed:Float)
 	{		
 		super.update(elapsed);
 		
-		if (mouseOverButton())
+		// i need to do this kind of checking otherwise it fucking glitches out on zooms
+		if ((FlxG.mouse.x > (x + 100 + buttonAxis[0][0]) && FlxG.mouse.x < (x + width + 100 + buttonAxis[0][1]))
+			&& (FlxG.mouse.y > (y + 100 + buttonAxis[1][0]) && FlxG.mouse.y < (y + height + 100 + buttonAxis[1][1])) && setPermition)
 		{
 			color = 0xFF878787;
 			
@@ -55,7 +49,7 @@ class Button extends FlxSprite
 	function isPressed(target:FlxSprite)
 	{
 		buttonPressed = true;
-		target.scale.set(0.9, 0.9);
+		target.scale.set(0.95, 0.95);
 		FlxTween.tween(target, {'scale.x': 1, 'scale.y': 1}, 0.1, {onComplete: function(twn:FlxTween)
 		{
 			buttonPressed = false;

@@ -1,0 +1,14 @@
+file: TailsDollFem
+offsets: 0, 0
+camoffsets: -200, 0
+scale: 1.1
+anti-aliasing: true
+flipX: false
+icon: tails-doll
+barcolor: 255, 123, 0
+prefix, 0, 0, idle, IDLE, false, 30
+prefix, 20, 20, singUP, UP, false, 24
+prefix, -70, 0, singLEFT, LEFT, false, 24
+prefix, 10, 0, singRIGHT, RIGHT, false, 24
+prefix, 0, -40, singDOWN, DOWN, false, 24
+starterIdle: idle, false

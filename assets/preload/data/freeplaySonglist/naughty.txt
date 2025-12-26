@@ -5,3 +5,4 @@ fnfgf,10,gf,Hard,225
 Unstoppable,10,fire,Hard,190
 Mekatsune,10,toriel,Extreme,180
 Terminatexs,10,j-bot,Hard,200
+Sunshine,10,tails-doll,Hard,105

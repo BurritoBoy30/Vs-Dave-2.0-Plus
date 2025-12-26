@@ -68,8 +68,16 @@ class Note extends FlxSprite
 		isSustainNote = sustainNote;
 		
 		this.noteStyle = noteStyle;
-
-		x += (FlxG.save.data.middlescroll ? PlayState.note_x_middlescroll : PlayState.note_x) + 50;
+		
+		if (PlayState.SONG.song.toLowerCase() == 'sunshine')
+		{
+			x += PlayState.note_x_middlescroll + 50;
+		}
+		else
+		{
+			x += (FlxG.save.data.middlescroll ? PlayState.note_x_middlescroll : PlayState.note_x) + 50;
+		}
+			
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 2000;
 		this.strumTime = strumTime + FlxG.save.data.offset;

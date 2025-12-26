@@ -441,7 +441,7 @@ class FreeplayState extends MusicBeatState
 				
 				switch (songs[curSelected].songName.toLowerCase())
 				{
-					case 'fnfgf' | 'unstoppable' | 'mekatsune':
+					case 'fnfgf' | 'unstoppable' | 'mekatsune' | 'sunshine':
 						if (songs[curSelected].songName.toLowerCase() == 'fnfgf')
 							PlayState.gfvideotype = modes[selectedmode].toLowerCase();
 							
@@ -534,7 +534,7 @@ class FreeplayState extends MusicBeatState
 	{
 		switch (songs[curSelected].songName.toLowerCase())
 		{
-			case 'fnfgf' | 'unstoppable' | 'mekatsune':
+			case 'fnfgf' | 'unstoppable' | 'mekatsune' | 'sunshine':
 				diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase());
 			default:
 				if (CharacterSelectState.noGfChar.contains(curBfChar.toLowerCase()) || songs[curSelected].songName.toLowerCase() == 'boing')
