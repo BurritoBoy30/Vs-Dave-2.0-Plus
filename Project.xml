@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin' | Vs Dave & Bambi: Burrito Build" file="VsDavePlus" packageName="com.ninjamuffin99.funkin" package="com.ninjamuffin99.funkin" main="Main" version="1.3" company="BurritoBoy30" />
+	<app title="Friday Night Funkin' | Vs Dave & Bambi - Burrito Build v3" file="VsDavePlus" packageName="com.ninjamuffin99.funkin" package="com.ninjamuffin99.funkin" main="Main" version="1.3" company="BurritoBoy30" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -133,7 +133,12 @@
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 	
-	<icon path="art/iconOG.png" />
+	<assets path='art/icons/iconOG.png' rename='icon.png' if="linux || mac" />
+	
+	<icon path="art/icons/icon16.png" size='16'/>
+	<icon path="art/icons/icon32.png" size='32'/>
+	<icon path="art/icons/icon64.png" size='64'/>
+	<icon path="art/icons/iconOG.png" />
 
 	<!-- <haxedef name="SKIP_TO_PLAYSTATE" if="debug" /> -->	
 </project>

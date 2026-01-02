@@ -473,6 +473,8 @@ class PlayState extends MusicBeatState
 				gf.setPosition(400 + gf.charOffset[0], 110 + gf.charOffset[1]);
 			case 'tails-bg':
 				dad.setPosition(-100, -100);
+			case 'bakery':
+				gf.setPosition(1050 + gf.charOffset[0], 150 + gf.charOffset[1]);
 		}
 		
 		//they dont show up on video stages to improve performance
@@ -491,6 +493,7 @@ class PlayState extends MusicBeatState
 		
 		add(gf);
 		add(dad);
+		
 		switch (SONG.song.toLowerCase())
 		{
 			case 'insanity':
@@ -532,6 +535,10 @@ class PlayState extends MusicBeatState
 				dadmirror = new Character(-100, -100, "tails-doll-3d-2", 'dad');
 				add(dadmirror);
 				dadmirror.visible = false;
+			case 'caked-up':
+				var table:BackgroundImg = new BackgroundImg(dad.x + 15, -154, 'stages/cake/quail', 1, 1, 0.5);
+				add(table);
+				
 		}
 		add(boyfriend);
 		
@@ -692,7 +699,7 @@ class PlayState extends MusicBeatState
 		
 		if (SONG.song.toLowerCase() == 'sunshine')
 		{
-			cinematicBars = new FlxSprite(0,0).loadGraphic(Paths.image('BL'));
+			cinematicBars = new FlxSprite().loadGraphic(Paths.image('BL'));
 			cinematicBars.visible = false;
 			insert(members.indexOf(timeTxt), cinematicBars);
 	
@@ -1181,6 +1188,23 @@ class PlayState extends MusicBeatState
 					tails_fundo = new BackgroundImg(-1000, -620, 'stages/singleimages/BACKING', 1, 1, 1.1);
 					add(tails_fundo);
 					
+				case 'tantalum':
+					defaultCamZoom = 0.7;
+					curStage = 'metal';
+					
+					var bg:BackgroundImg = new BackgroundImg(0, 0, 'stages/singleimages/metal', false, true, 1.3);
+					bg.screenCenter();
+					add(bg);
+					
+					createShader(bg, 0.1, 5, 2);
+					
+				case 'caked-up':
+					defaultCamZoom = 1.1;
+					curStage = 'bakery';
+					
+					var place:BackgroundImg = new BackgroundImg(-85, -154, 'stages/cake/quah', 1, 1, 0.5);
+					add(place);
+				
 				default:
 					defaultCamZoom = 0.9;
 					curStage = 'stage';
@@ -1846,7 +1870,7 @@ class PlayState extends MusicBeatState
 		
 		var toy = -100 + -Math.sin((curStep / 9.5) * 2) * 30 * 5;
 		var tox = -330 -Math.cos((curStep / 9.5)) * 100;
-		
+
 		if (['dave-angey', 'bambi-3d', 'bambi-unfair', 'dave-split-3d', 'bambi-piss-3d', 'exbungo', 'hell-expunged'].contains(dad.curCharacter))
 		{
 			dad.y += (Math.sin(elapsedtime) * 0.4);
@@ -1869,6 +1893,9 @@ class PlayState extends MusicBeatState
 
 					dad.x += (tox - dad.x);
 					dad.y += (toy - dad.y);
+				case 'ringi':
+					dad.x += (Math.cos(elapsedtime) * 1.25);
+					dad.y += (Math.sin(elapsedtime) * 1.25);
 			}
 		}
 		
@@ -3540,6 +3567,20 @@ class PlayState extends MusicBeatState
 						iconP2.visible = true;
 						scoreTxt.visible = true;
 				}
+			case 'tantalum':
+				switch (curStep)
+				{
+					case 888:
+						dad.canDance = false;
+						dad.playAnim('catOut', false);
+					case 896:
+						dad.canDance = true;
+					case 1408:
+						dad.canDance = false;
+						dad.playAnim('catIn', false);
+					case 1415:
+						dad.canDance = true;
+				}
 		}
 		
 		if (SONG.song.toLowerCase() == 'recursed')
@@ -3737,6 +3778,39 @@ class PlayState extends MusicBeatState
 		else
 		{
 			gfBeatSnap = gfSpeed;
+		}
+		
+		if (SONG.notes[Math.floor(curStep / 16)].altAnim)
+		{
+			if (dad.checkForAltIdle())
+				dad.idleAlt = "-alt";
+			else
+				dad.idleAlt = "";
+				
+			if (dadmirror != null)
+			{
+				if (dadmirror.checkForAltIdle())
+					dadmirror.idleAlt = "-alt";
+				else
+					dadmirror.idleAlt = "";
+			}
+			if (gf.checkForAltIdle())
+				gf.idleAlt = "-alt";
+			else
+				gf.idleAlt = "";
+				
+			if (boyfriend.checkForAltIdle())
+				boyfriend.idleAlt = "-alt";
+			else
+				boyfriend.idleAlt = "";
+		}
+		else
+		{
+			dad.idleAlt = "";
+			if (dadmirror != null)
+				dadmirror.idleAlt = "";
+			gf.idleAlt = "";
+			boyfriend.idleAlt = "";
 		}
 
 		if (curBeat % (gfBeatSnap + ((curSong == 'disruption' || curSong == 'unfairness') && gf.danceType == 'dance' ? 2 : 0)) == 0)

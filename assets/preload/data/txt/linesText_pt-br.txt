@@ -45,6 +45,7 @@ botplayScreen==BOTPLAY
 // Options //
 ghosttapping==Ghost Tapping
 downscroll==Downscroll
+middlescroll==Middlescroll
 accdisplay==Display de Precisão
 naughtiness==Safadeza
 changekeys==Trocar Binds

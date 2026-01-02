@@ -143,6 +143,15 @@ class MainMenuState extends MusicBeatState
 			}
 		});
 		
+		for (memb in [playButton, optionsButton, creditsButton])
+		{
+			if(memb == target)
+				continue;
+
+			FlxTween.tween(memb, {alpha: 0}, 0.4, {ease: FlxEase.quadOut});
+		}
+		
+		
 		FlxG.mouse.visible = false;
 	}
 	

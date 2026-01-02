@@ -1,0 +1,21 @@
+file: ringi
+offsets: 0, 0
+camoffsets: -170, -120
+scale: 1.8
+anti-aliasing: true
+flipX: false
+icon: ringi
+barcolor: 199, 164, 165
+prefix, 0, 0, idle, idle, false, 24
+prefix, 0, 0, idle-alt, alt idle, false, 24
+prefix, 0, 0, singUP, up, false, 24
+prefix, 0, 0, singUP-alt, alt up, false, 24
+prefix, 0, 0, singRIGHT, right, false, 24
+prefix, 0, 0, singRIGHT-alt, alt right, false, 24
+prefix, 0, 0, singDOWN, down, false, 24
+prefix, 0, 0, singDOWN-alt, alt down, false, 24
+prefix, 0, 0, singLEFT, left, false, 24
+prefix, 0, 0, singLEFT-alt, alt left, false, 24
+prefix, 0, 0, catIn, cat in, false, 24
+prefix, 0, 0, catOut, cat out, false, 24
+starterIdle: idle, false

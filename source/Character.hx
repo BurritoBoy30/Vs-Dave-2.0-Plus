@@ -18,6 +18,7 @@ class Character extends FlxSprite
 	public var holdTimer:Float = 0;
 	public var furiosityScale:Float = 1.02;
 	public var canDance:Bool = true;
+	public var idleAlt:String = "";
 
 	public var charOffset:Array<Float> = [0, 0];
 	public var animationsArray:Array<String> = [];
@@ -159,7 +160,7 @@ class Character extends FlxSprite
 		if (!debugMode && canDance)
 		{
 			if (danceType == 'dance')
-			{	
+			{		
 				if (hasHair ? !animation.curAnim.name.startsWith('hair') : true)
 				{
 					danced = !danced;
@@ -174,14 +175,14 @@ class Character extends FlxSprite
 					}
 					
 					if (danced)
-						playAnim(startedVarAnims[0], forceAnim);
+						playAnim(startedVarAnims[0] + idleAlt, forceAnim);
 					else
-						playAnim(startedVarAnims[1], forceAnim);
+						playAnim(startedVarAnims[1] + idleAlt, forceAnim);
 				}
 			}
 			else
 			{
-				playAnim(startedAnim, forceAnim);
+				playAnim(startedAnim + idleAlt, forceAnim);
 			}
 		}
 	}
@@ -218,6 +219,13 @@ class Character extends FlxSprite
 				danced = !danced;
 			}
 		}
+	}
+	
+	public function checkForAltIdle()
+	{
+		var alltheanims:Array<String> = animation.getNameList();
+		
+		return alltheanims.contains('idle-alt') || alltheanims.contains('danceLeft-alt') && alltheanims.contains('danceRight-alt');
 	}
 	
 	//my magnum opus or whatever the people say

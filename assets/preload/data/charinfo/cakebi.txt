@@ -1,0 +1,14 @@
+file: thick_legs_bambi
+offsets: -200, -200
+camoffsets: 250, 350
+scale: 0.5
+anti-aliasing: true
+flipX: false
+icon: cakebi
+barcolor: 101, 51, 3
+prefix, 0, 0, idle, idle, false, 24
+prefix, 0, 0, singUP, up, false, 24
+prefix, 0, 0, singRIGHT, right, false, 24
+prefix, 0, 0, singDOWN, down, false, 24
+prefix, 0, 0, singLEFT, left, false, 24
+starterIdle: idle, false

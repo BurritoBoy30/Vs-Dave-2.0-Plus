@@ -54,7 +54,9 @@ class Note extends FlxSprite
 		'exbungo',
 		'bombu',
 		'bombai',
-		'hell-expunged'
+		'hell-expunged',
+		'ringi',
+		'cakebi'
 	];
 
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?musthit:Bool = true, noteStyle:String = "normal")
