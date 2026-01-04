@@ -3,3 +3,4 @@ Disability,6,dave-split-3d,Hard,182
 OG,7,dave-alpha,Extreme,110
 Tantalum,8,ringi,Normal,180
 Caked-Up,8,cakebi,Normal,189
+Dale,8,dale,Easy,132

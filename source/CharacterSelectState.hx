@@ -64,8 +64,12 @@ class CharacterSelectState extends MusicBeatState
 	var overlay:FlxSprite;
 	
 	public static var noGfChar:Array<String> = ['bf-with-gf', 'bf-with-cyan', 'gf-player', 'rapper-gf', 'oruta'];
-	public static var hornyGFs:Array<String> = ['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-massive',
-		'three-gfs', 'gf-trepidation', 'gf-trepidation-nsfw', 'gf-trepidation-pixel', 'skyblue', 'tails-doll', 'gefe', 'gefe-busty', 'gefe-twerk'];
+	public static var hornyGFs:Array<String> = [
+		'gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-massive',
+		'three-gfs', 'gf-trepidation', 'gf-trepidation-nsfw', 'gf-trepidation-pixel',
+		'skyblue', 'tails-doll', 'gefe', 'gefe-busty', 'gefe-twerk'
+	];
+	var songsWithNoGf:Array<String> = ['boing', 'caked-up', 'dale'];
 
 	public var noMorePresses:Bool = false;
 	
@@ -230,7 +234,7 @@ class CharacterSelectState extends MusicBeatState
 		updateGfUI();
 		
 		#if desktop
-		DiscordClient.changePresence("In the Character Selection", boyfriendData[curBF].names[curFormBF] + ((!noGfChar.contains(boyfriendChar.curCharacter) && PlayState.SONG.song.toLowerCase() != 'boing') ? " - " + girlfriendData[curGF].names[curFormGF] : ""));
+		DiscordClient.changePresence("In the Character Selection", boyfriendData[curBF].names[curFormBF] + ((!noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase())) ? " - " + girlfriendData[curGF].names[curFormGF] : ""));
 		#end
 		
 		super.create();
@@ -244,8 +248,8 @@ class CharacterSelectState extends MusicBeatState
 		
 		super.update(elapsed);
 		
-		tailsBox.visible = FlxG.save.data.canTailsDoll && FlxG.save.data.hornyGF && FlxG.save.data.hornyALL && (!noGfChar.contains(boyfriendChar.curCharacter) && PlayState.SONG.song.toLowerCase() != 'boing');
-		girlfriendChar.visible = !noGfChar.contains(boyfriendChar.curCharacter) && PlayState.SONG.song.toLowerCase() != 'boing';
+		tailsBox.visible = FlxG.save.data.canTailsDoll && FlxG.save.data.hornyGF && FlxG.save.data.hornyALL && (!noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase()));
+		girlfriendChar.visible = !noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase());
 		
 		if (!selectedCharacter)
 		{
@@ -308,7 +312,7 @@ class CharacterSelectState extends MusicBeatState
 							changeBoyfriendForm(1);
 					}
 					
-					if (!noGfChar.contains(boyfriendChar.curCharacter) && PlayState.SONG.song.toLowerCase() != 'boing')
+					if (!noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase()))
 					{
 						if (FlxG.keys.justPressed.A && !isTails)
 							changeGirlfriend(-1);
@@ -360,7 +364,7 @@ class CharacterSelectState extends MusicBeatState
 					var heyAnimation:Bool = boyfriendChar.animation.getByName("hey") != null; 
 					boyfriendChar.playAnim(heyAnimation ? 'hey' : 'singUP', true);
 					
-					if (!noGfChar.contains(boyfriendChar.curCharacter) && PlayState.SONG.song.toLowerCase() != 'boing')
+					if (!noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase()))
 					{
 						var cheerAnimation:Bool = girlfriendChar.animation.getByName("cheer") != null; 
 						girlfriendChar.playAnim(girlfriendChar.danceType == 'idle' ? 'singUP' : cheerAnimation ? 'cheer' : (girlfriendChar.curCharacter == 'gf-trepidation') ? 'danceLeft1' : 'danceLeft', true);
@@ -535,10 +539,10 @@ class CharacterSelectState extends MusicBeatState
 	
 	function updateGfUI()
 	{
-		girlfriendText.visible = !(noGfChar.contains(boyfriendChar.curCharacter) || PlayState.SONG.song.toLowerCase() == 'boing');
-		iconGF.visible = !(noGfChar.contains(boyfriendChar.curCharacter) || PlayState.SONG.song.toLowerCase() == 'boing');
+		girlfriendText.visible = !(noGfChar.contains(boyfriendChar.curCharacter) || songsWithNoGf.contains(PlayState.SONG.song.toLowerCase()));
+		iconGF.visible = !(noGfChar.contains(boyfriendChar.curCharacter) || songsWithNoGf.contains(PlayState.SONG.song.toLowerCase()));
 		
-		if ((noGfChar.contains(boyfriendChar.curCharacter) || PlayState.SONG.song.toLowerCase() == 'boing') || isTails) {
+		if ((noGfChar.contains(boyfriendChar.curCharacter) || songsWithNoGf.contains(PlayState.SONG.song.toLowerCase())) || isTails) {
 			changeInfoImg.loadGraphic(Paths.image('charselect/' + FlxG.save.data.gameLanguage + '/changeInfoNoGF'));
 			changeInfoImg.y = FlxG.height - ((changeInfoImg.height / 2) + 23);
 		} else {
@@ -644,7 +648,7 @@ class CharacterSelectState extends MusicBeatState
 		boyfriendText.text = boyfriendData[curBF].displayNames[curFormBF];
 		iconBF.x += (boyfriendText.textField.textWidth / 2) + iconOffseet;
 		
-		boyfriendChar = new Boyfriend(770 + shitOffset[0] - ((noGfChar.contains(boyfriendData[curBF].names[curFormBF]) || PlayState.SONG.song.toLowerCase() == 'boing') ? 200 : 0), 450 + shitOffset[1], boyfriendData[curBF].names[curFormBF]);
+		boyfriendChar = new Boyfriend(770 + shitOffset[0] - ((noGfChar.contains(boyfriendData[curBF].names[curFormBF]) || songsWithNoGf.contains(PlayState.SONG.song.toLowerCase())) ? 200 : 0), 450 + shitOffset[1], boyfriendData[curBF].names[curFormBF]);
 		boyfriendChar.x += boyfriendChar.charOffset[0];
 		boyfriendChar.y += boyfriendChar.charOffset[1];
 		insert(members.indexOf(overlay), boyfriendChar);
@@ -652,7 +656,7 @@ class CharacterSelectState extends MusicBeatState
 		noMorePresses = false;
 		
 		#if desktop
-		DiscordClient.changePresence("In the Character Selection", boyfriendData[curBF].names[curFormBF] + ((!noGfChar.contains(boyfriendChar.curCharacter) && PlayState.SONG.song.toLowerCase() != 'boing') ? " - " + girlfriendData[curGF].names[curFormGF] : ""));
+		DiscordClient.changePresence("In the Character Selection", boyfriendData[curBF].names[curFormBF] + ((!noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase())) ? " - " + girlfriendData[curGF].names[curFormGF] : ""));
 		#end
 	}
 	
@@ -689,7 +693,7 @@ class CharacterSelectState extends MusicBeatState
 		noMorePresses = false;
 		
 		#if desktop
-		DiscordClient.changePresence("In the Character Selection", boyfriendData[curBF].names[curFormBF] + ((!noGfChar.contains(boyfriendChar.curCharacter) && PlayState.SONG.song.toLowerCase() != 'boing') ? " - " + girlfriendData[curGF].names[curFormGF] : ""));
+		DiscordClient.changePresence("In the Character Selection", boyfriendData[curBF].names[curFormBF] + ((!noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase())) ? " - " + girlfriendData[curGF].names[curFormGF] : ""));
 		#end
 	}
 		

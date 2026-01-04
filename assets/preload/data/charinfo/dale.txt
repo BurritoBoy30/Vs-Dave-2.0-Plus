@@ -1,0 +1,14 @@
+file: dale
+offsets: -500, -450
+camoffsets: 350, 425
+scale: 0.65
+anti-aliasing: true
+flipX: false
+icon: dale
+barcolor: 111, 68, 71
+prefix, 0, 0, idle, idle, false, 24
+prefix, 0, 0, singUP, up, false, 24
+prefix, 0, 0, singRIGHT, right, false, 24
+prefix, 0, 0, singDOWN, down, false, 24
+prefix, 0, 0, singLEFT, left, false, 24
+starterIdle: idle, false

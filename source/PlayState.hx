@@ -190,7 +190,7 @@ class PlayState extends MusicBeatState
 	
 	// shit for songs
 	var place:BackgroundImg;
-	var darkStages:Array<String> = ['bambiFarmNight', 'disabled', 'unfairness', 'rsod'];
+	var darkStages:Array<String> = ['bambiFarmNight', 'disabled', 'unfairness', 'rsod', 'freezer'];
 	
 	//recursed stuff
 	var startPanic:Bool = false;
@@ -446,7 +446,7 @@ class PlayState extends MusicBeatState
 		if (SONG.song.toLowerCase() == 'tutorial')
 			gf.visible = false;
 		else
-			gf.visible = !(Character.tutorialGFs.contains(dad.curCharacter) || CharacterSelectState.noGfChar.contains(boyfriend.curCharacter) || SONG.song.toLowerCase() == 'boing');
+			gf.visible = !(Character.tutorialGFs.contains(dad.curCharacter) || CharacterSelectState.noGfChar.contains(boyfriend.curCharacter) || SONG.song.toLowerCase() == 'boing' || SONG.song.toLowerCase() == 'dale' || SONG.song.toLowerCase() == 'caked-up');
 		
 		if (darkStages.contains(curStage))
 		{
@@ -454,6 +454,7 @@ class PlayState extends MusicBeatState
 			gf.color = 0xFF878787;
 			boyfriend.color = 0xFF878787;
 		}
+		
 		switch (curStage)
 		{
 			case 'exbungo-land':
@@ -475,6 +476,8 @@ class PlayState extends MusicBeatState
 				dad.setPosition(-100, -100);
 			case 'bakery':
 				gf.setPosition(1050 + gf.charOffset[0], 150 + gf.charOffset[1]);
+			case 'freezer':
+				dad.setPosition(-350 + dad.charOffset[0], 100 + dad.charOffset[1]);
 		}
 		
 		//they dont show up on video stages to improve performance
@@ -1205,11 +1208,18 @@ class PlayState extends MusicBeatState
 					var place:BackgroundImg = new BackgroundImg(-85, -154, 'stages/cake/quah', 1, 1, 0.5);
 					add(place);
 				
+				case 'dale':
+					defaultCamZoom = 0.9;
+					curStage = 'freezer';
+					
+					var place:BackgroundImg = new BackgroundImg(-950, -900, 'stages/dale/dale_bg_new_maybe', 1, 1, 1.4);
+					add(place);
+					
 				default:
 					defaultCamZoom = 0.9;
 					curStage = 'stage';
 					
-					var bg:BackgroundImg = new BackgroundImg(-600, -200, 'stages/default/stageback', 0.9, 0.9);
+					var bg:BackgroundImg = new BackgroundImg(-600, -800, 'stages/default/stageback', 0.9, 0.9);
 					add(bg);
 
 					var stageFront:BackgroundImg = new BackgroundImg(-650, 600, 'stages/default/stagefront', 0.9, 0.9, 1.1);
@@ -3782,35 +3792,23 @@ class PlayState extends MusicBeatState
 		
 		if (SONG.notes[Math.floor(curStep / 16)].altAnim)
 		{
-			if (dad.checkForAltIdle())
-				dad.idleAlt = "-alt";
-			else
-				dad.idleAlt = "";
+			dad.idleAlt = true;
 				
 			if (dadmirror != null)
-			{
-				if (dadmirror.checkForAltIdle())
-					dadmirror.idleAlt = "-alt";
-				else
-					dadmirror.idleAlt = "";
-			}
-			if (gf.checkForAltIdle())
-				gf.idleAlt = "-alt";
-			else
-				gf.idleAlt = "";
+				dadmirror.idleAlt = true;
 				
-			if (boyfriend.checkForAltIdle())
-				boyfriend.idleAlt = "-alt";
-			else
-				boyfriend.idleAlt = "";
+			gf.idleAlt = true;
+			boyfriend.idleAlt = true;
 		}
 		else
 		{
-			dad.idleAlt = "";
+			dad.idleAlt = false;
+				
 			if (dadmirror != null)
-				dadmirror.idleAlt = "";
-			gf.idleAlt = "";
-			boyfriend.idleAlt = "";
+				dadmirror.idleAlt = false;
+				
+			gf.idleAlt = false;
+			boyfriend.idleAlt = false;
 		}
 
 		if (curBeat % (gfBeatSnap + ((curSong == 'disruption' || curSong == 'unfairness') && gf.danceType == 'dance' ? 2 : 0)) == 0)
