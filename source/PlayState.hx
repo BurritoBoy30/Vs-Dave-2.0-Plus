@@ -1219,7 +1219,7 @@ class PlayState extends MusicBeatState
 					defaultCamZoom = 0.9;
 					curStage = 'stage';
 					
-					var bg:BackgroundImg = new BackgroundImg(-600, -800, 'stages/default/stageback', 0.9, 0.9);
+					var bg:BackgroundImg = new BackgroundImg(-600, -600, 'stages/default/stageback', 0.9, 0.9);
 					add(bg);
 
 					var stageFront:BackgroundImg = new BackgroundImg(-650, 600, 'stages/default/stagefront', 0.9, 0.9, 1.1);

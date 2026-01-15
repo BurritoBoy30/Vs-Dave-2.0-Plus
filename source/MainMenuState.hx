@@ -51,8 +51,10 @@ class MainMenuState extends MusicBeatState
 		bar.antialiasing = FlxG.save.data.antiAliasing;
 		add(bar);
 		
-		var dummyfriend:FlxSprite = new FlxSprite().loadGraphic(Paths.image('hornyshit/dummyfriend', 'shared'));
+		var menufolks:Array<String> = ['dummyfriend', 'ema1', 'ema2', 'sarvente', 'duomi'];
+		var dummyfriend:FlxSprite = new FlxSprite().loadGraphic(Paths.image('hornyshit/main_menu_folks/' + menufolks[FlxG.random.int(0, menufolks.length - 1)], 'shared'));
 		dummyfriend.antialiasing = FlxG.save.data.antiAliasing;
+		dummyfriend.visible = FlxG.save.data.hornyALL;
 		add(dummyfriend);
 		
 		var overlay:FlxSprite = new FlxSprite().loadGraphic(Paths.image('backgroundOverlay', 'preload'));
@@ -81,7 +83,7 @@ class MainMenuState extends MusicBeatState
 		});
 		add(creditsButton);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 32, 0, "Burrito Engine+ v" + gameVer, 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 32, 0, "Burrito Engine v" + gameVer, 12);
 		versionShit.setFormat("Comic Sans MS Bold", 18, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionShit.borderSize = 1.5;
 		versionShit.antialiasing = FlxG.save.data.antiAliasing;

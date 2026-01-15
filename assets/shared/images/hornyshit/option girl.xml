@@ -2,15 +2,15 @@
 <TextureAtlas imagePath="option girl.png">
 <SubTexture name="option girl idle0000" x="0" y="0" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
 <SubTexture name="option girl idle0001" x="920" y="0" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
-<SubTexture name="option girl idle0002" x="0" y="720" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
-<SubTexture name="option girl idle0003" x="920" y="720" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
-<SubTexture name="option girl idle0004" x="1840" y="0" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
+<SubTexture name="option girl idle0002" x="1840" y="0" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
+<SubTexture name="option girl idle0003" x="0" y="720" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
+<SubTexture name="option girl idle0004" x="920" y="720" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
 <SubTexture name="option girl idle0005" x="1840" y="720" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
 <SubTexture name="option girl idle0006" x="0" y="1440" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
 <SubTexture name="option girl idle0007" x="920" y="1440" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
 <SubTexture name="option girl idle0008" x="1840" y="1440" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
-<SubTexture name="option girl idle0009" x="2760" y="0" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
-<SubTexture name="option girl idle0010" x="2760" y="720" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
-<SubTexture name="option girl idle0011" x="2760" y="1440" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
-<SubTexture name="option girl idle0012" x="0" y="2160" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
+<SubTexture name="option girl idle0009" x="0" y="2160" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
+<SubTexture name="option girl idle0010" x="920" y="2160" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
+<SubTexture name="option girl idle0011" x="1840" y="2160" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
+<SubTexture name="option girl idle0012" x="0" y="2880" width="920" height="720" frameX="0" frameY="0" frameWidth="920" frameHeight="720" />
 </TextureAtlas>

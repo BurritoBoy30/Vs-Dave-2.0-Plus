@@ -25,7 +25,10 @@ class HealthIcon extends FlxSprite
 		'exbungo',
 		'bombu',
 		'bombai',
-		'hell-expunged'
+		'hell-expunged',
+		'ringi',
+		'cakebi',
+		'dale',
 	];
 	
 	public var isPlayer:Bool;
