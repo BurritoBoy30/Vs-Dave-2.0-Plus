@@ -2169,21 +2169,12 @@ class PlayState extends MusicBeatState
 				video.pause();
 			}
 
-			// 1 / 1000 chance for Gitaroo Man easter egg
-			if (FlxG.random.bool(0.1))
-			{
-				// gitaroo man easter egg
-				FlxG.switchState(new GitarooPause());
+			if(FlxG.sound.music != null) {
+				FlxG.sound.music.pause();
+				vocals.pause();
 			}
-			else
-			{
-				if(FlxG.sound.music != null) {
-					FlxG.sound.music.pause();
-					vocals.pause();
-				}
-				PauseSubState.transCamera = camOther;
-				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
-			}
+			PauseSubState.transCamera = camOther;
+			openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 			
 			#if desktop
 			var curTime:Float = Conductor.songPosition;
@@ -3627,7 +3618,7 @@ class PlayState extends MusicBeatState
 		if (SONG.song.toLowerCase() == 'recursed')
 		{
 			zoeyBop = new FlxSprite(700, 100);
-			zoeyBop.frames = Paths.getSparrowAtlas('hornyshit/zoey_recursed', 'shared');
+			zoeyBop.frames = Paths.getSparrowAtlas('hornyshit/zoey_recursed', 'preload');
 			zoeyBop.animation.addByPrefix('jiggle', 'jiggle', 10, true);
 			zoeyBop.animation.play('jiggle');
 			zoeyBop.setGraphicSize(Std.int(zoeyBop.width * 1.5));

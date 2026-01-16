@@ -26,7 +26,13 @@ class MainMenuState extends MusicBeatState
 	var playButton:Button;
 	var optionsButton:Button;
 	var creditsButton:Button;
-
+	
+	// things for the menu slut or whatever
+	var dummyfriend:FlxSprite;
+	var menufolks:Array<String> = ['dummyfriend', 'ema1', 'ema2', 'sarvente', 'duomi', 'toga', 'pyro', 'ilulu'];
+	public static var failSafe:Int = 0;
+	var chance:Int = 0;
+	
 	override function create()
 	{
 		if (!FlxG.sound.music.playing)
@@ -51,8 +57,11 @@ class MainMenuState extends MusicBeatState
 		bar.antialiasing = FlxG.save.data.antiAliasing;
 		add(bar);
 		
-		var menufolks:Array<String> = ['dummyfriend', 'ema1', 'ema2', 'sarvente', 'duomi'];
-		var dummyfriend:FlxSprite = new FlxSprite().loadGraphic(Paths.image('hornyshit/main_menu_folks/' + menufolks[FlxG.random.int(0, menufolks.length - 1)], 'shared'));
+		chance = FlxG.random.int(0, menufolks.length - 1);
+		reroll();
+		failSafe = chance;
+		
+		dummyfriend = new FlxSprite().loadGraphic(Paths.image('hornyshit/main_menu_folks/' + menufolks[chance], 'preload'));
 		dummyfriend.antialiasing = FlxG.save.data.antiAliasing;
 		dummyfriend.visible = FlxG.save.data.hornyALL;
 		add(dummyfriend);
@@ -120,8 +129,25 @@ class MainMenuState extends MusicBeatState
 				FlxG.switchState(new AnimationDebug());
 			}
 		}
+		
+		// debug things
+		if (FlxG.keys.justPressed.R)
+		{
+			chance = FlxG.random.int(0, menufolks.length - 1);
+			reroll();
+			failSafe = chance;
+			dummyfriend.loadGraphic(Paths.image('hornyshit/main_menu_folks/' + menufolks[chance], 'preload'));
+		}
 
 		super.update(elapsed);
+	}
+	
+	function reroll()
+	{
+		if (chance == failSafe)
+		{
+			chance = FlxG.random.int(0, menufolks.length - 1);
+		}
 	}
 	
 	function goToState(thestate:String, target:FlxSprite, flashcolor:FlxColor)

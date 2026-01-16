@@ -9,7 +9,6 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
-import options.*;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -55,7 +54,7 @@ class OptionsMenu extends MusicBeatState
 		add(menuBG);
 		
 		var hornyBitch:FlxSprite = new FlxSprite(0, 0);
-		hornyBitch.frames = Paths.getSparrowAtlas('hornyshit/option girl', 'shared');
+		hornyBitch.frames = Paths.getSparrowAtlas('hornyshit/option girl', 'preload');
 		hornyBitch.animation.addByPrefix('idle', "option girl idle", 30);
 		hornyBitch.screenCenter(X);
 		hornyBitch.animation.play('idle');

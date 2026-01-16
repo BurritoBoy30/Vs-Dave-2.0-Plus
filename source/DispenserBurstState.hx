@@ -50,43 +50,43 @@ class DispenserBurstState extends MusicBeatState
 		
 		var correctAxis:Array<Dynamic> = Button.loadOffset('correction');
 		
-		buttonBlu = new Button(bluDispenserBitch.width * 1.34, 10, correctAxis, 'hornyshit/dispenser/blue_button', function()
+		buttonBlu = new Button(bluDispenserBitch.width * 1.34, 10, correctAxis, 'hornyshit/dispenser/blue_button', 'preload', function()
 		{
 			changeBitchColor('blu');
 		});
 		add(buttonBlu);
 		
-		buttonRed = new Button(buttonBlu.x, buttonBlu.height + buttonBlu.y + 20, correctAxis, 'hornyshit/dispenser/red_button', function()
+		buttonRed = new Button(buttonBlu.x, buttonBlu.height + buttonBlu.y + 20, correctAxis, 'hornyshit/dispenser/red_button', 'preload', function()
 		{
 			changeBitchColor('red');
 		});
 		add(buttonRed);
 		
-		buttonBluRed = new Button(buttonBlu.x + buttonBlu.width + 10, buttonBlu.y, correctAxis, 'hornyshit/dispenser/blue-red_typeButton', function()
+		buttonBluRed = new Button(buttonBlu.x + buttonBlu.width + 10, buttonBlu.y, correctAxis, 'hornyshit/dispenser/blue-red_typeButton', 'preload', function()
 		{
 			changeBitchType('blu-red');
 		});
 		add(buttonBluRed);
 		
-		buttonRedBlu = new Button(buttonBluRed.x, buttonBluRed.y + buttonBluRed.height + 20, correctAxis, 'hornyshit/dispenser/red-blue_typeButton', function()
+		buttonRedBlu = new Button(buttonBluRed.x, buttonBluRed.y + buttonBluRed.height + 20, correctAxis, 'hornyshit/dispenser/red-blue_typeButton', 'preload', function()
 		{
 			changeBitchType('red-blu');
 		});
 		add(buttonRedBlu);
 		
-		button1 = new Button(196, 10, correctAxis, 'hornyshit/dispenser/1_button', function()
+		button1 = new Button(196, 10, correctAxis, 'hornyshit/dispenser/1_button', 'preload', function()
 		{
 			changeBitchSize(1);
 		});
 		add(button1);
 		
-		button2 = new Button(button1.x, button1.height + button1.y + 20, correctAxis, 'hornyshit/dispenser/2_button', function()
+		button2 = new Button(button1.x, button1.height + button1.y + 20, correctAxis, 'hornyshit/dispenser/2_button', 'preload', function()
 		{
 			changeBitchSize(2);
 		});
 		add(button2);
 		
-		button3 = new Button(button2.x, button2.height + button2.y + 20, correctAxis, 'hornyshit/dispenser/3_button', function()
+		button3 = new Button(button2.x, button2.height + button2.y + 20, correctAxis, 'hornyshit/dispenser/3_button', 'preload', function()
 		{
 			changeBitchSize(3);
 		});
@@ -198,7 +198,7 @@ class DispenserBitch extends FlxSprite
 	
 	public function reloadBitch(size:Float, type:String, folder:String)
 	{
-		frames = Paths.getSparrowAtlas('hornyshit/dispenser/' + folder + '/size' + size + '_' + type, 'shared');
+		frames = Paths.getSparrowAtlas('hornyshit/dispenser/' + folder + '/size' + size + '_' + type, 'preload');
 		animation.addByIndices('danceLeft', "size" + size + '_' + type + ' idle', [28, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12], "", 40, false);
 		animation.addByIndices('danceRight', "size" + size + '_' + type + ' idle', [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", 40, false);
 		animation.play('danceLeft', true);

@@ -16,7 +16,6 @@ class Character extends FlxSprite
 	public var curCharacter:String = 'bf';
 
 	public var holdTimer:Float = 0;
-	public var furiosityScale:Float = 1.02;
 	public var canDance:Bool = true;
 	public var idleAlt:Bool = false;
 
@@ -35,7 +34,7 @@ class Character extends FlxSprite
 	var hasHair:Bool = false;
 	
 	public static var tutorialGFs:Array<String> = [];
-		
+
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:String = 'bf')
 	{
 		super(x, y);
@@ -110,9 +109,6 @@ class Character extends FlxSprite
 
 				var dadVar:Float = 4;
 
-				if (curCharacter == 'dad')
-					dadVar = 6.1;
-					
 				if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
 				{
 					dance();

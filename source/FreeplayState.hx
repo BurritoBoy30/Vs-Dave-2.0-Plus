@@ -120,7 +120,7 @@ class FreeplayState extends MusicBeatState
 	function GoToActualFreeplay()
 	{
 		zoeyBop = new FlxSprite(700, 100);
-		zoeyBop.frames = Paths.getSparrowAtlas('hornyshit/zoey', 'shared');
+		zoeyBop.frames = Paths.getSparrowAtlas('hornyshit/zoey', 'preload');
 		zoeyBop.animation.addByPrefix('jiggle', 'jiggle', 10, true);
 		zoeyBop.animation.play('jiggle');
 		zoeyBop.setGraphicSize(Std.int(zoeyBop.width * 1.5));
