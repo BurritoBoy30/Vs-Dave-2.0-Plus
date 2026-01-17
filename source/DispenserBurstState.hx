@@ -8,6 +8,7 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.addons.display.FlxBackdrop;
 
 class DispenserBurstState extends MusicBeatState
 {
@@ -22,6 +23,9 @@ class DispenserBurstState extends MusicBeatState
 	var bitchFolder:String = 'tf2';
 	// tf2, jaiden
 	var swapBitchFolder:Bool = false;
+	
+	var movingBar:FlxBackdrop;
+	var joggingBitchesBackground:FlxSprite;
 	
 	// this might be unnecessary i think???
 	var buttonRed:Button;
@@ -49,6 +53,15 @@ class DispenserBurstState extends MusicBeatState
 
 		Conductor.changeBPM(150);
 		
+		joggingBitchesBackground = new FlxSprite().loadGraphic(Paths.image('hornyshit/dispenser/jaiden/backgrounds/blue', 'preload'));
+		joggingBitchesBackground.screenCenter();
+		joggingBitchesBackground.antialiasing = FlxG.save.data.antiAliasing;
+		add(joggingBitchesBackground);
+		
+		movingBar = new FlxBackdrop(Paths.image('hornyshit/dispenser/jaiden/movingBar', 'preload'), XY, 0, 0);
+		movingBar.antialiasing = FlxG.save.data.antiAliasing;
+		add(movingBar);
+		
 		bluDispenserBitch = new DispenserBitch(bitchSize, 'blu', 'none');
 		add(bluDispenserBitch);
 		
@@ -70,7 +83,7 @@ class DispenserBurstState extends MusicBeatState
 		});
 		add(buttonSwitch);
 		
-		var offset:Float = 60;
+		var offset:Float = 65;
 		buttonBlu = new Button((bluDispenserBitch.width * 1.34) + offset, 10, correctAxis, 'hornyshit/dispenser/tf2/blue_button', 'preload', function()
 		{
 			changeBitchColor('blu');
@@ -141,14 +154,39 @@ class DispenserBurstState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		Conductor.songPosition = FlxG.sound.music.time;
-
-		super.update(elapsed);
+		
+		var scrollSpeed:Float = 100;
+		movingBar.x += scrollSpeed * elapsed;
+		
+		movingBar.visible = bitchFolder == 'jaiden';
+		joggingBitchesBackground.visible = bitchFolder == 'jaiden';
 		
 		if (controls.BACK)
 		{
 			FlxG.mouse.visible = false;
 			FlxG.switchState(new FreeplayState());
 		}
+		
+		super.update(elapsed);
+	}
+	
+	function reloadJoggingBitchesBackground()
+	{
+		var fileName:String = '';
+		switch (bitchColor)
+		{
+			case 'red':
+				fileName = 'red';
+			case 'blu':
+				fileName = 'blue';
+			case 'mixed':
+				if (bitchType == 'blu-red')
+					fileName = 'blue-red';
+				else if (bitchType == 'red-blu')
+					fileName = 'red-blue';
+		}
+		
+		joggingBitchesBackground.loadGraphic(Paths.image('hornyshit/dispenser/jaiden/backgrounds/' + fileName, 'preload'));
 	}
 	
 	function changeBitchColor(cor:String)
@@ -163,6 +201,7 @@ class DispenserBurstState extends MusicBeatState
 				bitchType = 'none';
 				reloadBitches();
 			}
+			reloadJoggingBitchesBackground();
 		}
 	}
 	
@@ -175,6 +214,7 @@ class DispenserBurstState extends MusicBeatState
 			bluDispenserBitch.visible = true;
 			redDispenserBitch.visible = true;
 			reloadBitches();
+			reloadJoggingBitchesBackground();
 		}
 	}
 	
@@ -226,10 +266,6 @@ class DispenserBurstState extends MusicBeatState
 			
 		buttonSwitch.reloadImage('hornyshit/dispenser/button_' + opposite, 'preload');
 		
-		button1.visible = bitchFolder == 'tf2';
-		button2.visible = bitchFolder == 'tf2';
-		button3.visible = bitchFolder == 'tf2';
-		
 		for (memb in [button1, button2, button3])
 		{
 			memb.visible = bitchFolder == 'tf2';
@@ -278,8 +314,8 @@ class DispenserBitch extends FlxSprite
 			screenCenter();
 			scale.set(0.85, 0.85);
 			
-			animation.addByIndices('danceLeft', "size" + fuckingBitchSize + '_' + type + ' idle', [28, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12], "", 40, false);
-			animation.addByIndices('danceRight', "size" + fuckingBitchSize + '_' + type + ' idle', [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", 40, false);
+			animation.addByIndices('danceLeft', "size" + fuckingBitchSize + '_' + type + ' idle', [28, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12], "", 30, false);
+			animation.addByIndices('danceRight', "size" + fuckingBitchSize + '_' + type + ' idle', [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", 30, false);
 			animation.play('danceLeft', true);
 		}
 		else if (fandom == 'jaiden')
