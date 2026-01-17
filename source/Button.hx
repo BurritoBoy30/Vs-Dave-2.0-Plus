@@ -56,6 +56,11 @@ class Button extends FlxSprite
 		}});
 	}
 	
+	public function reloadImage(img:String = 'blank', folder:String = 'shared')
+	{
+		loadGraphic(Paths.image(img, folder));
+	}
+	
 	public static function loadOffset(file:String)
 	{
 		var xOffsets:Array<Float> = [0, 0];

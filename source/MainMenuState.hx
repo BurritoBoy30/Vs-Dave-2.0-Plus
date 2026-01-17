@@ -179,7 +179,6 @@ class MainMenuState extends MusicBeatState
 			FlxTween.tween(memb, {alpha: 0}, 0.4, {ease: FlxEase.quadOut});
 		}
 		
-		
 		FlxG.mouse.visible = false;
 	}
 	

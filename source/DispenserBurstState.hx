@@ -19,6 +19,9 @@ class DispenserBurstState extends MusicBeatState
 	//1, 2, 3
 	var bitchType:String = "none";
 	// none, red-blu, blu-red
+	var bitchFolder:String = 'tf2';
+	// tf2, jaiden
+	var swapBitchFolder:Bool = false;
 	
 	// this might be unnecessary i think???
 	var buttonRed:Button;
@@ -28,6 +31,10 @@ class DispenserBurstState extends MusicBeatState
 	var button3:Button;
 	var buttonRedBlu:Button;
 	var buttonBluRed:Button;
+	var buttonSwitch:Button;
+	
+	var buttonList:Array<Button> = [];
+	var buttonFileList:Array<String> = ['red', 'blue', 'red-blue', 'blue-red'];
 	
 	override function create()
 	{
@@ -35,6 +42,8 @@ class DispenserBurstState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Fucking the Dispenser Bitch", null);
 		#end
+		
+		FlxG.mouse.visible = true;
 		
 		FlxG.sound.playMusic(Paths.music('burstByKO3', 'shared'), 1, true);
 
@@ -50,47 +59,61 @@ class DispenserBurstState extends MusicBeatState
 		
 		var correctAxis:Array<Dynamic> = Button.loadOffset('correction');
 		
-		buttonBlu = new Button(bluDispenserBitch.width * 1.34, 10, correctAxis, 'hornyshit/dispenser/blue_button', 'preload', function()
+		buttonSwitch = new Button(10, 10, correctAxis, 'hornyshit/dispenser/button_jaiden', 'preload', function()
+		{
+			swapBitchFolder =! swapBitchFolder;
+			
+			if (swapBitchFolder)
+				changeEverythingTo('jaiden');
+			else
+				changeEverythingTo('tf2');
+		});
+		add(buttonSwitch);
+		
+		var offset:Float = 60;
+		buttonBlu = new Button((bluDispenserBitch.width * 1.34) + offset, 10, correctAxis, 'hornyshit/dispenser/tf2/blue_button', 'preload', function()
 		{
 			changeBitchColor('blu');
 		});
 		add(buttonBlu);
 		
-		buttonRed = new Button(buttonBlu.x, buttonBlu.height + buttonBlu.y + 20, correctAxis, 'hornyshit/dispenser/red_button', 'preload', function()
+		buttonRed = new Button(buttonBlu.x, buttonBlu.height + buttonBlu.y + 5, correctAxis, 'hornyshit/dispenser/tf2/red_button', 'preload', function()
 		{
 			changeBitchColor('red');
 		});
 		add(buttonRed);
 		
-		buttonBluRed = new Button(buttonBlu.x + buttonBlu.width + 10, buttonBlu.y, correctAxis, 'hornyshit/dispenser/blue-red_typeButton', 'preload', function()
+		buttonBluRed = new Button(buttonBlu.x + buttonBlu.width + 5, buttonBlu.y, correctAxis, 'hornyshit/dispenser/tf2/blue-red_button', 'preload', function()
 		{
 			changeBitchType('blu-red');
 		});
 		add(buttonBluRed);
 		
-		buttonRedBlu = new Button(buttonBluRed.x, buttonBluRed.y + buttonBluRed.height + 20, correctAxis, 'hornyshit/dispenser/red-blue_typeButton', 'preload', function()
+		buttonRedBlu = new Button(buttonBluRed.x, buttonBluRed.y + buttonBluRed.height + 5, correctAxis, 'hornyshit/dispenser/tf2/red-blue_button', 'preload', function()
 		{
 			changeBitchType('red-blu');
 		});
 		add(buttonRedBlu);
 		
-		button1 = new Button(196, 10, correctAxis, 'hornyshit/dispenser/1_button', 'preload', function()
+		button1 = new Button(196, 10, correctAxis, 'hornyshit/dispenser/tf2/1_button', 'preload', function()
 		{
 			changeBitchSize(1);
 		});
 		add(button1);
 		
-		button2 = new Button(button1.x, button1.height + button1.y + 20, correctAxis, 'hornyshit/dispenser/2_button', 'preload', function()
+		button2 = new Button(button1.x, button1.height + button1.y + 20, correctAxis, 'hornyshit/dispenser/tf2/2_button', 'preload', function()
 		{
 			changeBitchSize(2);
 		});
 		add(button2);
 		
-		button3 = new Button(button2.x, button2.height + button2.y + 20, correctAxis, 'hornyshit/dispenser/3_button', 'preload', function()
+		button3 = new Button(button2.x, button2.height + button2.y + 20, correctAxis, 'hornyshit/dispenser/tf2/3_button', 'preload', function()
 		{
 			changeBitchSize(3);
 		});
 		add(button3);
+		
+		buttonList = [buttonRed, buttonBlu, buttonRedBlu, buttonBluRed];
 
 		super.create();
 	}
@@ -103,8 +126,16 @@ class DispenserBurstState extends MusicBeatState
 		
 		danced = !danced;
 		
-		redDispenserBitch.animation.play(danced ? 'danceRight' : 'danceLeft', true);
-		bluDispenserBitch.animation.play(danced ? 'danceRight' : 'danceLeft', true);
+		if (bitchFolder == 'tf2')
+		{
+			redDispenserBitch.animation.play(danced ? 'danceRight' : 'danceLeft', true);
+			bluDispenserBitch.animation.play(danced ? 'danceRight' : 'danceLeft', true);
+		}
+		else if (bitchFolder == 'jaiden')
+		{
+			redDispenserBitch.animation.play('idle', true);
+			bluDispenserBitch.animation.play('idle', true);
+		}
 	}
 	
 	override function update(elapsed:Float)
@@ -114,8 +145,9 @@ class DispenserBurstState extends MusicBeatState
 		super.update(elapsed);
 		
 		if (controls.BACK)
-		{	
-			FlxG.switchState(new ConsoleState());
+		{
+			FlxG.mouse.visible = false;
+			FlxG.switchState(new FreeplayState());
 		}
 	}
 	
@@ -178,8 +210,43 @@ class DispenserBurstState extends MusicBeatState
 		
 		danced = false;
 		
-		bluDispenserBitch.reloadBitch(bitchSize, 'blu', blufolder);
-		redDispenserBitch.reloadBitch(bitchSize, 'red', redfolder);
+		bluDispenserBitch.reloadBitch(bitchSize, 'blu', blufolder, bitchFolder);
+		redDispenserBitch.reloadBitch(bitchSize, 'red', redfolder, bitchFolder);
+	}
+	
+	function changeEverythingTo(folder:String)
+	{
+		bitchFolder = folder;
+		
+		var opposite:String = '';
+		if (folder == 'tf2')
+			opposite = 'jaiden';
+		else if (folder == 'jaiden')
+			opposite = 'tf2';
+			
+		buttonSwitch.reloadImage('hornyshit/dispenser/button_' + opposite, 'preload');
+		
+		button1.visible = bitchFolder == 'tf2';
+		button2.visible = bitchFolder == 'tf2';
+		button3.visible = bitchFolder == 'tf2';
+		
+		for (memb in [button1, button2, button3])
+		{
+			memb.visible = bitchFolder == 'tf2';
+			memb.setPermition = bitchFolder == 'tf2';
+		}
+		
+		for (i in 0...buttonList.length)
+		{
+			buttonList[i].reloadImage(fileName(folder, buttonFileList[i]), 'preload');
+		}
+		
+		reloadBitches();
+	}
+	
+	function fileName(folder:String, whatis:String)
+	{
+		return 'hornyshit/dispenser/' + folder + '/' + whatis + '_button';
 	}
 }
 
@@ -188,7 +255,7 @@ class DispenserBitch extends FlxSprite
 	public function new (size:Float, type:String, folder:String)
 	{
 		super();
-		reloadBitch(size, type, folder);
+		reloadBitch(size, type, folder, 'tf2');
 		screenCenter();
 		scale.set(0.85, 0.85);
 		antialiasing = FlxG.save.data.antiAliasing;
@@ -196,11 +263,32 @@ class DispenserBitch extends FlxSprite
 		animation.play('danceLeft', true);
 	}
 	
-	public function reloadBitch(size:Float, type:String, folder:String)
+	public function reloadBitch(size:Float, type:String, folder:String, fandom:String)
 	{
-		frames = Paths.getSparrowAtlas('hornyshit/dispenser/' + folder + '/size' + size + '_' + type, 'preload');
-		animation.addByIndices('danceLeft', "size" + size + '_' + type + ' idle', [28, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12], "", 40, false);
-		animation.addByIndices('danceRight', "size" + size + '_' + type + ' idle', [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", 40, false);
-		animation.play('danceLeft', true);
+		var fuckingBitchSize:Float = 0;
+		
+		if (fandom == 'tf2')
+			fuckingBitchSize = size;
+		else if (fandom == 'jaiden')
+			fuckingBitchSize = 1;
+			
+		frames = Paths.getSparrowAtlas('hornyshit/dispenser/' + fandom + '/' + folder + '/size' + fuckingBitchSize + '_' + type, 'preload');
+		if (fandom == 'tf2')
+		{
+			screenCenter();
+			scale.set(0.85, 0.85);
+			
+			animation.addByIndices('danceLeft', "size" + fuckingBitchSize + '_' + type + ' idle', [28, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12], "", 40, false);
+			animation.addByIndices('danceRight', "size" + fuckingBitchSize + '_' + type + ' idle', [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", 40, false);
+			animation.play('danceLeft', true);
+		}
+		else if (fandom == 'jaiden')
+		{
+			screenCenter();
+			scale.set(0.8, 0.8);
+			
+			animation.addByPrefix('idle', "size" + fuckingBitchSize + '_' + type + ' idle', 12, false);
+			animation.play('idle', true);
+		}
 	}
 }
