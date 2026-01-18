@@ -12,11 +12,7 @@ import openfl.Assets;
 class StartState extends MusicBeatState
 {
 	override public function create():Void
-	{
-		PlayerSettings.init();
-		FlxG.save.bind('funkin', 'ninjamuffin99');
-		SaveDataHandler.initSave();
-		
+	{	
 		#if desktop
 		DiscordClient.initialize();
 		Application.current.onExit.add (function (exitCode) {

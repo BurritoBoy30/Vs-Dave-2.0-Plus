@@ -29,7 +29,7 @@ class MainMenuState extends MusicBeatState
 	
 	// things for the menu slut or whatever
 	var dummyfriend:FlxSprite;
-	var menufolks:Array<String> = ['dummyfriend', 'ema1', 'ema2', 'sarvente', 'duomi', 'toga', 'pyro', 'ilulu'];
+	var menufolks:Array<String> = ['dummyfriend', 'ema1', 'ema2', 'sarvente', 'duomi', 'toga', 'pyro', 'ilulu', 'hopelesspeaches'];
 	public static var failSafe:Int = 0;
 	var chance:Int = 0;
 	
@@ -59,7 +59,6 @@ class MainMenuState extends MusicBeatState
 		
 		chance = FlxG.random.int(0, menufolks.length - 1);
 		reroll();
-		failSafe = chance;
 		
 		dummyfriend = new FlxSprite().loadGraphic(Paths.image('hornyshit/main_menu_folks/' + menufolks[chance], 'preload'));
 		dummyfriend.antialiasing = FlxG.save.data.antiAliasing;
@@ -83,13 +82,29 @@ class MainMenuState extends MusicBeatState
 			if (!selectedSomethin)
 				goToState('options', optionsButton, 0xFF878787);
 		});
+		
+		var isHornyOptionOffset:Float = 0;
+		if (FlxG.save.data.hornyALL)
+			isHornyOptionOffset = buttonposition[0] + 145;
+		else
+			isHornyOptionOffset = (FlxG.width / 2) - (optionsButton.width / 2);
+		
+		optionsButton.x = isHornyOptionOffset;
 		add(optionsButton);
 		
-		creditsButton = new Button(buttonposition[0] + (145 * 2), buttonposition[1] + playButton.height + optionsButton.height + 60, Button.loadOffset('correction'), 'ui/mainmenu_buttons/' + FlxG.save.data.gameLanguage + '/mainmenu_credits', 'preload', function()
+		creditsButton = new Button(0, buttonposition[1] + playButton.height + optionsButton.height + 60, Button.loadOffset('correction'), 'ui/mainmenu_buttons/' + FlxG.save.data.gameLanguage + '/mainmenu_credits', 'preload', function()
 		{
 			if (!selectedSomethin)
 				goToState('credits', creditsButton, 0xFFFF84F2);
 		});
+		
+		var isHornyCreditOffset:Float = 0;
+		if (FlxG.save.data.hornyALL)
+			isHornyCreditOffset = buttonposition[0] + (145 * 2);
+		else
+			isHornyCreditOffset = FlxG.width - creditsButton.width - 30;
+			
+		creditsButton.x = isHornyCreditOffset;
 		add(creditsButton);
 
 		var versionShit:FlxText = new FlxText(5, FlxG.height - 32, 0, "Burrito Engine v" + gameVer, 12);
@@ -135,7 +150,6 @@ class MainMenuState extends MusicBeatState
 		{
 			chance = FlxG.random.int(0, menufolks.length - 1);
 			reroll();
-			failSafe = chance;
 			dummyfriend.loadGraphic(Paths.image('hornyshit/main_menu_folks/' + menufolks[chance], 'preload'));
 		}
 
@@ -147,6 +161,7 @@ class MainMenuState extends MusicBeatState
 		if (chance == failSafe)
 		{
 			chance = FlxG.random.int(0, menufolks.length - 1);
+			failSafe = chance;
 		}
 	}
 	

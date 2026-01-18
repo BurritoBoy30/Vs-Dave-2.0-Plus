@@ -50,6 +50,10 @@ class FlxSplash extends FlxState
 	
 	override public function create():Void
 	{
+		PlayerSettings.init();
+		FlxG.save.bind('funkin', 'ninjamuffin99');
+		SaveDataHandler.initSave();
+		
 		_cachedBgColor = FlxG.cameras.bgColor;
 		FlxG.cameras.bgColor = FlxColor.BLACK;
 
@@ -115,7 +119,7 @@ class FlxSplash extends FlxState
 	function drawTailsDoll()
 	{
 		_functions =[
-			function()
+			function() // adds the 4 parts of the tails doll
 			{
 				one = new FlxSprite(0, 100).loadGraphic(Paths.image('preloader/1', 'preload'));
 				one.antialiasing = FlxG.save.data.antiAliasing;
@@ -143,7 +147,7 @@ class FlxSplash extends FlxState
 				four.screenCenter(X);
 				add(four);
 			},
-			function()
+			function() // does the fancy transition for the whole splash screen
 			{
 				five = new FlxSprite(0, 100).loadGraphic(Paths.image('preloader/5', 'preload'));
 				five.antialiasing = FlxG.save.data.antiAliasing;
@@ -173,7 +177,7 @@ class FlxSplash extends FlxState
 				bg.visible = true;
 				logo.visible = true;
 			},
-			function()
+			function() // safety precaution, to make sure it doesnt crash
 			{
 				everythingLoaded = true;
 			}
