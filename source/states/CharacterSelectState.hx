@@ -1,4 +1,4 @@
-package;
+package states;
 
 #if desktop
 import Discord.DiscordClient;
@@ -250,6 +250,10 @@ class CharacterSelectState extends MusicBeatState
 		
 		tailsBox.visible = FlxG.save.data.canTailsDoll && FlxG.save.data.hornyGF && FlxG.save.data.hornyALL && (!noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase()));
 		girlfriendChar.visible = !noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase());
+		
+		for(allbuttons in [saveBox, loadBox, tailsBox, settingsIcon]) {
+			allbuttons.setPermition = !selectedCharacter;
+		}
 		
 		if (!selectedCharacter)
 		{

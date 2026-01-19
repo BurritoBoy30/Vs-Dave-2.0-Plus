@@ -1,4 +1,4 @@
-package;
+package states;
 
 import Controls.KeyboardScheme;
 import flixel.FlxG;

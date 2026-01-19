@@ -1,4 +1,4 @@
-package;
+package states;
 
 #if desktop
 import Discord.DiscordClient;
@@ -60,6 +60,8 @@ import sys.io.File;
 import sys.io.Process;
 import lime.app.Application;
 #end
+
+import substates.*;
 
 using StringTools;
 
@@ -151,8 +153,6 @@ class PlayState extends MusicBeatState
 	var darkBg:FlxSprite;
 	
 	public static var eyesoreson = true;
-
-	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 
 	var fc:Bool = true;
 
@@ -354,28 +354,6 @@ class PlayState extends MusicBeatState
 		else
 			isDownScroll = FlxG.save.data.downscroll;
 
-		switch (SONG.song.toLowerCase())
-		{
-			case 'house':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/houseDialogue'));
-			case 'insanity':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/insanityDialogue'));
-			case 'polygonized':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/furiosityDialogue'));
-			case 'supernovae':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/supernovaeDialogue'));
-			case 'glitch':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/glitchDialogue'));
-			case 'blocked':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/retardedDialogue'));
-			case 'corn-theft':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/cornDialogue'));
-			case 'maze':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/mazeDialogue'));
-			case 'splitathon':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/splitathonDialogue'));
-		}
-
 		// create the stage
 		generateStage(SONG.song.toLowerCase());
 		
@@ -544,12 +522,6 @@ class PlayState extends MusicBeatState
 				
 		}
 		add(boyfriend);
-		
-		var doof:DialogueBox = new DialogueBox(false, dialogue);
-		// doof.x += 70;
-		// doof.y = FlxG.height * 0.5;
-		doof.scrollFactor.set();
-		doof.finishThing = startCountdown;
 
 		Conductor.songPosition = -5000;
 		
@@ -685,7 +657,6 @@ class PlayState extends MusicBeatState
 		gfGetsFreakyTxt.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		timeLabelTxt.cameras = [camHUD];
-		doof.cameras = [camHUD];
 		
 		if (SONG.song.toLowerCase() == 'rules')
 		{
@@ -1252,38 +1223,7 @@ class PlayState extends MusicBeatState
 			FlxColor.fromRGB(bfcolors[0], bfcolors[1], bfcolors[2]));
 		healthBar.updateBar();
 	}
-	
-	function schoolIntro(?dialogueBox:DialogueBox, isStart:Bool = true):Void
-	{
-		inCutscene = true;
-		camFollow.setPosition(boyfriend.getGraphicMidpoint().x - 200, dad.getGraphicMidpoint().y - 10);
-		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
-		black.scrollFactor.set();
-		add(black);
 
-		var stupidBasics:Float = 1;
-		if (isStart)
-		{
-			FlxTween.tween(black, {alpha: 0}, stupidBasics);
-		}
-		else
-		{
-			black.alpha = 0;
-			stupidBasics = 0;
-		}
-		new FlxTimer().start(stupidBasics, function(fuckingSussy:FlxTimer)
-		{
-			if (dialogueBox != null)
-			{
-				add(dialogueBox);
-			}
-			else
-			{
-				startCountdown();
-			}
-		});
-	}
-	
 	function polygonizedEnd()
 	{
 		FlxG.camera.flash(FlxColor.WHITE, 1);

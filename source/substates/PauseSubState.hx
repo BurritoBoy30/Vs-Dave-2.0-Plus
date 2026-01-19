@@ -1,4 +1,4 @@
-package;
+package substates;
 
 import Controls.Control;
 import flixel.FlxG;
@@ -15,6 +15,7 @@ import flixel.util.FlxColor;
 import flixel.addons.display.FlxBackdrop;
 import flixel.FlxCamera;
 import flixel.addons.transition.Transition;
+import states.*;
 
 class PauseSubState extends MusicBeatSubstate
 {

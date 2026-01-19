@@ -1,4 +1,4 @@
-package;
+package options;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -6,6 +6,7 @@ import flixel.FlxObject;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import states.*;
 
 class ChangeLanguage extends MusicBeatState
 {

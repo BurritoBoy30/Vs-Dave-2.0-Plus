@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import states.*;
 
 class StrumNote extends FlxSprite
 {

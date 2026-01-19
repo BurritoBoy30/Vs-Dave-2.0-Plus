@@ -1,4 +1,4 @@
-package;
+package states;
 
 #if desktop
 import Discord.DiscordClient;
@@ -8,11 +8,16 @@ import flixel.FlxG;
 import flixel.FlxState;
 import lime.app.Application;
 import openfl.Assets;
+import states.*;
 
 class StartState extends MusicBeatState
 {
 	override public function create():Void
-	{	
+	{
+		PlayerSettings.init();
+		FlxG.save.bind('funkin', 'ninjamuffin99');
+		SaveDataHandler.initSave();
+		
 		#if desktop
 		DiscordClient.initialize();
 		Application.current.onExit.add (function (exitCode) {

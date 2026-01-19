@@ -1,4 +1,4 @@
-package;
+package substates;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -13,6 +13,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.sound.FlxSound;
 import flixel.graphics.frames.FlxAtlasFrames;
+import states.*;
 
 class GameOverTailsDoll extends MusicBeatSubstate
 {

@@ -1,4 +1,4 @@
-package;
+package options;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -8,6 +8,7 @@ import Controls.KeyboardScheme;
 import Controls.Control;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import states.*;
 
 class ChangeKeysState extends MusicBeatState
 {	

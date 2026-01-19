@@ -1,4 +1,4 @@
-package;
+package options;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -156,7 +156,7 @@ class ComboNumbersState extends MusicBeatState
 		if (controls.BACK)
 		{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
-			FlxG.switchState(new OptionsMenu());
+			FlxG.switchState(new states.OptionsMenu());
 		}
 	}
 	

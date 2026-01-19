@@ -49,11 +49,7 @@ class FlxSplash extends FlxState
 	}
 	
 	override public function create():Void
-	{
-		PlayerSettings.init();
-		FlxG.save.bind('funkin', 'ninjamuffin99');
-		SaveDataHandler.initSave();
-		
+	{	
 		_cachedBgColor = FlxG.cameras.bgColor;
 		FlxG.cameras.bgColor = FlxColor.BLACK;
 
@@ -122,45 +118,45 @@ class FlxSplash extends FlxState
 			function() // adds the 4 parts of the tails doll
 			{
 				one = new FlxSprite(0, 100).loadGraphic(Paths.image('preloader/1', 'preload'));
-				one.antialiasing = FlxG.save.data.antiAliasing;
+				one.antialiasing = true;
 				one.screenCenter(X);
 				add(one);
 			},
 			function()
 			{
 				two = new FlxSprite(0, 100).loadGraphic(Paths.image('preloader/2', 'preload'));
-				two.antialiasing = FlxG.save.data.antiAliasing;
+				two.antialiasing = true;
 				two.screenCenter(X);
 				add(two);
 			},
 			function()
 			{
 				three = new FlxSprite(0, 100).loadGraphic(Paths.image('preloader/3', 'preload'));
-				three.antialiasing = FlxG.save.data.antiAliasing;
+				three.antialiasing = true;
 				three.screenCenter(X);
 				add(three);
 			},
 			function()
 			{
 				four = new FlxSprite(0, 100).loadGraphic(Paths.image('preloader/4', 'preload'));
-				four.antialiasing = FlxG.save.data.antiAliasing;
+				four.antialiasing = true;
 				four.screenCenter(X);
 				add(four);
 			},
 			function() // does the fancy transition for the whole splash screen
 			{
 				five = new FlxSprite(0, 100).loadGraphic(Paths.image('preloader/5', 'preload'));
-				five.antialiasing = FlxG.save.data.antiAliasing;
+				five.antialiasing = true;
 				five.screenCenter(X);
 				insert(members.indexOf(one), five);
 				
 				logo = new FlxSprite(0, five.y + five.height + 50).loadGraphic(Paths.image('preloader/logo', 'preload'));
-				logo.antialiasing = FlxG.save.data.antiAliasing;
+				logo.antialiasing = true;
 				logo.screenCenter(X);
 				add(logo);
 				
 				bg = new FlxSprite().loadGraphic(Paths.image('preloader/back', 'preload'));
-				bg.antialiasing = FlxG.save.data.antiAliasing;
+				bg.antialiasing = true;
 				insert(members.indexOf(five), bg);
 				
 				five.visible = false;

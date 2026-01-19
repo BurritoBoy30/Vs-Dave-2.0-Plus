@@ -1,4 +1,4 @@
-package;
+package states;
 
 import flixel.FlxG;
 import flixel.text.FlxText;
@@ -49,7 +49,7 @@ class WarningState extends MusicBeatState
 
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
-				FlxG.switchState(new TitleState());
+				FlxG.switchState(new states.TitleState());
 			});
 		}	
 	}

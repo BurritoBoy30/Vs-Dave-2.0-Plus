@@ -6,6 +6,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxMath;
 import flixel.math.FlxRandom;
 import flixel.util.FlxColor;
+import states.*;
 
 #if polymod
 import polymod.format.ParseRules.TargetSignatureElement;

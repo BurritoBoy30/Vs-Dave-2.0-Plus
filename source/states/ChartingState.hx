@@ -1,4 +1,4 @@
-package;
+package states;
 
 import openfl.system.System;
 import sys.io.File;

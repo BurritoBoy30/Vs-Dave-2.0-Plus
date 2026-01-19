@@ -1,4 +1,4 @@
-package;
+package states;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -12,6 +12,7 @@ import lime.utils.Assets;
 #if desktop
 import Discord.DiscordClient;
 #end
+import options.*;
 
 class OptionsMenu extends MusicBeatState
 {
