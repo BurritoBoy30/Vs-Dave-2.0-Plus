@@ -421,10 +421,12 @@ class PlayState extends MusicBeatState
 		boyfriend.x += boyfriend.charOffset[0];
 		boyfriend.y += boyfriend.charOffset[1];	
 		
+		var thereisnogfs:Array<String> = ['boing', 'caked-up', 'dale', 'your-demise'];
+		
 		if (SONG.song.toLowerCase() == 'tutorial')
 			gf.visible = false;
 		else
-			gf.visible = !(Character.tutorialGFs.contains(dad.curCharacter) || CharacterSelectState.noGfChar.contains(boyfriend.curCharacter) || SONG.song.toLowerCase() == 'boing' || SONG.song.toLowerCase() == 'dale' || SONG.song.toLowerCase() == 'caked-up');
+			gf.visible = !(Character.tutorialGFs.contains(dad.curCharacter) || CharacterSelectState.noGfChar.contains(boyfriend.curCharacter) || thereisnogfs.contains(SONG.song.toLowerCase()));
 		
 		if (darkStages.contains(curStage))
 		{
@@ -519,6 +521,11 @@ class PlayState extends MusicBeatState
 			case 'caked-up':
 				var table:BackgroundImg = new BackgroundImg(dad.x + 15, -154, 'stages/cake/quail', 1, 1, 0.5);
 				add(table);
+			case 'your-demise':
+				var stage:BackgroundImg = new BackgroundImg(0, 0, 'stages/mon/montable', 1, 1, 2);
+				stage.screenCenter();
+				stage.y += 500;
+				add(stage);
 				
 		}
 		add(boyfriend);
@@ -1185,6 +1192,18 @@ class PlayState extends MusicBeatState
 					
 					var place:BackgroundImg = new BackgroundImg(-950, -900, 'stages/dale/dale_bg_new_maybe', 1, 1, 1.4);
 					add(place);
+					
+				case 'your-demise':
+					defaultCamZoom = 0.5;
+					curStage = 'justmonika';
+					
+					var space:BackgroundImg = new BackgroundImg(0, 0, 'stages/mon/spacewindow', 0.3, 0.3, 2);
+					space.screenCenter();
+					add(space);
+					
+					var classroom:BackgroundImg = new BackgroundImg(0, 0, 'stages/mon/classroom', 0.8, 0.8, 2);
+					classroom.screenCenter();
+					add(classroom);
 					
 				default:
 					defaultCamZoom = 0.9;
@@ -2511,10 +2530,16 @@ class PlayState extends MusicBeatState
 		else
 		{
 			if (SONG.song.toLowerCase() == 'rules' && enterRule34)
+			{
 				camFollow.setPosition((boyfriend.getMidpoint().x - 350) + boyfriend.camOffsets[0], (boyfriend.getMidpoint().y - 100) + boyfriend.camOffsets[1]);
+			}
+			else if (SONG.song.toLowerCase() == 'your-demise' && dad.curCharacter == 'monika')
+			{
+				camFollow.setPosition((boyfriend.getMidpoint().x - 100) + (boyfriend.camOffsets[0] - 200), (dad.getMidpoint().y - 100) + (dad.camOffsets[1] + 175));
+			}
 			else
 				camFollow.setPosition((boyfriend.getMidpoint().x - 100) + boyfriend.camOffsets[0], (boyfriend.getMidpoint().y - 100) + boyfriend.camOffsets[1]);
-			
+				
 			dadNoteCamOffset[0] = 0;
 			dadNoteCamOffset[1] = 0;
 

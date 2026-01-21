@@ -2,7 +2,7 @@ file: ringi
 offsets: 0, 0
 camoffsets: -170, -120
 scale: 1.8
-anti-aliasing: true
+anti-aliasing: false
 flipX: false
 icon: ringi
 barcolor: 199, 164, 165

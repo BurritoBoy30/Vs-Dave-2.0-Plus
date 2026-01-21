@@ -29,7 +29,7 @@ class MainMenuState extends MusicBeatState
 	
 	// things for the menu slut or whatever
 	var dummyfriend:FlxSprite;
-	var menufolks:Array<String> = ['dummyfriend', 'ema1', 'ema2', 'sarvente', 'duomi', 'toga', 'pyro', 'ilulu', 'hopelesspeaches'];
+	var menufolks:Array<String> = ['dummyfriend', 'ema1', 'ema2', 'sarvente', 'duomi', 'toga', 'pyro', 'ilulu', 'hopelesspeaches', 'fizzie', 'candi'];
 	public static var failSafe:Int = 0;
 	var chance:Int = 0;
 	

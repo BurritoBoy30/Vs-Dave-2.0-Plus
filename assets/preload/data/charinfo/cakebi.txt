@@ -2,7 +2,7 @@ file: thick_legs_bambi
 offsets: -200, -200
 camoffsets: 250, 350
 scale: 0.5
-anti-aliasing: true
+anti-aliasing: false
 flipX: false
 icon: cakebi
 barcolor: 101, 51, 3

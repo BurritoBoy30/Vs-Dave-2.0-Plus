@@ -2,7 +2,7 @@ file: dale
 offsets: -500, -450
 camoffsets: 350, 425
 scale: 0.65
-anti-aliasing: true
+anti-aliasing: false
 flipX: false
 icon: dale
 barcolor: 111, 68, 71

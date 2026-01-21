@@ -69,7 +69,7 @@ class CharacterSelectState extends MusicBeatState
 		'three-gfs', 'gf-trepidation', 'gf-trepidation-nsfw', 'gf-trepidation-pixel',
 		'skyblue', 'tails-doll', 'gefe', 'gefe-busty', 'gefe-twerk'
 	];
-	var songsWithNoGf:Array<String> = ['boing', 'caked-up', 'dale'];
+	var songsWithNoGf:Array<String> = ['boing', 'caked-up', 'dale', 'your-demise'];
 
 	public var noMorePresses:Bool = false;
 	

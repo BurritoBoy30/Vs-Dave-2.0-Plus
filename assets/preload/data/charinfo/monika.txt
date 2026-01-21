@@ -1,0 +1,14 @@
+file: bigmon
+offsets: -500, -600
+camoffsets: -100, -50
+scale: 1.3
+anti-aliasing: true
+flipX: false
+icon: monika
+barcolor: 255, 0, 29
+prefix, 0, 0, idle, BigmonIdle, true, 24
+prefix, 43, 2, singUP, BigmonUp, false, 24
+prefix, -140, -62, singRIGHT, BigmonRight, false, 24
+prefix, -21, -38, singDOWN, BigmonDown, false, 24
+prefix, -71, 0, singLEFT, BigmonLeft, false, 24
+starterIdle: idle, false

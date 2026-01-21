@@ -537,7 +537,7 @@ class FreeplayState extends MusicBeatState
 			case 'fnfgf' | 'unstoppable' | 'mekatsune' | 'sunshine':
 				diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase());
 			default:
-				if (CharacterSelectState.noGfChar.contains(curBfChar.toLowerCase()) || songs[curSelected].songName.toLowerCase() == 'boing')
+				if (CharacterSelectState.noGfChar.contains(curBfChar.toLowerCase()) || (['boing', 'your-demise'].contains(songs[curSelected].songName.toLowerCase())))
 					diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase()) + " - (" + curBfChar.toUpperCase() + ")";
 				else
 				{
