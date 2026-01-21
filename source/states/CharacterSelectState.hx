@@ -144,7 +144,6 @@ class CharacterSelectState extends MusicBeatState
 		
 		iconBF = new HealthIcon(boyfriendData[curBF].names[curFormBF], false);
 		iconBF.y = boyfriendText.y - 10;
-		iconBF.screenCenter(X);
 		add(iconBF);
 		iconBF.cameras = [camHUD];
 
@@ -639,18 +638,16 @@ class CharacterSelectState extends MusicBeatState
 		UpdateGF();
 	}
 	
-	var iconOffseet:Float = 15;
 	var shitOffset:Array<Float> = [-130, -60];
 	
 	public function UpdateBF()
 	{
 		noMorePresses = true;
-		if (boyfriendChar != null) {
+		if (boyfriendChar != null)
 			remove(boyfriendChar);
-			iconBF.x -= (boyfriendText.textField.textWidth / 2) + iconOffseet;
-		}
+			
 		boyfriendText.text = boyfriendData[curBF].displayNames[curFormBF];
-		iconBF.x += (boyfriendText.textField.textWidth / 2) + iconOffseet;
+		iconBF.x = (FlxG.width / 2) + (boyfriendText.textField.textWidth / 2) - 60;
 		
 		boyfriendChar = new Boyfriend(770 + shitOffset[0] - ((noGfChar.contains(boyfriendData[curBF].names[curFormBF]) || songsWithNoGf.contains(PlayState.SONG.song.toLowerCase())) ? 200 : 0), 450 + shitOffset[1], boyfriendData[curBF].names[curFormBF]);
 		boyfriendChar.x += boyfriendChar.charOffset[0];
@@ -681,13 +678,11 @@ class CharacterSelectState extends MusicBeatState
 		}
 		
 		noMorePresses = true;
-		if (girlfriendChar != null) {
+		if (girlfriendChar != null)
 			remove(girlfriendChar);
-			iconGF.x -= (girlfriendText.textField.textWidth / 2) + iconOffseet;
-		}
 		
 		girlfriendText.text = displayName;
-		iconGF.x += (girlfriendText.textField.textWidth / 2) + iconOffseet;
+		iconGF.x = (FlxG.width / 2) + (girlfriendText.textField.textWidth / 2) - 60;
 		
 		girlfriendChar = new Girlfriend(400 + shitOffset[0], 130 + shitOffset[1], name);
 		girlfriendChar.x += girlfriendChar.charOffset[0];

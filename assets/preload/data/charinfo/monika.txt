@@ -1,5 +1,5 @@
 file: bigmon
-offsets: -500, -600
+offsets: -600, -600
 camoffsets: -100, -50
 scale: 1.3
 anti-aliasing: true

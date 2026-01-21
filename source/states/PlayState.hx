@@ -524,6 +524,7 @@ class PlayState extends MusicBeatState
 			case 'your-demise':
 				var stage:BackgroundImg = new BackgroundImg(0, 0, 'stages/mon/montable', 1, 1, 2);
 				stage.screenCenter();
+				stage.x -= 70;
 				stage.y += 500;
 				add(stage);
 				
@@ -613,15 +614,18 @@ class PlayState extends MusicBeatState
 		add(healthBarBG);
 		
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
+		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
 		
 		if (ifGfCanSingThenHerStuffCanFunction())
 		{
 			iconGF = new HealthIcon(gf.healthIcon, true);
+			iconGF.y = healthBar.y - (iconGF.height / 2) - 50;
 			add(iconGF);
 		}
 
 		iconP2 = new HealthIcon(dad.healthIcon);
+		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
 		reloadHealthBarColors();
 
@@ -2224,13 +2228,17 @@ class PlayState extends MusicBeatState
 		
 		iconP1.scale.set(FlxMath.lerp(iconP1.realSize, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)), FlxMath.lerp(iconP1.realSize, iconP1.scale.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)));
 		iconP2.scale.set(FlxMath.lerp(iconP2.realSize, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)), FlxMath.lerp(iconP2.realSize, iconP2.scale.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)));
-
+		
+		iconP1.angle = FlxMath.lerp(0, iconP1.angle, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
+		iconP2.angle = FlxMath.lerp(0, iconP2.angle, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
+		
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
 		
 		if (ifGfCanSingThenHerStuffCanFunction())
 		{
 			iconGF.scale.set(FlxMath.lerp(iconGF.realSize, iconGF.scale.x, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)), FlxMath.lerp(iconGF.realSize, iconGF.scale.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)));
+			iconGF.angle = FlxMath.lerp(0, iconGF.angle, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
 			iconGF.updateHitbox();
 		}
 		
@@ -2242,13 +2250,13 @@ class PlayState extends MusicBeatState
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset) + (iconP2.whosthisfucker == 'ohungi' ? ohungiOffset : 0);
 		
-		iconP1.y = healthBar.y - (iconP1.height / 2);
-		iconP2.y = healthBar.y - (iconP2.height / 2);
+		iconP1.y = FlxMath.lerp(healthBar.y - (iconP1.height / 2), iconP1.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
+		iconP2.y = FlxMath.lerp(healthBar.y - (iconP2.height / 2), iconP2.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
 		
 		if (ifGfCanSingThenHerStuffCanFunction())
 		{
-			iconGF.x = iconP1.x + ((iconP1.height / 2) - 20);
-			iconGF.y = iconP1.y - ((iconP1.height / 2) - 20) ;
+			iconGF.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) + 50);
+			iconGF.y = FlxMath.lerp(healthBar.y - (iconGF.height / 2) - 50, iconGF.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
 		}
 
 		if (healthBar.percent < 20)
@@ -2535,7 +2543,7 @@ class PlayState extends MusicBeatState
 			}
 			else if (SONG.song.toLowerCase() == 'your-demise' && dad.curCharacter == 'monika')
 			{
-				camFollow.setPosition((boyfriend.getMidpoint().x - 100) + (boyfriend.camOffsets[0] - 200), (dad.getMidpoint().y - 100) + (dad.camOffsets[1] + 175));
+				camFollow.setPosition((boyfriend.getMidpoint().x - 100) + (boyfriend.camOffsets[0] - 200), (dad.getMidpoint().y - 100) + (dad.camOffsets[1] + 200));
 			}
 			else
 				camFollow.setPosition((boyfriend.getMidpoint().x - 100) + boyfriend.camOffsets[0], (boyfriend.getMidpoint().y - 100) + boyfriend.camOffsets[1]);
@@ -3685,6 +3693,8 @@ class PlayState extends MusicBeatState
 	}
 	
 	var gfBeatSnap:Int = 1;
+	
+	var iconBouncingOnIt:Bool = false;
 
 	override function beatHit()
 	{
@@ -3723,9 +3733,26 @@ class PlayState extends MusicBeatState
 		}
 		
 		if (curBeat % boingBeatFix(1) == 0)
-		{
-			iconP1.scale.set(iconP1.realSize + 0.2, iconP1.realSize + 0.2);
-			iconP2.scale.set(iconP2.realSize + 0.2, iconP2.realSize + 0.2);
+			iconBouncingOnIt = !iconBouncingOnIt;
+			
+		if (curBeat % boingBeatFix(1) == 0) // all this for a good looking icon bounce
+		{			
+			if (iconBouncingOnIt)
+			{
+				iconP1.scale.set(iconP1.realSize + 0.1, iconP1.realSize + 0.3);
+				iconP2.scale.set(iconP1.realSize + 0.1, iconP1.realSize - 0.2);
+			}
+			else
+			{
+				iconP1.scale.set(iconP1.realSize + 0.1, iconP1.realSize - 0.2);
+				iconP2.scale.set(iconP1.realSize + 0.1, iconP1.realSize + 0.3);
+			}
+
+			iconP1.angle = iconBouncingOnIt ? 20 : -20;
+			iconP2.angle = iconBouncingOnIt ? 20 : -20;
+			
+			iconP1.y = healthBar.y - (iconP1.height / 2) + (iconBouncingOnIt ? 15 : -15);
+			iconP2.y = healthBar.y - (iconP2.height / 2) + (iconBouncingOnIt ? -15 : 15);
 
 			iconP1.updateHitbox();
 			iconP2.updateHitbox();
@@ -3733,7 +3760,13 @@ class PlayState extends MusicBeatState
 		
 		if (ifGfCanSingThenHerStuffCanFunction())
 		{
-			iconGF.scale.set(iconGF.realSize + 0.2, iconGF.realSize + 0.2);
+			if (iconBouncingOnIt)
+				iconGF.scale.set(iconGF.realSize + 0.1, iconGF.realSize + 0.3);
+			else
+				iconGF.scale.set(iconGF.realSize + 0.1, iconGF.realSize - 0.2);
+				
+			iconGF.angle = iconBouncingOnIt ? 20 : -20;
+			iconGF.y = (healthBar.y - (iconGF.height / 2) - 50) + (iconBouncingOnIt ? 15 : -15);
 			iconGF.updateHitbox();
 		}
 		
