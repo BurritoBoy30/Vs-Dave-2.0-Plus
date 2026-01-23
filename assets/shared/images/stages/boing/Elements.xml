@@ -2,18 +2,18 @@
 <TextureAtlas imagePath="Elements.png">
 	<!-- Created with Adobe Animate version 22.0.2.168 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="Twogirls_Idle0000" x="833" y="0" width="412" height="892" frameX="0" frameY="-14" frameWidth="428" frameHeight="906"/>
-	<SubTexture name="Twogirls_Idle0001" x="833" y="0" width="412" height="892" frameX="0" frameY="-14" frameWidth="428" frameHeight="906"/>
-	<SubTexture name="Twogirls_Idle0002" x="833" y="0" width="412" height="892" frameX="0" frameY="-14" frameWidth="428" frameHeight="906"/>
-	<SubTexture name="Twogirls_Idle0003" x="421" y="0" width="412" height="896" frameX="-3" frameY="-10" frameWidth="428" frameHeight="906"/>
-	<SubTexture name="Twogirls_Idle0004" x="419" y="906" width="416" height="895" frameX="-3" frameY="-11" frameWidth="428" frameHeight="906"/>
-	<SubTexture name="Twogirls_Idle0005" x="419" y="906" width="416" height="895" frameX="-3" frameY="-11" frameWidth="428" frameHeight="906"/>
-	<SubTexture name="Twogirls_Idle0006" x="0" y="906" width="419" height="898" frameX="-5" frameY="-8" frameWidth="428" frameHeight="906"/>
-	<SubTexture name="Twogirls_Idle0007" x="0" y="906" width="419" height="898" frameX="-5" frameY="-8" frameWidth="428" frameHeight="906"/>
-	<SubTexture name="Twogirls_Idle0008" x="0" y="906" width="419" height="898" frameX="-5" frameY="-8" frameWidth="428" frameHeight="906"/>
-	<SubTexture name="Twogirls_Idle0009" x="0" y="0" width="421" height="906" frameX="-7" frameY="0" frameWidth="428" frameHeight="906"/>
-	<SubTexture name="Twogirls_Idle0010" x="0" y="0" width="421" height="906" frameX="-7" frameY="0" frameWidth="428" frameHeight="906"/>
-	<SubTexture name="Twogirls_Idle0011" x="0" y="0" width="421" height="906" frameX="-7" frameY="0" frameWidth="428" frameHeight="906"/>
-	<SubTexture name="Twogirls_Idle0012" x="0" y="0" width="421" height="906" frameX="-7" frameY="0" frameWidth="428" frameHeight="906"/>
-	<SubTexture name="Twogirls_Idle0013" x="0" y="0" width="421" height="906" frameX="-7" frameY="0" frameWidth="428" frameHeight="906"/>
+	<SubTexture name="Twogirls_Idle0000" x="833" y="0" width="410" height="892" frameX="0" frameY="-14" frameWidth="428" frameHeight="906"/>
+	<SubTexture name="Twogirls_Idle0001" x="833" y="0" width="410" height="892" frameX="0" frameY="-14" frameWidth="428" frameHeight="906"/>
+	<SubTexture name="Twogirls_Idle0002" x="833" y="0" width="410" height="892" frameX="0" frameY="-14" frameWidth="428" frameHeight="906"/>
+	<SubTexture name="Twogirls_Idle0003" x="421" y="0" width="410" height="896" frameX="-3" frameY="-10" frameWidth="428" frameHeight="906"/>
+	<SubTexture name="Twogirls_Idle0004" x="419" y="906" width="414" height="895" frameX="-3" frameY="-11" frameWidth="428" frameHeight="906"/>
+	<SubTexture name="Twogirls_Idle0005" x="419" y="906" width="414" height="895" frameX="-3" frameY="-11" frameWidth="428" frameHeight="906"/>
+	<SubTexture name="Twogirls_Idle0006" x="0" y="906" width="417" height="898" frameX="-5" frameY="-8" frameWidth="428" frameHeight="906"/>
+	<SubTexture name="Twogirls_Idle0007" x="0" y="906" width="417" height="898" frameX="-5" frameY="-8" frameWidth="428" frameHeight="906"/>
+	<SubTexture name="Twogirls_Idle0008" x="0" y="906" width="417" height="898" frameX="-5" frameY="-8" frameWidth="428" frameHeight="906"/>
+	<SubTexture name="Twogirls_Idle0009" x="0" y="0" width="419" height="905" frameX="-7" frameY="0" frameWidth="428" frameHeight="906"/>
+	<SubTexture name="Twogirls_Idle0010" x="0" y="0" width="419" height="905" frameX="-7" frameY="0" frameWidth="428" frameHeight="906"/>
+	<SubTexture name="Twogirls_Idle0011" x="0" y="0" width="419" height="905" frameX="-7" frameY="0" frameWidth="428" frameHeight="906"/>
+	<SubTexture name="Twogirls_Idle0012" x="0" y="0" width="419" height="905" frameX="-7" frameY="0" frameWidth="428" frameHeight="906"/>
+	<SubTexture name="Twogirls_Idle0013" x="0" y="0" width="419" height="905" frameX="-7" frameY="0" frameWidth="428" frameHeight="906"/>
 </TextureAtlas>

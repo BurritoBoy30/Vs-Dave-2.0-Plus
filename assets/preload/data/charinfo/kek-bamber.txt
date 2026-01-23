@@ -1,0 +1,14 @@
+file: bambi_farter
+offsets: 0, -50
+camoffsets: 100, 100
+scale: 1
+anti-aliasing: true
+flipX: false
+icon: kekker
+barcolor: 179, 179, 179
+prefix, 0, 0, idle, BAMBI_IDLE, false, 24
+prefix, 55, 79, singUP, BAMBI_UP, false, 24
+prefix, -42, 26, singRIGHT, BAMBI_RIGHT, false, 24
+prefix, -10, -170, singDOWN, BAMBI_DOWN, false, 24
+prefix, 66, 12, singLEFT, BAMBI_LEFT, false, 24
+starterIdle: idle, false

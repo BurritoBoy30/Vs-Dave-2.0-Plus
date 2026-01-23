@@ -353,9 +353,6 @@ class PlayState extends MusicBeatState
 			isDownScroll = true;
 		else
 			isDownScroll = FlxG.save.data.downscroll;
-
-		// create the stage
-		generateStage(SONG.song.toLowerCase());
 		
 		screenshader.waveAmplitude = 1;
 		screenshader.waveFrequency = 2;
@@ -435,31 +432,6 @@ class PlayState extends MusicBeatState
 			boyfriend.color = 0xFF878787;
 		}
 		
-		switch (curStage)
-		{
-			case 'exbungo-land':
-				dad.setPosition(298 + dad.charOffset[0], 131 + dad.charOffset[1]);
-				boyfriend.setPosition(1332 + boyfriend.charOffset[0], 513 + boyfriend.charOffset[1]);
-				gf.setPosition(756 + gf.charOffset[0], 200 + gf.charOffset[1]);
-			case 'ohungi stage':
-				dad.x -= 100;
-			case 'boing':
-				dad.x -= 150;
-				boyfriend.x += 100;
-			case 'pc':
-				dad.setPosition(400 + dad.charOffset[0], 300 + dad.charOffset[1]);
-				boyfriend.setPosition(1480 + boyfriend.charOffset[0], 650 + boyfriend.charOffset[1]);
-				gf.setPosition(850 + gf.charOffset[0], 330 + gf.charOffset[1]);
-			case 'sasx':
-				gf.setPosition(400 + gf.charOffset[0], 110 + gf.charOffset[1]);
-			case 'tails-bg':
-				dad.setPosition(-100, -100);
-			case 'bakery':
-				gf.setPosition(1050 + gf.charOffset[0], 150 + gf.charOffset[1]);
-			case 'freezer':
-				dad.setPosition(-350 + dad.charOffset[0], 100 + dad.charOffset[1]);
-		}
-		
 		//they dont show up on video stages to improve performance
 		if (songsWithVideos.contains(SONG.song.toLowerCase()))
 		{
@@ -473,6 +445,9 @@ class PlayState extends MusicBeatState
 			gf.visible = false;
 			boyfriend.visible = false;
 		}
+		
+		// create the stage
+		generateStage(SONG.song.toLowerCase());
 		
 		add(gf);
 		add(dad);
@@ -1016,6 +991,10 @@ class PlayState extends MusicBeatState
 					
 					createShader(bg, 0.1, 5, 2);
 					
+					dad.setPosition(298 + dad.charOffset[0], 131 + dad.charOffset[1]);
+					boyfriend.setPosition(1332 + boyfriend.charOffset[0], 513 + boyfriend.charOffset[1]);
+					gf.setPosition(756 + gf.charOffset[0], 200 + gf.charOffset[1]);
+					
 				case 'computer':
 					defaultCamZoom = 0.75;
 					curStage = 'laptop';
@@ -1053,6 +1032,8 @@ class PlayState extends MusicBeatState
 					
 					var frontground:BackgroundImg = new BackgroundImg(-1100, 220, 'stages/ohungi/ohungi ground', 1, 1);
 					add(frontground);
+					
+					dad.setPosition(0 + dad.charOffset[0], 100 + dad.charOffset[1]);
 					
 				case 'recursed':
 					defaultCamZoom = 0.4;
@@ -1128,6 +1109,9 @@ class PlayState extends MusicBeatState
 					MisViejas.animation.play('Twogirls_Idle', true);
 					add(MisViejas);
 					
+					dad.setPosition(-50 + dad.charOffset[0], 100 + dad.charOffset[1]);
+					boyfriend.setPosition(870 + boyfriend.charOffset[0], 450 + boyfriend.charOffset[1]);
+					
 				case 'rules' | 'malware-madness':
 					defaultCamZoom = 0.6;
 					curStage = 'pc';
@@ -1158,6 +1142,10 @@ class PlayState extends MusicBeatState
 					add(backBG);
 					
 					add(ground);
+					
+					dad.setPosition(400 + dad.charOffset[0], 300 + dad.charOffset[1]);
+					boyfriend.setPosition(1480 + boyfriend.charOffset[0], 650 + boyfriend.charOffset[1]);
+					gf.setPosition(850 + gf.charOffset[0], 330 + gf.charOffset[1]);
 				
 				case 'terminatexs':
 					defaultCamZoom = 0.7;
@@ -1166,6 +1154,8 @@ class PlayState extends MusicBeatState
 					var lol:BackgroundImg = new BackgroundImg(-600, -300, 'stages/singleimages/lol');
 					add(lol);
 					
+					gf.setPosition(400 + gf.charOffset[0], 110 + gf.charOffset[1]);
+					
 				case 'sunshine':
 					defaultCamZoom = 1;
 					curStage = 'tails-bg';
@@ -1173,12 +1163,15 @@ class PlayState extends MusicBeatState
 					tails_fundo = new BackgroundImg(-1000, -620, 'stages/singleimages/BACKING', 1, 1, 1.1);
 					add(tails_fundo);
 					
+					dad.setPosition(-100, -100);
+					
 				case 'tantalum':
 					defaultCamZoom = 0.7;
 					curStage = 'metal';
 					
 					var bg:BackgroundImg = new BackgroundImg(0, 0, 'stages/singleimages/metal', false, true, 1.3);
 					bg.screenCenter();
+					bg.x -= 100;
 					add(bg);
 					
 					createShader(bg, 0.1, 5, 2);
@@ -1197,6 +1190,8 @@ class PlayState extends MusicBeatState
 					var place:BackgroundImg = new BackgroundImg(-950, -900, 'stages/dale/dale_bg_new_maybe', 1, 1, 1.4);
 					add(place);
 					
+					dad.setPosition(-350 + dad.charOffset[0], 100 + dad.charOffset[1]);
+					
 				case 'your-demise':
 					defaultCamZoom = 0.5;
 					curStage = 'justmonika';
@@ -1208,6 +1203,19 @@ class PlayState extends MusicBeatState
 					var classroom:BackgroundImg = new BackgroundImg(0, 0, 'stages/mon/classroom', 0.8, 0.8, 2);
 					classroom.screenCenter();
 					add(classroom);
+					
+				case 'bambi-bass':
+					defaultCamZoom = 0.65;
+					curStage = 'bambi-street';
+					
+					var street:BackgroundImg = new BackgroundImg(0, 0, 'stages/bass/bambi_bass_bg');
+					street.screenCenter();
+					street.x -= 170;
+					street.y -= 105;
+					add(street);
+					
+					dad.setPosition(-400 + dad.charOffset[0], 100 + dad.charOffset[1]);
+					gf.setPosition(80 + gf.charOffset[0], 100 + gf.charOffset[1]);
 					
 				default:
 					defaultCamZoom = 0.9;
@@ -3691,9 +3699,7 @@ class PlayState extends MusicBeatState
 		
 		lettersMovement[int].push([angleThing, floatyThing]);
 	}
-	
-	var gfBeatSnap:Int = 1;
-	
+		
 	var iconBouncingOnIt:Bool = false;
 
 	override function beatHit()
@@ -3732,51 +3738,17 @@ class PlayState extends MusicBeatState
 			gf.playAnim('scared', true);
 		}
 		
-		if (curBeat % boingBeatFix(1) == 0)
+		if (curBeat % boingBeatFix(1) == 0) // all this for a good looking icon bounce
+		{	
 			iconBouncingOnIt = !iconBouncingOnIt;
 			
-		if (curBeat % boingBeatFix(1) == 0) // all this for a good looking icon bounce
-		{			
-			if (iconBouncingOnIt)
-			{
-				iconP1.scale.set(iconP1.realSize + 0.1, iconP1.realSize + 0.3);
-				iconP2.scale.set(iconP1.realSize + 0.1, iconP1.realSize - 0.2);
-			}
-			else
-			{
-				iconP1.scale.set(iconP1.realSize + 0.1, iconP1.realSize - 0.2);
-				iconP2.scale.set(iconP1.realSize + 0.1, iconP1.realSize + 0.3);
-			}
-
-			iconP1.angle = iconBouncingOnIt ? 20 : -20;
-			iconP2.angle = iconBouncingOnIt ? 20 : -20;
+			iconBounce(iconBouncingOnIt, 'bf', iconP1);
+			iconBounce(iconBouncingOnIt, 'dad', iconP2);
 			
-			iconP1.y = healthBar.y - (iconP1.height / 2) + (iconBouncingOnIt ? 15 : -15);
-			iconP2.y = healthBar.y - (iconP2.height / 2) + (iconBouncingOnIt ? -15 : 15);
-
-			iconP1.updateHitbox();
-			iconP2.updateHitbox();
-		}
-		
-		if (ifGfCanSingThenHerStuffCanFunction())
-		{
-			if (iconBouncingOnIt)
-				iconGF.scale.set(iconGF.realSize + 0.1, iconGF.realSize + 0.3);
-			else
-				iconGF.scale.set(iconGF.realSize + 0.1, iconGF.realSize - 0.2);
-				
-			iconGF.angle = iconBouncingOnIt ? 20 : -20;
-			iconGF.y = (healthBar.y - (iconGF.height / 2) - 50) + (iconBouncingOnIt ? 15 : -15);
-			iconGF.updateHitbox();
-		}
-		
-		if (gf.danceType == 'idle')
-		{
-			gfBeatSnap = 2;
-		}
-		else
-		{
-			gfBeatSnap = gfSpeed;
+			if (ifGfCanSingThenHerStuffCanFunction())
+			{
+				iconBounce(iconBouncingOnIt, 'gf', iconGF);
+			}
 		}
 		
 		if (SONG.notes[Math.floor(curStep / 16)].altAnim)
@@ -3799,8 +3771,17 @@ class PlayState extends MusicBeatState
 			gf.idleAlt = false;
 			boyfriend.idleAlt = false;
 		}
+		
+		if (gf.danceType == 'idle')
+		{
+			gfSpeed = 2;
+		}
+		else
+		{
+			gfSpeed = 1;
+		}
 
-		if (curBeat % (gfBeatSnap + ((curSong == 'disruption' || curSong == 'unfairness') && gf.danceType == 'dance' ? 2 : 0)) == 0)
+		if (curBeat % gfSpeed == 0)
 		{
 			if (ifGfCanSingThenHerStuffCanFunction())
 			{
@@ -3917,6 +3898,14 @@ class PlayState extends MusicBeatState
 				if (curBeat % 2 == 0)
 					backBG.animation.play('idle', true);
 		}
+	}
+	
+	function iconBounce(evenBeat:Bool, character:String, whichIcon:HealthIcon)
+	{
+		whichIcon.scale.set(whichIcon.realSize + 0.1, whichIcon.realSize + (character == 'dad' ? (evenBeat ? -0.2 : 0.3) : (evenBeat ? 0.3 : -0.2)));
+		whichIcon.angle = evenBeat ? 20 : -20;	
+		whichIcon.y = (healthBar.y - (whichIcon.height / 2) - (character == 'gf' ? 50 : 0)) + (evenBeat ? 15 : -15);
+		whichIcon.updateHitbox();
 	}
 	
 	function hideLetters(hideInt:Int)

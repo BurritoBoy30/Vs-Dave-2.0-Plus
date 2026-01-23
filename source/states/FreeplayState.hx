@@ -25,6 +25,7 @@ class FreeplayState extends MusicBeatState
 	var selector:FlxText;
 	var curSelected:Int = 0;
 
+	var mainBG:FlxSprite = new FlxSprite();
 	var scoreText:FlxText;
 	var diffText:FlxText;
 	var scoreBG:FlxSprite;
@@ -58,6 +59,31 @@ class FreeplayState extends MusicBeatState
 	var lilText:FlxText;
 	var modes:Array<String> = ["Normal", "Alt"];
 	var selectedmode:Int = 0;
+	
+	var songColors:Array<FlxColor> = [
+		0xFFA5004D, //tutorial, fnfgf
+		0xFF0F5FFF, //dave
+		0xFFFF9583, //dave 3d
+		0xFF25BF37, //bambi
+		0xFF00FFFF, //split a thon
+		0xFF9271FD, //og
+		0xFFC7A4A5, //ringi
+		0xFF653303, //cakebi
+		0xFF6F4447, //dale
+		0xFFB3B3B3, //bambi bass
+		0xFFFF0000, //unfair, your demise
+		0xFF332019, //kabunga
+		0xFF211952, //computer
+		0xFF8E070A, //corridor
+		0xFFF6F6F5, //disposition, mekatsune
+		0xFF60AB24, //decimal
+		0xFF2C2C2C, //recursed
+		0xFF852424, //boing
+		0xFFCBCCCC, //rules, malware madness
+		0xFFE3B756, //unstoppable
+		0xFFBC0102, //terminatexs
+		0xFFFF7B00 //sunshine
+	];
 
 	override function create()
 	{
@@ -75,10 +101,10 @@ class FreeplayState extends MusicBeatState
 			AllPossibleSongs = ["Dave","Golden","Joke","Extra","Console"];
 		}
 		
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
-		bg.antialiasing = FlxG.save.data.antiAliasing;
-		bg.color = 0xFF9271FD;
-		add(bg);
+		mainBG = new FlxSprite().loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
+		mainBG.antialiasing = FlxG.save.data.antiAliasing;
+		mainBG.color = 0xFF9271FD;
+		add(mainBG);
 		
 		CurrentSongIcon = new FlxSprite().loadGraphic(Paths.image('packs/week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
 		CurrentSongIcon.screenCenter();
@@ -355,6 +381,8 @@ class FreeplayState extends MusicBeatState
 				loadingPack = true;
 				canInteract = false;
 				
+				FlxTween.color(mainBG, 0.25, mainBG.color, 0xFF9271FD);
+				
 				for (i in iconArray)
 				{
 					FlxTween.tween(i, {alpha: 0}, 0.2);
@@ -514,6 +542,7 @@ class FreeplayState extends MusicBeatState
 				item.alpha = 1;
 			}
 		}
+		FlxTween.color(mainBG, 0.25, mainBG.color, songColors[songs[curSelected].week]);
 	}
 	
 	public function changefnfgfmode(change:Int)

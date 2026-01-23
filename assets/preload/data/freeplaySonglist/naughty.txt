@@ -1,9 +1,9 @@
-Boing,10,girlf,Hard,150
-Rules,10,movi,Normal,140
-Malware-Madness,10,mivo,Normal,180
-fnfgf,10,gf,Hard,225
-Unstoppable,10,fire,Hard,190
-Mekatsune,10,toriel,Extreme,180
-Terminatexs,10,j-bot,Hard,200
-Sunshine,10,tails-doll,Hard,105
+Boing,17,girlf,Hard,150
+Rules,18,movi,Normal,140
+Malware-Madness,18,mivo,Normal,180
+fnfgf,0,gf,Hard,225
+Unstoppable,19,fire,Hard,190
+Mekatsune,14,toriel,Extreme,180
+Terminatexs,20,j-bot,Hard,200
+Sunshine,21,tails-doll,Hard,105
 Your-Demise,10,monika,Hard,157

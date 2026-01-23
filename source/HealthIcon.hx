@@ -109,13 +109,17 @@ class HealthIcon extends FlxSprite
 		{
 			case 'normal':
 				if (whosthisfucker == 'ohungi')
+				{
 					animation.play('normal');
+				}
 				else
 					animation.curAnim.curFrame = 0;
 					
 			case 'losing':
 				if (whosthisfucker == 'ohungi')
+				{
 					animation.play('losing');
+				}
 				else
 					animation.curAnim.curFrame = 1;
 		}

@@ -1,7 +1,7 @@
 Bonus-Song,1,dave,Normal,140
-Mealie,2,bambi-new,Hard,167
-Computer,8,bombu,Easy,130
-Crimson-Corridor,8,bombai,Normal,150
-Disposition,9,hell-expunged,Extreme,115
-Decimal,10,ohungi,Hard,140
-Recursed,10,recurser,Hard,150
+Mealie,3,bambi-new,Hard,167
+Computer,12,bombu,Easy,130
+Crimson-Corridor,13,bombai,Normal,150
+Disposition,14,hell-expunged,Extreme,115
+Decimal,15,ohungi,Hard,140
+Recursed,16,recurser,Hard,150

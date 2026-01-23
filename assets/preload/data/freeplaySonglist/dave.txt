@@ -1,8 +1,8 @@
 Tutorial,0,gf,Easy,100
 House,1,dave,Normal,230
 Insanity,1,dave-annoyed,Normal,160
-Polygonized,1,dave-angey,Hard,180
-Blocked,2,bambi-new,Hard,188
-Corn-Theft,2,bambi-new,Hard,105
-Maze,2,bambi-new,Normal,113
-Splitathon,3,the-duo,Hard,230
+Polygonized,2,dave-angey,Hard,180
+Blocked,3,bambi-new,Hard,188
+Corn-Theft,3,bambi-new,Hard,105
+Maze,3,bambi-new,Normal,113
+Splitathon,4,the-duo,Hard,230

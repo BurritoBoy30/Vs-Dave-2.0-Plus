@@ -1,5 +1,5 @@
-Supernovae,4,bambi-joke,Stupid,160
-Glitch,4,bambi-joke,Stupid,110
-Cheating,5,bambi-3d,Stupid,125
-Unfairness,5,bambi-unfair,Stupid,150
-Kabunga,5,exbungo,Hard,174
+Supernovae,3,bambi-joke,Stupid,160
+Glitch,3,bambi-joke,Stupid,110
+Cheating,3,bambi-3d,Stupid,125
+Unfairness,10,bambi-unfair,Stupid,150
+Kabunga,11,exbungo,Hard,174
