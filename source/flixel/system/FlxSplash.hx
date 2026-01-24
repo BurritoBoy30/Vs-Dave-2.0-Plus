@@ -104,10 +104,10 @@ class FlxSplash extends FlxState
 		if (_curPart == 6 && everythingLoaded)
 		{
 			// Make the logo a tad bit longer, so our users fully appreciate our hard work :D
-			FlxTween.tween(five, {alpha: 0}, 0.7, {ease: FlxEase.quadOut, onComplete: (_)->complete()});
+			FlxTween.tween(five, {alpha: 0}, 0.5, {ease: FlxEase.quadOut, onComplete: (_)->complete()});
 			for (memb in [bg, logo])
 			{
-				FlxTween.tween(memb, {alpha: 0}, 0.7, {ease: FlxEase.quadOut});
+				FlxTween.tween(memb, {alpha: 0}, 0.5, {ease: FlxEase.quadOut});
 			}
 		}
 	}

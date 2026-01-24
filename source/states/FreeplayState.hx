@@ -350,9 +350,9 @@ class FreeplayState extends MusicBeatState
 				changeSelection(1);
 			}
 			
-			lilText.visible = songs[curSelected].songName.toLowerCase() == 'fnfgf';
+			lilText.visible = songs[curSelected].songName.toLowerCase() == 'fnfgf' || songs[curSelected].songName.toLowerCase() == 'terminatexs';
 			
-			if (songs[curSelected].songName.toLowerCase() == 'fnfgf')
+			if (songs[curSelected].songName.toLowerCase() == 'fnfgf' || songs[curSelected].songName.toLowerCase() == 'terminatexs')
 			{
 				if (controls.LEFT_P && canInteract)
 				{
@@ -470,9 +470,6 @@ class FreeplayState extends MusicBeatState
 				switch (songs[curSelected].songName.toLowerCase())
 				{
 					case 'fnfgf' | 'unstoppable' | 'mekatsune' | 'sunshine':
-						if (songs[curSelected].songName.toLowerCase() == 'fnfgf')
-							PlayState.gfvideotype = modes[selectedmode].toLowerCase();
-							
 						LoadingState.loadAndSwitchState(new PlayState());
 					default:
 						LoadingState.loadAndSwitchState(new CharacterSelectState());
@@ -556,6 +553,7 @@ class FreeplayState extends MusicBeatState
 		{
 			selectedmode = 0;
 		}
+		PlayState.altType = modes[selectedmode].toLowerCase();
 		lilText.text = "< " + modes[selectedmode] + " >";
 	}
 	

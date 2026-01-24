@@ -22,6 +22,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
+import flixel.addons.display.FlxBackdrop;
 
 using StringTools;
 
@@ -33,7 +34,7 @@ class TitleState extends MusicBeatState
 	var credGroup:FlxGroup;
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
-	var ngSpr:FlxSprite;
+	var moverz:FlxBackdrop;
 
 	var curWacky:Array<String> = [];
 
@@ -60,8 +61,7 @@ class TitleState extends MusicBeatState
 	}
 
 	var logoBl:FlxSprite;
-	var gfDance:FlxSprite;
-	var danceLeft:Bool = false;
+	var gfDance:Character;
 	var titleText:FlxSprite;
 
 	function startIntro()
@@ -112,12 +112,16 @@ class TitleState extends MusicBeatState
 		logoBl.updateHitbox();
 		// logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
+		
+		moverz = new FlxBackdrop(Paths.image('ui/checkeredBG_title', 'preload'), XY, 0, 0);
+		moverz.antialiasing = FlxG.save.data.antiAliasing;
+		moverz.color = 0xFFA5004D;
+		moverz.scrollFactor.set();
+		add(moverz);
 
-		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
-		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
-		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-		gfDance.antialiasing = FlxG.save.data.antiAliasing;
+		gfDance = new Girlfriend(FlxG.width * 0.43, FlxG.height * 0.07, 'gf');
+		gfDance.x += gfDance.charOffset[0];
+		gfDance.y += gfDance.charOffset[1];
 		add(gfDance);
 		add(logoBl);
 
@@ -153,14 +157,6 @@ class TitleState extends MusicBeatState
 
 		credTextShit.visible = false;
 
-		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo'));
-		add(ngSpr);
-		ngSpr.visible = false;
-		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
-		ngSpr.updateHitbox();
-		ngSpr.screenCenter(X);
-		ngSpr.antialiasing = FlxG.save.data.antiAliasing;
-
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
 		FlxG.mouse.visible = false;
@@ -195,7 +191,14 @@ class TitleState extends MusicBeatState
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
-
+		
+		var scrollSpeed:Float = 50;
+		if (moverz != null)
+		{
+			moverz.x += scrollSpeed * elapsed;
+			moverz.y += scrollSpeed * elapsed;
+		}
+		
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
 
 		if (!transitioning && skippedIntro)
@@ -269,15 +272,12 @@ class TitleState extends MusicBeatState
 		super.beatHit();
 
 		if(logoBl != null) 
-			logoBl.animation.play('bump');
+			logoBl.animation.play('bump', true);
 
-		if(gfDance != null) {
-			danceLeft = !danceLeft;
-
-			if (danceLeft)
-				gfDance.animation.play('danceRight');
-			else
-				gfDance.animation.play('danceLeft');
+		if(gfDance != null) 
+		{
+			if (curBeat % (gfDance.danceType == 'idle' ? 2 : 1) == 0)
+				gfDance.dance();
 		}
 
 		if(!closedState) {
@@ -331,7 +331,7 @@ class TitleState extends MusicBeatState
 					addMoreText('& Bambi');
 				// credTextShit.text += '\nNight';
 				case 14:
-					addMoreText('Plus'); // credTextShit.text += '\nFunkin';
+					addMoreText('Burrito Build'); // credTextShit.text += '\nFunkin';
 				case 15:
 					deleteCoolText();
 					skipIntro();
@@ -345,8 +345,6 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
-			remove(ngSpr);
-
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
 			skippedIntro = true;

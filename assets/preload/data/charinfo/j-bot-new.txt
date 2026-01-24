@@ -1,0 +1,14 @@
+file: j-bot-new
+offsets: -350, -290
+camoffsets: -200, -100
+scale: 1.5
+anti-aliasing: true
+flipX: false
+icon: j-bot-new
+barcolor: 255, 0, 0
+prefix, 0, 0, idle, d idle, false, 18
+prefix, 1, 2, singUP, d up, false, 28
+prefix, -12, 0, singRIGHT, d right, false, 28
+prefix, 0, 0, singLEFT, d left, false, 28
+prefix, -26, 0, singDOWN, d down, false, 28
+starterIdle: idle, true

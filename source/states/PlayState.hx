@@ -191,6 +191,7 @@ class PlayState extends MusicBeatState
 	// shit for songs
 	var place:BackgroundImg;
 	var darkStages:Array<String> = ['bambiFarmNight', 'disabled', 'unfairness', 'rsod', 'freezer'];
+	var thereisnogfs:Array<String> = ['boing', 'caked-up', 'dale', 'your-demise'];
 	
 	//recursed stuff
 	var startPanic:Bool = false;
@@ -233,7 +234,7 @@ class PlayState extends MusicBeatState
 	
 	// video
 	public static var video:FlxVideoSprite;
-	public static var gfvideotype:String = '';
+	public static var altType:String = '';
 	public var camVideo:FlxCamera;
 	public var songsWithVideos:Array<String> = ['fnfgf', 'unstoppable', 'mekatsune'];
 	
@@ -389,6 +390,10 @@ class PlayState extends MusicBeatState
 				inCaseTutorial = SONG.player2;
 			}
 		}
+		else if (SONG.song.toLowerCase() == 'terminatexs' && altType == 'alt')
+		{
+			inCaseTutorial = 'j-bot-new';
+		}
 		else
 		{
 			inCaseTutorial = SONG.player2;
@@ -405,32 +410,15 @@ class PlayState extends MusicBeatState
 			dad.x = 400 + dad.charOffset[0];
 			dad.y = 130 + dad.charOffset[1];
 		}
-		
-		switch (dad.curCharacter)
-		{
-			case 'ohungi':
-				camPos.x += 200;
-			case 'j-bot':
-				camPos.x += 200;
-		}
-		
+
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
 		boyfriend.x += boyfriend.charOffset[0];
 		boyfriend.y += boyfriend.charOffset[1];	
-		
-		var thereisnogfs:Array<String> = ['boing', 'caked-up', 'dale', 'your-demise'];
 		
 		if (SONG.song.toLowerCase() == 'tutorial')
 			gf.visible = false;
 		else
 			gf.visible = !(Character.tutorialGFs.contains(dad.curCharacter) || CharacterSelectState.noGfChar.contains(boyfriend.curCharacter) || thereisnogfs.contains(SONG.song.toLowerCase()));
-		
-		if (darkStages.contains(curStage))
-		{
-			dad.color = 0xFF878787;
-			gf.color = 0xFF878787;
-			boyfriend.color = 0xFF878787;
-		}
 		
 		//they dont show up on video stages to improve performance
 		if (songsWithVideos.contains(SONG.song.toLowerCase()))
@@ -448,6 +436,13 @@ class PlayState extends MusicBeatState
 		
 		// create the stage
 		generateStage(SONG.song.toLowerCase());
+		
+		if (darkStages.contains(curStage))
+		{
+			dad.color = 0xFF878787;
+			gf.color = 0xFF878787;
+			boyfriend.color = 0xFF878787;
+		}
 		
 		add(gf);
 		add(dad);
@@ -765,12 +760,12 @@ class PlayState extends MusicBeatState
 		switch (SONG.song.toLowerCase())
 		{
 			case 'fnfgf':
-				if (gfvideotype == 'alt')
+				if (altType == 'alt')
 					loadVideo('fnfgfnew');
 				else
 					loadVideo('fnfgf');
 					
-				gfvideotype = '';
+				altType = '';
 			case 'unstoppable':
 				loadVideo('unstoppable');
 				iconP1.createIcon('test');
@@ -1151,10 +1146,11 @@ class PlayState extends MusicBeatState
 					defaultCamZoom = 0.7;
 					curStage = 'sasx';
 					
-					var lol:BackgroundImg = new BackgroundImg(-600, -300, 'stages/singleimages/lol');
+					var lol:BackgroundImg = new BackgroundImg(-610, -300, 'stages/singleimages/lol');
 					add(lol);
 					
-					gf.setPosition(400 + gf.charOffset[0], 110 + gf.charOffset[1]);
+					gf.setPosition(500 + gf.charOffset[0], 130 + gf.charOffset[1]);
+					boyfriend.setPosition(970 + boyfriend.charOffset[0], 450 + boyfriend.charOffset[1]);
 					
 				case 'sunshine':
 					defaultCamZoom = 1;
@@ -1215,7 +1211,7 @@ class PlayState extends MusicBeatState
 					add(street);
 					
 					dad.setPosition(-400 + dad.charOffset[0], 100 + dad.charOffset[1]);
-					gf.setPosition(80 + gf.charOffset[0], 100 + gf.charOffset[1]);
+					gf.setPosition(80 + gf.charOffset[0], 80 + gf.charOffset[1]);
 					
 				default:
 					defaultCamZoom = 0.9;
@@ -1388,7 +1384,6 @@ class PlayState extends MusicBeatState
 						}
 					});
 					FlxG.sound.play(Paths.sound('introGo'), 0.6);
-					creditPopUp();
 				case 4:
 			}
 
@@ -1397,76 +1392,6 @@ class PlayState extends MusicBeatState
 		}, 5);
 	}
 	
-	var creditGoDown:Bool = false;
-	
-	function creditPopUp()
-	{
-		var size:Float = FlxG.width / 3;
-		
-		var creditString:String;
-		switch (curSong)
-		{
-			case 'tutorial':
-				creditString = 'KawaiSprite';
-			case 'house' | 'insanity' | 'polygonized' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'bonus-song' | 'cheating' |
-				'unfairness' | 'kabunga':
-				creditString = 'MoldyGH';
-			case 'mealie':
-				creditString = 'Alexander Copper 19';
-			case 'glitch':
-				creditString = 'DeadShadow & PixelGH\nRemix by MoldyGH';
-			case 'supernovae':
-				creditString = 'ArchWk\nRemix by MoldyGH';
-			case 'disability' | 'disruption':
-				creditString = 'Sky!';
-			case 'og' | 'recursed':
-				creditString = 'Aadsta';
-			case 'computer' | 'crimson-corridor':
-				creditString = 'Cheemy';
-			case 'decimal':
-				creditString = 'ImpyBoo';
-			default:
-				creditString = 'Placeholder';
-		}
-		
-		var creditBG:FlxSprite = new FlxSprite(-(size + 20), 0).makeGraphic(Std.int(size), Std.int(FlxG.height), FlxColor.BLACK);
-		creditBG.antialiasing = FlxG.save.data.antiAliasing;
-		creditBG.alpha = 0.6;
-		add(creditBG);
-		creditBG.cameras = [camHUD];
-		
-		var creditText:FlxText = new FlxText(-(size + 20), 5, creditBG.width, ReturnLanguage.getLine('songcredit') + creditString, 20);
-		creditText.setFormat(Paths.font("comic.ttf"), 35, FlxColor.WHITE, CENTER);
-		creditText.antialiasing = FlxG.save.data.antiAliasing;
-		add(creditText);
-		creditText.cameras = [camHUD];
-		
-		// the bg only only goes the to right place if i add it to the FlxTween function, fucking why??
-		FlxTween.tween(creditBG, {x: 0}, 1, {ease: FlxEase.elasticInOut});
-		FlxTween.tween(creditText, {x: 0}, 1, {ease: FlxEase.elasticInOut});
-		
-		new FlxTimer().start(5, function(Dumbshit:FlxTimer)
-		{
-			FlxTween.tween(creditBG, {x: -(size + 20)}, 1,
-			{
-				ease: FlxEase.elasticInOut,
-				onComplete: function(twn:FlxTween)
-				{
-					creditBG.destroy();
-				}
-			});
-			
-			FlxTween.tween(creditText, {x: -(size + 20)}, 1,
-			{
-				ease: FlxEase.elasticInOut,
-				onComplete: function(twn:FlxTween)
-				{
-					creditBG.destroy();
-				}
-			});
-		});
-	}
-
 	var previousFrameTime:Int = 0;
 	var lastReportedPlayheadPosition:Int = 0;
 	var songTime:Float = 0;
@@ -2552,6 +2477,10 @@ class PlayState extends MusicBeatState
 			else if (SONG.song.toLowerCase() == 'your-demise' && dad.curCharacter == 'monika')
 			{
 				camFollow.setPosition((boyfriend.getMidpoint().x - 100) + (boyfriend.camOffsets[0] - 200), (dad.getMidpoint().y - 100) + (dad.camOffsets[1] + 200));
+			}
+			else if (SONG.song.toLowerCase() == 'terminatexs')
+			{
+				camFollow.setPosition((boyfriend.getMidpoint().x - 100) + boyfriend.camOffsets[0] - 50, (boyfriend.getMidpoint().y - 100) + boyfriend.camOffsets[1]);
 			}
 			else
 				camFollow.setPosition((boyfriend.getMidpoint().x - 100) + boyfriend.camOffsets[0], (boyfriend.getMidpoint().y - 100) + boyfriend.camOffsets[1]);
@@ -3904,7 +3833,7 @@ class PlayState extends MusicBeatState
 	{
 		whichIcon.scale.set(whichIcon.realSize + 0.1, whichIcon.realSize + (character == 'dad' ? (evenBeat ? -0.2 : 0.3) : (evenBeat ? 0.3 : -0.2)));
 		whichIcon.angle = evenBeat ? 20 : -20;	
-		whichIcon.y = (healthBar.y - (whichIcon.height / 2) - (character == 'gf' ? 50 : 0)) + (evenBeat ? 15 : -15);
+		whichIcon.y = (healthBar.y - (whichIcon.height / 2) - (character == 'gf' ? 50 : 0)) + (character == 'dad' ? (evenBeat ? -15 : 15) : (evenBeat ? 15 : -15));
 		whichIcon.updateHitbox();
 	}
 	
@@ -3931,7 +3860,7 @@ class PlayState extends MusicBeatState
 	function ifGfCanSingThenHerStuffCanFunction()
 	{
 		return FlxG.save.data.gfCanSing && Character.tutorialGFs.contains(gf.curCharacter)
-			&& !CharacterSelectState.noGfChar.contains(boyfriend.curCharacter) && SONG.song.toLowerCase() != 'boing';
+			&& !CharacterSelectState.noGfChar.contains(boyfriend.curCharacter) && !thereisnogfs.contains(SONG.song.toLowerCase());
 	}
 	
 	//miku put the wrong bpm on "Boing" so this is a fix for it so the characters dont bop off-sync
@@ -3982,14 +3911,14 @@ class PlayState extends MusicBeatState
 	
 	public function JBotBonkAnimation()
 	{
-		if (SONG.song.toLowerCase() == 'terminatexs')
+		if (SONG.song.toLowerCase() == 'terminatexs' && altType != 'alt')
 		{	
 			dad.canDance = false;
 			dad.visible = false;
 			
 			jBotBonk.x = dad.x;
 			jBotBonk.y = dad.y;
-			boolthatstopsthegamefromcrashing = false;
+			boolthatstopsthegamefromcrashing = true;
 			jBotBonk.animation.play('bonk', false);
 			
 		}

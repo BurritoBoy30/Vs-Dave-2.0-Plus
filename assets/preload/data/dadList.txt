@@ -23,6 +23,7 @@ movi
 movi2
 mivo
 j-bot
+j-bot-new
 ringi
 cakebi
 dale

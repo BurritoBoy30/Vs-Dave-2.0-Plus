@@ -16,6 +16,7 @@ import options.*;
 
 class OptionsMenu extends MusicBeatState
 {
+	var menuBG:FlxSprite;
 	var selector:FlxText;
 	var curSelected:Int = 0;
 	
@@ -47,26 +48,25 @@ class OptionsMenu extends MusicBeatState
 		DiscordClient.changePresence("In the Option Menu", null);
 		#end
 		
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
-		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
-		menuBG.updateHitbox();
-		menuBG.screenCenter();
-		menuBG.antialiasing = FlxG.save.data.antiAliasing;
-		add(menuBG);
+		if (!FlxG.save.data.hornyALL)
+		{
+			menuBG = new FlxSprite().loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
+			menuBG.screenCenter();
+			menuBG.antialiasing = FlxG.save.data.antiAliasing;
+			add(menuBG);
+		}
+		else
+		{
+			menuBG = new FlxSprite();
+			menuBG.frames = Paths.getSparrowAtlas('hornyshit/lirabyjoaopereira', 'preload');
+			menuBG.animation.addByPrefix("lira deepthroating pogo", "succ", 24);
+			menuBG.screenCenter();
+			menuBG.animation.play('lira deepthroating pogo');
+			menuBG.antialiasing = FlxG.save.data.antiAliasing;
+			add(menuBG);
+		}
 		
-		var hornyBitch:FlxSprite = new FlxSprite(0, 0);
-		hornyBitch.frames = Paths.getSparrowAtlas('hornyshit/option girl', 'preload');
-		hornyBitch.animation.addByPrefix('idle', "option girl idle", 30);
-		hornyBitch.screenCenter(X);
-		hornyBitch.animation.play('idle');
-		hornyBitch.antialiasing = FlxG.save.data.antiAliasing;
-		if (FlxG.save.data.hornyALL) add(hornyBitch);
-		
-		var colors:Array<Int> = [0xFFea71fd, 0xFF71FCD5, 0xFFF97070, 0xFFF7DE6F, 0xFF6EF46E];
-		var selectedColor:Int = colors[FlxG.random.int(0, 4)];
-		
-		menuBG.color = selectedColor;
-		hornyBitch.color = selectedColor;
+		menuBG.color = FlxColor.fromRGB(FlxG.random.int(0, 255), FlxG.random.int(0, 255), FlxG.random.int(0, 255));
 		
 		grpControls = new FlxTypedGroup<Alphabet>();
 		add(grpControls);
