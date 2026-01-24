@@ -370,7 +370,7 @@ class CharacterSelectState extends MusicBeatState
 					if (!noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase()))
 					{
 						var cheerAnimation:Bool = girlfriendChar.animation.getByName("cheer") != null; 
-						girlfriendChar.playAnim(girlfriendChar.danceType == 'idle' ? 'singUP' : cheerAnimation ? 'cheer' : (girlfriendChar.curCharacter == 'gf-trepidation') ? 'danceLeft1' : 'danceLeft', true);
+						girlfriendChar.playAnim(girlfriendChar.danceType == 'idle' ? 'singUP' : cheerAnimation ? 'cheer' : (girlfriendChar.curCharacter == 'gf-trepidation' || girlfriendChar.curCharacter == 'gf-trepidation-nsfw') ? 'danceLeft1' : 'danceLeft', true);
 					}
 					
 					FlxG.sound.music.stop();

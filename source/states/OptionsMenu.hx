@@ -17,8 +17,9 @@ import options.*;
 class OptionsMenu extends MusicBeatState
 {
 	var menuBG:FlxSprite;
-	var selector:FlxText;
 	var curSelected:Int = 0;
+	var icon:HealthIcon;
+	var selector:FlxSprite;
 	
 	var controlsStrings:Array<Option> = [
 		new Option('ghosttapping', FlxG.save.data.newInput),
@@ -33,14 +34,15 @@ class OptionsMenu extends MusicBeatState
 		new Option('antialiasing', FlxG.save.data.antiAliasing),
 		new Option('cammove', FlxG.save.data.noteCamera),
 		new Option('gfsings', FlxG.save.data.gfCanSing),
-		new Option('combonum')
+		new Option('combonum'),
+		new Option('gfontitle')
 	];
+	
+	var allYourGfs:Array<String> = [];
 	
 	private var grpControls:FlxTypedGroup<Alphabet>;
 	private var checkArray:Array<CheckBox> = [];
-	
-	var currentSelectedOption:String = '';
-	
+		
 	override function create()
 	{
 		#if desktop
@@ -49,7 +51,9 @@ class OptionsMenu extends MusicBeatState
 		#end
 		
 		if (!FlxG.save.data.hornyALL)
-		{
+		{	
+			allYourGfs = ['gf', 'gf-pixel', 'psyka', 'cyan'];
+			
 			menuBG = new FlxSprite().loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
 			menuBG.screenCenter();
 			menuBG.antialiasing = FlxG.save.data.antiAliasing;
@@ -57,6 +61,8 @@ class OptionsMenu extends MusicBeatState
 		}
 		else
 		{
+			allYourGfs = ['gf', 'gf-pixel', 'three-gfs', 'tails-doll'];
+			
 			menuBG = new FlxSprite();
 			menuBG.frames = Paths.getSparrowAtlas('hornyshit/lirabyjoaopereira', 'preload');
 			menuBG.animation.addByPrefix("lira deepthroating pogo", "succ", 24);
@@ -86,9 +92,17 @@ class OptionsMenu extends MusicBeatState
 			add(controlCheckBox);
 		}
 		
+		icon = new HealthIcon(allYourGfs[FlxG.save.data.gfTitleNum]);
+		add(icon);
+		
+		selector = new FlxSprite().loadGraphic(Paths.image('ui/icon_selection', 'preload'));
+		selector.antialiasing = FlxG.save.data.antiAliasing;
+		add(selector);
+		
 		checkArray[5].visible = false;
 		checkArray[8].visible = false;
 		checkArray[12].visible = false;
+		checkArray[13].visible = false;
 		
 		super.create();
 		
@@ -99,8 +113,11 @@ class OptionsMenu extends MusicBeatState
 	{
 		super.update(elapsed);
 		
-		currentSelectedOption = controlsStrings[curSelected].returnOption;
-
+		icon.y = grpControls.members[13].y - 45;
+		icon.x = FlxG.width - icon.width - 60;
+		selector.y = icon.y;
+		selector.x = icon.x - (selector.width / 5);
+		
 		if (controls.BACK)
 			FlxG.switchState(new MainMenuState());
 			
@@ -108,7 +125,15 @@ class OptionsMenu extends MusicBeatState
 			changeSelection(-1);
 		if (controls.DOWN_P)
 			changeSelection(1);
-
+		
+		if (controlsStrings[curSelected].returnOption == 'gfontitle')
+		{
+			if (controls.LEFT_P)
+				changeYourGF(-1);
+			if (controls.RIGHT_P)
+				changeYourGF(1);
+		}
+		
 		if (controls.ACCEPT)
 		{
 			switch(controlsStrings[curSelected].returnOption)
@@ -151,8 +176,21 @@ class OptionsMenu extends MusicBeatState
 				case 'combonum':
 					LoadingState.loadAndSwitchState(new ComboNumbersState());
 			}
-			
 		}
+	}
+	
+	function changeYourGF(change:Int)
+	{
+		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		
+		FlxG.save.data.gfTitleNum += change;
+
+		if (FlxG.save.data.gfTitleNum < 0)
+			FlxG.save.data.gfTitleNum = allYourGfs.length - 1;
+		if (FlxG.save.data.gfTitleNum >= allYourGfs.length)
+			FlxG.save.data.gfTitleNum = 0;
+			
+		icon.createIcon(allYourGfs[FlxG.save.data.gfTitleNum]);
 	}
 
 	var isSettingControl:Bool = false;

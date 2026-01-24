@@ -26,6 +26,7 @@ class MainMenuState extends MusicBeatState
 	var playButton:Button;
 	var optionsButton:Button;
 	var creditsButton:Button;
+	var backButton:Button;
 	
 	// things for the menu slut or whatever
 	var dummyfriend:FlxSprite;
@@ -106,9 +107,17 @@ class MainMenuState extends MusicBeatState
 			
 		creditsButton.x = isHornyCreditOffset;
 		add(creditsButton);
+		
+		backButton = new Button(0, 0, Button.loadOffset('correction'), 'ui/mainmenu_buttons/goBack', 'preload', function()
+		{
+			FlxG.switchState(new TitleState());
+		});
+		backButton.x = 5;
+		backButton.y = FlxG.height - backButton.height - 5;
+		add(backButton);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 32, 0, "Burrito Engine v" + gameVer, 12);
-		versionShit.setFormat("Comic Sans MS Bold", 18, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		var versionShit:FlxText = new FlxText(-5, FlxG.height - 32, FlxG.width, "Burrito Engine v" + gameVer, 12);
+		versionShit.setFormat("Comic Sans MS Bold", 18, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionShit.borderSize = 1.5;
 		versionShit.antialiasing = FlxG.save.data.antiAliasing;
 		add(versionShit);
@@ -125,7 +134,7 @@ class MainMenuState extends MusicBeatState
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
 		
-		for(allbuttons in [playButton, optionsButton, creditsButton]) {
+		for(allbuttons in [playButton, optionsButton, creditsButton, backButton]) {
 			allbuttons.setPermition = !selectedSomethin;
 		}
 		
@@ -133,12 +142,7 @@ class MainMenuState extends MusicBeatState
 		bar.x += scrollSpeed * elapsed;
 
 		if (!selectedSomethin)
-		{
-			if (controls.BACK)
-			{
-				FlxG.switchState(new TitleState());
-			}
-			
+		{		
 			if (FlxG.keys.justPressed.SEVEN)
 			{
 				FlxG.switchState(new AnimationDebug());
@@ -186,7 +190,7 @@ class MainMenuState extends MusicBeatState
 			}
 		});
 		
-		for (memb in [playButton, optionsButton, creditsButton])
+		for (memb in [playButton, optionsButton, creditsButton, backButton])
 		{
 			if(memb == target)
 				continue;

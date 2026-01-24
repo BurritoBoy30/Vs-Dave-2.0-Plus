@@ -35,6 +35,8 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var moverz:FlxBackdrop;
+	var laGirlfriends:Array<String> = [];
+	public static var laColors:Array<FlxColor> = [];
 
 	var curWacky:Array<String> = [];
 
@@ -45,6 +47,17 @@ class TitleState extends MusicBeatState
 		trace('huh');
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
+		
+		if (!FlxG.save.data.hornyALL)
+		{
+			laGirlfriends = ['gf', 'gf-pixel', 'psyka', 'cyan'];
+			laColors = [0xFFA5004D, 0xFFAE2044, 0xFFC042EC, 0xFF7BD6F6];
+		}
+		else
+		{
+			laGirlfriends = ['gf-hot', 'gf-pixel-hot', 'three-gfs', 'tails-doll'];
+			laColors = [0xFFA5004D, 0xFFAE2044, 0xFFA5004D, 0xFFFF7B00];
+		}
 		
 		super.create();
 
@@ -115,11 +128,11 @@ class TitleState extends MusicBeatState
 		
 		moverz = new FlxBackdrop(Paths.image('ui/checkeredBG_title', 'preload'), XY, 0, 0);
 		moverz.antialiasing = FlxG.save.data.antiAliasing;
-		moverz.color = 0xFFA5004D;
+		moverz.color = laColors[FlxG.save.data.gfTitleNum];
 		moverz.scrollFactor.set();
 		add(moverz);
 
-		gfDance = new Girlfriend(FlxG.width * 0.43, FlxG.height * 0.07, 'gf');
+		gfDance = new Girlfriend(FlxG.width * 0.43, FlxG.height * 0.07, laGirlfriends[FlxG.save.data.gfTitleNum]);
 		gfDance.x += gfDance.charOffset[0];
 		gfDance.y += gfDance.charOffset[1];
 		add(gfDance);
@@ -209,6 +222,10 @@ class TitleState extends MusicBeatState
 
 				FlxG.camera.flash(FlxColor.WHITE, 1);
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+				
+				gfDance.canDance = false;
+				var cheerAnimation:Bool = gfDance.animation.getByName("cheer") != null; 
+				gfDance.playAnim(gfDance.danceType == 'idle' ? 'singUP' : cheerAnimation ? 'cheer' : (gfDance.curCharacter == 'gf-trepidation') ? 'danceLeft1' : 'danceLeft', true);
 
 				transitioning = true;
 				// FlxG.sound.music.stop();

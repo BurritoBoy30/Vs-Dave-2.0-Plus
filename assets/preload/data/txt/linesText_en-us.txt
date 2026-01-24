@@ -56,6 +56,7 @@ antialiasing==Anti Aliasing
 cammove==Camera Movement
 gfsings==Girlfriend Sings
 combonum==Combo Pop Up
+gfontitle==Girlfriend on Title
 
 // Character Names //
 bf==Boyfriend
