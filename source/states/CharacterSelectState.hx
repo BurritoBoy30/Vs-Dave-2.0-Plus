@@ -472,7 +472,7 @@ class CharacterSelectState extends MusicBeatState
 	
 	function openSettings()
 	{
-		openSubState(new CharacterSelectSettings(camHUD));
+		openSubState(new substates.CharacterSelectSettings(camHUD));
 	}
 	
 	override function beatHit()
@@ -519,7 +519,7 @@ class CharacterSelectState extends MusicBeatState
 				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-pixel-hot']),
 				new SelectableChar(['gefe', 'gefe-busty', 'gefe-twerk']),
 				new SelectableChar(['gf-massive']),
-				new SelectableChar(['three-gfs']),
+				new SelectableChar(['three-gfs', 'three-gfs-christmas', 'three-gfs-new']),
 				new SelectableChar(['gf-trepidation', 'gf-trepidation-nsfw', 'gf-trepidation-pixel']),
 				new SelectableChar(['skyblue'])
 			];

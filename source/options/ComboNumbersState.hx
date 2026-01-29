@@ -156,7 +156,7 @@ class ComboNumbersState extends MusicBeatState
 		if (controls.BACK)
 		{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
-			FlxG.switchState(new states.OptionsMenu());
+			FlxG.switchState(new states.OptionsMenuState());
 		}
 	}
 	

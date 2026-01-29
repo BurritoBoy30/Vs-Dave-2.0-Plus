@@ -1,18 +1,18 @@
-file: girlfriends/GFGAWDl
-offsets: -132, -70
+file: girlfriends/the_3_broads
+offsets: -95, -44
 camoffsets: -100, 120
 scale: 1
 anti-aliasing: true
 flipX: false
 icon: three-gfs
 barcolor: 175, 0, 80	
-prefix, 2, -32, cheer, GF Cheer, false, 24
-prefix, 32, -35, singLEFT, GF left note, false, 24
-prefix, -47, -35, singRIGHT, GF Right Note, false, 24
-prefix, -24, -30, singUP, GF Up Note, false, 24
-prefix, -35, -35, singDOWN, GF Down Note, false, 24
-indices, -47, -35, sad, gf sad, 0:1:2:3:4:5:6:7:8:9:10:11:12, false, 24
-prefix, 0, -9, danceLeft, dancingLEFT, false, 24
-prefix, 0, -9, danceRight, dancingRIGHT, false, 24
-prefix, -46, -34, scared, GF FEAR, true, 24
+prefix, 38, -6, cheer, GF Cheer, false, 24
+prefix, 74, -9, singLEFT, GF left note, false, 24
+prefix, -11, -9, singRIGHT, GF Right Note, false, 24
+prefix, 12, -1, singUP, GF Up Note, false, 24
+prefix, 8, -9, singDOWN, GF Down Note, false, 24
+indices, -11, -9, sad, gf sad, 0:1:2:3:4:5:6:7:8:9:10:11:12, false, 24
+indices, 0, -9, danceLeft, GF Dancing Beat, 30:0:1:2:3:4:5:6:7:8:9:10:11:12:13:14, false, 24
+indices, 0, -9, danceRight, GF Dancing Beat, 15:16:17:18:19:20:21:22:23:23:24:25:26:27:28:29, false, 24
+prefix, -10, -8, scared, GF FEAR, true, 24
 starterDance: danceRight, danceLeft, true

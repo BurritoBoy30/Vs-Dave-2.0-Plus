@@ -41,7 +41,6 @@ class CreditsState extends MusicBeatState
 	];
 	
 	var grpCredits:FlxTypedGroup<CreditListing>;
-
 	
 	override function create()
 	{	

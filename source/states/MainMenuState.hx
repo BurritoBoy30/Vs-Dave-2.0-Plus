@@ -112,7 +112,7 @@ class MainMenuState extends MusicBeatState
 		{
 			FlxG.switchState(new TitleState());
 		});
-		backButton.x = 5;
+		backButton.x = 10;
 		backButton.y = FlxG.height - backButton.height - 5;
 		add(backButton);
 
@@ -184,7 +184,7 @@ class MainMenuState extends MusicBeatState
 				case 'play':
 					FlxG.switchState(new FreeplayState());
 				case 'options':
-					FlxG.switchState(new OptionsMenu());
+					FlxG.switchState(new OptionsMenuState());
 				case 'credits':
 					FlxG.switchState(new CreditsState());
 			}
@@ -197,8 +197,6 @@ class MainMenuState extends MusicBeatState
 
 			FlxTween.tween(memb, {alpha: 0}, 0.4, {ease: FlxEase.quadOut});
 		}
-		
-		FlxG.mouse.visible = false;
 	}
 	
 	public static function randomizeBG()

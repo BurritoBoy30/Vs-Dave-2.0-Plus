@@ -139,6 +139,8 @@ class AnimationDebug extends MusicBeatState
 		super.create();
 		
 		Transition.nextCamera = camTransition;
+		
+		changeAnim(0);
 	}
 	
 	var curCharDropDown:FlxUIDropDownMenu;
@@ -243,19 +245,13 @@ class AnimationDebug extends MusicBeatState
 		{
 			if (FlxG.keys.justPressed.W)
 			{
-				curAnim -= 1;
+				changeAnim(-1);
 			}
 
 			if (FlxG.keys.justPressed.S)
 			{
-				curAnim += 1;
+				changeAnim(1);
 			}
-			
-			if (curAnim < 0)
-				curAnim = char.animationsArray.length - 1;
-
-			if (curAnim >= char.animationsArray.length)
-				curAnim = 0;
 		
 			if (FlxG.keys.justPressed.S || FlxG.keys.justPressed.W)
 			{	
@@ -308,6 +304,16 @@ class AnimationDebug extends MusicBeatState
 		}
 		
 		super.update(elapsed);
+	}
+	
+	function changeAnim(bruh:Int)
+	{
+		curAnim += bruh;
+		
+		if (curAnim < 0)
+			curAnim = char.animationsArray.length - 1;
+		if (curAnim >= char.animationsArray.length)
+			curAnim = 0;
 	}
 
 	function loadChar(daDude:String = 'bf')

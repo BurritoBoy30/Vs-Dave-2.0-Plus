@@ -90,7 +90,9 @@ gefe==GeFe
 gefe-busty==GeFe Peituda
 gefe-twerk==GeFe Rebolando
 gf-massive==Girlfriend Massiva
-three-gfs==Trio Girlfriend
+three-gfs==Trio de Girlfriend
+three-gfs-christmas==Trio de Girlfriend (Natal)
+three-gfs-new==Trio de Girlfriend (Novo)
 gf-trepidation==Girlfriend Trepidation
 gf-trepidation-nsfw==Girlfriend Trepidation (+18)
 gf-trepidation-pixel==Girlfriend Trepidation (Pixel)

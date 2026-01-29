@@ -92,7 +92,7 @@ class ChangeKeysState extends MusicBeatState
 		if (state == 'select')
 		{
 			if (controls.BACK)
-				FlxG.switchState(new OptionsMenu());
+				FlxG.switchState(new OptionsMenuState());
 			
 			if (FlxG.save.data.keyStyleChoice == 2)
 			{

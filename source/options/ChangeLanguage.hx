@@ -78,11 +78,11 @@ class ChangeLanguage extends MusicBeatState
 		{
 			FlxG.save.data.gameLanguage = optionShit[curSelected];
 			FlxG.sound.play(Paths.sound('confirmMenu'));
-			FlxG.switchState(new OptionsMenu());
+			FlxG.switchState(new OptionsMenuState());
 		}
 		
 		if (controls.BACK)
-			FlxG.switchState(new OptionsMenu());
+			FlxG.switchState(new OptionsMenuState());
 	}
 	
 	function changeItem(huh:Int = 0)
