@@ -77,6 +77,10 @@ class OptionsMenuState extends MusicBeatState
 			add(menuBG);
 		}
 		
+		var overlay:FlxSprite = new FlxSprite(FlxG.width / 2, 0).loadGraphic(Paths.image('optionbg', 'preload'));
+		overlay.antialiasing = FlxG.save.data.antiAliasing;
+		add(overlay);
+		
 		menuBG.color = FlxColor.fromRGB(FlxG.random.int(0, 255), FlxG.random.int(0, 255), FlxG.random.int(0, 255));
 		
 		var correct:Float = FlxG.width - 180;
@@ -230,16 +234,12 @@ class Option
 }
 
 class OptionListing extends FlxSpriteGroup
-{
-	var versionShit:FlxText;
-	
-	var callingBack:Void -> Void;
-	
+{	
 	public function new(x:Float, y:Float, getNames:Option, calledBack:Void -> Void)
 	{
 		super(x, y);
 		
-		versionShit = new FlxText(x, y, 0, getNames.names, 12);
+		var versionShit:FlxText = new FlxText(x, y, 0, getNames.names, 12);
 		versionShit.setFormat("Comic Sans MS Bold", 90, FlxColor.WHITE, LEFT);
 		versionShit.antialiasing = FlxG.save.data.antiAliasing;
 		
@@ -258,10 +258,5 @@ class OptionListing extends FlxSpriteGroup
 		
 		add(versionShit_black);
 		add(versionShit);
-	}
-	
-	public function getScale()
-	{
-		return versionShit.textField.textWidth;
 	}
 }
