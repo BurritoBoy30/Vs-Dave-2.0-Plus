@@ -148,6 +148,7 @@ class Character extends FlxSprite
 
 	private var danced:Bool = false;
 	var trepTransition:Bool = false;
+	var changeThierIdle:Int = 0;
 
 	/**
 	 * FOR GF DANCING SHIT
@@ -186,7 +187,17 @@ class Character extends FlxSprite
 			}
 			else
 			{
-				playAnim(startedAnim + idleExtention, forceAnim);
+				if (curCharacter == 'sarv-and-gf')
+				{
+					changeThierIdle++;
+					
+					if (changeThierIdle > 3)
+						changeThierIdle = 0;
+						
+					playAnim('idle' + changeThierIdle, forceAnim);
+				}
+				else
+					playAnim(startedAnim + idleExtention, forceAnim);
 			}
 		}
 	}

@@ -76,12 +76,11 @@ class OptionsMenuState extends MusicBeatState
 			menuBG.antialiasing = FlxG.save.data.antiAliasing;
 			add(menuBG);
 		}
+		menuBG.color = FlxColor.fromRGB(FlxG.random.int(0, 255), FlxG.random.int(0, 255), FlxG.random.int(0, 255));
 		
 		var overlay:FlxSprite = new FlxSprite(FlxG.width / 2, 0).loadGraphic(Paths.image('optionbg', 'preload'));
 		overlay.antialiasing = FlxG.save.data.antiAliasing;
 		add(overlay);
-		
-		menuBG.color = FlxColor.fromRGB(FlxG.random.int(0, 255), FlxG.random.int(0, 255), FlxG.random.int(0, 255));
 		
 		var correct:Float = FlxG.width - 180;
 		changekeys_hitbox = new Button(correct, 0, Button.loadOffset('correction'), 'optionbutton', 'preload', function()

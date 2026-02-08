@@ -1,0 +1,13 @@
+file: girlfriends/gfandsarvbychoklit
+offsets: -400, -250
+camoffsets: -100, 120
+scale: 1
+anti-aliasing: true
+flipX: false
+icon: sarv-and-gf
+barcolor: 175, 0, 80	
+prefix, 0, 0, idle0, left, false, 24
+prefix, 0, 0, idle1, down, false, 24
+prefix, 0, 0, idle2, right, false, 24
+prefix, 0, 0, idle3, up, false, 24
+starterIdle: idle0, true

@@ -521,7 +521,8 @@ class CharacterSelectState extends MusicBeatState
 				new SelectableChar(['gf-massive']),
 				new SelectableChar(['three-gfs', 'three-gfs-christmas', 'three-gfs-new']),
 				new SelectableChar(['gf-trepidation', 'gf-trepidation-nsfw', 'gf-trepidation-pixel']),
-				new SelectableChar(['skyblue'])
+				new SelectableChar(['skyblue']),
+				new SelectableChar(['sarv-and-gf'])
 			];
 			
 			boyfriendData.push(new SelectableChar(['oruta']));
