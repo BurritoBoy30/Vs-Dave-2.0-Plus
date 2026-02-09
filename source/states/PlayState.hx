@@ -1013,7 +1013,7 @@ class PlayState extends MusicBeatState
 					createShader(bg, 0.1, 5, 2);
 					
 				case 'disposition':
-					defaultCamZoom = 0.65;
+					defaultCamZoom = 0.5;
 					curStage = 'hell';
 					
 				case 'decimal':

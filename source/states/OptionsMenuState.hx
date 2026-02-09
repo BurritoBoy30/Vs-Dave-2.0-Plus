@@ -113,6 +113,7 @@ class OptionsMenuState extends MusicBeatState
 			grpOptions.add(theoptions);
 		}
 		
+		// gf option
 		icon = new HealthIcon(allYourGfs[FlxG.save.data.gfTitleNum]);
 		add(icon);
 		
@@ -148,7 +149,7 @@ class OptionsMenuState extends MusicBeatState
 		}
 		else if (FlxG.mouse.wheel < 0)
 		{
-			if (camoffset != -camoffsetLimit)
+			if (camoffset > -camoffsetLimit)
 				camoffset -= 100;
 		}
 		else
