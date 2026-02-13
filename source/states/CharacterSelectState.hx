@@ -159,7 +159,7 @@ class CharacterSelectState extends MusicBeatState
 		add(changeInfoImg);
 		changeInfoImg.cameras = [camHUD];
 		
-		hornyGfBG = new FlxSprite(FlxG.width - 305, FlxG.height - 105).loadGraphic(Paths.image('charselect/' + FlxG.save.data.gameLanguage + '/hornygf_bg'));
+		hornyGfBG = new FlxSprite(FlxG.width - 305, FlxG.height - 105).loadGraphic(Paths.image('charselect/hornygf_bg_' + FlxG.save.data.gameLanguage, 'horny'));
 		hornyGfBG.antialiasing = FlxG.save.data.antiAliasing;
 		add(hornyGfBG);
 		hornyGfBG.cameras = [camHUD];
@@ -168,7 +168,7 @@ class CharacterSelectState extends MusicBeatState
 		add(settingsIcon);
 		settingsIcon.cameras = [camHUD];
 		
-		hornyGfBOX = new FlxUICheckBox(hornyGfBG.x + (hornyGfBG.width / 1.5), hornyGfBG.y, Paths.image('charselect/hornygf_box'), Paths.image('charselect/hornygf_boxCheck'), "", 100);
+		hornyGfBOX = new FlxUICheckBox(hornyGfBG.x + (hornyGfBG.width / 1.5), hornyGfBG.y, Paths.image('charselect/hornygf_box', 'horny'), Paths.image('charselect/hornygf_boxCheck', 'horny'), "", 100);
 		hornyGfBOX.callback = function()
 		{
 			getHorny();
@@ -205,7 +205,7 @@ class CharacterSelectState extends MusicBeatState
 		add(saveBox);
 		saveBox.cameras = [camHUD];
 		
-		tailsBox = new Button(saveBox.x, saveBox.y - saveBox.height - 5, Button.loadOffset('tailsbox'), 'charselect/tailsdoll_box', loadTailsDoll);
+		tailsBox = new Button(saveBox.x, saveBox.y - saveBox.height - 5, Button.loadOffset('tailsbox'), 'charselect/tailsdoll_box', 'horny', loadTailsDoll);
 		add(tailsBox);
 		tailsBox.cameras = [camHUD];
 		

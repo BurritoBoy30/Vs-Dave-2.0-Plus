@@ -456,7 +456,7 @@ class PlayState extends MusicBeatState
 				
 			case 'terminatexs':
 				jBotBonk = new FlxSprite(9999, 9999);
-				jBotBonk.frames = Paths.getSparrowAtlas('bonk');
+				jBotBonk.frames = Paths.getSparrowAtlas('bonk', 'horny');
 				jBotBonk.animation.addByPrefix('bonk', 'b bonk', 24, false);
 				jBotBonk.scale.set(1.8, 1.8);
 				jBotBonk.antialiasing = FlxG.save.data.antiAliasing;
@@ -492,7 +492,7 @@ class PlayState extends MusicBeatState
 				var table:BackgroundImg = new BackgroundImg(dad.x + 15, -154, 'stages/cake/quail', 1, 1, 0.5);
 				add(table);
 			case 'your-demise':
-				var stage:BackgroundImg = new BackgroundImg(0, 0, 'stages/mon/montable', 1, 1, 2);
+				var stage:BackgroundImg = new BackgroundImg(0, 0, 'stages/mon/montable', 'horny', 1, 1, 2);
 				stage.screenCenter();
 				stage.x -= 70;
 				stage.y += 500;
@@ -1089,18 +1089,18 @@ class PlayState extends MusicBeatState
 					defaultCamZoom = 0.7;
 					curStage = 'boing';
 					
-					var bg:BackgroundImg = new BackgroundImg(-600, -300, 'stages/boing/white', 1, 1, 3);
+					var bg:BackgroundImg = new BackgroundImg(-600, -300, 'stages/boing/white', 'horny', 1, 1, 3);
 					add(bg);
 					
 					MyBeloved = new BackgroundImg(400, 450, 'stages/boing/Miku', [
 						['prefix', 'Miku-Idle', 'Miku-Idle', 24, false]
-					]);
+					], 'horny');
 					MyBeloved.animation.play('Miku-Idle', true);
 					add(MyBeloved);
 					
 					MisViejas = new BackgroundImg(1000, -100, 'stages/boing/Elements', [
 						['prefix', 'Twogirls_Idle', 'Twogirls_Idle', 24, false]
-					]);
+					], 'horny');
 					MisViejas.animation.play('Twogirls_Idle', true);
 					add(MisViejas);
 					
@@ -1192,11 +1192,11 @@ class PlayState extends MusicBeatState
 					defaultCamZoom = 0.5;
 					curStage = 'justmonika';
 					
-					var space:BackgroundImg = new BackgroundImg(0, 0, 'stages/mon/spacewindow', 0.3, 0.3, 2);
+					var space:BackgroundImg = new BackgroundImg(0, 0, 'stages/mon/spacewindow', 'horny', 0.3, 0.3, 2);
 					space.screenCenter();
 					add(space);
 					
-					var classroom:BackgroundImg = new BackgroundImg(0, 0, 'stages/mon/classroom', 0.8, 0.8, 2);
+					var classroom:BackgroundImg = new BackgroundImg(0, 0, 'stages/mon/classroom', 'horny', 0.8, 0.8, 2);
 					classroom.screenCenter();
 					add(classroom);
 					
@@ -3528,7 +3528,7 @@ class PlayState extends MusicBeatState
 		if (SONG.song.toLowerCase() == 'recursed')
 		{
 			zoeyBop = new FlxSprite(700, 100);
-			zoeyBop.frames = Paths.getSparrowAtlas('hornyshit/zoey_recursed', 'preload');
+			zoeyBop.frames = Paths.getSparrowAtlas('zoey_recursed', 'horny');
 			zoeyBop.animation.addByPrefix('jiggle', 'jiggle', 10, true);
 			zoeyBop.animation.play('jiggle');
 			zoeyBop.setGraphicSize(Std.int(zoeyBop.width * 1.5));

@@ -49,16 +49,16 @@ class DispenserBurstState extends MusicBeatState
 		
 		FlxG.mouse.visible = true;
 		
-		FlxG.sound.playMusic(Paths.music('doodle', 'shared'), 1, true);
+		FlxG.sound.playMusic(Paths.music('doodle', 'horny'), 1, true);
 
 		Conductor.changeBPM(160);
 		
-		joggingBitchesBackground = new FlxSprite().loadGraphic(Paths.image('hornyshit/dispenser/jaiden/backgrounds/blue', 'preload'));
+		joggingBitchesBackground = new FlxSprite().loadGraphic(Paths.image('dispenser/jaiden/backgrounds/blue', 'horny'));
 		joggingBitchesBackground.screenCenter();
 		joggingBitchesBackground.antialiasing = FlxG.save.data.antiAliasing;
 		add(joggingBitchesBackground);
 		
-		movingBar = new FlxBackdrop(Paths.image('hornyshit/dispenser/jaiden/movingBar', 'preload'), XY, 0, 0);
+		movingBar = new FlxBackdrop(Paths.image('dispenser/jaiden/movingBar', 'horny'), XY, 0, 0);
 		movingBar.antialiasing = FlxG.save.data.antiAliasing;
 		add(movingBar);
 		
@@ -72,7 +72,7 @@ class DispenserBurstState extends MusicBeatState
 		
 		var correctAxis:Array<Dynamic> = Button.loadOffset('correction');
 		
-		buttonSwitch = new Button(5, 5, correctAxis, 'hornyshit/dispenser/button_jaiden', 'preload', function()
+		buttonSwitch = new Button(5, 5, correctAxis, 'dispenser/button_jaiden', 'horny', function()
 		{
 			swapBitchFolder =! swapBitchFolder;
 			
@@ -84,43 +84,43 @@ class DispenserBurstState extends MusicBeatState
 		add(buttonSwitch);
 		
 		var offset:Float = 65;
-		buttonBlu = new Button((bluDispenserBitch.width * 1.34) + offset, 5, correctAxis, 'hornyshit/dispenser/tf2/blue_button', 'preload', function()
+		buttonBlu = new Button((bluDispenserBitch.width * 1.34) + offset, 5, correctAxis, 'dispenser/tf2/blue_button', 'horny', function()
 		{
 			changeBitchColor('blu');
 		});
 		add(buttonBlu);
 		
-		buttonRed = new Button(buttonBlu.x, buttonBlu.height + buttonBlu.y + 5, correctAxis, 'hornyshit/dispenser/tf2/red_button', 'preload', function()
+		buttonRed = new Button(buttonBlu.x, buttonBlu.height + buttonBlu.y + 5, correctAxis, 'dispenser/tf2/red_button', 'horny', function()
 		{
 			changeBitchColor('red');
 		});
 		add(buttonRed);
 		
-		buttonBluRed = new Button(buttonBlu.x + buttonBlu.width + 5, buttonBlu.y, correctAxis, 'hornyshit/dispenser/tf2/blue-red_button', 'preload', function()
+		buttonBluRed = new Button(buttonBlu.x + buttonBlu.width + 5, buttonBlu.y, correctAxis, 'dispenser/tf2/blue-red_button', 'horny', function()
 		{
 			changeBitchType('blu-red');
 		});
 		add(buttonBluRed);
 		
-		buttonRedBlu = new Button(buttonBluRed.x, buttonBluRed.y + buttonBluRed.height + 5, correctAxis, 'hornyshit/dispenser/tf2/red-blue_button', 'preload', function()
+		buttonRedBlu = new Button(buttonBluRed.x, buttonBluRed.y + buttonBluRed.height + 5, correctAxis, 'dispenser/tf2/red-blue_button', 'horny', function()
 		{
 			changeBitchType('red-blu');
 		});
 		add(buttonRedBlu);
 		
-		button1 = new Button(196, 10, correctAxis, 'hornyshit/dispenser/tf2/1_button', 'preload', function()
+		button1 = new Button(196, 10, correctAxis, 'dispenser/tf2/1_button', 'horny', function()
 		{
 			changeBitchSize(1);
 		});
 		add(button1);
 		
-		button2 = new Button(button1.x, button1.height + button1.y + 20, correctAxis, 'hornyshit/dispenser/tf2/2_button', 'preload', function()
+		button2 = new Button(button1.x, button1.height + button1.y + 20, correctAxis, 'dispenser/tf2/2_button', 'horny', function()
 		{
 			changeBitchSize(2);
 		});
 		add(button2);
 		
-		button3 = new Button(button2.x, button2.height + button2.y + 20, correctAxis, 'hornyshit/dispenser/tf2/3_button', 'preload', function()
+		button3 = new Button(button2.x, button2.height + button2.y + 20, correctAxis, 'dispenser/tf2/3_button', 'horny', function()
 		{
 			changeBitchSize(3);
 		});
@@ -186,7 +186,7 @@ class DispenserBurstState extends MusicBeatState
 					fileName = 'red-blue';
 		}
 		
-		joggingBitchesBackground.loadGraphic(Paths.image('hornyshit/dispenser/jaiden/backgrounds/' + fileName, 'preload'));
+		joggingBitchesBackground.loadGraphic(Paths.image('dispenser/jaiden/backgrounds/' + fileName, 'horny'));
 	}
 	
 	function changeBitchColor(cor:String)
@@ -264,7 +264,7 @@ class DispenserBurstState extends MusicBeatState
 		else if (folder == 'jaiden')
 			opposite = 'tf2';
 			
-		buttonSwitch.reloadImage('hornyshit/dispenser/button_' + opposite, 'preload');
+		buttonSwitch.reloadImage('dispenser/button_' + opposite, 'horny');
 		
 		for (memb in [button1, button2, button3])
 		{
@@ -274,7 +274,7 @@ class DispenserBurstState extends MusicBeatState
 		
 		for (i in 0...buttonList.length)
 		{
-			buttonList[i].reloadImage('hornyshit/dispenser/' + folder + '/' + buttonFileList[i] + '_button', 'preload');
+			buttonList[i].reloadImage('dispenser/' + folder + '/' + buttonFileList[i] + '_button', 'horny');
 		}
 		
 		reloadBitches();
@@ -303,7 +303,7 @@ class DispenserBitch extends FlxSprite
 		else if (fandom == 'jaiden')
 			fuckingBitchSize = 1;
 
-		frames = Paths.getSparrowAtlas('hornyshit/dispenser/' + fandom + '/' + folder + '/size' + fuckingBitchSize + '_' + type, 'preload');
+		frames = Paths.getSparrowAtlas('dispenser/' + fandom + '/' + folder + '/size' + fuckingBitchSize + '_' + type, 'horny');
 		if (fandom == 'tf2')
 		{
 			screenCenter();

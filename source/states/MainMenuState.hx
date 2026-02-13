@@ -30,7 +30,7 @@ class MainMenuState extends MusicBeatState
 	
 	// things for the menu slut or whatever
 	var dummyfriend:FlxSprite;
-	var menufolks:Array<String> = ['dummyfriend', 'ema1', 'ema2', 'sarvente', 'duomi', 'toga', 'pyro', 'ilulu', 'fizzie', 'candi', 'knightset'];
+	var menufolks:Array<String> = ['dummyfriend', 'ema1', 'ema2', 'sarvente', 'duomi', 'toga', 'pyro', 'ilulu', 'fizzie', 'candi', 'knightset', 'twotime'];
 	var chance:Int = 0;
 	
 	override function create()
@@ -59,7 +59,7 @@ class MainMenuState extends MusicBeatState
 		
 		chance = FlxG.random.int(0, menufolks.length - 1);
 		
-		dummyfriend = new FlxSprite().loadGraphic(Paths.image('hornyshit/main_menu_folks/' + menufolks[chance], 'preload'));
+		dummyfriend = new FlxSprite().loadGraphic(Paths.image('main_menu_folks/' + menufolks[chance], 'horny'));
 		dummyfriend.antialiasing = FlxG.save.data.antiAliasing;
 		dummyfriend.visible = FlxG.save.data.hornyALL;
 		add(dummyfriend);
@@ -151,7 +151,7 @@ class MainMenuState extends MusicBeatState
 		if (FlxG.keys.justPressed.R)
 		{
 			chance = FlxG.random.int(0, menufolks.length - 1);
-			dummyfriend.loadGraphic(Paths.image('hornyshit/main_menu_folks/' + menufolks[chance], 'preload'));
+			dummyfriend.loadGraphic(Paths.image('main_menu_folks/' + menufolks[chance], 'horny'));
 		}
 
 		super.update(elapsed);

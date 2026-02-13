@@ -69,7 +69,7 @@ class OptionsMenuState extends MusicBeatState
 			allYourGfs = ['gf', 'gf-pixel', 'three-gfs', 'tails-doll'];
 			
 			menuBG = new FlxSprite();
-			menuBG.frames = Paths.getSparrowAtlas('hornyshit/lirabyjoaopereira', 'preload');
+			menuBG.frames = Paths.getSparrowAtlas('lirabyjoaopereira', 'horny');
 			menuBG.animation.addByPrefix("lira deepthroating pogo", "succ", 24);
 			menuBG.screenCenter();
 			menuBG.animation.play('lira deepthroating pogo');

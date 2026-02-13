@@ -45,6 +45,7 @@ class FreeplayState extends MusicBeatState
 	private var CurrentSongIcon:FlxSprite;
 
 	public var AllPossibleSongs:Array<String> = [];
+	var AllSongPackImages:Array<String> = [];
 
 	private var CurrentPack:Int = 0;
 
@@ -95,10 +96,26 @@ class FreeplayState extends MusicBeatState
 		if (FlxG.save.data.hornyALL)
 		{
 			AllPossibleSongs = ["Dave","Golden","Joke","Extra","Naughty","Console"];
+			
+			AllSongPackImages = [
+				Paths.image('packs/week_icons_dave', 'preload'),
+				Paths.image('packs/week_icons_golden', 'preload'),
+				Paths.image('packs/week_icons_joke', 'preload'),
+				Paths.image('packs/week_icons_extra', 'preload'),
+				Paths.image('packs/week_icons_naughty', 'horny'),
+				Paths.image('packs/week_icons_whores', 'horny'),
+			];
 		}
 		else
 		{
-			AllPossibleSongs = ["Dave","Golden","Joke","Extra","Console"];
+			AllPossibleSongs = ["Dave","Golden","Joke","Extra"];
+			
+			AllSongPackImages = [
+				Paths.image('packs/week_icons_dave', 'preload'),
+				Paths.image('packs/week_icons_golden', 'preload'),
+				Paths.image('packs/week_icons_joke', 'preload'),
+				Paths.image('packs/week_icons_extra', 'preload')
+			];
 		}
 		
 		mainBG = new FlxSprite().loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
@@ -106,7 +123,7 @@ class FreeplayState extends MusicBeatState
 		mainBG.color = 0xFF9271FD;
 		add(mainBG);
 		
-		CurrentSongIcon = new FlxSprite().loadGraphic(Paths.image('packs/week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
+		CurrentSongIcon = new FlxSprite().loadGraphic(AllSongPackImages[CurrentPack]);
 		CurrentSongIcon.screenCenter();
 		CurrentSongIcon.x -= 300;
 		changePackAntiAliasing();
@@ -146,7 +163,7 @@ class FreeplayState extends MusicBeatState
 	function GoToActualFreeplay()
 	{
 		zoeyBop = new FlxSprite(700, 100);
-		zoeyBop.frames = Paths.getSparrowAtlas('hornyshit/zoey', 'preload');
+		zoeyBop.frames = Paths.getSparrowAtlas('zoey', 'horny');
 		zoeyBop.animation.addByPrefix('jiggle', 'jiggle', 10, true);
 		zoeyBop.animation.play('jiggle');
 		zoeyBop.setGraphicSize(Std.int(zoeyBop.width * 1.5));
@@ -260,7 +277,7 @@ class FreeplayState extends MusicBeatState
 		}
 		NameAlpha.text = ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase());
 		PackDescription.text = ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase() + "_desc");
-		CurrentSongIcon.loadGraphic(Paths.image('packs/week_icons_' + (AllPossibleSongs[CurrentPack].toLowerCase())));
+		CurrentSongIcon.loadGraphic(AllSongPackImages[CurrentPack]);
 		changePackAntiAliasing();
 	}
 	
