@@ -57,6 +57,7 @@ cammove==Movimento da Câmera
 gfsings==Girlfriend Canta
 combonum==Pop Up do Combo
 gfontitle==Girlfriend no Titúlo
+preloader==Manter Arquivos
 
 // Character Names //
 bf==Boyfriend
@@ -80,6 +81,8 @@ psyka-christmas==Psyka (Natal)
 psyka-standing==Psyka (Em Pé)
 cyan==Cyan
 cyan-chrismas==Cyan (Natal)
+cyan-hot==Cyan Gostosa
+clarissa==Clarissa
 kaity==Kaity
 kaity-christmas==Kaity (Natal)
 gf-hot==Girlfriend Gostosa

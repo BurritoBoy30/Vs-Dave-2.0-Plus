@@ -518,6 +518,7 @@ class CharacterSelectState extends MusicBeatState
 			girlfriendData = [
 				new SelectableChar(['gf-hot', 'gf-hot-funny', 'gf-hot-christmas', 'gf-hot-standing', 'gf-pixel-hot']),
 				new SelectableChar(['gefe', 'gefe-busty', 'gefe-twerk']),
+				new SelectableChar(['cyan-hot']),
 				new SelectableChar(['gf-massive']),
 				new SelectableChar(['three-gfs', 'three-gfs-christmas', 'three-gfs-new']),
 				new SelectableChar(['gf-trepidation', 'gf-trepidation-nsfw', 'gf-trepidation-pixel']),
@@ -532,7 +533,7 @@ class CharacterSelectState extends MusicBeatState
 			girlfriendData = [
 				new SelectableChar(['gf', 'gf-christmas', 'gf-standing', 'gf-pixel']),
 				new SelectableChar(['psyka', 'psyka-christmas', 'psyka-standing']),
-				new SelectableChar(['cyan', 'cyan-christmas']),
+				new SelectableChar(['cyan', 'cyan-christmas', 'clarissa']),
 				new SelectableChar(['kaity', 'kaity-christmas']),
 				new SelectableChar(['aymara'])
 			];
@@ -706,7 +707,7 @@ class CharacterSelectState extends MusicBeatState
 		
 		if (accessViaPlaystate) accessViaPlaystate = false;
 		
-		LoadingState.loadAndSwitchState(new PlayState());
+		LoadingState.loadAndSwitchState(new LoadingScreenState());
 	}
 }
 

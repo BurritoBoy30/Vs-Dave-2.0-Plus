@@ -43,7 +43,8 @@ class OptionsMenuState extends MusicBeatState
 		new Option('cammove', FlxG.save.data.noteCamera),
 		new Option('gfsings', FlxG.save.data.gfCanSing),
 		new Option('combonum'),
-		new Option('gfontitle')
+		new Option('gfontitle'),
+		new Option('preloader', FlxG.save.data.preloadAtAll)
 	];
 	
 	var grpOptions:FlxTypedGroup<OptionListing>;
@@ -136,7 +137,7 @@ class OptionsMenuState extends MusicBeatState
 	}
 	
 	var camoffset:Float = 0;
-	var camoffsetLimit:Float = 1500;
+	var camoffsetLimit:Float = 1700;
 	
 	override function update(elapsed:Float)
 	{
@@ -212,6 +213,8 @@ class OptionsMenuState extends MusicBeatState
 				FlxG.save.data.noteCamera = !FlxG.save.data.noteCamera;
 			case 'gfsings':
 				FlxG.save.data.gfCanSing = !FlxG.save.data.gfCanSing;
+			case 'preloader':
+				FlxG.save.data.preloadAtAll = !FlxG.save.data.preloadAtAll;
 		}
 	}
 }

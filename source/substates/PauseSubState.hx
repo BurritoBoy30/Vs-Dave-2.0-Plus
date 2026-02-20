@@ -174,6 +174,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.boyfriendOverride = "none";
 					PlayState.girlfriendOverride = "none";
 					
+					Main.dumpCache();
 					FlxG.switchState(new FreeplayState());
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			}

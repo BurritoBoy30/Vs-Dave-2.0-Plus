@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
 import openfl.Assets;
@@ -77,5 +78,13 @@ class Main extends Sprite
 		fps = new FpsDisplay(10, 3, 0xFFFFFF);
 		addChild(fps);
 		#end
+	}
+	
+	public static function dumpCache()
+	{
+		if (!FlxG.save.data.preloadAtAll)
+		{
+			Assets.cache.clear();
+		}
 	}
 }

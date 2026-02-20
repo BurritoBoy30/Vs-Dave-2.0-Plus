@@ -10,7 +10,10 @@ import Controls.Control;
 class SaveDataHandler
 {
 	public static function initSave()
-	{
+	{		
+		if (FlxG.save.data.preloadAtAll == null)
+			FlxG.save.data.preloadAtAll = true;
+			
 		if (FlxG.save.data.newInput == null)
 			FlxG.save.data.newInput = true;
 

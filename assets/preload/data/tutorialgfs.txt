@@ -2,6 +2,8 @@ gf
 gf-christmas
 cyan
 cyan-christmas
+cyan-hot
+clarissa
 psyka
 psyka-christmas
 gf-massive
@@ -13,3 +15,4 @@ skyblue
 three-gfs
 kaity
 aymara
+sarv-and-gf

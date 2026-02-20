@@ -19,6 +19,8 @@ three-gfs-christmas
 three-gfs-new
 cyan
 cyan-christmas
+cyan-hot
+clarissa
 psyka
 psyka-christmas
 psyka-standing

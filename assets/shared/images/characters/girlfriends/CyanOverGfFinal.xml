@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="CyanOverGfFinal.png">
+	<!-- Created with Adobe Animate version 22.0.2.168 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Cyan Down0000" x="10" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Down0001" x="899" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Down0002" x="1788" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Down0003" x="2677" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Down0004" x="3566" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Down0005" x="4455" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Down0006" x="4455" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Down0007" x="4455" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Down0008" x="4455" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Down0009" x="4455" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Down0010" x="4455" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Down0011" x="4455" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Down0012" x="4455" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Down0013" x="4455" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Down0014" x="4455" y="10" width="879" height="434"/>
+	<SubTexture name="Cyan Hey0000" x="5344" y="10" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0001" x="5344" y="10" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0002" x="6233" y="10" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0003" x="7122" y="10" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0004" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0005" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0006" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0007" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0008" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0009" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0010" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0011" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0012" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0013" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0014" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0015" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0016" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0017" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0018" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0019" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Hey0020" x="10" y="458" width="879" height="438"/>
+	<SubTexture name="Cyan Idle Dancing Beat0000" x="899" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0001" x="1788" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0002" x="2677" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0003" x="3566" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0004" x="4455" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0005" x="5344" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0006" x="5344" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0007" x="6233" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0008" x="6233" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0009" x="6233" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0010" x="7122" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0011" x="7122" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0012" x="7122" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0013" x="7122" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0014" x="7122" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0015" x="10" y="906" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0016" x="899" y="906" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0017" x="1788" y="906" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0018" x="2677" y="906" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0019" x="3566" y="906" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0020" x="4455" y="906" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0021" x="4455" y="906" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0022" x="5344" y="906" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0023" x="5344" y="906" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0024" x="5344" y="906" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0025" x="7122" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0026" x="7122" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0027" x="7122" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0028" x="7122" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Idle Dancing Beat0029" x="7122" y="458" width="879" height="434"/>
+	<SubTexture name="Cyan Left0000" x="6233" y="906" width="879" height="463"/>
+	<SubTexture name="Cyan Left0001" x="7122" y="906" width="879" height="463"/>
+	<SubTexture name="Cyan Left0002" x="10" y="1379" width="879" height="463"/>
+	<SubTexture name="Cyan Left0003" x="899" y="1379" width="879" height="463"/>
+	<SubTexture name="Cyan Left0004" x="1788" y="1379" width="879" height="463"/>
+	<SubTexture name="Cyan Left0005" x="2677" y="1379" width="879" height="463"/>
+	<SubTexture name="Cyan Left0006" x="2677" y="1379" width="879" height="463"/>
+	<SubTexture name="Cyan Left0007" x="2677" y="1379" width="879" height="463"/>
+	<SubTexture name="Cyan Left0008" x="2677" y="1379" width="879" height="463"/>
+	<SubTexture name="Cyan Left0009" x="2677" y="1379" width="879" height="463"/>
+	<SubTexture name="Cyan Left0010" x="2677" y="1379" width="879" height="463"/>
+	<SubTexture name="Cyan Left0011" x="2677" y="1379" width="879" height="463"/>
+	<SubTexture name="Cyan Left0012" x="2677" y="1379" width="879" height="463"/>
+	<SubTexture name="Cyan Left0013" x="2677" y="1379" width="879" height="463"/>
+	<SubTexture name="Cyan Left0014" x="2677" y="1379" width="879" height="463"/>
+	<SubTexture name="Cyan Right0000" x="3566" y="1379" width="879" height="439"/>
+	<SubTexture name="Cyan Right0001" x="4455" y="1379" width="879" height="439"/>
+	<SubTexture name="Cyan Right0002" x="5344" y="1379" width="879" height="439"/>
+	<SubTexture name="Cyan Right0003" x="6233" y="1379" width="879" height="439"/>
+	<SubTexture name="Cyan Right0004" x="7122" y="1379" width="879" height="439"/>
+	<SubTexture name="Cyan Right0005" x="10" y="1852" width="879" height="439"/>
+	<SubTexture name="Cyan Right0006" x="10" y="1852" width="879" height="439"/>
+	<SubTexture name="Cyan Right0007" x="10" y="1852" width="879" height="439"/>
+	<SubTexture name="Cyan Right0008" x="10" y="1852" width="879" height="439"/>
+	<SubTexture name="Cyan Right0009" x="10" y="1852" width="879" height="439"/>
+	<SubTexture name="Cyan Right0010" x="10" y="1852" width="879" height="439"/>
+	<SubTexture name="Cyan Right0011" x="10" y="1852" width="879" height="439"/>
+	<SubTexture name="Cyan Right0012" x="10" y="1852" width="879" height="439"/>
+	<SubTexture name="Cyan Right0013" x="10" y="1852" width="879" height="439"/>
+	<SubTexture name="Cyan Right0014" x="10" y="1852" width="879" height="439"/>
+	<SubTexture name="Cyan Sad0000" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0001" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0002" x="1788" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0003" x="1788" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0004" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0005" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0006" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0007" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0008" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0009" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0010" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0011" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0012" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0013" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0014" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0015" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0016" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0017" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0018" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0019" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0020" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0021" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0022" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0023" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0024" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0025" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0026" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0027" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0028" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0029" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0030" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0031" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0032" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0033" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0034" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0035" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0036" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0037" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0038" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0039" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0040" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0041" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0042" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0043" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0044" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0045" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0046" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0047" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0048" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0049" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0050" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0051" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0052" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0053" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0054" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0055" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0056" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0057" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0058" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0059" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0060" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0061" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0062" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0063" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0064" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0065" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0066" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0067" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0068" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0069" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0070" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0071" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0072" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0073" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0074" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0075" x="899" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0076" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0077" x="2677" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0078" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Sad0079" x="3566" y="1852" width="879" height="435"/>
+	<SubTexture name="Cyan Scared0000" x="4455" y="1852" width="879" height="453"/>
+	<SubTexture name="Cyan Scared0001" x="5344" y="1852" width="879" height="453"/>
+	<SubTexture name="Cyan Scared0002" x="6233" y="1852" width="879" height="453"/>
+	<SubTexture name="Cyan Scared0003" x="7122" y="1852" width="879" height="453"/>
+	<SubTexture name="Cyan Up0000" x="10" y="2315" width="879" height="520"/>
+	<SubTexture name="Cyan Up0001" x="899" y="2315" width="879" height="520"/>
+	<SubTexture name="Cyan Up0002" x="1788" y="2315" width="879" height="520"/>
+	<SubTexture name="Cyan Up0003" x="2677" y="2315" width="879" height="520"/>
+	<SubTexture name="Cyan Up0004" x="3566" y="2315" width="879" height="520"/>
+	<SubTexture name="Cyan Up0005" x="4455" y="2315" width="879" height="520"/>
+	<SubTexture name="Cyan Up0006" x="4455" y="2315" width="879" height="520"/>
+	<SubTexture name="Cyan Up0007" x="4455" y="2315" width="879" height="520"/>
+	<SubTexture name="Cyan Up0008" x="4455" y="2315" width="879" height="520"/>
+	<SubTexture name="Cyan Up0009" x="4455" y="2315" width="879" height="520"/>
+	<SubTexture name="Cyan Up0010" x="4455" y="2315" width="879" height="520"/>
+	<SubTexture name="Cyan Up0011" x="4455" y="2315" width="879" height="520"/>
+	<SubTexture name="Cyan Up0012" x="4455" y="2315" width="879" height="520"/>
+	<SubTexture name="Cyan Up0013" x="4455" y="2315" width="879" height="520"/>
+	<SubTexture name="Cyan Up0014" x="4455" y="2315" width="879" height="520"/>
+</TextureAtlas>
