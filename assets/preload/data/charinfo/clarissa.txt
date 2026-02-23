@@ -6,12 +6,12 @@ anti-aliasing: true
 flipX: false
 icon: clarissa
 barcolor: 89, 237, 246
-prefix, 0, -5, cheer, Cyan Hey, false, 24
-prefix, 0, 20, singLEFT, Cyan Left, false, 24
-prefix, 0, -4, singRIGHT, Cyan Right, false, 24
-prefix, 0, 76, singUP, Cyan Up, false, 24
-prefix, 0, -10, singDOWN, Cyan Down, false, 24
-indices, 0, -8, sad, Cyan Sad, 0:1:2:3:4:5:6:7:8:9:10:11:12, false, 24
+prefix, 0, -4, cheer, Cyan Hey, false, 24
+prefix, 0, 27, singLEFT, Cyan Left, false, 24
+prefix, 0, -3, singRIGHT, Cyan Right, false, 24
+prefix, 0, 98, singUP, Cyan Up, false, 24
+prefix, 0, -9, singDOWN, Cyan Down, false, 24
+indices, 0, -6, sad, Cyan Sad, 0:1:2:3:4:5:6:7:8:9:10:11:12, false, 24
 indices, 0, -9, danceLeft, Cyan Idle Dancing Beat, 30:0:1:2:3:4:5:6:7:8:9:10:11:12:13:14, false, 24
 indices, 0, -9, danceRight, Cyan Idle Dancing Beat, 15:16:17:18:19:20:21:22:23:24:25:26:27:28:29, false, 24
 prefix, -2, -17, scared, GF FEAR, true, 24

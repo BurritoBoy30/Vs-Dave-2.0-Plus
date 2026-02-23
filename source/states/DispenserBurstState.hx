@@ -24,10 +24,10 @@ class DispenserBurstState extends MusicBeatState
 	// tf2, jaiden
 	var swapBitchFolder:Bool = false;
 	
+	var lineInBetween:FlxSprite;
 	var movingBar:FlxBackdrop;
 	var joggingBitchesBackground:FlxSprite;
 	
-	// this might be unnecessary i think???
 	var buttonRed:Button;
 	var buttonBlu:Button;
 	var button1:Button;
@@ -67,6 +67,11 @@ class DispenserBurstState extends MusicBeatState
 		
 		redDispenserBitch = new DispenserBitch(bitchSize, 'red', 'none');
 		add(redDispenserBitch);
+		
+		lineInBetween = new FlxSprite(0, 0).loadGraphic(Paths.image('dispenser/line', 'horny'));
+		lineInBetween.antialiasing = FlxG.save.data.antiAliasing;
+		lineInBetween.visible = false;
+		add(lineInBetween);
 		
 		redDispenserBitch.visible = false;
 		
@@ -160,6 +165,9 @@ class DispenserBurstState extends MusicBeatState
 		
 		movingBar.visible = bitchFolder == 'jaiden';
 		joggingBitchesBackground.visible = bitchFolder == 'jaiden';
+		
+		lineInBetween.visible = (redDispenserBitch.visible && bluDispenserBitch.visible);
+		lineInBetween.x = bitchFolder == 'jaiden' ? 2.5 : 0;
 		
 		if (controls.BACK)
 		{
