@@ -47,8 +47,6 @@ class DispenserBurstState extends MusicBeatState
 		DiscordClient.changePresence("Fucking the Dispenser Bitch", null);
 		#end
 		
-		FlxG.mouse.visible = true;
-		
 		FlxG.sound.playMusic(Paths.music('doodle', 'horny'), 1, true);
 
 		Conductor.changeBPM(160);
@@ -171,7 +169,6 @@ class DispenserBurstState extends MusicBeatState
 		
 		if (controls.BACK)
 		{
-			FlxG.mouse.visible = false;
 			FlxG.switchState(new FreeplayState());
 		}
 		

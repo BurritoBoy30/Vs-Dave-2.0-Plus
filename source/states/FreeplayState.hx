@@ -46,15 +46,22 @@ class FreeplayState extends MusicBeatState
 
 	public var AllPossibleSongs:Array<String> = [];
 	var AllSongPackImages:Array<String> = [];
+	var packAmmount:Int;
 
 	private var CurrentPack:Int = 0;
 
 	private var NameAlpha:FlxText;
 	private var PackDescription:FlxText;
-
-	var loadingPack:Bool = false;
-
+	var PackList:FlxSprite;
 	var zoeyBop:FlxSprite;
+	
+	var select_button:Button;
+	var return_button:Button;
+	var selection_left:Button;
+	var selection_right:Button;
+	var go_play:Button;
+	
+	var loadingPack:Bool = false;
 	var iconBoopin:Bool = false;
 	
 	var lilText:FlxText;
@@ -96,6 +103,7 @@ class FreeplayState extends MusicBeatState
 		if (FlxG.save.data.hornyALL)
 		{
 			AllPossibleSongs = ["Dave","Golden","Joke","Extra","Naughty","Console"];
+			packAmmount = 6;
 			
 			AllSongPackImages = [
 				Paths.image('packs/week_icons_dave', 'preload'),
@@ -109,6 +117,7 @@ class FreeplayState extends MusicBeatState
 		else
 		{
 			AllPossibleSongs = ["Dave","Golden","Joke","Extra"];
+			packAmmount = 4;
 			
 			AllSongPackImages = [
 				Paths.image('packs/week_icons_dave', 'preload'),
@@ -126,6 +135,7 @@ class FreeplayState extends MusicBeatState
 		CurrentSongIcon = new FlxSprite().loadGraphic(AllSongPackImages[CurrentPack]);
 		CurrentSongIcon.screenCenter();
 		CurrentSongIcon.x -= 300;
+		CurrentSongIcon.y -= 50;
 		changePackAntiAliasing();
 
 		NameAlpha = new FlxText(675, (FlxG.height / 2) - 300, FlxG.width, ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase()));
@@ -138,9 +148,39 @@ class FreeplayState extends MusicBeatState
 		PackDescription.borderSize = 2;
 		PackDescription.antialiasing = FlxG.save.data.antiAliasing;
 		
+		PackList = new FlxSprite(0, 0);
+		PackList.frames = Paths.getSparrowAtlas('freeplay/freeplayPackList' + packAmmount, 'preload');
+		PackList.x = (FlxG.width / 2) - (PackList.width / 2);
+		PackList.y = FlxG.height - PackList.height;
+		PackList.antialiasing = FlxG.save.data.antiAliasing;
+		for (i in 0...packAmmount)
+		{
+			PackList.animation.addByPrefix('pack' + i, 'pack' + i + ' ', 1, true);
+		}
+		PackList.animation.play('pack0');
+		
+		select_button = new Button(0, 0, Button.loadOffset('correction'), 'freeplay/select_' + FlxG.save.data.gameLanguage, 'preload');
+		select_button.x = (FlxG.width / 2) - (select_button.width / 2);
+		select_button.y = FlxG.height - (PackList.height * 2) - 5;
+		add(select_button);
+		
+		return_button = new Button(5, 0, Button.loadOffset('correction'), 'freeplay/return_' + FlxG.save.data.gameLanguage, 'preload');
+		return_button.y = FlxG.height - return_button.height - 5;
+		add(return_button);
+		
+		selection_left = new Button(0, PackList.y - 5, Button.loadOffset('correction'), 'freeplay/selection', 'preload');
+		selection_left.x = PackList.x - (selection_left.width + 5);
+		add(selection_left);
+		
+		selection_right = new Button(0, PackList.y - 5, Button.loadOffset('correction'), 'freeplay/selection', 'preload');
+		selection_right.x = PackList.x + PackList.width + 5;
+		selection_right.flipX = true;
+		add(selection_right);
+		
 		add(CurrentSongIcon);
 		add(NameAlpha);
 		add(PackDescription);
+		add(PackList);
 		
 		Highscore.load();
 
@@ -169,10 +209,10 @@ class FreeplayState extends MusicBeatState
 		zoeyBop.setGraphicSize(Std.int(zoeyBop.width * 1.5));
 		zoeyBop.alpha = 0;
 		zoeyBop.visible = FlxG.save.data.hornyALL;
-		add(zoeyBop);
+		insert(members.indexOf(return_button), zoeyBop);
 		
 		grpSongs = new FlxTypedGroup<Alphabet>();
-		add(grpSongs);
+		insert(members.indexOf(return_button), grpSongs);
 
 		for (i in 0...songs.length)
 		{
@@ -186,7 +226,7 @@ class FreeplayState extends MusicBeatState
 
 			// using a FlxGroup is too much fuss!
 			iconArray.push(icon);
-			add(icon);
+			insert(members.indexOf(return_button), icon);
 
 			// songText.x += 40;
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
@@ -200,30 +240,36 @@ class FreeplayState extends MusicBeatState
 
 		scoreBG = new FlxSprite(0, 0).makeGraphic(1, 66, 0xFF000000);
 		scoreBG.alpha = 0;
-		add(scoreBG);
+		insert(members.indexOf(return_button), scoreBG);
 
 		diffText = new FlxText(scoreText.x, scoreText.y + 40, FlxG.width, "", 24);
 		diffText.setFormat(Paths.font("comic.ttf"), 18, FlxColor.WHITE, RIGHT);
 		diffText.antialiasing = FlxG.save.data.antiAliasing;
 		diffText.alpha = 0;
-		add(diffText);
+		insert(members.indexOf(return_button), diffText);
 		
 		lilText = new FlxText(scoreText.x, scoreText.y + 80, FlxG.width, "", 24);
 		lilText.setFormat(Paths.font("comic.ttf"), 26, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		lilText.antialiasing = FlxG.save.data.antiAliasing;
 		lilText.visible = false;
 		lilText.alpha = 0;
-		add(lilText);
+		insert(members.indexOf(return_button), lilText);
 		changefnfgfmode(0);
 
-		add(scoreText);
+		insert(members.indexOf(return_button), scoreText);
+		
+		go_play = new Button(0, 0, Button.loadOffset('correction'), 'freeplay/goPlay_' + FlxG.save.data.gameLanguage, 'preload');
+		go_play.x = FlxG.width - go_play.width - 5;
+		go_play.y = FlxG.height - go_play.height - 5;
+		insert(members.indexOf(return_button), go_play);
 		
 		FlxTween.tween(scoreBG, {alpha: 0.6}, 0.2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(scoreText, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(diffText, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(zoeyBop, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(lilText, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
-
+		FlxTween.tween(go_play, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
+		
 		changeSelection();
 	}
 		
@@ -231,9 +277,6 @@ class FreeplayState extends MusicBeatState
 	{
 		super.beatHit();
 		
-		if (curBeat % 2 == 0 && iconBoopin)
-			FlxTween.tween(FlxG.camera, {zoom:1.05}, Conductor.crochet / 1300, {ease: FlxEase.quadOut, type: BACKWARD});
-			
 		if (iconBoopin)
 		{
 			FlxTween.tween(iconArray[curSelected].scale, {x: iconArray[curSelected].realSize + 0.2, y: iconArray[curSelected].realSize + 0.2}, Conductor.crochet / 1300, {ease: FlxEase.quadOut, type: BACKWARD});
@@ -268,15 +311,13 @@ class FreeplayState extends MusicBeatState
 	{
 		CurrentPack += change;
 		if (CurrentPack == -1)
-		{
 			CurrentPack = AllPossibleSongs.length - 1;
-		}
 		if (CurrentPack == AllPossibleSongs.length)
-		{
 			CurrentPack = 0;
-		}
+			
 		NameAlpha.text = ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase());
 		PackDescription.text = ReturnLanguage.getLine(AllPossibleSongs[CurrentPack].toLowerCase() + "_desc");
+		PackList.animation.play('pack' + CurrentPack);
 		CurrentSongIcon.loadGraphic(AllSongPackImages[CurrentPack]);
 		changePackAntiAliasing();
 	}
@@ -289,13 +330,21 @@ class FreeplayState extends MusicBeatState
 		}
 		else
 		{
-			CurrentSongIcon.antialiasing = CurrentSongIcon.antialiasing = FlxG.save.data.antiAliasing;
+			CurrentSongIcon.antialiasing = FlxG.save.data.antiAliasing;
 		}
 	}
 
 	override function update(elapsed:Float)
 	{
 		Conductor.songPosition = FlxG.sound.music.time;
+		
+		select_button.setPermition = !InMainFreeplayState && !loadingPack && canInteract;
+		return_button.setPermition = canInteract;
+		selection_left.setPermition = !InMainFreeplayState && canInteract;
+		selection_right.setPermition = !InMainFreeplayState && canInteract;
+		
+		if (go_play != null)
+			go_play.setPermition = InMainFreeplayState && canInteract;
 
 		super.update(elapsed);
 		
@@ -306,16 +355,19 @@ class FreeplayState extends MusicBeatState
 			scoreText = null;
 			diffText = null;
 			zoeyBop = null;
+			lilText = null;
+			go_play = null;
 			
-			if (controls.LEFT_P && canInteract)
+			selection_left.callback = function()
 			{
 				UpdatePackSelection(-1);
 			}
-			if (controls.RIGHT_P && canInteract)
+			selection_right.callback = function()
 			{
 				UpdatePackSelection(1);
-			}
-			if (controls.ACCEPT && !loadingPack && canInteract)
+			};
+			
+			select_button.callback = function()
 			{	
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 				 
@@ -329,26 +381,29 @@ class FreeplayState extends MusicBeatState
 					loadingPack = true;
 					LoadProperPack(AllPossibleSongs[CurrentPack].toLowerCase());
 					
-					FlxTween.tween(CurrentSongIcon, {alpha: 0}, 0.2);
-					FlxTween.tween(NameAlpha, {alpha: 0}, 0.2);
-					FlxTween.tween(PackDescription, {alpha: 0}, 0.2);
+					for(everything in [CurrentSongIcon, NameAlpha, PackDescription, PackList, selection_left, selection_right, select_button])
+					{
+						FlxTween.tween(everything, {alpha: 0}, 0.2);
+					}
 					
 					new FlxTimer().start(0.2, function(Dumbshit:FlxTimer)
 					{
-						CurrentSongIcon.visible = false;
-						NameAlpha.visible = false;
-						PackDescription.visible = false;
+						for(everything in [CurrentSongIcon, NameAlpha, PackDescription, PackList, selection_left, selection_right, select_button])
+						{
+							everything.visible = false;
+						}
 						GoToActualFreeplay();
 						InMainFreeplayState = true;
 						loadingPack = false;
 						canInteract = true;
 					});
 				}
-			}
-			if (controls.BACK && canInteract)
+			};
+			
+			return_button.callback = function()
 			{
 				FlxG.switchState(new MainMenuState());
-			}	
+			};
 		
 			return;
 		}
@@ -358,11 +413,11 @@ class FreeplayState extends MusicBeatState
 			var downP = controls.DOWN_P;
 			var accepted = controls.ACCEPT;
 
-			if (upP && canInteract)
+			if (FlxG.mouse.wheel > 0 && canInteract)
 			{
 				changeSelection(-1);
 			}
-			if (downP && canInteract)
+			if (FlxG.mouse.wheel < 0 && canInteract)
 			{
 				changeSelection(1);
 			}
@@ -393,8 +448,8 @@ class FreeplayState extends MusicBeatState
 				scoreBG.x = FlxG.width - (scoreBG.scale.x / 2);
 			}
 			
-			if (controls.BACK && canInteract)
-			{				
+			return_button.callback = function()
+			{			
 				loadingPack = true;
 				canInteract = false;
 				
@@ -445,6 +500,14 @@ class FreeplayState extends MusicBeatState
 					}});
 				}
 				
+				if (go_play != null)
+				{
+					FlxTween.tween(go_play, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
+					{
+						go_play = null;
+					}});
+				}
+				
 				if (zoeyBop != null)
 				{
 					FlxTween.tween(zoeyBop, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
@@ -455,12 +518,11 @@ class FreeplayState extends MusicBeatState
 				
 				new FlxTimer().start(0.2, function(Dumbshit:FlxTimer)
 				{
-					CurrentSongIcon.visible = true;
-					NameAlpha.visible = true;
-					PackDescription.visible = true;
-					FlxTween.tween(CurrentSongIcon, {alpha: 1}, 0.2);
-					FlxTween.tween(NameAlpha, {alpha: 1}, 0.2);
-					FlxTween.tween(PackDescription, {alpha: 1}, 0.2);
+					for(everything in [CurrentSongIcon, NameAlpha, PackDescription, PackList, selection_left, selection_right, select_button])
+					{
+						everything.visible = true;
+						FlxTween.tween(everything, {alpha: 1}, 0.2);
+					}
 					
 					InMainFreeplayState = false;
 					loadingPack = false;
@@ -474,16 +536,16 @@ class FreeplayState extends MusicBeatState
 					curSelected = 0;
 					canInteract = true;
 				});
-			}
-
-			if (accepted && canInteract)
+			};
+			
+			go_play.callback = function()
 			{
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase());
 
 				trace(poop);
 
 				PlayState.SONG = Song.loadFromJson(songs[curSelected].songName.toLowerCase());
-				
+					
 				switch (songs[curSelected].songName.toLowerCase())
 				{
 					case 'fnfgf' | 'unstoppable' | 'mekatsune' | 'sunshine':
@@ -491,7 +553,7 @@ class FreeplayState extends MusicBeatState
 					default:
 						LoadingState.loadAndSwitchState(new CharacterSelectState());
 				}
-			}
+			};
 		}
 		
 		if (FlxG.sound.music.volume < 0.7)

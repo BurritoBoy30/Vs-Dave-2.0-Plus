@@ -162,6 +162,7 @@ class PauseSubState extends MusicBeatSubstate
 					CharacterSelectState.accessViaPlaystate = true;
 					LoadingState.loadAndSwitchState(new CharacterSelectState());
 				case "exit":
+					FlxG.mouse.visible = true;
 					if (PlayState.video != null)
 					{
 						PlayState.video.destroy();

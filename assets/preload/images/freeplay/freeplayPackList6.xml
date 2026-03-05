@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="freeplayPackList6.png">
+	<SubTexture name="pack0 0000" x="0" y="0" width="300" height="50"/>
+	<SubTexture name="pack1 0000" x="0" y="50" width="300" height="50"/>
+	<SubTexture name="pack2 0000" x="0" y="100" width="300" height="50"/>
+	<SubTexture name="pack3 0000" x="0" y="150" width="300" height="50"/>
+	<SubTexture name="pack4 0000" x="0" y="200" width="300" height="50"/>
+	<SubTexture name="pack5 0000" x="0" y="250" width="300" height="50"/>
+</TextureAtlas>

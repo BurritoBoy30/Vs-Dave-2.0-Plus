@@ -19,6 +19,7 @@ class OptionsMenuState extends MusicBeatState
 {
 	var menuBG:FlxSprite;
 	
+	var return_hitbox:Button;
 	var changekeys_hitbox:Button;
 	var changelang_hitbox:Button;
 	var combonum_hitbox:Button;
@@ -122,16 +123,21 @@ class OptionsMenuState extends MusicBeatState
 		{
 			changeYourGF(1);
 		});
-		selector_right.antialiasing = FlxG.save.data.antiAliasing;
 		add(selector_right);
 		
 		selector_left = new Button(0, 0, Button.loadOffset('correction'), 'ui/icon_selection', 'preload', function()
 		{
 			changeYourGF(-1);
 		});
-		selector_left.antialiasing = FlxG.save.data.antiAliasing;
 		selector_left.flipX = true;
 		add(selector_left);
+		
+		return_hitbox = new Button(5, 0, Button.loadOffset('correction'), 'freeplay/return_' + FlxG.save.data.gameLanguage, 'preload', function()
+		{
+			FlxG.switchState(new MainMenuState());
+		});
+		return_hitbox.y = FlxG.height - return_hitbox.height - 5;
+		add(return_hitbox);
 		
 		super.create();
 	}
