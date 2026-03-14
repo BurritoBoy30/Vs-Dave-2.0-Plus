@@ -72,7 +72,7 @@ class Note extends FlxSprite
 		
 		this.noteStyle = noteStyle;
 		
-		if (PlayState.SONG.song.toLowerCase() == 'sunshine')
+		if (PlayState.SONG.song.toLowerCase() == 'sunshine' || PlayState.SONG.song.toLowerCase() == 'greetings')
 		{
 			x += PlayState.note_x_middlescroll + 50;
 		}

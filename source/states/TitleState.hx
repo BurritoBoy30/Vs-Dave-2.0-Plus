@@ -50,12 +50,10 @@ class TitleState extends MusicBeatState
 		
 		if (!FlxG.save.data.hornyALL)
 		{
-			laGirlfriends = ['gf', 'gf-pixel', 'psyka', 'cyan'];
 			laColors = [0xFFA5004D, 0xFFAE2044, 0xFFC042EC, 0xFF7BD6F6];
 		}
 		else
 		{
-			laGirlfriends = ['gf-hot', 'gf-pixel-hot', 'three-gfs', 'tails-doll'];
 			laColors = [0xFFA5004D, 0xFFAE2044, 0xFFA5004D, 0xFFFF7B00];
 		}
 		
@@ -132,9 +130,17 @@ class TitleState extends MusicBeatState
 		moverz.scrollFactor.set();
 		add(moverz);
 
-		gfDance = new Girlfriend(FlxG.width * 0.43, FlxG.height * 0.07, laGirlfriends[FlxG.save.data.gfTitleNum]);
-		gfDance.x += gfDance.charOffset[0];
-		gfDance.y += gfDance.charOffset[1];
+		gfDance = new Girlfriend(FlxG.width * 0.43, FlxG.height * 0.07, SaveDataHandler.allYourGfs[FlxG.save.data.gfTitleNum]);
+		var hornyOffset:Array<Float> = [0, 0];
+		switch (gfDance.curCharacter)
+		{
+			case 'gf-pixel':
+				hornyOffset = [70, 0];
+			case 'gf-pixel-hot':
+				hornyOffset = [70, 0];
+		}
+		gfDance.x += gfDance.charOffset[0] + hornyOffset[0];
+		gfDance.y += gfDance.charOffset[1] + hornyOffset[1];
 		add(gfDance);
 		add(logoBl);
 

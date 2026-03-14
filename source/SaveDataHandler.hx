@@ -9,6 +9,8 @@ import Controls.Control;
 */
 class SaveDataHandler
 {
+	public static var allYourGfs:Array<String> = [];
+	
 	public static function initSave()
 	{		
 		if (FlxG.save.data.preloadAtAll == null)
@@ -69,6 +71,8 @@ class SaveDataHandler
 			
 		if (FlxG.save.data.gfTitleNum == null)
 			FlxG.save.data.gfTitleNum = 0;
+			
+		resetGfList();
 		
 		if (FlxG.save.data.fullScreen == null)
 			FlxG.save.data.fullScreen = false;
@@ -94,4 +98,16 @@ class SaveDataHandler
 		if (FlxG.save.data.comboNumbersLocation == null)
 			FlxG.save.data.comboNumbersLocation = [0, 0];
     }
+	
+	public static function resetGfList()
+	{
+		if (!FlxG.save.data.hornyALL)
+		{	
+			allYourGfs = ['gf', 'gf-pixel', 'psyka', 'cyan'];
+		}
+		else
+		{
+			allYourGfs = ['gf-hot', 'gf-pixel-hot', 'three-gfs', 'cyan-hot'];
+		}
+	}
 }

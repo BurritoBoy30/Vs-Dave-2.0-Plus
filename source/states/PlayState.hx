@@ -428,7 +428,7 @@ class PlayState extends MusicBeatState
 			boyfriend.visible = false;
 		}
 		
-		if (SONG.song.toLowerCase() == 'sunshine')
+		if (SONG.song.toLowerCase() == 'sunshine' || SONG.song.toLowerCase() == 'greetings')
 		{
 			gf.visible = false;
 			boyfriend.visible = false;
@@ -509,7 +509,7 @@ class PlayState extends MusicBeatState
 		if (isDownScroll)
 			strumLine.y = FlxG.height - 185;
 		
-		var timeLocation:Float = (FlxG.save.data.middlescroll || SONG.song.toLowerCase() == 'sunshine') ? 300 : 0;
+		var timeLocation:Float = (FlxG.save.data.middlescroll || SONG.song.toLowerCase() == 'sunshine' || SONG.song.toLowerCase() == 'greetings') ? 300 : 0;
 		
 		timeTxt = new FlxText(timeLocation, strumLine.y + 15, FlxG.width, "", 32);
 		timeTxt.setFormat(Paths.font("comic.ttf"), 45, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1213,6 +1213,10 @@ class PlayState extends MusicBeatState
 					dad.setPosition(-400 + dad.charOffset[0], 100 + dad.charOffset[1]);
 					gf.setPosition(80 + gf.charOffset[0], 80 + gf.charOffset[1]);
 					
+				case 'greetings':
+					curStage = 'nothing';
+					defaultCamZoom = 0.5;
+					
 				default:
 					defaultCamZoom = 0.9;
 					curStage = 'stage';
@@ -1293,7 +1297,7 @@ class PlayState extends MusicBeatState
 		generateStaticArrows(1);
 		
 		for (i in 0...dadStrums.length) {
-			if(FlxG.save.data.middlescroll || SONG.song.toLowerCase() == 'sunshine') dadStrums.members[i].visible = false;
+			if(FlxG.save.data.middlescroll || SONG.song.toLowerCase() == 'sunshine' || SONG.song.toLowerCase() == 'greetings') dadStrums.members[i].visible = false;
 		}
 
 		talking = false;
@@ -1563,7 +1567,7 @@ class PlayState extends MusicBeatState
 			
 			var note_x_position:Float = 0;
 			
-			if (SONG.song.toLowerCase() == 'sunshine')
+			if (SONG.song.toLowerCase() == 'sunshine' || SONG.song.toLowerCase() == 'greetings')
 			{
 				note_x_position = note_x_middlescroll;
 			}
@@ -2260,7 +2264,7 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic && SONG.notes[Std.int(curStep / 16)] != null)
 		{
-			if (SONG.song.toLowerCase() == 'sunshine')
+			if (SONG.song.toLowerCase() == 'sunshine' || SONG.song.toLowerCase() == 'greetings')
 				focusCam(true);
 			else
 				focusCam(!SONG.notes[Std.int(curStep / 16)].mustHitSection);
@@ -2333,7 +2337,7 @@ class PlayState extends MusicBeatState
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{	
-				if(!daNote.mustPress && (FlxG.save.data.middlescroll || SONG.song.toLowerCase() == 'sunshine'))
+				if(!daNote.mustPress && (FlxG.save.data.middlescroll || SONG.song.toLowerCase() == 'sunshine' || SONG.song.toLowerCase() == 'greetings'))
 				{
 					daNote.active = true;
 					daNote.visible = false;
@@ -3528,7 +3532,7 @@ class PlayState extends MusicBeatState
 		if (SONG.song.toLowerCase() == 'recursed')
 		{
 			zoeyBop = new FlxSprite(700, 100);
-			zoeyBop.frames = Paths.getSparrowAtlas('zoey_recursed', 'horny');
+			zoeyBop.frames = Paths.getSparrowAtlas('freeplay/zoey_recursed', 'horny');
 			zoeyBop.animation.addByPrefix('jiggle', 'jiggle', 10, true);
 			zoeyBop.animation.play('jiggle');
 			zoeyBop.setGraphicSize(Std.int(zoeyBop.width * 1.5));

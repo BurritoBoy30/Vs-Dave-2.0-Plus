@@ -2,7 +2,7 @@ gf
 gf-christmas
 gf-standing
 gf-pixel
-gf-pixe-hot
+gf-pixel-hot
 gf-hot
 gf-hot-funny
 gf-hot-christmas

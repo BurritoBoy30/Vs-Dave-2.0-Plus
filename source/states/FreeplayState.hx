@@ -79,7 +79,7 @@ class FreeplayState extends MusicBeatState
 		0xFF653303, //cakebi
 		0xFF6F4447, //dale
 		0xFFB3B3B3, //bambi bass
-		0xFFFF0000, //unfair, your demise
+		0xFFFF0000, //unfair, your demise, greetings
 		0xFF332019, //kabunga
 		0xFF211952, //computer
 		0xFF8E070A, //corridor
@@ -203,7 +203,7 @@ class FreeplayState extends MusicBeatState
 	function GoToActualFreeplay()
 	{
 		zoeyBop = new FlxSprite(700, 100);
-		zoeyBop.frames = Paths.getSparrowAtlas('zoey', 'horny');
+		zoeyBop.frames = Paths.getSparrowAtlas('freeplay/zoey', 'horny');
 		zoeyBop.animation.addByPrefix('jiggle', 'jiggle', 10, true);
 		zoeyBop.animation.play('jiggle');
 		zoeyBop.setGraphicSize(Std.int(zoeyBop.width * 1.5));
@@ -351,12 +351,11 @@ class FreeplayState extends MusicBeatState
 		if (!InMainFreeplayState) 
 		{
 			iconBoopin = false;
-			scoreBG = null;
-			scoreText = null;
-			diffText = null;
-			zoeyBop = null;
-			lilText = null;
-			go_play = null;
+			
+			for(theStuff in [scoreBG, scoreText, diffText, zoeyBop, lilText, go_play])
+			{
+				theStuff = null;
+			}
 			
 			selection_left.callback = function()
 			{
@@ -370,7 +369,7 @@ class FreeplayState extends MusicBeatState
 			select_button.callback = function()
 			{	
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
-				 
+
 				if (AllPossibleSongs[CurrentPack].toLowerCase() == 'console')
 				{
 					FlxG.switchState(new DispenserBurstState());
@@ -468,52 +467,15 @@ class FreeplayState extends MusicBeatState
 					}});
 				}
 				
-				if (scoreBG != null)
+				for(theStuff in [scoreBG, scoreText, diffText, zoeyBop, lilText, go_play])
 				{
-					FlxTween.tween(scoreBG, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
+					if (theStuff != null)
 					{
-						scoreBG = null;
-					}});
-				}
-				
-				if (scoreText != null)
-				{
-					FlxTween.tween(scoreText, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
-					{
-						scoreText = null;
-					}});
-				}
-				
-				if (diffText != null)
-				{
-					FlxTween.tween(diffText, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
-					{
-						diffText = null;
-					}});
-				}
-				
-				if (lilText != null)
-				{
-					FlxTween.tween(lilText, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
-					{
-						lilText = null;
-					}});
-				}
-				
-				if (go_play != null)
-				{
-					FlxTween.tween(go_play, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
-					{
-						go_play = null;
-					}});
-				}
-				
-				if (zoeyBop != null)
-				{
-					FlxTween.tween(zoeyBop, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
-					{
-						zoeyBop = null;
-					}});
+						FlxTween.tween(theStuff, {alpha: 0}, 0.2, {onComplete: function(twn:FlxTween)
+						{
+							theStuff = null;
+						}});
+					}
 				}
 				
 				new FlxTimer().start(0.2, function(Dumbshit:FlxTimer)
@@ -548,8 +510,9 @@ class FreeplayState extends MusicBeatState
 					
 				switch (songs[curSelected].songName.toLowerCase())
 				{
-					case 'fnfgf' | 'unstoppable' | 'mekatsune' | 'sunshine':
+					case 'fnfgf' | 'unstoppable' | 'mekatsune' | 'sunshine' | 'greetings':
 						LoadingState.loadAndSwitchState(new PlayState());
+						FlxG.mouse.visible = false;
 					default:
 						LoadingState.loadAndSwitchState(new CharacterSelectState());
 				}
@@ -640,7 +603,7 @@ class FreeplayState extends MusicBeatState
 	{
 		switch (songs[curSelected].songName.toLowerCase())
 		{
-			case 'fnfgf' | 'unstoppable' | 'mekatsune' | 'sunshine':
+			case 'fnfgf' | 'unstoppable' | 'mekatsune' | 'sunshine' | 'greetings':
 				diffText.text = ReturnLanguage.getLine(songs[curSelected].diffculty.toUpperCase());
 			default:
 				if (CharacterSelectState.noGfChar.contains(curBfChar.toLowerCase()) || (['boing', 'your-demise'].contains(songs[curSelected].songName.toLowerCase())))

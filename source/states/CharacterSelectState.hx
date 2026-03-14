@@ -52,6 +52,7 @@ class CharacterSelectState extends MusicBeatState
 	var loadBox:Button;
 	var tailsBox:Button;
 	var settingsIcon:Button;
+	var goBack:Button;
 	
 	var hornyGfBG:FlxSprite;
 	var hornyGfBOX:FlxUICheckBox;

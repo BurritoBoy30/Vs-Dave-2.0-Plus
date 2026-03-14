@@ -236,6 +236,20 @@ class Character extends FlxSprite
 		}
 	}
 	
+	public static function getIconName(character:String)
+	{
+		var offsetStuffs:Array<String> = CoolUtil.coolTextFile(Paths.txt('charinfo/' + character, 'preload'));
+		var returnhealthIcon:String = '';
+		for (charText in offsetStuffs)
+		{
+			var charInfo:Array<String> = charText.split(": ");
+			
+			if (charInfo[0] == 'icon')
+				returnhealthIcon = charInfo[1];
+		}
+		return returnhealthIcon;
+	}
+	
 	//my magnum opus or whatever the people say
 	function loadCharInfo(character:String)
 	{

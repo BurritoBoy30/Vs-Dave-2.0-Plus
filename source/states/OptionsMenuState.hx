@@ -28,7 +28,6 @@ class OptionsMenuState extends MusicBeatState
 	var selector_right:Button;
 	var selector_left:Button;
 	var pickYourGf:Bool = false;
-	var allYourGfs:Array<String> = [];
 	
 	var controlsStrings:Array<Option> = [
 		new Option('ghosttapping', FlxG.save.data.newInput),
@@ -58,18 +57,14 @@ class OptionsMenuState extends MusicBeatState
 		#end
 		
 		if (!FlxG.save.data.hornyALL)
-		{	
-			allYourGfs = ['gf', 'gf-pixel', 'psyka', 'cyan'];
-			
+		{				
 			menuBG = new FlxSprite().loadGraphic(Paths.image(MainMenuState.randomizeBG(), 'preload'));
 			menuBG.screenCenter();
 			menuBG.antialiasing = FlxG.save.data.antiAliasing;
 			add(menuBG);
 		}
 		else
-		{
-			allYourGfs = ['gf', 'gf-pixel', 'three-gfs', 'tails-doll'];
-			
+		{			
 			menuBG = new FlxSprite();
 			menuBG.frames = Paths.getSparrowAtlas('lirabyjoaopereira', 'horny');
 			menuBG.animation.addByPrefix("lira deepthroating pogo", "succ", 24);
@@ -116,8 +111,9 @@ class OptionsMenuState extends MusicBeatState
 		}
 		
 		// gf option
-		icon = new HealthIcon(allYourGfs[FlxG.save.data.gfTitleNum]);
+		icon = new HealthIcon('gf');
 		add(icon);
+		changeYourGF(0);
 		
 		selector_right = new Button(0, 0, Button.loadOffset('correction'), 'ui/icon_selection', 'preload', function()
 		{
@@ -132,10 +128,7 @@ class OptionsMenuState extends MusicBeatState
 		selector_left.flipX = true;
 		add(selector_left);
 		
-		return_hitbox = new Button(5, 0, Button.loadOffset('correction'), 'freeplay/return_' + FlxG.save.data.gameLanguage, 'preload', function()
-		{
-			FlxG.switchState(new MainMenuState());
-		});
+		return_hitbox = new Button(5, 0, Button.loadOffset('correction'), 'freeplay/return_' + FlxG.save.data.gameLanguage, 'preload');
 		return_hitbox.y = FlxG.height - return_hitbox.height - 5;
 		add(return_hitbox);
 		
@@ -176,8 +169,10 @@ class OptionsMenuState extends MusicBeatState
 		changelang_hitbox.y = (155 * 8) + 20 + camoffset;
 		combonum_hitbox.y = (155 * 12) + 20 + camoffset;
 		
-		if (controls.BACK)
+		return_hitbox.callback = function()
+		{
 			FlxG.switchState(new MainMenuState());
+		};
 	}
 	
 	function changeYourGF(change:Int)
@@ -187,11 +182,11 @@ class OptionsMenuState extends MusicBeatState
 		FlxG.save.data.gfTitleNum += change;
 
 		if (FlxG.save.data.gfTitleNum < 0)
-			FlxG.save.data.gfTitleNum = allYourGfs.length - 1;
-		if (FlxG.save.data.gfTitleNum >= allYourGfs.length)
+			FlxG.save.data.gfTitleNum = SaveDataHandler.allYourGfs.length - 1;
+		if (FlxG.save.data.gfTitleNum >= SaveDataHandler.allYourGfs.length)
 			FlxG.save.data.gfTitleNum = 0;
 			
-		icon.createIcon(allYourGfs[FlxG.save.data.gfTitleNum]);
+		icon.createIcon(Character.getIconName(SaveDataHandler.allYourGfs[FlxG.save.data.gfTitleNum]));
 	}
 	
 	function chooseYourOptions(thingsToReturn:String)
@@ -208,6 +203,7 @@ class OptionsMenuState extends MusicBeatState
 				FlxG.save.data.accuracyDisplay = !FlxG.save.data.accuracyDisplay;
 			case 'naughtiness':
 				FlxG.save.data.hornyALL = !FlxG.save.data.hornyALL;
+				SaveDataHandler.resetGfList();
 			case 'fullscreen':
 				FlxG.save.data.fullScreen = !FlxG.save.data.fullScreen;
 				FlxG.fullscreen = FlxG.save.data.fullScreen;
