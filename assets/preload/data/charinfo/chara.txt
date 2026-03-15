@@ -1,6 +1,6 @@
 file: chara
 offsets: 0, 0
-camoffsets: -160, -10
+camoffsets: -142, 70
 scale: 1
 anti-aliasing: true
 flipX: false
@@ -8,7 +8,7 @@ icon: chara
 barcolor: 226, 29, 29
 prefix, 0, 0, idle, chara idle, false, 18
 prefix, 0, 0, singUP, chara up, false, 18
-prefix, 0, 0, singRIGHT, chara right, false, 18
+prefix, -10, 0, singRIGHT, chara right, false, 18
 prefix, 0, 0, singDOWN, chara down, false, 18
 prefix, 0, 0, singLEFT, chara left, false, 18
 starterIdle: idle, false

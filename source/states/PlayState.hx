@@ -257,6 +257,9 @@ class PlayState extends MusicBeatState
 	var tails_fundo:BackgroundImg;
 	var cinematicBars:FlxSprite;
 	
+	// greetings
+	var gameOver:BackgroundImg;
+	
 	var banbiWindowNames:Array<String> = ['when you realize you have school this monday', 'industrial society and its future', 'my ears burn', 'i got that weed card', 'my ass itch', 'bruh', 'alright instagram its shoutout time'];
 	
 	// too lazy to remove this
@@ -1111,28 +1114,28 @@ class PlayState extends MusicBeatState
 					defaultCamZoom = 0.6;
 					curStage = 'pc';
 					
-					folds = new BackgroundImg(-400, -190, 'stages/normal/folds', 0.5, 0.7, 2);
+					folds = new BackgroundImg(-400, -190, 'stages/normal/folds', 'horny', 0.5, 0.7, 2);
 					add(folds);
 					
-					ground = new BackgroundImg(-215, -210, 'stages/normal/ground', 1, 1, 2);
+					ground = new BackgroundImg(-215, -210, 'stages/normal/ground', 'horny', 1, 1, 2);
 					
 					matrix1 = new BackgroundImg(0, -210, 'stages/normal/matrix1', [
 						['prefix', 'idle', 'matrix', 30, true]
-					], 1, 1, 4);
+					], 'horny', 1, 1, 4);
 					matrix1.x = (ground.x - matrix1.width) + 2;
 					matrix1.animation.play('idle', true);
 					add(matrix1);
 
 					matrix2 = new BackgroundImg(0, -210, 'stages/normal/matrix2', [
 						['prefix', 'idle', 'matrix', 30, true]
-					], 1, 1, 4);
+					], 'horny', 1, 1, 4);
 					matrix2.x = (ground.x + ground.width) - 1;
 					matrix2.animation.play('idle', true);
 					add(matrix2);
 					
 					backBG = new BackgroundImg(-215, -190, 'stages/normal/back', [
 						['prefix', 'idle', 'back', 30, false]
-					], 1, 1, 2);
+					], 'horny', 1, 1, 2);
 					backBG.animation.play('idle', true);
 					add(backBG);
 					
@@ -1146,7 +1149,7 @@ class PlayState extends MusicBeatState
 					defaultCamZoom = 0.7;
 					curStage = 'sasx';
 					
-					var lol:BackgroundImg = new BackgroundImg(-610, -300, 'stages/singleimages/lol');
+					var lol:BackgroundImg = new BackgroundImg(-610, -300, 'stages/singleimages/lol', 'horny');
 					add(lol);
 					
 					gf.setPosition(500 + gf.charOffset[0], 130 + gf.charOffset[1]);
@@ -1156,7 +1159,7 @@ class PlayState extends MusicBeatState
 					defaultCamZoom = 1;
 					curStage = 'tails-bg';
 					
-					tails_fundo = new BackgroundImg(-1000, -620, 'stages/singleimages/BACKING', 1, 1, 1.1);
+					tails_fundo = new BackgroundImg(-1000, -620, 'stages/singleimages/BACKING', 'horny', 1, 1, 1.1);
 					add(tails_fundo);
 					
 					dad.setPosition(-100, -100);
@@ -1217,6 +1220,11 @@ class PlayState extends MusicBeatState
 					curStage = 'nothing';
 					defaultCamZoom = 0.5;
 					
+					gameOver = new BackgroundImg(0, 0, 'stages/singleimages/charagameover', 'horny', 1, 1, 2);
+					gameOver.screenCenter();
+					gameOver.x -= 25;
+					gameOver.y += 225;
+					add(gameOver);
 				default:
 					defaultCamZoom = 0.9;
 					curStage = 'stage';
@@ -2561,6 +2569,8 @@ class PlayState extends MusicBeatState
 			botPlayOn = false;
 			
 		trace('WENT BACK TO FREEPLAY??');
+		
+		FlxG.mouse.visible = true;
 		
 		if (PlayState.boyfriendOverride != "none" || PlayState.boyfriendOverride != "bf")
 			PlayState.boyfriendOverride = "none";

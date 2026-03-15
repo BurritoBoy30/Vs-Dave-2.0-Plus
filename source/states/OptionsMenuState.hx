@@ -46,6 +46,8 @@ class OptionsMenuState extends MusicBeatState
 		new Option('gfontitle'),
 		new Option('preloader', FlxG.save.data.preloadAtAll)
 	];
+	var camoffset:Float = 0;
+	var camoffsetLimit:Float = 0;
 	
 	var grpOptions:FlxTypedGroup<OptionListing>;
 	
@@ -110,6 +112,8 @@ class OptionsMenuState extends MusicBeatState
 			grpOptions.add(theoptions);
 		}
 		
+		camoffsetLimit = controlsStrings.length * 113;
+		
 		// gf option
 		icon = new HealthIcon('gf');
 		add(icon);
@@ -134,9 +138,6 @@ class OptionsMenuState extends MusicBeatState
 		
 		super.create();
 	}
-	
-	var camoffset:Float = 0;
-	var camoffsetLimit:Float = 1700;
 	
 	override function update(elapsed:Float)
 	{
