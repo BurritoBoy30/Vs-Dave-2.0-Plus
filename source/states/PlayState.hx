@@ -2171,20 +2171,23 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 		
-		iconP1.scale.set(FlxMath.lerp(iconP1.realSize, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)), FlxMath.lerp(iconP1.realSize, iconP1.scale.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)));
-		iconP2.scale.set(FlxMath.lerp(iconP2.realSize, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)), FlxMath.lerp(iconP2.realSize, iconP2.scale.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)));
-		
-		iconP1.angle = FlxMath.lerp(0, iconP1.angle, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
-		iconP2.angle = FlxMath.lerp(0, iconP2.angle, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
-		
-		iconP1.updateHitbox();
-		iconP2.updateHitbox();
-		
-		if (ifGfCanSingThenHerStuffCanFunction())
+		if (FlxG.save.data.canIconBounce)
 		{
-			iconGF.scale.set(FlxMath.lerp(iconGF.realSize, iconGF.scale.x, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)), FlxMath.lerp(iconGF.realSize, iconGF.scale.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)));
-			iconGF.angle = FlxMath.lerp(0, iconGF.angle, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
-			iconGF.updateHitbox();
+			iconP1.scale.set(FlxMath.lerp(iconP1.realSize, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)), FlxMath.lerp(iconP1.realSize, iconP1.scale.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)));
+			iconP2.scale.set(FlxMath.lerp(iconP2.realSize, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)), FlxMath.lerp(iconP2.realSize, iconP2.scale.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)));
+			
+			iconP1.angle = FlxMath.lerp(0, iconP1.angle, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
+			iconP2.angle = FlxMath.lerp(0, iconP2.angle, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
+			
+			iconP1.updateHitbox();
+			iconP2.updateHitbox();
+			
+			if (ifGfCanSingThenHerStuffCanFunction())
+			{
+				iconGF.scale.set(FlxMath.lerp(iconGF.realSize, iconGF.scale.x, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)), FlxMath.lerp(iconGF.realSize, iconGF.scale.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1)));
+				iconGF.angle = FlxMath.lerp(0, iconGF.angle, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
+				iconGF.updateHitbox();
+			}
 		}
 		
 		if (health > 2)
@@ -2195,13 +2198,16 @@ class PlayState extends MusicBeatState
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset) + (iconP2.whosthisfucker == 'ohungi' ? ohungiOffset : 0);
 		
-		iconP1.y = FlxMath.lerp(healthBar.y - (iconP1.height / 2), iconP1.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
-		iconP2.y = FlxMath.lerp(healthBar.y - (iconP2.height / 2), iconP2.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
+		if (FlxG.save.data.canIconBounce)
+		{
+			iconP1.y = FlxMath.lerp(healthBar.y - (iconP1.height / 2), iconP1.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
+			iconP2.y = FlxMath.lerp(healthBar.y - (iconP2.height / 2), iconP2.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
+		}
 		
 		if (ifGfCanSingThenHerStuffCanFunction())
 		{
 			iconGF.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) + 50);
-			iconGF.y = FlxMath.lerp(healthBar.y - (iconGF.height / 2) - 50, iconGF.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
+			if (FlxG.save.data.canIconBounce) iconGF.y = FlxMath.lerp(healthBar.y - (iconGF.height / 2) - 50, iconGF.y, CoolUtil.boundTo(1 - (elapsed * 5), 0, 1));
 		}
 
 		if (healthBar.percent < 20)
@@ -3845,10 +3851,13 @@ class PlayState extends MusicBeatState
 	
 	function iconBounce(evenBeat:Bool, character:String, whichIcon:HealthIcon)
 	{
-		whichIcon.scale.set(whichIcon.realSize + 0.1, whichIcon.realSize + (character == 'dad' ? (evenBeat ? -0.2 : 0.3) : (evenBeat ? 0.3 : -0.2)));
-		whichIcon.angle = evenBeat ? 20 : -20;	
-		whichIcon.y = (healthBar.y - (whichIcon.height / 2) - (character == 'gf' ? 50 : 0)) + (character == 'dad' ? (evenBeat ? -15 : 15) : (evenBeat ? 15 : -15));
-		whichIcon.updateHitbox();
+		if (FlxG.save.data.canIconBounce)
+		{
+			whichIcon.scale.set(whichIcon.realSize + 0.1, whichIcon.realSize + (character == 'dad' ? (evenBeat ? -0.2 : 0.3) : (evenBeat ? 0.3 : -0.2)));
+			whichIcon.angle = evenBeat ? 20 : -20;	
+			whichIcon.y = (healthBar.y - (whichIcon.height / 2) - (character == 'gf' ? 50 : 0)) + (character == 'dad' ? (evenBeat ? -15 : 15) : (evenBeat ? 15 : -15));
+			whichIcon.updateHitbox();
+		}
 	}
 	
 	function hideLetters(hideInt:Int)

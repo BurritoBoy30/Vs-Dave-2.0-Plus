@@ -58,6 +58,7 @@ gfsings==Girlfriend Canta
 combonum==Pop Up do Combo
 gfontitle==Girlfriend no Titúlo
 preloader==Manter Arquivos
+iconbounce==Ícones Animados
 
 // Character Names //
 bf==Boyfriend

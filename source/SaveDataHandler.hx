@@ -97,6 +97,9 @@ class SaveDataHandler
 			
 		if (FlxG.save.data.comboNumbersLocation == null)
 			FlxG.save.data.comboNumbersLocation = [0, 0];
+			
+		if (FlxG.save.data.canIconBounce == null)
+			FlxG.save.data.canIconBounce = true;
     }
 	
 	public static function resetGfList()

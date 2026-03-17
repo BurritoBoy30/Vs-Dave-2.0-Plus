@@ -44,7 +44,8 @@ class OptionsMenuState extends MusicBeatState
 		new Option('gfsings', FlxG.save.data.gfCanSing),
 		new Option('combonum'),
 		new Option('gfontitle'),
-		new Option('preloader', FlxG.save.data.preloadAtAll)
+		new Option('preloader', FlxG.save.data.preloadAtAll),
+		new Option('iconbounce', FlxG.save.data.canIconBounce)
 	];
 	var camoffset:Float = 0;
 	var camoffsetLimit:Float = 0;
@@ -178,7 +179,8 @@ class OptionsMenuState extends MusicBeatState
 	
 	function changeYourGF(change:Int)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		if (change != 0)
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		
 		FlxG.save.data.gfTitleNum += change;
 
@@ -218,6 +220,8 @@ class OptionsMenuState extends MusicBeatState
 				FlxG.save.data.gfCanSing = !FlxG.save.data.gfCanSing;
 			case 'preloader':
 				FlxG.save.data.preloadAtAll = !FlxG.save.data.preloadAtAll;
+			case 'iconbounce':
+				FlxG.save.data.canIconBounce = !FlxG.save.data.canIconBounce;
 		}
 	}
 }

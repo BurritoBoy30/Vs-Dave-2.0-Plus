@@ -58,6 +58,7 @@ gfsings==Girlfriend Sings
 combonum==Combo Pop Up
 gfontitle==Girlfriend on Title
 preloader==Keep loaded files
+iconbounce==Bouncy Icons
 
 // Character Names //
 bf==Boyfriend
