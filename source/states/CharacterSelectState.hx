@@ -337,7 +337,7 @@ class CharacterSelectState extends MusicBeatState
 				{
 					if (accessViaPlaystate)
 					{
-						LoadingState.loadAndSwitchState(new PlayState());
+						LoadingState.loadAndSwitchState(new LoadingScreenState(new PlayState()));
 					}
 					else
 					{
@@ -708,7 +708,7 @@ class CharacterSelectState extends MusicBeatState
 		
 		if (accessViaPlaystate) accessViaPlaystate = false;
 		
-		LoadingState.loadAndSwitchState(new LoadingScreenState());
+		LoadingState.loadAndSwitchState(new LoadingScreenState(new PlayState()));
 	}
 }
 

@@ -23,6 +23,7 @@ class OptionsMenuState extends MusicBeatState
 	var changekeys_hitbox:Button;
 	var changelang_hitbox:Button;
 	var combonum_hitbox:Button;
+	var plus18_hitbox:Button;
 	
 	var icon:HealthIcon;
 	var selector_right:Button;
@@ -97,7 +98,7 @@ class OptionsMenuState extends MusicBeatState
 		
 		combonum_hitbox = new Button(correct, 0, Button.loadOffset('correction'), 'optionbutton', 'preload', function()
 		{
-			LoadingState.loadAndSwitchState(new ComboNumbersState());
+			LoadingState.loadAndSwitchState(new LoadingScreenState(new ComboNumbersState()));
 		});
 		add(combonum_hitbox);
 		
@@ -117,6 +118,7 @@ class OptionsMenuState extends MusicBeatState
 		
 		// gf option
 		icon = new HealthIcon('gf');
+		icon.scale.set(icon.realSize * 0.93, icon.realSize * 0.93);
 		add(icon);
 		changeYourGF(0);
 		
@@ -133,6 +135,14 @@ class OptionsMenuState extends MusicBeatState
 		selector_left.flipX = true;
 		add(selector_left);
 		
+		plus18_hitbox = new Button(0, 0, Button.loadOffset('correction'), 'ui/' + (FlxG.save.data.gfTitleTypeIsHorny ? 'plus18_on' : 'plus18_off'), 'horny', function()
+		{
+			FlxG.save.data.gfTitleTypeIsHorny = !FlxG.save.data.gfTitleTypeIsHorny;
+			updateGfList();
+		});
+		plus18_hitbox.visible = FlxG.save.data.hornyALL;
+		add(plus18_hitbox);
+		
 		return_hitbox = new Button(5, 0, Button.loadOffset('correction'), 'freeplay/return_' + FlxG.save.data.gameLanguage, 'preload');
 		return_hitbox.y = FlxG.height - return_hitbox.height - 5;
 		add(return_hitbox);
@@ -143,6 +153,8 @@ class OptionsMenuState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+		
+		plus18_hitbox.visible = FlxG.save.data.hornyALL;
 		
 		if (FlxG.mouse.wheel > 0)
 		{
@@ -162,8 +174,10 @@ class OptionsMenuState extends MusicBeatState
 			item.y = camoffset;
 		}
 		
-		icon.y = (155 * 13) + 30 + camoffset;
+		icon.y = (155 * 13) + camoffset;
 		icon.x = 1050;
+		plus18_hitbox.x = icon.x;
+		plus18_hitbox.y = icon.y + icon.height - 25;
 		selector_left.setPosition(icon.x - selector_left.width, icon.y + 10);
 		selector_right.setPosition(icon.x + icon.width, icon.y + 10);
 		
@@ -175,6 +189,16 @@ class OptionsMenuState extends MusicBeatState
 		{
 			FlxG.switchState(new MainMenuState());
 		};
+	}
+	
+	function updateGfList()
+	{
+		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		
+		SaveDataHandler.resetGfList();
+		if (plus18_hitbox.visible) plus18_hitbox.reloadImage('ui/' + (FlxG.save.data.gfTitleTypeIsHorny ? 'plus18_on' : 'plus18_off'), 'horny');
+		FlxG.save.data.gfTitleNum = 0;
+		changeYourGF(0);
 	}
 	
 	function changeYourGF(change:Int)
@@ -206,7 +230,7 @@ class OptionsMenuState extends MusicBeatState
 				FlxG.save.data.accuracyDisplay = !FlxG.save.data.accuracyDisplay;
 			case 'naughtiness':
 				FlxG.save.data.hornyALL = !FlxG.save.data.hornyALL;
-				SaveDataHandler.resetGfList();
+				updateGfList();
 			case 'fullscreen':
 				FlxG.save.data.fullScreen = !FlxG.save.data.fullScreen;
 				FlxG.fullscreen = FlxG.save.data.fullScreen;

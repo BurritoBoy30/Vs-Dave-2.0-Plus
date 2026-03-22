@@ -100,17 +100,23 @@ class SaveDataHandler
 			
 		if (FlxG.save.data.canIconBounce == null)
 			FlxG.save.data.canIconBounce = true;
+		
+		if (FlxG.save.data.gfTitleTypeIsHorny == null)
+			FlxG.save.data.gfTitleTypeIsHorny = true;		
     }
 	
 	public static function resetGfList()
 	{
 		if (!FlxG.save.data.hornyALL)
 		{	
-			allYourGfs = ['gf', 'gf-pixel', 'psyka', 'cyan'];
+			allYourGfs = ['gf', 'gf-pixel', 'psyka', 'cyan', 'kaity', 'aymara'];
 		}
 		else
 		{
-			allYourGfs = ['gf-hot', 'gf-pixel-hot', 'three-gfs', 'cyan-hot'];
+			if (FlxG.save.data.gfTitleTypeIsHorny)
+				allYourGfs = ['gf-hot', 'gf-pixel-hot', 'three-gfs', 'cyan-hot', 'tails-doll'];
+			else
+				allYourGfs = ['gf', 'gf-pixel', 'psyka', 'cyan', 'kaity', 'aymara'];
 		}
 	}
 }

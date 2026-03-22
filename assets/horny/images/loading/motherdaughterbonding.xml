@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="motherdaughterbonding.png">
+<SubTexture name="succ0000" x="0" y="0" width="823" height="720" frameX="0" frameY="0" frameWidth="823" frameHeight="720" />
+<SubTexture name="succ0001" x="0" y="720" width="823" height="720" frameX="0" frameY="0" frameWidth="823" frameHeight="720" />
+<SubTexture name="succ0002" x="0" y="1440" width="823" height="720" frameX="0" frameY="0" frameWidth="823" frameHeight="720" />
+<SubTexture name="succ0003" x="0" y="2160" width="823" height="720" frameX="0" frameY="0" frameWidth="823" frameHeight="720" />
+</TextureAtlas>

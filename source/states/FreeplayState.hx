@@ -511,10 +511,10 @@ class FreeplayState extends MusicBeatState
 				switch (songs[curSelected].songName.toLowerCase())
 				{
 					case 'fnfgf' | 'unstoppable' | 'mekatsune' | 'sunshine' | 'greetings':
-						LoadingState.loadAndSwitchState(new PlayState());
+						LoadingState.loadAndSwitchState(new LoadingScreenState(new PlayState()));
 						FlxG.mouse.visible = false;
 					default:
-						LoadingState.loadAndSwitchState(new CharacterSelectState());
+						LoadingState.loadAndSwitchState(new LoadingScreenState(new CharacterSelectState()));
 				}
 			};
 		}

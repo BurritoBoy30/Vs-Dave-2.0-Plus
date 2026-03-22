@@ -1,6 +1,7 @@
 package states;
 
 import flixel.FlxG;
+import flixel.FlxState;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
@@ -12,30 +13,59 @@ using StringTools;
 
 class LoadingScreenState extends MusicBeatState
 {
-	var gfXml:FlxSprite;
+	var startLoad:Bool = false;
+	
 	var loadingText:FlxText;
+	var goToState:FlxState;
+	
+	var assetList:Array<Dynamic> = [
+		['gf_fucked', 'fucked', 12],
+		['motherdaughterbonding', 'succ', 12],
+		['auntsolo', 'spitroast', 12],
+		['kenzou', 'tits', 10]
+	];
+	
+	var id:Int = 0;
+	
+	public function new(state:FlxState)
+	{
+		super();
+		
+		goToState = state;
+	}
 	
 	override public function create():Void
 	{
-		gfXml = new FlxSprite(0, 0);
-		gfXml.frames = Paths.getSparrowAtlas('gf_fucked', 'horny');
-		gfXml.animation.addByPrefix('gfgettingfuckedlikethewhoresheis', 'fucked', 12, true);
-		gfXml.animation.addByPrefix('gfbecomesacumdumpster', 'gettingfilledwithcum', 12, false);
-		gfXml.animation.play('gfgettingfuckedlikethewhoresheis', true);
-		gfXml.x = FlxG.width - gfXml.width + 1;
+		id = FlxG.random.int(0, assetList.length - 1);
+		
+		var gfXml:FlxSprite = new FlxSprite(0, 0);
+		gfXml.frames = Paths.getSparrowAtlas('loading/' + assetList[id][0], 'horny');
+		gfXml.animation.addByPrefix('sex',  assetList[id][1], assetList[id][2], true);
+		gfXml.animation.play('sex', true);
+		gfXml.x = FlxG.width - gfXml.width;
 		gfXml.visible = FlxG.save.data.hornyALL;
 		gfXml.antialiasing = FlxG.save.data.antiAliasing;
 		add(gfXml);
 		
-		loadingText = new FlxText(20, FlxG.height - 70, FlxG.width, 'Now Loading...', 16);
+		var fadeIn:FlxSprite = new FlxSprite(gfXml.x, 0).loadGraphic(Paths.image('loading/fade', 'horny'));
+		fadeIn.visible = FlxG.save.data.hornyALL;
+		fadeIn.antialiasing = FlxG.save.data.antiAliasing;
+		add(fadeIn);
+		
+		loadingText = new FlxText(20, FlxG.height - 70, FlxG.width, '', 16);
 		loadingText.setFormat(Paths.font("comic.ttf"), 40, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		loadingText.borderSize = 2;
 		loadingText.antialiasing = FlxG.save.data.antiAliasing;
 		add(loadingText);
 
 		super.create();
-
-		new FlxTimer().start(2, function(skyFNF:FlxTimer) go());
+		
+		startLoad = true;
+		
+		if (startLoad)
+		{
+			new FlxTimer().start(2, function(skyFNF:FlxTimer) go());
+		}
 	}
 	
 	var updateText:Float = 0;
@@ -63,9 +93,8 @@ class LoadingScreenState extends MusicBeatState
 
 	function go():Void
 	{
-		gfXml.animation.play('gfbecomesacumdumpster', false);
 		new FlxTimer().start(3, function(skyFNF:FlxTimer)
-			LoadingState.loadAndSwitchState(new PlayState())
+			LoadingState.loadAndSwitchState(goToState)
 		);
 	}
 }

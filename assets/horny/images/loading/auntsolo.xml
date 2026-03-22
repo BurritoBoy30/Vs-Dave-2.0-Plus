@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="auntsolo.png">
+<SubTexture name="spitroast0000" x="0" y="0" width="598" height="720" frameX="0" frameY="0" frameWidth="598" frameHeight="720" />
+<SubTexture name="spitroast0001" x="598" y="0" width="598" height="720" frameX="0" frameY="0" frameWidth="598" frameHeight="720" />
+<SubTexture name="spitroast0002" x="0" y="720" width="598" height="720" frameX="0" frameY="0" frameWidth="598" frameHeight="720" />
+<SubTexture name="spitroast0003" x="598" y="720" width="598" height="720" frameX="0" frameY="0" frameWidth="598" frameHeight="720" />
+</TextureAtlas>

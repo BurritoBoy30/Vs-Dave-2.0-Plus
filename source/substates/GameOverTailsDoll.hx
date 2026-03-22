@@ -166,7 +166,7 @@ class GameOverTailsDoll extends MusicBeatSubstate
 			{
 				tailsCamera.fade(FlxColor.BLACK, 2, false, function()
 				{
-					LoadingState.loadAndSwitchState(new PlayState());
+					LoadingState.loadAndSwitchState(new LoadingScreenState(new PlayState()));
 				});
 			});
 		}

@@ -160,7 +160,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.botPlayOn = !PlayState.botPlayOn;
 				case 'change_character':
 					CharacterSelectState.accessViaPlaystate = true;
-					LoadingState.loadAndSwitchState(new CharacterSelectState());
+					LoadingState.loadAndSwitchState(new LoadingScreenState(new CharacterSelectState()));
 				case "exit":
 					FlxG.mouse.visible = true;
 					if (PlayState.video != null)

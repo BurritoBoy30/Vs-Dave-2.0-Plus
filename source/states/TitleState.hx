@@ -36,7 +36,6 @@ class TitleState extends MusicBeatState
 	var textGroup:FlxGroup;
 	var moverz:FlxBackdrop;
 	var laGirlfriends:Array<String> = [];
-	public static var laColors:Array<FlxColor> = [];
 
 	var curWacky:Array<String> = [];
 
@@ -47,15 +46,6 @@ class TitleState extends MusicBeatState
 		trace('huh');
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
-		
-		if (!FlxG.save.data.hornyALL)
-		{
-			laColors = [0xFFA5004D, 0xFFAE2044, 0xFFC042EC, 0xFF7BD6F6];
-		}
-		else
-		{
-			laColors = [0xFFA5004D, 0xFFAE2044, 0xFFA5004D, 0xFFFF7B00];
-		}
 		
 		super.create();
 
@@ -126,7 +116,7 @@ class TitleState extends MusicBeatState
 		
 		moverz = new FlxBackdrop(Paths.image('ui/checkeredBG_title', 'preload'), XY, 0, 0);
 		moverz.antialiasing = FlxG.save.data.antiAliasing;
-		moverz.color = laColors[FlxG.save.data.gfTitleNum];
+		moverz.color = 0xFFA5004D;
 		moverz.scrollFactor.set();
 		add(moverz);
 

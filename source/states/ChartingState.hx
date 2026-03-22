@@ -867,7 +867,7 @@ class ChartingState extends MusicBeatState
 			FlxG.sound.music.stop();
 			vocals.stop();
 			
-			LoadingState.loadAndSwitchState(new PlayState());
+			LoadingState.loadAndSwitchState(new LoadingScreenState(new PlayState()));
 		}
 
 		if (FlxG.keys.justPressed.E)
@@ -1485,7 +1485,7 @@ class ChartingState extends MusicBeatState
 	function loadAutosave():Void
 	{
 		PlayState.SONG = Song.parseJSONshit(FlxG.save.data.autosave);
-		LoadingState.loadAndSwitchState(new ChartingState());
+		LoadingState.loadAndSwitchState(new LoadingScreenState(new ChartingState()));
 	}
 
 	function autosaveSong():Void
