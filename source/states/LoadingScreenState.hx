@@ -22,7 +22,9 @@ class LoadingScreenState extends MusicBeatState
 		['gf_fucked', 'fucked', 12],
 		['motherdaughterbonding', 'succ', 12],
 		['auntsolo', 'spitroast', 12],
-		['kenzou', 'tits', 10]
+		['kenzou', 'tits', 10],
+		['girlfriend', 'bop', 24],
+		['kanna', 'inpublic', 12]
 	];
 	
 	var id:Int = 0;

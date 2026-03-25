@@ -1,4 +1,4 @@
-file: Dave_insanity_lol
+file: Dave_insanity_lol, shared
 offsets: 75, 150
 camoffsets: 0, 0
 scale: 1

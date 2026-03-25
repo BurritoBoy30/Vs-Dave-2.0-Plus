@@ -1,4 +1,4 @@
-file: girlfriends/gfPixel
+file: girlfriends/gfPixel, shared
 offsets: 280, 280
 camoffsets: 0, 0
 scale: 6

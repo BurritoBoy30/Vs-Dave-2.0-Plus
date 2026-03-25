@@ -1,4 +1,4 @@
-file: dave_sheet
+file: dave_sheet, shared
 offsets: 75, 150
 camoffsets: 0, 0
 scale: 1

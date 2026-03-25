@@ -1,4 +1,4 @@
-file: ringi
+file: ringi, shared
 offsets: 0, 0
 camoffsets: -170, -120
 scale: 1.8

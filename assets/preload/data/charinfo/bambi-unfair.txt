@@ -1,4 +1,4 @@
-file: unfair_bambi
+file: unfair_bambi, shared
 offsets: 0, 0
 camoffsets: -100, -50
 scale: 1.2

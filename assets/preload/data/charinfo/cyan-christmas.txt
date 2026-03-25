@@ -1,4 +1,4 @@
-file: girlfriends/cyanChristmas
+file: girlfriends/cyanChristmas, shared
 offsets: -80, -7
 camoffsets: 0, 0
 scale: 1

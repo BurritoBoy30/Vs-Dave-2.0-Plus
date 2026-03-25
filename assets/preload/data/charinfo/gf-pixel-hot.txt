@@ -1,4 +1,4 @@
-file: girlfriends/GFbyRember
+file: girlfriends/GFbyRember, horny
 offsets: 285, 310
 camoffsets: 0, 0
 scale: 6

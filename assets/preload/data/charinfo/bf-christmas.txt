@@ -1,4 +1,4 @@
-file: bfChristmas
+file: bfChristmas, shared
 offsets: 0, 0
 camoffsets: 0, 0
 scale: 1

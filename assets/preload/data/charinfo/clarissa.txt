@@ -1,4 +1,4 @@
-file: girlfriends/CyanOverGfFinal
+file: girlfriends/CyanOverGfFinal, shared
 offsets: -40, 150
 camoffsets: -150, 150
 scale: 1.25

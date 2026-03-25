@@ -1,4 +1,4 @@
-file: dale
+file: dale, shared
 offsets: -500, -450
 camoffsets: 350, 425
 scale: 0.65

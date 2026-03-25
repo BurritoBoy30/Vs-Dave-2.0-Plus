@@ -1,4 +1,4 @@
-file: girlfriends/Psyka_assets
+file: girlfriends/Psyka_assets, shared
 offsets: 0, -28
 camoffsets: 0, 0
 scale: 1

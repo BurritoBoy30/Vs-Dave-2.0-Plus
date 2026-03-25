@@ -34,7 +34,7 @@ class CharacterSelectSettings extends MusicBeatSubstate
 		add(titleText);
 		titleText.cameras = [funnyCam];
 		
-		tailsDoll = new FlxUICheckBox(100, 100, Paths.image('charselect/hornygf_box'), Paths.image('charselect/hornygf_boxCheck'), "", 100);
+		tailsDoll = new FlxUICheckBox(100, 100, Paths.image('charselect/hornygf_box', 'horny'), Paths.image('charselect/hornygf_boxCheck', 'horny'), "", 100);
 		tailsDoll.callback = function()
 		{
 			FlxG.save.data.canTailsDoll = !FlxG.save.data.canTailsDoll;

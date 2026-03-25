@@ -1,4 +1,4 @@
-file: bambiRemake
+file: bambiRemake, shared
 offsets: 200, 400
 camoffsets: 0, 0
 scale: 1

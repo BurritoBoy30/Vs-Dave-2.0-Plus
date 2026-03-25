@@ -1,4 +1,4 @@
-file: girlfriends/GF_Bent_New
+file: girlfriends/GF_Bent_New, horny
 offsets: 0, -5
 camoffsets: 0, 0
 scale: 1

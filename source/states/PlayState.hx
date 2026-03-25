@@ -2194,6 +2194,18 @@ class PlayState extends MusicBeatState
 			health = 2;
 		
 		var iconOffset:Int = 26;
+		
+		if (iconP2.whosthisfucker == 'ohungi')
+		{
+			if (healthBar.percent > 80)
+			{
+				ohungiOffset = 45;
+			}
+			else
+			{
+				ohungiOffset = 80;
+			}
+		}
 
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset) + (iconP2.whosthisfucker == 'ohungi' ? ohungiOffset : 0);
@@ -2226,12 +2238,10 @@ class PlayState extends MusicBeatState
 		if (healthBar.percent > 80)
 		{
 			iconP2.changeState('losing');
-			ohungiOffset = 40;
 		}
 		else
 		{
 			iconP2.changeState('normal');
-			ohungiOffset = 20;
 		}
 
 		if (startingSong)

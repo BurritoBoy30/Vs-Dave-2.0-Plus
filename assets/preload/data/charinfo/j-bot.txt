@@ -1,4 +1,4 @@
-file: j-bot
+file: j-bot, horny
 offsets: -275, -50
 camoffsets: -350, -120
 scale: 1.8

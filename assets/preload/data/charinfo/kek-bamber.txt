@@ -1,4 +1,4 @@
-file: bambi_farter
+file: bambi_farter, shared
 offsets: 0, -50
 camoffsets: 100, 100
 scale: 1

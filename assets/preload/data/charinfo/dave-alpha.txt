@@ -1,4 +1,4 @@
-file: alphadave
+file: alphadave, shared
 offsets: 0, -20
 camoffsets: 0, 50
 scale: 1

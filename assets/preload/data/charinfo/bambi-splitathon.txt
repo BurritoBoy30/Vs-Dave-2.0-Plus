@@ -1,4 +1,4 @@
-file: Splitathon_Bambi
+file: Splitathon_Bambi, shared
 offset: 200, 400
 camoffsets: 0, 50
 scale: 1

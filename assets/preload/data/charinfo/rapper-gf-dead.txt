@@ -1,4 +1,4 @@
-file: death/GF_in_Bf_clothes_DEAD
+file: death/GF_in_Bf_clothes_DEAD, shared
 offsets: 0, -340
 camoffsets: 0, 0
 scale: 1

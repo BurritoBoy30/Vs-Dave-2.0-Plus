@@ -1,4 +1,4 @@
-file: bombai
+file: bombai, shared
 offsets: -675, -500
 camoffsets: 125, 175
 scale: 0.8

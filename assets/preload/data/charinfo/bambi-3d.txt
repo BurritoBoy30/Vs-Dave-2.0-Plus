@@ -1,4 +1,4 @@
-file: bambi_angryboy
+file: bambi_angryboy, shared
 offsets: 0, -200
 camoffsets: 0, 0
 scale: 0.98

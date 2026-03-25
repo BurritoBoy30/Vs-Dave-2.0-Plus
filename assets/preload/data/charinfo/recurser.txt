@@ -1,4 +1,4 @@
-file: Recurser
+file: Recurser, shared
 offsets: -800, 0
 camoffsets: 0, 0
 scale: 1

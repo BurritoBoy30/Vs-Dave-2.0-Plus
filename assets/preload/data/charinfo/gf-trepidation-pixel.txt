@@ -1,4 +1,4 @@
-file: girlfriends/trepidation_gf_sprite_by_Rember
+file: girlfriends/trepidation_gf_sprite_by_Rember, horny
 offsets: 185, 190
 camoffsets: 0, 0
 scale: 6

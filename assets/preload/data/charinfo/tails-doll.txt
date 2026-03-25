@@ -1,4 +1,4 @@
-file: girlfriends/tdoll-assets
+file: girlfriends/tdoll-assets, horny
 offsets: -75, -120
 camoffsets: -75, 110
 scale: 1

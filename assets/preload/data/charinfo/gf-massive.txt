@@ -1,4 +1,4 @@
-file: girlfriends/massivegf
+file: girlfriends/massivegf, horny
 offsets: 75, -300
 camoffsets: -450, 150
 scale: 0.93

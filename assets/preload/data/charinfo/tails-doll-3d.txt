@@ -1,4 +1,4 @@
-file: TailsDollFem
+file: TailsDollFem, horny
 offsets: 0, 0
 camoffsets: -200, 0
 scale: 1.1

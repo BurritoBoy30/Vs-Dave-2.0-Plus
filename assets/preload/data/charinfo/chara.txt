@@ -1,4 +1,4 @@
-file: chara
+file: chara, horny
 offsets: 0, 0
 camoffsets: -142, 70
 scale: 1

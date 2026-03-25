@@ -1,4 +1,4 @@
-file: girlfriends/cyanHot_assets
+file: girlfriends/cyanHot_assets, horny
 offsets: -50, 60
 camoffsets: -150, 150
 scale: 1.1

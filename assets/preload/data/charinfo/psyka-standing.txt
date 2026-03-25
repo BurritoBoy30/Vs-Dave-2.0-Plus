@@ -1,4 +1,4 @@
-file: girlfriends/obaries
+file: girlfriends/obaries, shared
 offsets: 90, 185
 camoffsets: 0, 0
 scale: 1

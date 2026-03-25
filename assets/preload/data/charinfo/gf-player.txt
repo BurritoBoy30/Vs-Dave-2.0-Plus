@@ -1,4 +1,4 @@
-file: Playable_GF_V2
+file: Playable_GF_V2, shared
 offsets: 0, -85
 camoffsets: 0, 0
 scale: 1

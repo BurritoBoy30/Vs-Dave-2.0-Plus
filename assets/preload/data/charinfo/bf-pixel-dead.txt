@@ -1,4 +1,4 @@
-file: death/bfPixelsDEAD
+file: death/bfPixelsDEAD, shared
 offsets: 200, 150
 camoffsets: -170, -130 
 scale: 6

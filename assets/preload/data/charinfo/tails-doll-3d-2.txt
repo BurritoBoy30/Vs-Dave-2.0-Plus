@@ -1,4 +1,4 @@
-file: FemTailsFase2
+file: FemTailsFase2, horny
 offsets: 0, 0
 camoffsets: -200, 0
 scale: 1.1

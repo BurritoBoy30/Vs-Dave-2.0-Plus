@@ -1,4 +1,4 @@
-file: ohungi
+file: ohungi, shared
 offsets: 0, 230
 camoffsets: 0, 0
 scale: 1

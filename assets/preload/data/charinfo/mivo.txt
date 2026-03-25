@@ -1,4 +1,4 @@
-file: movi_fat
+file: movi_fat, horny
 offsets: 0, 0
 camoffsets: -290, -110
 scale: 1

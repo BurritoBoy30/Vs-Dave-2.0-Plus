@@ -1,4 +1,4 @@
-file: oruta
+file: oruta, horny
 offsets: 50, -100
 camoffsets: -70, -70 
 scale: 1

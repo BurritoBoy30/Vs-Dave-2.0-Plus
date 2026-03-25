@@ -1,4 +1,4 @@
-file: girlfriends/ovaries
+file: girlfriends/ovaries, shared
 offsets: 90, 205
 camoffsets: 0, 0
 scale: 1

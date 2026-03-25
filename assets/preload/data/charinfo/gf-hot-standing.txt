@@ -1,4 +1,4 @@
-file: girlfriends/GF_Funny_Boombox
+file: girlfriends/GF_Funny_Boombox, horny
 offsets: 90, 205
 camoffsets: 0, 0
 scale: 1

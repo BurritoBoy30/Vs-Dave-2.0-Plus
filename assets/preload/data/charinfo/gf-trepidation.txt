@@ -1,4 +1,4 @@
-file: girlfriends/tpgf
+file: girlfriends/tpgf, horny
 offsets: -400, -250
 camoffsets: 0, 0
 scale: 0.75

@@ -262,7 +262,8 @@ class Character extends FlxSprite
 			switch (charInfo[0])
 			{
 				case 'file':
-					frames = Paths.getSparrowAtlas('characters/' + charInfo[1], 'shared');
+					var charoffsetInfo:Array<String> = charInfo[1].split(', ');
+					frames = Paths.getSparrowAtlas('characters/' + charoffsetInfo[0], charoffsetInfo[1]);
 				case 'offsets':
 					var charoffsetInfo:Array<String> = charInfo[1].split(', ');
 					charOffset = [Std.parseFloat(charoffsetInfo[0]), Std.parseFloat(charoffsetInfo[1])];

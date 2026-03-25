@@ -1,4 +1,4 @@
-file: bigmon
+file: bigmon, horny
 offsets: -600, -600
 camoffsets: -100, -50
 scale: 1.3

@@ -1,4 +1,4 @@
-file: bfPixel
+file: bfPixel, shared
 offsets: 200, 150
 camoffsets: -200, -170 
 scale: 6

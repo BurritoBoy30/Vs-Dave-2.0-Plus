@@ -1,4 +1,4 @@
-file: GF_in_Bf_clothesV2
+file: GF_in_Bf_clothesV2, shared
 offsets: 0, -340
 camoffsets: -50, 250 
 scale: 1

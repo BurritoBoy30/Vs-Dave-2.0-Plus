@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="girlfriend.png">
+<SubTexture name="bop0000" x="0" y="0" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0001" x="0" y="0" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0002" x="547" y="0" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0003" x="547" y="0" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0004" x="1094" y="0" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0005" x="1094" y="0" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0006" x="0" y="720" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0007" x="0" y="720" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0008" x="547" y="720" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0009" x="547" y="720" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0010" x="1094" y="720" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0011" x="1094" y="720" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0012" x="0" y="1440" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0013" x="0" y="1440" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0014" x="547" y="1440" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0015" x="547" y="1440" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0016" x="1094" y="1440" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0017" x="1094" y="1440" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0018" x="0" y="2160" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0019" x="0" y="2160" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0020" x="547" y="2160" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0021" x="547" y="2160" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0022" x="1094" y="2160" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+<SubTexture name="bop0023" x="1094" y="2160" width="547" height="720" frameX="0" frameY="0" frameWidth="547" frameHeight="720" />
+</TextureAtlas>

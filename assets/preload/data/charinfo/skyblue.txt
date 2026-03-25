@@ -1,4 +1,4 @@
-file: girlfriends/SKYBLUE
+file: girlfriends/SKYBLUE, horny
 offsets: 20, -70
 camoffsets: -100, 0
 scale: 1

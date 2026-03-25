@@ -1,4 +1,4 @@
-file: girlfriends/gfChristmas
+file: girlfriends/gfChristmas, shared
 offsets: -80, 0
 camoffsets: 0, 0
 scale: 1

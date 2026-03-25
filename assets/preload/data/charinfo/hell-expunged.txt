@@ -1,4 +1,4 @@
-file: hell_expunged
+file: hell_expunged, shared
 offsets: -550, -550
 camoffsets: -75, 110
 scale: 1

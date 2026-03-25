@@ -1,4 +1,4 @@
-file: bambi-joke
+file: bambi-joke, shared
 offsets: 175, 400
 camoffsets: 0, 0
 scale: 1
