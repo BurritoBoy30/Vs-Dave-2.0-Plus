@@ -2654,9 +2654,12 @@ class PlayState extends MusicBeatState
 
 		var pixelShit:String = "";
 
-		if (daStyle == 'pixel')
+		switch (daStyle)
 		{
-			pixelShit = 'pixelUI/';
+			case 'pixel': 
+				pixelShit = 'pixelUI/';
+			case '3d':
+				pixelShit = '3dUi/';
 		}
 		
 		var pixelShitOffset:Array<Float> = [0, 0];

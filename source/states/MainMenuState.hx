@@ -44,7 +44,8 @@ class MainMenuState extends MusicBeatState
 		'knightset',
 		'twotime',
 		'toychica',
-		'bitch'
+		'bitch',
+		'girlfriend'
 	];
 	var chance:Int = 0;
 	
