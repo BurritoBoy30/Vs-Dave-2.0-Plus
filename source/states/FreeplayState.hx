@@ -372,7 +372,7 @@ class FreeplayState extends MusicBeatState
 
 				if (AllPossibleSongs[CurrentPack].toLowerCase() == 'console')
 				{
-					FlxG.switchState(new DispenserBurstState());
+					FlxG.switchState(new DispenserBurstStateRecode());
 				}
 				else
 				{

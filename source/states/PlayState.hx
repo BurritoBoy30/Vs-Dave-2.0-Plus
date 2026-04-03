@@ -48,8 +48,7 @@ import Shaders.PulseEffect;
 import Shaders.GlitchEffect;
 
 // video thing
-import hxcodec.flixel.FlxVideo;
-import hxcodec.flixel.FlxVideoSprite;
+import hxvlc.flixel.FlxVideoSprite;
 
 #if sys
 import sys.FileSystem;
@@ -804,7 +803,7 @@ class PlayState extends MusicBeatState
 		video = new FlxVideoSprite(0, 0);
 		video.scrollFactor.set();
 		video.cameras = [camVideo];
-		video.play('assets/videos/' + file + '.mp4');
+		video.load('assets/videos/' + file + '.mp4');
 		video.antialiasing = FlxG.save.data.antiAliasing;
 		video.pause();
 		add(video);
@@ -1450,7 +1449,7 @@ class PlayState extends MusicBeatState
 		
 		if (video != null)
 		{
-			video.resume();
+			video.play();
 		}
 
 	}
