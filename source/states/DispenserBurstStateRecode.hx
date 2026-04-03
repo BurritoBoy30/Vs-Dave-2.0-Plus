@@ -27,8 +27,8 @@ class DispenserBurstStateRecode extends MusicBeatState
 	var button2right:Button;
 	var button3right:Button;
 		
-	var leftSize:Float = 1;
-	var rightSize:Float = 1;
+	var leftSize:Int = 1;
+	var rightSize:Int = 1;
 	
 	override function create()
 	{
@@ -69,69 +69,38 @@ class DispenserBurstStateRecode extends MusicBeatState
 		// left side
 		button1left = new Button(FlxG.width - 185, 70, correctAxis, 'dispenser-recode/button1', 'horny', function()
 		{
-			if (leftSize != 1)
-			{
-				leftSize = 1;
-				bluDispenserBitch.reloadBitch('left', leftSize);
-				leftBack.loadGraphic(Paths.image('dispenser-recode/backgrounds/' + leftSize, 'horny'));
-			}
+			reloadLeftSide(1);
 		});
 		add(button1left);
 		
 		button2left = new Button(button1left.x, button1left.height + button1left.y + 20, correctAxis, 'dispenser-recode/button2', 'horny', function()
 		{
-			if (leftSize != 2)
-			{
-				leftSize = 2;
-				bluDispenserBitch.reloadBitch('left', leftSize);
-				leftBack.loadGraphic(Paths.image('dispenser-recode/backgrounds/' + leftSize, 'horny'));
-			}
+			reloadLeftSide(2);
 		});
 		add(button2left);
 		
 		button3left = new Button(button2left.x, button2left.height + button2left.y + 20, correctAxis, 'dispenser-recode/button3', 'horny', function()
 		{
-			if (leftSize != 3)
-			{
-				leftSize = 3;
-				bluDispenserBitch.reloadBitch('left', leftSize);
-				leftBack.loadGraphic(Paths.image('dispenser-recode/backgrounds/' + leftSize, 'horny'));
-			}
+			reloadLeftSide(3);
 		});
 		add(button3left);
-		
 		
 		// right side
 		button1right = new Button(button1left.x + 100, button1left.y, correctAxis, 'dispenser-recode/button1', 'horny', function()
 		{
-			if (rightSize != 1)
-			{
-				rightSize = 1;
-				redDispenserBitch.reloadBitch('right', rightSize);
-				rightBack.loadGraphic(Paths.image('dispenser-recode/backgrounds/' + rightSize, 'horny'));
-			}
+			reloadRightSide(1);
 		});
 		add(button1right);
 		
 		button2right = new Button(button1right.x, button1right.height + button1right.y + 20, correctAxis, 'dispenser-recode/button2', 'horny', function()
 		{
-			if (rightSize != 2)
-			{
-				rightSize = 2;
-				redDispenserBitch.reloadBitch('right', rightSize);
-				rightBack.loadGraphic(Paths.image('dispenser-recode/backgrounds/' + rightSize, 'horny'));
-			}
+			reloadRightSide(2);
 		});
 		add(button2right);
 		
 		button3right = new Button(button2right.x, button2right.height + button2right.y + 20, correctAxis, 'dispenser-recode/button3', 'horny', function()
 		{
-			if (rightSize != 3)
-			{
-				rightSize = 3;
-				redDispenserBitch.reloadBitch('right', rightSize);
-				rightBack.loadGraphic(Paths.image('dispenser-recode/backgrounds/' + rightSize, 'horny'));
-			}
+			reloadRightSide(3);
 		});
 		add(button3right);
 		
@@ -143,6 +112,26 @@ class DispenserBurstStateRecode extends MusicBeatState
 		add(return_button);
 		
 		super.create();
+	}
+	
+	function reloadRightSide(change:Int)
+	{
+		if (rightSize != change)
+		{
+			rightSize = change;
+			redDispenserBitch.reloadBitch('right', rightSize);
+			rightBack.loadGraphic(Paths.image('dispenser-recode/backgrounds/' + rightSize, 'horny'));
+		}
+	}
+	
+	function reloadLeftSide(change:Int)
+	{
+		if (leftSize != change)
+		{
+			leftSize = change;
+			bluDispenserBitch.reloadBitch('left', leftSize);
+			leftBack.loadGraphic(Paths.image('dispenser-recode/backgrounds/' + leftSize, 'horny'));
+		}
 	}
 	
 	override function update(elapsed:Float)

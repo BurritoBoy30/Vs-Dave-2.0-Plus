@@ -26,13 +26,13 @@ golden==Dourado
 joke==Piada
 extra==Extras
 naughty==Safadeza
-console==Putas :)
+console==Jaiden e Co.
 dave_desc==Escolha entre as músicas principais do Modo História!
 golden_desc==Escolha entre algumas das batidas do mod Golden Apple!
 joke_desc==Músicas que não devem ser levadas á sério!
 extra_desc==Para aqueles querendo mais que as músicas principais!
 naughty_desc==Para aqueles se sentindo meio sapecas~
-console_desc==Foda as dispensers BLU e RED, ou a Jaiden e sua mãe!
+console_desc==Foda a Jaiden, sua mãe gostosa e sua tia suculenta!
 
 // Pause Menu UI //
 resume==Resumir

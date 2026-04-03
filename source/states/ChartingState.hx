@@ -90,9 +90,6 @@ class ChartingState extends MusicBeatState
 	var gridBlackLine:FlxSprite;
 	var vocals:FlxSound;
 
-	public var p2:Character;
-	public var p1:Character;
-
 	var leftIcon:HealthIcon;
 	var rightIcon:HealthIcon;
 
@@ -1158,18 +1155,15 @@ class ChartingState extends MusicBeatState
 
 	function updateHeads():Void
 	{		
-		p1 = new Character(0,0, _song.player1, 'dad');
-		p2 = new Character(0,0, _song.player2, 'dad');
-		
 		if (check_mustHitSection.checked)
 		{
-			leftIcon.createIcon(p1.healthIcon);
-			rightIcon.createIcon(p2.healthIcon);
+			leftIcon.createIcon(Character.getIconName(_song.player1));
+			rightIcon.createIcon(Character.getIconName(_song.player2));
 		}
 		else
 		{
-			leftIcon.createIcon(p2.healthIcon);
-			rightIcon.createIcon(p1.healthIcon);
+			leftIcon.createIcon(Character.getIconName(_song.player2));
+			rightIcon.createIcon(Character.getIconName(_song.player1));
 		}
 		
 		if (leftIcon.whosthisfucker == 'ohungi')

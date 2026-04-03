@@ -26,13 +26,13 @@ golden==Golden
 joke==Joke
 extra==Extras
 naughty==Naughty
-console==Whores :)
+console==Jaiden & Co.
 dave_desc==Choose between the main songs from Story Mode!
 golden_desc==Choose between some of the hits from the Golden Apple mod!
 joke_desc==Songs that aren't meant to be taken seriously!
 extra_desc==For those wanting more than the main songs!
 naughty_desc==For those feeling a bit spicy~
-console_desc==Fuck either BLU and RED dispensers, or Jaiden and her mom!
+console_desc==Fuck Jaiden, her hot mom and her sexy aunt!
 
 // Pause Menu UI //
 resume==Resume
