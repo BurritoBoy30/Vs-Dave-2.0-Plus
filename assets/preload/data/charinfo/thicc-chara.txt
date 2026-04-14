@@ -1,0 +1,14 @@
+file: thicc_charaara, horny
+offsets: 0, -50
+camoffsets: -50, 120
+scale: 1
+anti-aliasing: true
+flipX: false
+icon: thicc-chara
+barcolor: 111, 178, 60
+prefix, 0, 0, idle, Mom Idle, false, 24
+prefix, 12, 75, singUP, Mom Up Pose, false, 24
+prefix, 22, -84, singRIGHT, Mom Pose Left, false, 24
+prefix, 30, -151, singDOWN, MOM DOWN POSE, false, 24
+prefix, 251, -23, singLEFT, Mom Left Pose, false, 24
+starterIdle: idle, false

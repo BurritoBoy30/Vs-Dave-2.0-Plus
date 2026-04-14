@@ -1224,6 +1224,14 @@ class PlayState extends MusicBeatState
 					gameOver.x -= 25;
 					gameOver.y += 225;
 					add(gameOver);
+					
+				case 'megalo-strike-back':
+					defaultCamZoom = 0.8;
+					curStage = 'megalo';
+					
+					var bg:BackgroundImg = new BackgroundImg(-400, -150, 'stages/singleimages/chara-bg', 'horny', 1, 1, 1.2);
+					add(bg);
+					
 				default:
 					defaultCamZoom = 0.9;
 					curStage = 'stage';
