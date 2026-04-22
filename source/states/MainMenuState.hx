@@ -45,7 +45,9 @@ class MainMenuState extends MusicBeatState
 		'twotime',
 		'toychica',
 		'bitch',
-		'girlfriend'
+		'girlfriend',
+		'colette',
+		'skyblue'
 	];
 	var chance:Int = 0;
 	
@@ -166,7 +168,13 @@ class MainMenuState extends MusicBeatState
 		// debug things
 		if (FlxG.keys.justPressed.R)
 		{
-			chance = FlxG.random.int(0, menufolks.length - 1);
+			chance++;
+			
+			if (chance < 0)
+				chance = menufolks.length - 1;
+			if (chance >= menufolks.length)
+				chance = 0;
+				
 			dummyfriend.loadGraphic(Paths.image('main_menu_folks/' + menufolks[chance], 'horny'));
 		}
 

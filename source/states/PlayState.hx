@@ -1229,7 +1229,7 @@ class PlayState extends MusicBeatState
 					defaultCamZoom = 0.8;
 					curStage = 'megalo';
 					
-					var bg:BackgroundImg = new BackgroundImg(-400, -150, 'stages/singleimages/chara-bg', 'horny', 1, 1, 1.2);
+					var bg:BackgroundImg = new BackgroundImg(-400, -200, 'stages/singleimages/chara-bg', 'horny', 1, 1, 1.2);
 					add(bg);
 					
 				default:
@@ -1331,28 +1331,8 @@ class PlayState extends MusicBeatState
 
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 			introAssets.set('default', ['ready', "set", "go"]);
-			introAssets.set('school', [
-				'weeb/pixelUI/ready-pixel',
-				'weeb/pixelUI/set-pixel',
-				'weeb/pixelUI/date-pixel'
-			]);
-			introAssets.set('schoolEvil', [
-				'weeb/pixelUI/ready-pixel',
-				'weeb/pixelUI/set-pixel',
-				'weeb/pixelUI/date-pixel'
-			]);
 
 			var introAlts:Array<String> = introAssets.get('default');
-			var altSuffix:String = "";
-
-			for (value in introAssets.keys())
-			{
-				if (value == curStage)
-				{
-					introAlts = introAssets.get(value);
-					altSuffix = '-pixel';
-				}
-			}
 
 			switch (swagCounter)
 			{
