@@ -26,6 +26,7 @@ import openfl.Lib;
 #end
 class FpsDisplay extends TextField
 {
+	public static var gameVer:String = "1.3";
 	/**
 		The current frame rate, expressed using frames-per-second
 	**/
@@ -49,11 +50,12 @@ class FpsDisplay extends TextField
 		width = FlxG.width;
 		text = "FPS: ";
 		antiAliasType = FlxG.save.data.antiAliasing ? "advanced" : "normal";
+		alpha = 0.8;
 
 		cacheCount = 0;
 		currentTime = 0;
 		times = [];
-		maxChars = 6969;
+		maxChars = 1000;
 		wordWrap = true;
 
 		#if flash
@@ -101,6 +103,7 @@ class FpsDisplay extends TextField
 			{
 				text += "\nMemory: " + memoryMegas + " MB";
 			}
+			text += "\nBurrito Engine v" + gameVer;
 			#end
 			#if (gl_stats && !disable_cffi && (!html5 || !canvas))
 			text += "\ntotalDC: " + Context3DStats.totalDrawCalls();

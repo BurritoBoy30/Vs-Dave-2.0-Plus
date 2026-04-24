@@ -47,7 +47,10 @@ class MainMenuState extends MusicBeatState
 		'bitch',
 		'girlfriend',
 		'colette',
-		'skyblue'
+		'skyblue',
+		'qwel',
+		'jellybean',
+		'frisk_and_chara'
 	];
 	var chance:Int = 0;
 	
@@ -131,12 +134,6 @@ class MainMenuState extends MusicBeatState
 		backButton.x = 10;
 		backButton.y = FlxG.height - backButton.height - 5;
 		add(backButton);
-
-		var versionShit:FlxText = new FlxText(-5, FlxG.height - 32, FlxG.width, "Burrito Engine v" + gameVer, 12);
-		versionShit.setFormat("Comic Sans MS Bold", 18, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		versionShit.borderSize = 1.5;
-		versionShit.antialiasing = FlxG.save.data.antiAliasing;
-		add(versionShit);
 
 		super.create();
 	}
