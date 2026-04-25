@@ -2186,11 +2186,11 @@ class PlayState extends MusicBeatState
 		{
 			if (healthBar.percent > 80)
 			{
-				ohungiOffset = 45;
+				ohungiOffset = 50;
 			}
 			else
 			{
-				ohungiOffset = 80;
+				ohungiOffset = 30;
 			}
 		}
 

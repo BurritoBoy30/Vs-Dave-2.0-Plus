@@ -59,6 +59,8 @@ class FreeplayState extends MusicBeatState
 	var return_button:Button;
 	var selection_left:Button;
 	var selection_right:Button;
+	var selectSong_up:Button;
+	var selectSong_down:Button;
 	var go_play:Button;
 	
 	var loadingPack:Bool = false;
@@ -263,12 +265,23 @@ class FreeplayState extends MusicBeatState
 		go_play.y = FlxG.height - go_play.height - 5;
 		insert(members.indexOf(return_button), go_play);
 		
+		selectSong_down = new Button(0, go_play.y, Button.loadOffset('correction'), 'freeplay/songselect', 'preload');
+		selectSong_down.x = go_play.x - selectSong_down.width - 5;
+		selectSong_down.flipY = true;
+		insert(members.indexOf(return_button), selectSong_down);
+		
+		selectSong_up = new Button(0, go_play.y, Button.loadOffset('correction'), 'freeplay/songselect', 'preload');
+		selectSong_up.x = selectSong_down.x - selectSong_up.width - 5;
+		insert(members.indexOf(return_button), selectSong_up);
+		
 		FlxTween.tween(scoreBG, {alpha: 0.6}, 0.2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(scoreText, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(diffText, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(zoeyBop, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(lilText, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(go_play, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
+		FlxTween.tween(selectSong_down, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
+		FlxTween.tween(selectSong_up, {alpha: 1}, 0.2, {ease: FlxEase.expoInOut});
 		
 		changeSelection();
 	}
@@ -345,6 +358,12 @@ class FreeplayState extends MusicBeatState
 		
 		if (go_play != null)
 			go_play.setPermition = InMainFreeplayState && canInteract;
+			
+		if (selectSong_down != null)
+			selectSong_down.setPermition = InMainFreeplayState && canInteract;
+			
+		if (selectSong_up != null)
+			selectSong_up.setPermition = InMainFreeplayState && canInteract;
 
 		super.update(elapsed);
 		
@@ -352,7 +371,7 @@ class FreeplayState extends MusicBeatState
 		{
 			iconBoopin = false;
 			
-			for(theStuff in [scoreBG, scoreText, diffText, zoeyBop, lilText, go_play])
+			for(theStuff in [scoreBG, scoreText, diffText, zoeyBop, lilText, go_play, selectSong_down, selectSong_up])
 			{
 				theStuff = null;
 			}
@@ -408,15 +427,11 @@ class FreeplayState extends MusicBeatState
 		}
 		else
 		{
-			var upP = controls.UP_P;
-			var downP = controls.DOWN_P;
-			var accepted = controls.ACCEPT;
-
-			if (FlxG.mouse.wheel > 0 && canInteract)
+			selectSong_up.callback = function()
 			{
 				changeSelection(-1);
 			}
-			if (FlxG.mouse.wheel < 0 && canInteract)
+			selectSong_down.callback = function()
 			{
 				changeSelection(1);
 			}
@@ -467,7 +482,7 @@ class FreeplayState extends MusicBeatState
 					}});
 				}
 				
-				for(theStuff in [scoreBG, scoreText, diffText, zoeyBop, lilText, go_play])
+				for(theStuff in [scoreBG, scoreText, diffText, zoeyBop, lilText, go_play, selectSong_down, selectSong_up])
 				{
 					if (theStuff != null)
 					{
