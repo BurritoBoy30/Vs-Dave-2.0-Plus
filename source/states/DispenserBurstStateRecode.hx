@@ -15,6 +15,7 @@ class DispenserBurstStateRecode extends MusicBeatState
 	public var bluDispenserBitch:DispenserBitch;
 	public var redDispenserBitch:DispenserBitch;
 	
+	var lineInBetween:FlxSprite;
 	var leftBack:FlxSprite;
 	var rightBack:FlxSprite;
 	var movingBar:FlxBackdrop;
@@ -55,11 +56,11 @@ class DispenserBurstStateRecode extends MusicBeatState
 		redDispenserBitch = new DispenserBitch('right', rightSize);
 		add(redDispenserBitch);
 		
-		var lineInBetween:FlxSprite = new FlxSprite(2.5, 0).loadGraphic(Paths.image('dispenser-recode/line', 'horny'));
+		lineInBetween = new FlxSprite(2.5, 0).loadGraphic(Paths.image('dispenser-recode/line', 'horny'));
 		lineInBetween.antialiasing = FlxG.save.data.antiAliasing;
 		add(lineInBetween);
 		
-		var listing:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('dispenser-recode/options_' + FlxG.save.data.gameLanguage, 'horny'));
+		var listing:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('dispenser-recode/listing', 'horny'));
 		listing.x = FlxG.width - listing.width;
 		listing.antialiasing = FlxG.save.data.antiAliasing;
 		add(listing);
@@ -67,7 +68,7 @@ class DispenserBurstStateRecode extends MusicBeatState
 		var correctAxis:Array<Dynamic> = Button.loadOffset('correction');
 		
 		// left side
-		button1left = new Button(FlxG.width - 185, 70, correctAxis, 'dispenser-recode/button1', 'horny', function()
+		button1left = new Button(FlxG.width - 180, 70, correctAxis, 'dispenser-recode/button1', 'horny', function()
 		{
 			reloadLeftSide(1);
 		});
@@ -121,6 +122,9 @@ class DispenserBurstStateRecode extends MusicBeatState
 			rightSize = change;
 			redDispenserBitch.reloadBitch('right', rightSize);
 			rightBack.loadGraphic(Paths.image('dispenser-recode/backgrounds/' + rightSize, 'horny'));
+			
+			redDispenserBitch.animation.play('idle', true);
+			bluDispenserBitch.animation.play('idle', true);
 		}
 	}
 	
@@ -131,6 +135,9 @@ class DispenserBurstStateRecode extends MusicBeatState
 			leftSize = change;
 			bluDispenserBitch.reloadBitch('left', leftSize);
 			leftBack.loadGraphic(Paths.image('dispenser-recode/backgrounds/' + leftSize, 'horny'));
+			
+			redDispenserBitch.animation.play('idle', true);
+			bluDispenserBitch.animation.play('idle', true);
 		}
 	}
 	

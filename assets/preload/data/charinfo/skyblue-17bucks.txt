@@ -1,0 +1,14 @@
+file: skyblue-17bucks, horny
+offsets: -270, -190
+camoffsets: 140, 180
+scale: 0.9
+anti-aliasing: true
+flipX: false
+icon: skyblue-17bucks
+barcolor: 40, 80, 191
+prefix, 0, 0, idle, skyblue Idle, false, 20
+prefix, 0, 0, singUP, skyblue up, false, 22
+prefix, 0, 0, singLEFT, skyblue left, false, 22
+prefix, 0, 0, singRIGHT, skyblue right, false, 22
+prefix, 0, 0, singDOWN, skyblue down, false, 22
+starterIdle: idle, true

@@ -9,3 +9,4 @@ Sunshine,21,tails-doll,Hard,105
 Your-Demise,10,monika,Hard,157
 Greetings,10,chara,Hard,143
 Megalo-Strike-Back,3,thicc-chara,Hard,165
+17Skyblue,3,skyblue-17bucks,Normal,150

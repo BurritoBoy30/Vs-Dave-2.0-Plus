@@ -1232,6 +1232,13 @@ class PlayState extends MusicBeatState
 					var bg:BackgroundImg = new BackgroundImg(-400, -200, 'stages/singleimages/chara-bg', 'horny', 1, 1, 1.2);
 					add(bg);
 					
+				case '17skyblue':
+					defaultCamZoom = 0.7;
+					curStage = 'skybluehooters';
+					
+					var bg:BackgroundImg = new BackgroundImg(-600, -300, 'stages/singleimages/skybluebg', 'horny', 1, 1);
+					add(bg);
+					
 				default:
 					defaultCamZoom = 0.9;
 					curStage = 'stage';
@@ -1731,7 +1738,7 @@ class PlayState extends MusicBeatState
 	function goToChartEditor()
 	{
 		FlxG.switchState(new ChartingState());
-				
+
 		#if desktop
 		DiscordClient.changePresence("Chart Editor", null, null, true);
 		#end
