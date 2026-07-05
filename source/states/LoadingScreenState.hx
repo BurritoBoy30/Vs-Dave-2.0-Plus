@@ -45,7 +45,7 @@ class LoadingScreenState extends MusicBeatState
 		gfXml.animation.addByPrefix('sex',  assetList[id][1], assetList[id][2], true);
 		gfXml.animation.play('sex', true);
 		gfXml.x = FlxG.width - gfXml.width;
-		gfXml.visible = FlxG.save.data.hornyALL;
+		gfXml.visible = FlxG.save.data.hornyALL && FlxG.save.data.loadingSplashes;
 		gfXml.antialiasing = FlxG.save.data.antiAliasing;
 		add(gfXml);
 		

@@ -102,7 +102,10 @@ class SaveDataHandler
 			FlxG.save.data.canIconBounce = true;
 		
 		if (FlxG.save.data.gfTitleTypeIsHorny == null)
-			FlxG.save.data.gfTitleTypeIsHorny = true;		
+			FlxG.save.data.gfTitleTypeIsHorny = true;
+			
+		if (FlxG.save.data.loadingSplashes == null)
+			FlxG.save.data.loadingSplashes = true;
     }
 	
 	public static function resetGfList()

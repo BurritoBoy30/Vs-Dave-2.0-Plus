@@ -46,7 +46,8 @@ class OptionsMenuState extends MusicBeatState
 		new Option('combonum'),
 		new Option('gfontitle'),
 		new Option('preloader', FlxG.save.data.preloadAtAll),
-		new Option('iconbounce', FlxG.save.data.canIconBounce)
+		new Option('iconbounce', FlxG.save.data.canIconBounce),
+		new Option('loadingsplashes', FlxG.save.data.loadingSplashes)
 	];
 	var camoffset:Float = 0;
 	var camoffsetLimit:Float = 0;
@@ -246,6 +247,8 @@ class OptionsMenuState extends MusicBeatState
 				FlxG.save.data.preloadAtAll = !FlxG.save.data.preloadAtAll;
 			case 'iconbounce':
 				FlxG.save.data.canIconBounce = !FlxG.save.data.canIconBounce;
+			case 'loadingsplashes':
+				FlxG.save.data.loadingSplashes = !FlxG.save.data.loadingSplashes;
 		}
 	}
 }

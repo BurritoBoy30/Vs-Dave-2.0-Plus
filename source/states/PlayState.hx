@@ -99,7 +99,6 @@ class PlayState extends MusicBeatState
 	public static var gf:Girlfriend;
 	public static var boyfriend:Boyfriend;
 	private var dadmirror:Character;
-	private var gfmirror:Girlfriend;
 	
 	private var splitathonCharacterExpression:Character;
 	
@@ -181,7 +180,6 @@ class PlayState extends MusicBeatState
 	var funneEffect:FlxSprite;
 	var inCutscene:Bool = false;
 	
-	public static var boyfriendOverride:String = "none";
 	public static var girlfriendOverride:String = "none";
 
 	var bfNoteCamOffset:Array<Float> = new Array<Float>();
@@ -263,6 +261,9 @@ class PlayState extends MusicBeatState
 	
 	// too lazy to remove this
 	public var isDownScroll:Bool = false;
+	
+	public var fatAssGF:GirlfriendThatGetsFat;
+	public static var Girlfriendthatgetsfatasfuck:Bool = false;
 	
 	override public function create()
 	{
@@ -420,7 +421,7 @@ class PlayState extends MusicBeatState
 		if (SONG.song.toLowerCase() == 'tutorial')
 			gf.visible = false;
 		else
-			gf.visible = !(Character.tutorialGFs.contains(dad.curCharacter) || CharacterSelectState.noGfChar.contains(boyfriend.curCharacter) || thereisnogfs.contains(SONG.song.toLowerCase()));
+			gf.visible = !(Character.tutorialGFs.contains(dad.curCharacter) || CharacterSelectState.noGfChar.contains(boyfriend.curCharacter) || thereisnogfs.contains(SONG.song.toLowerCase()) || Girlfriendthatgetsfatasfuck);
 		
 		//they dont show up on video stages to improve performance
 		if (songsWithVideos.contains(SONG.song.toLowerCase()))
@@ -447,6 +448,11 @@ class PlayState extends MusicBeatState
 		}
 		
 		add(gf);
+		if (Girlfriendthatgetsfatasfuck)
+		{
+			fatAssGF = new GirlfriendThatGetsFat(200, 215);
+			add(fatAssGF);
+		}
 		add(dad);
 		
 		switch (SONG.song.toLowerCase())
@@ -466,25 +472,8 @@ class PlayState extends MusicBeatState
 				
 				trace('event check');
 				
-			case 'rules':
-				//movi 2 spritesheet is too big, for the sake of optimization, im using the dadmirror code for the second part
-				var moveitall:Array<Float> = [-425, -100];
-				
-				white = new BackgroundImg(-765 + moveitall[0], 82 + moveitall[1], 'stages/page/white');
-				add(white);
-				white.visible = false;
-				
-				dadmirror = new Character(dad.x + moveitall[0], dad.y + 70 + moveitall[1], "movi2", 'dad');
-				add(dadmirror);
-				
-				backpage = new BackgroundImg(-1010 + moveitall[0], -43 + moveitall[1], 'stages/page/back-rule');
-				add(backpage);
-				backpage.visible = false;
-
-				gfmirror = new Girlfriend(1275, 350, gfVersion);
-				gfmirror.x += gfmirror.charOffset[0];
-				gfmirror.y += gfmirror.charOffset[1];
-				add(gfmirror);
+			case 'rules':	
+				dadmirror = new Character(dad.x - 425, dad.y - 30, "movi2", 'dad');
 			
 			case 'sunshine':
 				dadmirror = new Character(-100, -100, "tails-doll-3d-2", 'dad');
@@ -641,6 +630,9 @@ class PlayState extends MusicBeatState
 		timeTxt.cameras = [camHUD];
 		timeLabelTxt.cameras = [camHUD];
 		
+		if (Girlfriendthatgetsfatasfuck)
+			GirlfriendWeightGainHUD();
+		
 		if (SONG.song.toLowerCase() == 'rules')
 		{
 			staticTrans = new FlxSprite();
@@ -796,6 +788,58 @@ class PlayState extends MusicBeatState
 		super.create();
 		
 		Transition.nextCamera = camOther;
+	}
+	
+	var colorBox:FlxSprite;
+	var shadow:FlxSprite;
+	var box:FlxSprite;
+	var fatGirlfriendIcon:FlxSprite;
+	var fatGirlfriendIconTween:FlxTween;
+	var fatGirlfriendSizes:Array<String> = ['Thin', 'Pudgy', 'Chubby', 'Fat', 'Obese', 'Morbidly Obese', 'Immobile'];
+	var fatGirlfriendText:FlxText;
+	var gainingWeightNum:Float = 0;
+	
+	function GirlfriendWeightGainHUD()
+	{
+		colorBox = new FlxSprite(0, 0).loadGraphic(Paths.image('girlfriendweightgain/colorbox', 'horny'));
+		colorBox.y = FlxG.height - colorBox.height;
+		colorBox.color = 0xFFA5004D;
+		colorBox.antialiasing = FlxG.save.data.antiAliasing;
+		add(colorBox);
+		
+		shadow = new FlxSprite(0, 0).loadGraphic(Paths.image('girlfriendweightgain/shadow', 'horny'));
+		shadow.y = FlxG.height - shadow.height;
+		shadow.antialiasing = FlxG.save.data.antiAliasing;
+		add(shadow);
+		
+		fatGirlfriendText = new FlxText(0, colorBox.y, colorBox.width, fatGirlfriendSizes[0], 20);
+		fatGirlfriendText.setFormat(Paths.font("comic.ttf"), 15, FlxColor.BLACK, CENTER);
+		fatGirlfriendText.scrollFactor.set();
+		fatGirlfriendText.antialiasing = FlxG.save.data.antiAliasing;
+		add(fatGirlfriendText);
+		
+		fatGirlfriendIcon = new FlxSprite(0, 0).loadGraphic(Paths.image('girlfriendweightgain/girlfriend/icon_1', 'horny'));
+		fatGirlfriendIcon.y = FlxG.height - fatGirlfriendIcon.height;
+		fatGirlfriendIcon.antialiasing = FlxG.save.data.antiAliasing;
+		add(fatGirlfriendIcon);
+		
+		box = new FlxSprite(0, 0).loadGraphic(Paths.image('girlfriendweightgain/bordercolorbox', 'horny'));
+		box.y = FlxG.height - box.height;
+		box.antialiasing = FlxG.save.data.antiAliasing;
+		add(box);
+		
+		colorBox.cameras = [camHUD];
+		shadow.cameras = [camHUD];
+		box.cameras = [camHUD];
+		fatGirlfriendIcon.cameras = [camHUD];
+		fatGirlfriendText.cameras = [camHUD];
+	}
+	
+	function girlfriendGetsFat(size:Int = 1)
+	{
+		fatGirlfriendIcon.loadGraphic(Paths.image('girlfriendweightgain/girlfriend/icon_' + size, 'horny'));
+		fatAssGF.getFatter(size);
+		fatGirlfriendText.text = fatGirlfriendSizes[size - 1];
 	}
 	
 	public function loadVideo(file:String)
@@ -991,6 +1035,8 @@ class PlayState extends MusicBeatState
 					dad.setPosition(298 + dad.charOffset[0], 131 + dad.charOffset[1]);
 					boyfriend.setPosition(1332 + boyfriend.charOffset[0], 513 + boyfriend.charOffset[1]);
 					gf.setPosition(756 + gf.charOffset[0], 200 + gf.charOffset[1]);
+					if (Girlfriendthatgetsfatasfuck)
+						fatAssGF.setPosition(556, 285);
 					
 				case 'computer':
 					defaultCamZoom = 0.75;
@@ -1113,6 +1159,20 @@ class PlayState extends MusicBeatState
 					defaultCamZoom = 0.6;
 					curStage = 'pc';
 					
+					if (SONG.song.toLowerCase() == 'rules')
+					{
+						var moveitall:Array<Float> = [-425, -100];
+				
+						white = new BackgroundImg(-765 + moveitall[0], 82 + moveitall[1], 'stages/page/white', 'horny');
+						add(white);
+						white.visible = false;
+						
+						add(dadmirror);
+				
+						backpage = new BackgroundImg(-1010 + moveitall[0], -43 + moveitall[1], 'stages/page/back-rule', 'horny');
+						add(backpage);
+						backpage.visible = false;
+					}
 					folds = new BackgroundImg(-400, -190, 'stages/normal/folds', 'horny', 0.5, 0.7, 2);
 					add(folds);
 					
@@ -1143,6 +1203,8 @@ class PlayState extends MusicBeatState
 					dad.setPosition(400 + dad.charOffset[0], 300 + dad.charOffset[1]);
 					boyfriend.setPosition(1480 + boyfriend.charOffset[0], 650 + boyfriend.charOffset[1]);
 					gf.setPosition(850 + gf.charOffset[0], 330 + gf.charOffset[1]);
+					if (Girlfriendthatgetsfatasfuck)
+						fatAssGF.setPosition(650, 415);
 				
 				case 'terminatexs':
 					defaultCamZoom = 0.7;
@@ -1152,6 +1214,8 @@ class PlayState extends MusicBeatState
 					add(lol);
 					
 					gf.setPosition(500 + gf.charOffset[0], 130 + gf.charOffset[1]);
+					if (Girlfriendthatgetsfatasfuck)
+						fatAssGF.setPosition(300, 215);
 					boyfriend.setPosition(970 + boyfriend.charOffset[0], 450 + boyfriend.charOffset[1]);
 					
 				case 'sunshine':
@@ -1214,6 +1278,8 @@ class PlayState extends MusicBeatState
 					
 					dad.setPosition(-400 + dad.charOffset[0], 100 + dad.charOffset[1]);
 					gf.setPosition(80 + gf.charOffset[0], 80 + gf.charOffset[1]);
+					if (Girlfriendthatgetsfatasfuck)
+						fatAssGF.setPosition(-120, 165);
 					
 				case 'greetings':
 					curStage = 'nothing';
@@ -2534,12 +2600,10 @@ class PlayState extends MusicBeatState
 			if (darkStages.contains(curStage))
 			{
 				gf.color = 0xFF878787;
-				if (SONG.song.toLowerCase() == 'rules') gfmirror.color = 0xFF878787;
 			}
 			else
 			{
 				gf.color = FlxColor.WHITE;
-				if (SONG.song.toLowerCase() == 'rules') gfmirror.color = FlxColor.WHITE;
 			}
 		}
 	}
@@ -2582,11 +2646,11 @@ class PlayState extends MusicBeatState
 		
 		FlxG.mouse.visible = true;
 		
-		if (PlayState.boyfriendOverride != "none" || PlayState.boyfriendOverride != "bf")
-			PlayState.boyfriendOverride = "none";
-		
 		if (PlayState.girlfriendOverride != "none" || PlayState.girlfriendOverride != "gf")
 			PlayState.girlfriendOverride = "none";
+		
+		if (Girlfriendthatgetsfatasfuck)
+			Girlfriendthatgetsfatasfuck = false;
 			
 		FlxG.sound.playMusic(Paths.music('freakyMenu'));
 		FlxG.switchState(new FreeplayState());
@@ -2872,7 +2936,6 @@ class PlayState extends MusicBeatState
 				&& gf.animation.curAnim.name.startsWith('sing') && !gf.animation.curAnim.name.endsWith('miss'))
 			{
 				gf.dance();
-				if (SONG.song.toLowerCase() == 'rules') gfmirror.dance();
 				gfIdleColor();
 			}
 		}
@@ -2898,7 +2961,6 @@ class PlayState extends MusicBeatState
 			if (combo > 5 && gf.animOffsets.exists('sad') && !(ifGfCanSingThenHerStuffCanFunction()))
 			{
 				gf.playAnim('sad');
-				if (SONG.song.toLowerCase() == 'rules') gfmirror.playAnim('sad');
 			}
 			combo = 0;
 			misses++;
@@ -2954,10 +3016,8 @@ class PlayState extends MusicBeatState
 				else
 				{
 					gf.color = 0xFF000084;
-					if (SONG.song.toLowerCase() == 'rules') gfmirror.color = 0xFF000084;
 				}
 				gf.playAnim(gfAnimToPlay, true);
-				if (SONG.song.toLowerCase() == 'rules') gfmirror.playAnim(gfAnimToPlay, true);
 			}
 
 			updateAccuracy();
@@ -3050,6 +3110,17 @@ class PlayState extends MusicBeatState
 			{
 				combo += 1;
 				popUpScore(note.strumTime, note.noteStyle);
+				if (Girlfriendthatgetsfatasfuck) gainingWeightNum += 1;
+				
+				switch (gainingWeightNum)
+				{
+					case 30: girlfriendGetsFat(2);
+					case 60: girlfriendGetsFat(3);
+					case 90: girlfriendGetsFat(4);
+					case 120: girlfriendGetsFat(5);
+					case 150: girlfriendGetsFat(6);
+					case 180: girlfriendGetsFat(7);
+				}
 			}
 			else
 			{
@@ -3080,13 +3151,6 @@ class PlayState extends MusicBeatState
 			{
 				gf.playAnim('sing' + animList[Math.round(Math.abs(note.noteData))], true);
 				gf.holdTimer = 0;
-				
-				if (SONG.song.toLowerCase() == 'rules')
-				{
-					gfmirror.playAnim('sing' + animList[Math.round(Math.abs(note.noteData))], true);
-					gfmirror.holdTimer = 0;
-				}
-				
 				gfIdleColor();
 			}
 			
@@ -3432,7 +3496,6 @@ class PlayState extends MusicBeatState
 					case 1:
 						staticTrans.visible = false;
 						dadmirror.visible = false;
-						gfmirror.visible = false;
 					case 775:
 						staticTrans.visible = true;
 						dad.visible = false;
@@ -3449,8 +3512,8 @@ class PlayState extends MusicBeatState
 						backpage.visible = true;
 						enterRule34 = true;
 						
-						gfmirror.visible = true;
 						boyfriend.setPosition(1300 + boyfriend.charOffset[0], 650 + boyfriend.charOffset[1]);
+						gf.setPosition(1275 + gf.charOffset[0], 350 + gf.charOffset[1]);
 					case 784:
 						staticTrans.visible = false;
 				}
@@ -3697,9 +3760,20 @@ class PlayState extends MusicBeatState
 		if (curBeat % boingBeatFix(1) == 0) // all this for a good looking icon bounce
 		{	
 			iconBouncingOnIt = !iconBouncingOnIt;
-			
+
 			iconBounce(iconBouncingOnIt, 'bf', iconP1);
 			iconBounce(iconBouncingOnIt, 'dad', iconP2);
+			
+			if (fatGirlfriendIconTween != null) { // this is so trash
+				fatGirlfriendIconTween.cancel();
+			}
+			fatGirlfriendIcon.scale.x = 1.2;
+			fatGirlfriendIcon.scale.y = 1.2;
+			fatGirlfriendIconTween = FlxTween.tween(fatGirlfriendIcon.scale, {x: 1, y: 1}, 0.2, {
+				onComplete: function(twn:FlxTween) {
+					fatGirlfriendIconTween = null;
+				}
+			});
 			
 			if (ifGfCanSingThenHerStuffCanFunction())
 			{
@@ -3744,7 +3818,6 @@ class PlayState extends MusicBeatState
 				if (!gf.animation.curAnim.name.startsWith("sing") && gf.canDance)
 				{
 					gf.dance();
-					if (SONG.song.toLowerCase() == 'rules') gfmirror.dance();
 					gfIdleColor();
 				}
 			}
@@ -3753,7 +3826,6 @@ class PlayState extends MusicBeatState
 				if (!shakeCam && gf.animation.getByName("scared") != null || (shakeCam || !shakeCam) && gf.animation.getByName("scared") == null)
 				{
 					gf.dance();
-					if (SONG.song.toLowerCase() == 'rules') gfmirror.dance();
 					gfIdleColor();
 				}
 			}
@@ -3768,6 +3840,11 @@ class PlayState extends MusicBeatState
 				boyfriend.dance();
 				boyfriendIdleColor();
 			}
+		}
+		
+		if (fatAssGF != null)
+		{
+			fatAssGF.playAnim();
 		}
 		
 		if (!dad.animation.curAnim.name.startsWith("sing") && curBeat % (dad.curCharacter == 'bambi-piss-3d' ? 4 : dad.danceType == 'dance' ? 1 : boingBeatFix(2)) == 0)
@@ -3890,7 +3967,8 @@ class PlayState extends MusicBeatState
 	function ifGfCanSingThenHerStuffCanFunction()
 	{
 		return FlxG.save.data.gfCanSing && Character.tutorialGFs.contains(gf.curCharacter)
-			&& !CharacterSelectState.noGfChar.contains(boyfriend.curCharacter) && !thereisnogfs.contains(SONG.song.toLowerCase());
+			&& !CharacterSelectState.noGfChar.contains(boyfriend.curCharacter) && !thereisnogfs.contains(SONG.song.toLowerCase())
+			&& Girlfriendthatgetsfatasfuck;
 	}
 	
 	//miku put the wrong bpm on "Boing" so this is a fix for it so the characters dont bop off-sync

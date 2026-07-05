@@ -172,7 +172,6 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.botPlayOn = false;
 					CharacterSelectState.accessViaPlaystate = false;
 					
-					PlayState.boyfriendOverride = "none";
 					PlayState.girlfriendOverride = "none";
 					
 					//Main.dumpCache();

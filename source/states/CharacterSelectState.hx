@@ -3,7 +3,6 @@ package states;
 #if desktop
 import Discord.DiscordClient;
 #end
-
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
@@ -79,6 +78,11 @@ class CharacterSelectState extends MusicBeatState
 	public var previewMode:Bool = false;
 	
 	public static var accessViaPlaystate:Bool = false;
+	
+	var weightgainGF:FlxUICheckBox;
+	var weightgainGF_txt:FlxSprite;
+	var fatassgirlfriend:Bool = false;
+	var fattyGF:GirlfriendThatGetsFat;
 	
 	override function create()
 	{
@@ -210,6 +214,24 @@ class CharacterSelectState extends MusicBeatState
 		add(tailsBox);
 		tailsBox.cameras = [camHUD];
 		
+		weightgainGF = new FlxUICheckBox(0, 0, Paths.image('charselect/hornygf_box', 'horny'), Paths.image('charselect/hornygf_boxCheck', 'horny'), "", 100);
+		weightgainGF.x = FlxG.width - 105;
+		weightgainGF.callback = function()
+		{
+			fatassgirlfriend = !fatassgirlfriend;	
+			fattyGF.visible = fatassgirlfriend;
+		};
+		weightgainGF.boxAntialias = true;
+		weightgainGF.visible = FlxG.save.data.hornyGF;
+		add(weightgainGF);
+		weightgainGF.cameras = [camHUD];
+		
+		weightgainGF_txt = new FlxSprite(weightgainGF.x, weightgainGF.y).loadGraphic(Paths.image('girlfriendweightgain/weightgaingf_select', 'horny'));
+		weightgainGF_txt.antialiasing = FlxG.save.data.antiAliasing;
+		weightgainGF_txt.visible = FlxG.save.data.hornyGF;
+		add(weightgainGF_txt);
+		weightgainGF_txt.cameras = [camHUD];
+		
 		overlay = new FlxSprite(0, 0).makeGraphic(1, 1);
 		overlay.scrollFactor.set();
 		add(overlay);
@@ -228,9 +250,10 @@ class CharacterSelectState extends MusicBeatState
 			curGF = 0;
 			curFormGF = 0;
 		}
-
+		
 		UpdateBF();
 		UpdateGF();
+		putTheFatBitchThere();
 		updateGfUI();
 		
 		#if desktop
@@ -249,7 +272,9 @@ class CharacterSelectState extends MusicBeatState
 		super.update(elapsed);
 		
 		tailsBox.visible = FlxG.save.data.canTailsDoll && FlxG.save.data.hornyGF && FlxG.save.data.hornyALL && (!noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase()));
-		girlfriendChar.visible = !noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase());
+		girlfriendChar.visible = !noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase()) && !fatassgirlfriend;
+		weightgainGF.visible = FlxG.save.data.hornyGF;
+		weightgainGF_txt.visible = weightgainGF.visible;
 		
 		for(allbuttons in [saveBox, loadBox, tailsBox, settingsIcon]) {
 			allbuttons.setPermition = !selectedCharacter;
@@ -316,7 +341,7 @@ class CharacterSelectState extends MusicBeatState
 							changeBoyfriendForm(1);
 					}
 					
-					if (!noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase()))
+					if (!noGfChar.contains(boyfriendChar.curCharacter) && !songsWithNoGf.contains(PlayState.SONG.song.toLowerCase()) && !fatassgirlfriend)
 					{
 						if (FlxG.keys.justPressed.A && !isTails)
 							changeGirlfriend(-1);
@@ -341,7 +366,6 @@ class CharacterSelectState extends MusicBeatState
 					}
 					else
 					{
-						FlxG.mouse.visible = false;
 						FlxG.sound.playMusic(Paths.music('freakyMenu'));
 						FlxG.switchState(new FreeplayState());
 					}
@@ -399,6 +423,13 @@ class CharacterSelectState extends MusicBeatState
 	function gfString()
 	{
 		return Character.tutorialGFs.contains(girlfriendChar.curCharacter);
+	}
+	
+	function putTheFatBitchThere()
+	{
+		fattyGF = new GirlfriendThatGetsFat(140, 190);
+		insert(members.indexOf(boyfriendChar), fattyGF);
+		fattyGF.visible = fatassgirlfriend;
 	}
 	
 	function charAnim(anim:String)
@@ -485,6 +516,8 @@ class CharacterSelectState extends MusicBeatState
 			if (boyfriendChar != null)
 				boyfriendChar.dance();
 		}
+		
+		fattyGF.playAnim();
 		
 		if (girlfriendChar != null && curBeat % (girlfriendChar.danceType == 'idle' ? 2 : 1) == 0)
 			girlfriendChar.dance();
@@ -705,6 +738,7 @@ class CharacterSelectState extends MusicBeatState
 		PlayState.girlfriendOverride = "none";
 		PlayState.SONG.player1 = boyfriendData[curBF].names[curFormBF];
 		PlayState.girlfriendOverride = isTails ? 'tails-doll' : girlfriendData[curGF].names[curFormGF];
+		PlayState.Girlfriendthatgetsfatasfuck = fatassgirlfriend;
 		
 		if (accessViaPlaystate) accessViaPlaystate = false;
 		

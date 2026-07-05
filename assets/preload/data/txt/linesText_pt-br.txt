@@ -59,6 +59,7 @@ combonum==Pop Up do Combo
 gfontitle==Girlfriend no Titúlo
 preloader==Manter Arquivos
 iconbounce==Ícones Animados
+loadingsplashes==Loading Animado
 
 // Character Names //
 bf==Boyfriend
